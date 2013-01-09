@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+
+	<application>
+		<app_version>UV Light</app_version>
+		<site_name>FastSell</site_name>
+		<js_framework>jquery_v1.8.2.js</js_framework>
+		<app_address>http://localhost/1_Fast_Sell</app_address>
+		<scrap_web_address>http://localhost:18080/tradeshow/ws/</scrap_web_address>
+		<current_conn>local</current_conn>
+		<accounts_root>/Applications/MAMP/htdocs/1_Fast_Sell/scrap_accounts</accounts_root>
+		<people_root>/Applications/MAMP/htdocs/1_Fast_Sell/scrap_people</people_root>
+		<java_root>/Applications/MAMP/htdocs/1_Fast_Sell/scrap_java</java_root>
+		<support_email>support@emergestudio.net</support_email>
+		<marshaller>json</marshaller>
+	</application>
+	
+	<local_conn>
+		<database_name>tradeshow</database_name>
+		<database_path>localhost</database_path>
+		<database_username>root</database_username>
+		<database_password>root</database_password>
+	</local_conn>
+	
+	<production_conn>
+		<database_name></database_name>
+		<database_path></database_path>
+		<database_username></database_username>
+		<database_password></database_password>
+	</production_conn>
+	
+</settings>

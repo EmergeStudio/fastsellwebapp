@@ -1,0 +1,80 @@
+/**
+ * notifications.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.pageNotifications .middle.notificationContainer {
+	width:850px;
+}
+.pageNotifications .middle.notificationContainer .leftColBig {
+	width:530px;
+}
+.pageNotifications .middle.notificationContainer .rightColSmall {
+}
+.pageNotifications .middle .btnDashboardContainer {
+	margin:0px auto;
+	width:135px;
+	padding-left:5px;
+	margin-bottom:20px;
+}
+.pageNotifications .divider {
+	margin-top:30px;
+	margin-bottom:30px;
+}
+.pageNotifications .inset {
+	margin:0px auto;
+	margin-bottom:10px;
+}
+.pageNotifications .inset:hover {
+	cursor:pointer;
+	background-color:#e6e6e6;
+}
+.pageNotifications .inset * {
+	text-shadow:#F1F1F1 1px 1px 0px;
+}
+.pageNotifications .inset .notificationLine .profileImage {
+	-moz-border-radius:2px;  
+	-webkit-border-radius:2px;
+	-webkit-box-shadow:0 0px 3px #909090;
+	-moz-box-shadow:0 0px 3px #909090;
+}
+.pageNotifications .inset .notificationLine .notificationDetails {
+	float:right;
+	width:450px;
+	margin-top:2px;
+}
+.pageNotifications .inset .notificationLine .notificationDetails .darkText, .pageNotifications .inset .notificationLine .notificationDetails .darkText b {
+	color:#161616;
+}
+.pageNotifications .middle .btnLoadMoreContainer {
+	margin:0px auto;
+	width:129px;
+	padding-left:5px;
+	margin-top:20px;
+}
+.pageNotifications .inpSearchNotifications {
+	margin-right:5px;
+	width:220px;
+}
+.pageNotifications .scrapButton.btnSearchNotifications {
+	padding:8px 12px;
+}
+.pageNotifications .userFilterLine {
+	padding:6px 6px;
+}
+.pageNotifications .userFilterLine:hover {
+	cursor:pointer;
+	background-color:#d8d8d8;
+}

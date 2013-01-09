@@ -1,0 +1,334 @@
+/**
+ * Cascade CSS Framework designed to make life easier
+ * navigation.css
+ * 
+ * @package cascade css
+ * @author Michelle Britton & Chris Cook
+ * @version 1.0
+ * @copyright Michelle Britton & Chris Cook 2008
+ */
+ 
+/* RESETS
+--------------------------------------------------------------------------------------- */
+#header #topBar ul, #header #banner ul {
+	padding:0px;
+}
+ 
+/* TOP BAR NAVIGATION
+--------------------------------------------------------------------------------------- */
+#header #topBar * {
+	color:#FFF;
+}
+#header #topBar .innerTop {
+	margin:0px auto; 
+	width:1215px;
+}
+#header #topBar .logoContain {
+	display:block;
+	width:150px;
+	height:50px;
+	padding:0px 6px;
+}
+#header #topBar .logoContain.leftLogo {
+	float:left;
+}
+#header #topBar .logoContain.centerLogo {
+	clear:both;
+	margin:0px auto;
+}
+/*#header #topBar .mainNav {
+	float:right;
+}
+#header #topBar .mainNav.userNav {
+	float:right;
+}*/
+#header #topBar .mainNav li {
+	display:block;
+	list-style:none;
+	float:left;
+	margin-left:1px;
+}
+#header #topBar .mainNav.userNav li {
+	background-position:left;
+}
+#header #topBar .mainNav li a.mainNavLink, #header #topBar .mainNav li div.mainNavLink {
+	padding:16px 14px 16px 14px;
+	font-size:15px;
+	text-shadow:#000 1px 1px 0px;
+	font-weight:200;
+}
+#header #topBar .mainNav li a.mainNavLink.noIcon, #header #topBar .mainNav li div.mainNavLink.noIcon {
+	padding:16px 14px 16px 16px;
+}
+#header #topBar .mainNav li a.mainNavLink.noIcon .blueLink, #header #topBar .mainNav li div.mainNavLink.noIcon .blueLink{
+	font-size:15px;
+	text-shadow:#000 1px 1px 0px;
+	font-weight:200;
+	color:#66A6D2;
+}
+#header #topBar .mainNav.userNav li a.mainNavLink, #header #topBar .mainNav.userNav li div.mainNavLink {
+	height:25px;
+}
+#header #topBar .mainNav li a:hover, #header #topBar .mainNav li div.mainNavLink:hover, #header #topBar #logo:hover, #header #topBar .mainNav li.active a {
+	cursor:pointer;
+}
+#header #topBar .mainNav li.active, #header #topBar .logoContain:hover, #header #topBar .mainNav li:hover, #header #topBar .mainNav li.superActive {
+	-webkit-box-shadow:inset 0 3px 6px #000000;
+	background-image:url(../../images/navigation/texture_active_back_2.jpg);
+}
+#header #topBar .logoContain:hover {
+	cursor:pointer;
+}
+#header #topBar .mainNav.userNav li a.mainNavLink {
+	text-indent:0px;
+	padding:10px;
+}
+#header #topBar .mainNav li a.mainNavLink, #header #topBar .mainNav li div.mainNavLink {
+	background-repeat:no-repeat;
+	background-position:12px;
+}
+#header #topBar .mainNav.userNav li {
+	padding:0px;
+}
+#header #topBar .mainNav li div.mainNavLink.mainNavNotifications {
+    padding-left: 50px;
+}
+#header #topBar .mainNav li div.mainNavLink.mainNavNotifications span {
+    position: absolute;
+    font-size: 22px;
+    margin-left: -33px;
+    margin-top: -1px;
+}
+#header #topBar .mainNav li div.mainNavLink.mainNavSettings {
+	background-image:url(../../images/navigation/top_link_settings.png);
+}
+#header #topBar .mainNav li div.mainNavLink.mainCompanySwitch {
+	padding-left:36px;
+	background-image:url(../../images/navigation/company_switch.png);
+}
+#header #topBar .mainNav .companySwitch {
+	min-width:118px;
+}
+#header #topBar .mainNav li .activeArrow {
+	display:block;
+	position:absolute;
+	width:40px;
+	height:13px;
+	margin-top:49px;
+	text-indent:-1000px;
+	background-image:url(../../images/navigation/top_link_arrow.png);
+	overflow:hidden;
+}
+#header #topBar .mainNav li .activeArrowDashboard {
+	margin-left:33px;
+}
+#header #topBar .mainNav li .activeArrowFastOrders {
+	margin-left:51px;
+}
+#header #topBar .mainNav li .activeArrowDocuments {
+	margin-left:51px;
+}
+#header #topBar .mainNav li .activeArrowAnalytics {
+	margin-left:45px;
+}
+#header #topBar .mainNav li .activeArrowLoyalty {
+	margin-left:38px;
+}
+#header #topBar .mainNav .mainNavSubMenu {
+	position:absolute;
+	display:none;
+	margin-top:44px;
+}
+#header #topBar .mainNav.userNav .mainNavSubMenu {
+	right:12px;
+}
+#header #topBar .mainNav.userNav .mainNavAdmin .mainNavSubMenu {
+	right:62px;
+}
+#header #topBar .mainNav.userNav li.mainNavAdmin a.mainNavLink {
+	text-indent:-1000px;
+}
+#header #topBar .mainNav .mainNavSubMenu a, #header #topBar .mainNav .mainNavSubMenu div {
+	display:block;
+	padding:8px 20px;
+	font-size:13px;
+	background-color:#0e0e0d;
+}
+#header #topBar .mainNav .mainNavSubMenu a:hover, #header #topBar .mainNav .mainNavSubMenu div:hover {
+	background-color:#333;
+}
+#header #topBar .mainNav .mainNavSubMenu a.lastLink, #header #topBar .mainNav .mainNavSubMenu div.lastLink {
+	-moz-border-radius-bottomleft:6px;
+	-moz-border-radius-bottomright:6px;   
+	-webkit-border-bottom-left-radius:6px; 
+	-webkit-border-bottom-right-radius:6px;
+}
+ 
+/* SUB NAVIGATION
+--------------------------------------------------------------------------------------- */
+#header #topBar .mainNav li .subNav {
+	display:none;
+	position:absolute;
+	padding:20px 20px;
+	background-color:#ffffff;
+	border:solid 1px #dfdfdf;
+	border-top:none;
+	/*background-image:url(../../images/universal/speckle_back.jpg);
+	-webkit-box-shadow:4px 0px 7px -3px #bababa;
+	border-left:solid 1px #dfdfdf;
+	border-bottom:solid 1px #dfdfdf;*/
+	z-index:3;
+}
+#header #topBar .mainNav li .subNav .makeLink, #header #topBar .mainNav li .subNav a {
+	color:#217fb3;
+}
+#header #topBar .mainNav li .subNav .makeLink:hover, #header #topBar .mainNav li .subNav a:hover {
+	color:#39a5e1; 
+	cursor:pointer;
+}
+#header #topBar .mainNav li .subNav .profileImageBorder {
+	float:left;
+	padding:12px;
+	background-color:#dadada;
+	-moz-box-shadow: rgba(255,255,255,0.9) 0px 1px 1px,inset rgba(0,0,0,0.34) 0px 1px 3px,inset rgba(0,0,0,0.2) 0px 0 1px;
+	-webkit-box-shadow: rgba(255,255,255,0.9) 0px 1px 1px,inset rgba(0,0,0,0.34) 0px 1px 3px,inset rgba(0,0,0,0.2) 0px 0 1px;
+	-moz-border-radius:4px;  
+	-webkit-border-radius:4px;
+}
+#header #topBar .mainNav li .subNav .profileImage {
+	-moz-border-radius:2px;  
+	-webkit-border-radius:2px;
+	-webkit-box-shadow:0 0px 3px #909090;
+	-moz-box-shadow:0 0px 3px #909090;
+}
+#header #topBar .mainNav li .subNav div, #header #topBar .mainNav li .subNav div b {
+	color:#585858;
+}
+#header #topBar .mainNav li .subNav a.scrapButton2 {
+	margin:2px 0px 0px 0px;
+	color:#525252;
+}
+#header #topBar .mainNav li .subNav .profileInner {
+	float:left;
+	margin-right:22px;
+}
+#header #topBar .mainNav li .subNav .profileInner .selector {
+	width:110px;
+}
+#header #topBar .mainNav li .subNav .profileInner .selector span {
+	width:110px;
+	color:#525252;
+}
+#header #topBar .mainNav li .subNav .profileInner select {
+	width:148px;
+}
+#header #topBar .mainNav li .subNav.subNavManage {
+	width:160px;
+	margin-left:-89px;
+}
+#header #topBar .mainNav li .subNav.subNavNotifications {
+	padding-top:5px;
+}
+#header #topBar .mainNav li .subNav .notificationLine {
+	width:300px;
+	padding-bottom:15px;
+	padding-top:15px;
+	border-bottom:1px solid #DFDFDF;
+}
+#header #topBar .mainNav li.userNavLink .subNav {
+	width:370px;
+}
+ 
+/* APPLICATION NAVIGATION
+--------------------------------------------------------------------------------------- */
+.middle.appNavigationContainer {
+    margin-top: 60px;
+}
+.middle .appNav {
+	margin-left:10px;
+}
+.middle .appNav li {
+	float:left;
+	margin-right:1px;
+}
+.middle .appNav li.rightLink {
+	float:right;
+	margin-right:10px;
+}
+.middle .appNav li:hover, .middle .appNav li.active {
+	cursor:pointer;
+	background-image:url(../../images/navigation/texture_active_back_2.jpg);
+	-webkit-box-shadow:inset 0 3px 6px #000000;
+}
+.middle .appNav li .sectionNavLink {
+	display:block;
+	font-size:14px;
+	padding: 20px 20px 16px 50px;
+	color:#efefef;
+}
+.middle .appNav li.homeLinkLi {
+	margin-left:10px;
+}
+.middle .appNav li .sectionNavLink.homeLink {
+	display:block;
+    padding: 20px 30px 16px 30px;
+	text-indent:-1000px;
+	background-image:url(../../images/icons/app_home.png);
+	background-repeat:no-repeat;
+	background-position:center;
+	overflow:hidden;
+}
+.middle .appNav li .sectionNavLink span {
+    position: absolute;
+    text-shadow: none;
+    font-size: 22px;
+    margin-left: -32px;
+    margin-top: -2px;
+}
+.middle .appNav li .sectionNavLink.fastsells span {
+    margin-top: -3px;
+}
+.middle .appNav li .sectionNavLink span.pink {
+    color: #dd1263;
+}
+.middle .appNav li .sectionNavLink span.yellow {
+    color: #fcb040;
+}
+.middle .appNav li .sectionNavLink span.blue {
+    color: #25aae1;
+}
+.middle .appNav li .subNav {
+    display:none;
+    padding: 10px 0px;
+    position:absolute;
+    margin-top:-1px;
+    background-color:#ffffff;
+    border:solid 1px #dfdfdf;
+    border-top:none;
+    z-index:3;
+}
+.middle .appNav li .subNav li {
+    float:none;
+    margin: 0px;
+}
+.middle .appNav li .subNav li a {
+    display:block;
+    padding: 8px 20px;
+    color: #525252;
+    text-shadow:none;
+    font-size:13px;
+    background-color:#fff;
+}
+.middle .appNav li .subNav li a:hover {
+    cursor:pointer;
+    background-color: #f3f3f3;
+}
+.middle .appNav li .subNav span {
+    position: relative;
+    text-shadow: none;
+    color: #525252;
+    font-size: 16px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 8px;
+}

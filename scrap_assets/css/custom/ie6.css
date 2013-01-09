@@ -1,0 +1,52 @@
+/**
+ * Cascade CSS Framework designed to make life easier
+ * ie6.css
+ * 
+ * @package cascade css
+ * @author Michelle Britton & Chris Cook
+ * @version 1.0
+ * @copyright Michelle Britton & Chris Cook 2008
+ */
+
+/** 
+ * Do not delete this import statement
+ */
+@import "../library/ie_reset.css";
+
+/** 
+ * Insert IE6 specific CSS here
+ */
+
+#middle .blackBar input {
+	margin-top:12px;
+}
+#middle .corner {
+	display:none;
+}
+.popup .middle .greyBlock .selectBack {
+	border:none;
+	background:none;
+}
+.popup .middle .greyBlock select {
+	margin-top:0px;
+}
+#middle .file .content {
+	display:block;
+	padding:16px 0px 16px 70px;
+	margin-left:0px;
+}
+#middle .fileControl {
+	right:355px;
+}
+#middle .botBar .numList {
+	margin-left:-72px;
+}
+#tooltip {
+	padding-top:7px;
+}
+#header #banner #logoHere {
+	margin-right:20px;
+}
+#middle .btnWithCorners {
+	padding:9px 12px 6px 12px;
+}

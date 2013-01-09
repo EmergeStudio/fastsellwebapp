@@ -1,0 +1,162 @@
+/**
+ * scrap_shifter.css
+ * 
+ * @author Chris Modem
+ * @version 1.0
+ */
+ 
+/* DISPLAY WHICH PANE
+--------------------------------------------------------------------------------------- */
+.shifterPane.shifterPane_1 {
+	display:block;
+}
+ 
+/* SHIFTER BASIC
+--------------------------------------------------------------------------------------- */
+.shifter {
+	margin:0px auto;
+}
+.controlBar.plain .shifter {
+	margin-top:28px;
+}
+.shifter .shifterBlock {
+	display:block;
+	float:left;
+	width:154px;
+	padding-top:20px;
+	text-align:center;
+	background-image:url(../../images/cool_screen/shifter_middle.png);
+	background-repeat:no-repeat;
+}
+.shifter .shifterBlock.shifterStart {
+	background-image:url(../../images/cool_screen/shifter_start.png);
+}
+.shifter .shifterBlock.shifterEnd {
+	background-image:url(../../images/cool_screen/shifter_end.png);
+}
+ 
+/* SHIFTER ACTIVE
+--------------------------------------------------------------------------------------- */
+.shifter .activeBarContain {
+	position:absolute;
+	display:block;
+	width:83px;
+	height:14px;
+	overflow:hidden;
+}
+.shifter .activeBar {
+	display:block;
+	width:10000px;
+}
+.shifter .activeBar .shifterBlockActive {
+	display:block;
+	float:left;
+	width:154px;
+	height:14px;
+	text-indent:-1000px;
+	background-image:url(../../images/cool_screen/shifter_middle_active.png);
+	background-repeat:no-repeat;
+	overflow:hidden;
+}
+.shifter .activeBar .shifterBlockActive.shifterStart {
+	background-image:url(../../images/cool_screen/shifter_start_active.png);
+}
+.shifter .activeBar .shifterBlockActive.shifterEnd {
+	background-image:url(../../images/cool_screen/shifter_end_active.png);
+}
+ 
+/* SHIFTER PANES
+--------------------------------------------------------------------------------------- */
+.shifterPane {
+	display:none;
+	padding:50px 40px 40px 40px;
+}
+.shifterPane p {
+	color:#888888;
+}
+.shifterPane ul {
+	margin-left:40px;
+}
+.shifterPane li {
+	list-style:disc;
+	margin-top:5px;
+	color:#888888;
+}
+.shifterPane label {
+	margin-top:25px;
+}
+.shifterPane input {
+	width:400px;
+	color:#888;
+	margin-bottom: 15px;
+}
+.shifterPane input.last {
+	margin-bottom:0px;
+}
+.shifterPane .greyLabelText {
+	padding:0px 0px 3px 8px;
+	color:#888888;
+}
+.shifterPane input.inpBigText {
+	font-size:15px;
+}
+.shifterPane textarea {
+	width:400px;
+	height:100px;
+	padding:6px 2px;
+	color:#888;
+	line-height: 18px;
+	margin-bottom: 15px;
+}
+.shifterPane input.scrap_date {
+	width:215px;
+	margin-right:10px;
+}
+.shifterPane .line {
+	display:block;
+	width:100%;
+	height:1px;
+	margin-top:25px;
+	background-color:#DFDFDF;
+}
+.shifterPane .ui-datepicker-trigger:hover {
+	cursor: pointer;
+}
+ 
+/* SHIFTER NAVIGATION
+--------------------------------------------------------------------------------------- */
+.shifterNav {
+	border-top:1px solid #DFDFDF;
+	margin:0px 40px;
+	padding-bottom:40px;
+	padding-top:25px;
+}
+ 
+/* CUSTOM STYLES
+--------------------------------------------------------------------------------------- */
+.shifterPane input.inpSize1 {
+	width:40px;
+	color:#585858;
+}
+.shifterPane .selector {
+	width:160px;
+}
+.shifterPane .selector select {
+	width:160px;
+}
+.shifterPane .selector span {
+	font-weight:400;
+	font-size:12px;
+	width:120px;
+}
+.shifterPane .inpFix {
+	margin-top:3px;
+}
+.shifterPane input.inpSearch {
+	padding:8px 0px 7px 2px;
+	width:240px;
+	margin-right: 10px;
+}
+.shifterPane .subPane {
+	display:none;
+}

@@ -1,0 +1,63 @@
+/**
+ * login.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.pageLogin .middle .whiteBack {
+    padding:25px;
+}
+.pageLogin .middle .loginContainer {
+    width:300px;
+    margin:0px auto;
+    margin-top:50px;
+}
+.pageLogin .middle .loginContainer input {
+    margin-bottom:20px;
+    font-size:16px;
+    font-weight:300;
+}
+.pageLogin .middle .loginContainer .btnLogin {
+    margin-left:94px;
+}
+.pageLogin .middle .loginContainer .emergeStudioLink {
+    display:block;
+    text-align:center;
+    margin:0px auto;
+    color:#999;
+}
+.pageLogin .middle .loginContainer .forgotPassword {
+    width:138px;
+    margin-top:60px;
+    margin-left: 68px;
+    color: #555;
+}
+.pageLogin .middle .loginContainer .signUp {
+    width:110px;
+    margin-top: 10px;
+    margin-left: 82px;
+    color: #fff;
+}
+.pageLogin .middle .loginContainer .emergeStudioLink {
+    width:170px;
+    margin-top:50px;
+}
+.pageLogin .middle .loginContainer .emergeStudioLink:hover {
+    color:#39a5e1;
+}
+.pageLogin .middle p {
+    color:#626262;
+    text-shadow:#F1F1F1 1px 1px 0px;
+    padding:0px 4px 4px 4px;
+}

@@ -1,0 +1,428 @@
+/**
+ * Cascade CSS Framework designed to make life easier
+ * global_preset.css
+ * 
+ * @package cascade css
+ * @author Michelle Britton & Chris Cook
+ * @version 1.0
+ * @copyright Michelle Britton & Chris Cook 2008
+ */
+ 
+* {margin:0; padding:0; font-family:'Helvetica Neue', Helvetica, Arial; font-size:13px; line-height:18px; text-shadow:#FFF 0px 1px 0px, #FFF 0px -1px 0px, #FFF 1px 0px 0px, #FFF -1px 0px 0px; color:#585858;}
+
+body { }
+
+input {
+	border: 1px solid #cdcdd4; /*standardise the border colour of input elements*/
+	border-bottom:1px solid #aaaaaa;
+	/*font-size:1.4em!important;*/
+	padding:9px 0px 8px 6px;
+	vertical-align:middle; /*removes a bug in FF where input elements have extra margin applied by the browser*/
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	color:#7e7e7e;
+	font-size:14px;
+	font-weight:300;
+}
+textarea {
+	border: 1px solid #cdcdd4; /*standardise the border colour of input elements*/
+	-moz-border-radius:3px; 
+	-webkit-border-radius:3px;
+}
+.inset input {
+	width:97%;
+	border:1px solid #c2c2c2;
+	border-bottom:1px solid #AAA;
+}
+input.ghosting, .inset input.ghosting, textarea.ghosting, .inset textarea.ghosting {
+    border: 1px solid #0787e1;
+    -moz-box-shadow: inset #c7c7c7 0px 1px 4px;
+    -webkit-box-shadow: inset #c7c7c7 0px 1px 4px;
+}
+.inset textarea {
+	width:99%;
+	height:100px;
+	padding:9px 0px 8px 6px;
+	border:1px solid #c2c2c2;
+	border-bottom:1px solid #AAA;
+	color:#7e7e7e;
+	font-size:14px;
+	font-weight:300;
+}
+input.inpText50 {
+	width:50%;
+}
+input.redBorder {
+	color:#e53737;
+	border:1px solid #e53737;
+	border-bottom:1px solid #d52c2c;
+	-moz-placeholder:#ca3030;
+}
+input.redBorder::-webkit-input-placeholder {
+	color:#f09292;
+}
+input.redBorder::-moz-placeholder {
+	color:#f09292;
+}
+
+legend, label {
+	display:block;
+	font-weight:bold;
+	margin-bottom:4px;
+	margin-left:2px;
+	font-size:13px!important;
+}
+
+ul, ol {margin:0; padding:0 0 18px 0; list-style:none;}
+ul {font-size:13px;}
+ol {font-size:13px;}
+p  {font-size:13px; margin-bottom:10px; line-height:18px;}
+q  {font-size:13px;}
+td {font-size:13px;}
+th {font-size:13px; font-weight:bold}
+.text  {font-size:13px; line-height:18px;}
+
+h1 {font-family: Arial, "Lucida Grande", Verdana, sans-serif; font-size:34px; font-weight:bold; margin-bottom:10px;}
+h2 {font-family: Arial, "Lucida Grande", Verdana, sans-serif; font-size:26px; margin-bottom:20px; font-weight:500;}
+h3 {font-family: Arial, "Lucida Grande", Verdana, sans-serif; font-size:18px; margin-bottom:15px; font-weight:500;}
+h4 {font-family: Arial, "Lucida Grande", Verdana, sans-serif; font-size:16px; font-weight:500; margin-bottom:15px;}
+.popup h4 {margin-bottom:0px;}
+h5 {font-family: Arial, "Lucida Grande", Verdana, sans-serif; font-size:14px; font-weight:500; margin-bottom:0px;}
+h6 {font-family: Arial, "Lucida Grande", Verdana, sans-serif; font-size:14px; margin-bottom:0.357em;}
+
+blockquote {color:#666; font-style:italic; margin: 0 0 18px 18px;}
+strong {font-weight:bold;}
+em     {font-style:italic;}
+
+a{text-decoration:none;}
+
+.displayNone, .hiddenDiv {display:none;}
+.floatLeft {float:left;}
+.floatRight {float:right;}
+.clearFloat {clear:both;}
+.divHeight {display:block; overflow:hidden;}
+.centerIt {margin:0px auto;}
+.greyTxt {color:#888888;}
+.greenTxt {color:#418307;}
+.redTxt {color:#b41c08;}
+.darkGreyTxt {color:#616161;}
+.txtEleven{font-size:11px;}
+.cornersBottom{-moz-border-radius-bottomleft:4px; -moz-border-radius-bottomright:4px;  -webkit-border-bottom-right-radius:4px; -webkit-border-bottom-left-radius:4px;}
+.roundMe{-moz-border-radius:4px; -webkit-border-radius:4px;}
+.txt11{font-size:11px;}
+.txt12{font-size:12px;}
+.txt13{font-size:13px;}
+.txt14{font-size:14px;}
+.txtCenter{text-align:center;}
+.underline{text-decoration:underline;}
+.underline:hover{text-decoration:none;}
+.txtHighlight{background-color:#ffff8a;}
+.someLineHeight{line-height:16px;}
+.greyTable .ajaxLoader{display:block; height:25px;	width:25px; background:url(../../images/universal/ajax_loader6.gif);}
+.greyTable .ajaxLoader.displayNone{display:none;}
+.middle .greyBlock .docInfoBlock span.indexValueSearch .txtHighlight{background-color:#585858; padding:0px; margin:0px;}
+.middle .greyBlock .docInfoBlock span.indexValueSearch .txtHighlight:hover{color:#39A5E1;}
+.middle .inpText50{width:50%;}
+
+/* Toggle CSS */
+.toggle div {
+    float: left;
+}
+.toggle .textTrue , .toggle .textFalse {
+    color: #363636;
+}
+.toggle .toggleBar {
+    height: 9px;
+    width: 30px;
+    margin: 4px 10px 2px 10px;
+    -moz-box-shadow: rgba(255,255,255,0.6) 0px 1px 1px,inset rgba(0,0,0,0.3) 0px 1px 4px,inset rgba(0,0,0,0.1) 0px 0 1px;
+    -webkit-box-shadow: rgba(255, 255, 255, 0.6) 0px 1px 1px,inset rgba(0, 0, 0, 0.3) 0px 1px 4px,inset rgba(0, 0, 0, 0.1) 0px 0 1px;
+    background: -webkit-linear-gradient(#9DA3A9, #E6E7E9);
+    background: -moz-linear-gradient(#9DA3A9, #E6E7E9);
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.toggle .toggleBar .toggleButton {
+    margin: -4px 0 0 -4px;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.37) 0px 1px 1px,rgba(0, 0, 0, 0.25) 0px 0 1px,inset white 0px 2px 0,inset rgba(255, 255, 255, 0.65) 0px 0 1px,inset rgba(0, 0, 0, 0.05) 0px -2px 0;
+    -moz-box-shadow: rgba(0,0,0,0.37) 0px 1px 1px,rgba(0,0,0,0.25) 0px 0 1px,inset #fff 0px 2px 0,inset rgba(255,255,255,0.65) 0px 0 1px,inset rgba(0,0,0,0.05) 0px -2px 0;
+    border-radius: 14px;
+    -moz-border-radius: 14px;
+    -webkit-border-radius: 14px;
+    background: -webkit-linear-gradient(#f8f8f8, #E6E7E9);
+    background: -moz-linear-gradient(#f8f8f8, #E6E7E9);
+}
+.toggle .toggleBar .toggleButton:active {
+    background: -webkit-linear-gradient(#cfcfcf, #f8f8f8);
+    background: -moz-linear-gradient(#cfcfcf, #f8f8f8);
+}
+.toggle .inactive {
+    color: #979797;
+}
+
+/* ICOMOON */
+@font-face {
+    font-family: 'icomoon';
+    src:url('../../fonts/icomoon.eot');
+    src:url('../../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/icomoon.svg#icomoon') format('svg'),
+    url('../../fonts/icomoon.woff') format('woff'),
+    url('../../fonts/icomoon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+    font-family: 'icomoon';
+    content: attr(data-icon);
+    speak: none;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: 'icomoon';
+    font-style: normal;
+    speak: none;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+.icon-reload:before {
+    content: "\e000";
+}
+.icon-search:before {
+    content: "\e001";
+}
+.icon-folder:before {
+    content: "\e002";
+}
+.icon-calendar:before {
+    content: "\e003";
+}
+.icon-envelope:before {
+    content: "\e004";
+}
+.icon-tag:before {
+    content: "\f02b";
+}
+.icon-tags:before {
+    content: "\f02c";
+}
+.icon-cog:before {
+    content: "\e005";
+}
+.icon-cancel:before {
+    content: "\e006";
+}
+.icon-cross:before {
+    content: "\e007";
+}
+.icon-flag:before {
+    content: "\e008";
+}
+.icon-bars:before {
+    content: "\e009";
+}
+.icon-stats:before {
+    content: "\e00a";
+}
+.icon-pie:before {
+    content: "\e00b";
+}
+.icon-bars-2:before {
+    content: "\e00c";
+}
+.icon-statistics:before {
+    content: "\e00d";
+}
+.icon-bars-3:before {
+    content: "\e00e";
+}
+.icon-stats-2:before {
+    content: "\e00f";
+}
+.icon-stats-3:before {
+    content: "\e010";
+}
+.icon-angle-left:before {
+    content: "\f104";
+}
+.icon-angle-right:before {
+    content: "\f105";
+}
+.icon-angle-up:before {
+    content: "\f106";
+}
+.icon-angle-down:before {
+    content: "\f107";
+}
+.icon-arrow-up:before {
+    content: "\e011";
+}
+.icon-arrow-down:before {
+    content: "\e012";
+}
+.icon-arrow-left:before {
+    content: "\e013";
+}
+.icon-arrow-up-2:before {
+    content: "\e014";
+}
+.icon-arrow-down-2:before {
+    content: "\e015";
+}
+.icon-arrow-left-2:before {
+    content: "\e016";
+}
+.icon-arrow-right:before {
+    content: "\e017";
+}
+.icon-checkmark:before {
+    content: "\e018";
+}
+.icon-checkmark-2:before {
+    content: "\e019";
+}
+.icon-eye:before {
+    content: "\e01a";
+}
+.icon-file-alt:before {
+    content: "\f0f6";
+}
+.icon-office:before {
+    content: "\e01b";
+}
+.icon-home:before {
+    content: "\e01c";
+}
+.icon-office-2:before {
+    content: "\e01d";
+}
+.icon-database:before {
+    content: "\e01e";
+}
+.icon-document-alt-fill:before {
+    content: "\e01f";
+}
+.icon-ticket:before {
+    content: "\e020";
+}
+.icon-comment:before {
+    content: "\f075";
+}
+.icon-chat:before {
+    content: "\e021";
+}
+.icon-chat-2:before {
+    content: "\e022";
+}
+.icon-pin:before {
+    content: "\e042";
+}
+.icon-map-pin-fill:before {
+    content: "\e023";
+}
+.icon-location:before {
+    content: "\e024";
+}
+.icon-compass:before {
+    content: "\e025";
+}
+.icon-list:before {
+    content: "\e026";
+}
+.icon-list-2:before {
+    content: "\e027";
+}
+.icon-star:before {
+    content: "\f005";
+}
+.icon-camera:before {
+    content: "\e028";
+}
+.icon-dial:before {
+    content: "\e029";
+}
+.icon-tools:before {
+    content: "\e02a";
+}
+.icon-box:before {
+    content: "\e02b";
+}
+.icon-signal:before {
+    content: "\e02c";
+}
+.icon-sale:before {
+    content: "\e02d";
+}
+.icon-shopping-cart:before {
+    content: "\f07a";
+}
+.icon-basket:before {
+    content: "\e02e";
+}
+.icon-upload:before {
+    content: "\e02f";
+}
+.icon-download:before {
+    content: "\e030";
+}
+.icon-cloud:before {
+    content: "\e031";
+}
+.icon-help:before {
+    content: "\e032";
+}
+.icon-question:before {
+    content: "\e033";
+}
+.icon-plus:before {
+    content: "\e034";
+}
+.icon-users:before {
+    content: "\e035";
+}
+.icon-users-2:before {
+    content: "\e036";
+}
+.icon-user:before {
+    content: "\e037";
+}
+.icon-user-2:before {
+    content: "\e038";
+}
+.icon-office-3:before {
+    content: "\e039";
+}
+.icon-clipboard:before {
+    content: "\e03a";
+}
+.icon-add-to-list:before {
+    content: "\e03b";
+}
+.icon-megaphone:before {
+    content: "\e03c";
+}
+.icon-profile:before {
+    content: "\e03d";
+}
+.icon-address-book:before {
+    content: "\e03e";
+}
+.icon-address-book-2:before {
+    content: "\e03f";
+}
+.icon-printer:before {
+    content: "\e040";
+}
+.icon-clipboard-2:before {
+    content: "\e041";
+}

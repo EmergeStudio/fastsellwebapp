@@ -1,0 +1,143 @@
+/**
+ * customers.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+	Shifter Pane
+	Sunbox
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.middle .shifterPane_3 .listContain, .middle .shifterPane_4 .listContain {
+    padding: 0px;
+}
+
+
+
+/* SHIFTER PANE
+--------------------------------------------------------------------------------------- */
+.shifterPane_2 div.uploader input {
+    width:190px;
+    margin-bottom:0px;
+}
+.shifterPane_2 div.uploader input:hover {
+    cursor: pointer;
+}
+.shifterPane_3 .checkDataContainer {
+    display:none;
+}
+.shifterPane_3 .loader, .shifterPane_4 .loader {
+    width: 100%;
+    margin: 21px 0px;
+    padding-top: 35px;
+    text-align: center;
+    font-size: 16px;
+    background-image: url(../../images/universal/ajax_loader10.gif);
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+.shifterPane_3 .coolTable.customers, .shifterPane_4 .coolTable.customers {
+    display: block;
+    width: 1120px;
+    overflow: auto;
+}
+.shifterPane_3 .coolTable.customers td .cross, .shifterPane_3 .coolTable.customers td .tick, .shifterPane_4 .coolTable.customers td .cross, .shifterPane_4 .coolTable.customers td .tick {
+    display:block;
+    width:15px;
+    height:15px;
+    background-repeat: no-repeat;
+    text-indent: -1000px;
+    overflow: hidden;
+}
+.shifterPane .btnRemoveError .btnIcon {
+    display: block;
+    float:left;
+    width:15px;
+    height:15px;
+    margin: 2px 5px 0px -4px;
+    background-image: url(../../images/icons/small_cross_3.png);
+}
+.checkDataContainer .shifterPane_3 .coolTable.customers td:hover {
+    cursor: pointer;
+}
+.shifterPane_3 .coolTable.customers td.editingField {
+    background-color: #fffdd9;
+}
+.shifterPane_3 .coolTable.customers td .cross, .shifterPane_4 .coolTable.customers td .cross {
+    background-image: url(../../images/icons/small_cross_3.png);
+}
+.shifterPane_3 .coolTable.customers td .tick, .shifterPane_4 .coolTable.customers td .tick {
+    background-image: url(../../images/icons/small_tick_2.png);
+}
+.shifterPane_3 .coolTable.customers td input, .shifterPane_4 .coolTable.customers td input {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    background: none;
+    font-size: 13px;
+    line-height: normal;
+    font-family: 'Helvetica Neue', Helvetica, Arial;
+    color: #585858;
+}
+.shifterPane_3 .coolTable.customers td.errorWidth, .shifterPane_3 .coolTable.customers td.errorWidth div, .shifterPane_4 .coolTable.customers td.errorWidth, .shifterPane_4 .coolTable.customers td.errorWidth div {
+    max-width: 170px;
+}
+.shifterPane_3 .coolTable.customers td.errorWidth div, .shifterPane_4 .coolTable.customers td.errorWidth div {
+    display: block;
+    width: 170px;
+    white-space: normal;
+}
+.shifterPane_4 .loader {
+    margin: 46px 0px 21px 0px;
+}
+
+
+
+/* SUNBOX
+--------------------------------------------------------------------------------------- */
+.sunBox.popAddCustomer table {
+    width: 100%;
+}
+.sunBox.popAddCustomer table th, .sunBox.popAddCustomer table td {
+    padding: 3px 5px;
+    vertical-align: middle;
+}
+.sunBox.popAddCustomer table td input {
+    font-size: 13px;
+}
+.sunBox.popAddCustomer .contentCenter .popup .inset input {
+    margin-bottom: 15px;
+}
+.sunBox .scrapButton.blueButton.btnAddCustomerNow {
+    padding: 5px 16px;
+    margin: 0px;
+    margin-bottom: 15px;
+}
+.sunBox.popAddCustomer table .topLine td {
+    padding: 13px 5px 12px 5px;
+    border-top: 1px solid #f8f8f8;
+}
+.sunBox.popAddCustomer table td .loader, .sunBox.popAddCustomer table td .tick, .sunBox.popAddCustomer table td .cross {
+    display: block;
+    width: 30px;
+    height: 30px;
+    margin-left: 15px;
+    background-image: url(../../images/universal/ajax_loader11.gif);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.sunBox.popAddCustomer table td .tick {
+    background-image: url(../../images/icons/scrap_note_tick.png);
+}
+.sunBox.popAddCustomer table td .cross {
+    background-image: url(../../images/icons/scrap_note_cross.png);
+}

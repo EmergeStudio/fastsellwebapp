@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+
+	<application>
+		<app_version>UV Light</app_version>
+		<site_name>Fast Sell</site_name>
+		<js_framework>jquery_v1.7.2.js</js_framework>
+		<app_address>http://localhost/21_Compass_3</app_address>
+		<scrap_web_address>http://localhost:18080/compass/ws/</scrap_web_address>
+		<current_conn>local</current_conn>
+		<accounts_root>/Applications/MAMP/htdocs/21_Compass_3/scrap_accounts</accounts_root>
+		<documents_root>/Applications/MAMP/htdocs/21_Compass_3/scrap_documents</documents_root>
+		<people_root>/Applications/MAMP/htdocs/21_Compass_3/scrap_people</people_root>
+		<java_root>/Applications/MAMP/htdocs/21_Compass_3/scrap_java</java_root>
+		<support_email>support@emergestudio.net</support_email>
+	</application>
+	
+	<local_conn>
+		<database_name>compass</database_name>
+		<database_path>localhost</database_path>
+		<database_username>root</database_username>
+		<database_password>root</database_password>
+	</local_conn>
+	
+	<production_conn>
+		<database_name></database_name>
+		<database_path></database_path>
+		<database_username></database_username>
+		<database_password></database_password>
+	</production_conn>
+	
+</settings>

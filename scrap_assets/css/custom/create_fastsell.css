@@ -1,0 +1,143 @@
+/**
+ * create_show_event.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.pageFastSells .shifterPane .showDescription.floatLeft input, .pageFastSells .shifterPane .showDescription.floatLeft textarea {
+    width: 480px;
+}
+.pageFastSells .shifterPane .showDescription.floatLeft textarea {
+    height: 186px;
+}
+.pageFastSells .uploadBanner .uploaderContainer {
+    margin: 0px auto;
+    width: 185px;
+    padding: 0px 15px;
+}
+.pageFastSells .showBanner .uploadBannerMessage img {
+    display: block;
+    width: 700px;
+    margin: 0px auto;
+}
+.pageFastSells .showBanner .uploadBannerMessage .loader {
+    display: none;
+    width: 32px;
+    height: 200px;
+    margin: 0px auto;
+    background-image: url('../../images/universal/ajax_loader_inset.gif');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.shifterPane_1 .uploaderContainer div.uploader input {
+    width:190px;
+    margin-bottom:0px;
+}
+.shifterPane_1 div.selector {
+    float: left;
+    width: 73px;
+    margin-right: 10px;
+    margin-left: -3px;
+}
+.shifterPane_1 div.selector select {
+    width: 85px;
+}
+.shifterPane_1 div.selector span {
+    width: 50px;
+}
+.shifterPane_1 .timeLabel label {
+    margin-top: 5px;
+}
+.shifterPane_1 .inset.showDescription, .shifterPane_1 .inset.showCloseDate {
+    padding: 25px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+.shifterPane_1 .inset.showDescription {
+    width: 490px;
+}
+.shifterPane_1 .time {
+    margin-top: -10px;
+}
+.shifterPane_1 .messageDateAndTime {
+    position: absolute;
+    display: block;
+    width: 587px;
+    height: 95px;
+    margin: 320px 0px 0px 294px;
+    text-indent: -1000px;
+    background-image: url('../../images/universal/message_date_and_time.png');
+    overflow: hidden;
+}
+.shifterPane_1 .messageCloseDate {
+    position: absolute;
+    display: block;
+    width: 745px;
+    height: 62px;
+    margin: 40px 0px 0px 325px;
+    text-indent: -1000px;
+    background-image: url('../../images/universal/message_close_date.png');
+    overflow: hidden;
+}
+.shifterPane_1 .inset.showDescription.floatRight {
+    background-image: url(../../images/messages/date_stuff.png);
+    background-repeat: no-repeat;
+    background-position: 250px 108px;
+}
+.shifterPane_2 .chosenUsers, .shifterPane_2 .userList {
+    padding: 25px;
+    width: 490px;
+}
+.shifterPane_2 .chosenUsers table .evenRow, .shifterPane_2 .userList table .evenRow, .shifterPane_2 .userList table tr {
+    background-color: #fff;
+}
+.middle .shifterPane_2 .scrapButton.blueButton {
+    padding: 8px 14px;
+    background-color: #71a5fb;
+}
+.pageFastSells .shifterPane_2 .uploaderContainer {
+    margin: 0px auto;
+    width: 185px;
+    margin-top: 230px;
+}
+.pageFastSells .shifterPane_2 .uploaderContainer .uploader {
+    background-color: #fff;
+}
+.middle .shifterPane_3 .inpSearchProducts {
+    width: 360px;
+    margin-right: 10px;
+}
+.middle .shifterPane_3 .scrapButton {
+    padding: 8px 14px;
+}
+.middle .shifterPane_3 .scrapButton.blueButton {
+    background-color: #71a5fb;
+}
+.middle .shifterPane_3 .inpUnits {
+    width: 50px;
+    margin: 0px;
+}
+.middle .shifterPane_3 .inpPrice {
+    width: 80px;
+    margin: 0px;
+}
+.middle .shifterPane_3 .scrapButton.btnAddProduct {
+    padding: 4px 12px;
+}
+.middle .shifterPane_3 .productsMasterFileUpload {
+    padding-top: 2px;
+}
+.middle .shifterPane_3 .productsMasterFileUpload h3 {
+    padding: 8px 0px 0px 0px;
+}

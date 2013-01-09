@@ -1,0 +1,35 @@
+/**
+ * Cascade CSS Framework designed to make life easier
+ * reset.css
+ * 
+ * @package cascade css
+ * @author Michelle Britton & Chris Cook
+ * @version 1.0
+ * @copyright Michelle Britton & Chris Cook 2008
+ */
+
+html, body, div, span, applet, object, h1, h2, h3, h4, h5, h6, iframe, blockquote, pre, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dd, dl, dt, fieldset, form, label, input, legend, table, caption, tbody, tfoot, thead, tr, th, td, p, ul, li {
+	border:0;
+	margin:0;
+	outline:0;
+	padding:0;	
+	text-align:left;
+}
+
+td {
+	vertical-align:top;
+}
+
+body, ul, ol, dl, td, th, caption, pre, p, blockquote, input, textarea {
+	line-height:normal;	
+}
+
+table {border-collapse:collapse; border-spacing:0;}
+q:before, q:after, blockquote:before, blockquote:after {content:"";}
+
+ul {list-style-position:outside; list-style-type:disc;}
+ol {list-style-position:outside; list-style-type:decimal;}
+
+a{color:#0a5f82;}
+a:hover{color:#1b8cbb;}
+u{color:#5e7930;}

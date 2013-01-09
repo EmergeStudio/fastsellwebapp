@@ -1,0 +1,208 @@
+/*--------------------- VIEWER --------------------*/
+.viewerBack {
+	position:fixed;
+	display:block;
+	background-image:url(../../images/universal/texture_back_2.jpg);
+	overflow:hidden;
+	z-index:1000;
+}
+.imageContainer {
+	position:absolute; 
+	top:74px; 
+	left:25px;
+	z-index:1001;
+}
+.imageContainer .imgDisplay {
+	left:25px;
+	border:1px solid #BFBFBF;
+}
+
+/* Viewer menu */
+.viewerMenu {
+	position:absolute;
+	height:50px;
+	padding:2px 0px;
+	background-image:url(../../images/navigation/texture_back_2.jpg);
+	border-bottom:1px solid #222;
+	z-index:1003;
+}
+.viewerMenu * {
+	color:#FFFFFF;
+	font-size:14px;
+	text-shadow:#111 1px 1px 0px;
+}
+.viewerMenu .divider {
+	display:block;
+	float:right;
+	width:1px;
+	height:50px;
+	background-color:#000;
+	border-right:1px solid #444;
+}
+.viewerMenu .viewerClose, .viewerMenu .viewerInfo, .viewerMenu .viewerNext, .viewerMenu .viewerPrev, .viewerMenu .btnMinus, .viewerMenu .btnPlus, .viewerMenu .viewerDownload, .viewerMenu .viewerRotateRight, .viewerMenu .viewerRotateLeft {
+	float:right;
+	width:29px;
+	height:28px;
+	margin:11px 8px;
+	text-indent:-1000px;
+	overflow:hidden;
+	background-position:top;
+}
+.viewerMenu .viewerClose {
+	background:url(../../images/telescope/btn_close.png);
+}
+.viewerMenu .viewerInfo {
+	background:url(../../images/telescope/btn_info.png);
+}
+.viewerMenu .viewerDownload {
+	margin-right:0px;
+	background:url(../../images/telescope/btn_download.png);
+}
+.viewerMenu .viewerNext {
+	margin:11px 3px;
+	background:url(../../images/telescope/btn_next.png);
+}
+.viewerMenu .viewerPrev {
+	margin:11px 3px;
+	background:url(../../images/telescope/btn_prev.png);
+}
+.viewerMenu .viewerRotateRight {
+	margin:11px 6px 11px 3px;
+	background:url(../../images/telescope/btn_rotate_right.png);
+}
+.viewerMenu .viewerRotateLeft {
+	margin:11px 3px 11px 6px;;
+	background:url(../../images/telescope/btn_rotate_left.png);
+}
+.viewerMenu .viewerPageCount {
+	float:right;
+	font-size:14px;
+	margin:17px 8px 0px 8px;
+	text-shadow:black 1px 1px 0px;
+}
+.viewerMenu .viewerClose:hover, .viewerMenu .viewerInfo:hover, .viewerMenu .viewerNext:hover, .viewerMenu .viewerPrev:hover, .viewerMenu .btnMinus:hover, .viewerMenu .btnPlus:hover, .viewerMenu .viewerDownload:hover, .viewerMenu .viewerRotateRight:hover, .viewerMenu .viewerRotateLeft:hover {
+	color:#39a5e1; 
+	background-position:bottom;
+	cursor:pointer;
+}
+.viewerMenu .controlBackBlack {
+	float:right;
+}
+.viewerMenu .btnMinus {
+	margin:11px 12px;
+	background:url(../../images/telescope/btn_minus.png);
+}
+.viewerMenu .btnPlus {
+	margin:11px 12px;
+	background:url(../../images/telescope/btn_plus.png);
+}
+.viewerMenu .zoomSlider {
+	/*float:right;*/
+	margin-top:4px;
+}
+.viewerMenu .documentHeading {
+	float:left;
+	margin:17px 15px 0px 25px;
+	font-size:14px;
+}
+
+/* Viewer content */
+.imageContainer:hover {
+	cursor:move;
+}
+
+/* Viewer information */
+.infoContainer {
+	position:absolute;
+	height:100px;
+	width:300px;
+	margin-top:47px;
+	right:0px;
+	background-image:url(../../images/universal/texture_back_2.jpg);
+	/*-webkit-box-shadow:0px 2px 10px #6b6b6b;
+	-moz-box-shadow:0px 2px 10px #6b6b6b;*/
+	border-left:solid 1px #bfbfbf;
+	z-index:1002;
+}
+.infoContainer .indexingContainer, .infoContainer .thumbsContainer {
+	display:block;
+	height:46%;
+	border-left:solid 1px #ffffff;
+	overflow:auto;
+}
+.infoContainer .indexingContainer {
+	height:40%;
+}
+.infoContainer .thumbsContainer {
+	height:52%;
+}
+.infoContainer .indexingContainer .indexingInner, .infoContainer .thumbsContainer .thumbsInner {
+	display:block;
+	padding:0px 30px;
+}
+.infoContainer .indexingContainer .indexingInner input {
+	width:97%;
+	font-size:13px;
+	margin-bottom:15px;
+}
+.infoContainer .thumbsContainer .thumbsInner img {
+	display:block;
+	width:239px;
+	margin-bottom:25px;
+	border:2px solid #ffffff;
+	-webkit-box-shadow:0px 2px 5px #7a7a7a;
+	-moz-box-shadow:0px 2px 5px #7a7a7a;
+}
+.infoContainer .thumbsContainer .thumbsInner img:hover { 
+	cursor:pointer;
+	border:2px solid #39a5e1;
+}
+.infoContainer .thumbsContainer .thumbsInner img.active {
+	border:2px solid #39a5e1;
+}
+.infoContainer .dividerContainer {
+	display:table;
+	height:6%;
+	border-left:solid 1px #ffffff;
+}
+.infoContainer .dividerContainer .dividerOuter {
+	display:table-cell;
+	vertical-align:middle;
+}
+.infoContainer .dividerContainer .divider {
+	display:block;
+	height:1px;
+	width:299px;
+	margin:0px 0px;
+	border-bottom:solid 1px #ffffff;
+	background-color:#bfbfbf;
+}
+
+
+/*--------------------- UI --------------------*/
+
+/* Component containers
+----------------------------------*/
+/*.ui-widget { font-family: Segoe UI, Arial, sans-serif; font-size: 1.1em; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Segoe UI, Arial, sans-serif; font-size: 1em; }
+.ui-widget-content { border: none; background: #ffffff; color: #ffffff; }
+.ui-widget-content a { color: #ffffff; }
+.ui-widget-header { display: block; border: 1px solid #272727; background: #333333 url(../../images/ui/title_back.jpg) 50% 50% repeat-x; color: #ffffff; font-weight: bold; height: 35px; }
+.ui-widget-header a { color: #ffffff; }*/
+
+/* Slider
+----------------------------------*/
+.ui-slider { position: relative; text-align: left; }
+.ui-slider .ui-slider-handle { position: absolute; z-index: 2; width: 28px; height: 28px; cursor: default; background:url(../../images/ui/ui-slider-handle.png); border:none; }
+.ui-slider .ui-slider-range { position: absolute; z-index: 1; font-size: .7em; display: block; border: 0; }
+.ui-slider-horizontal { height: .8em; }
+.ui-slider-horizontal .ui-slider-handle { margin-left:-10px; margin-top:8px; }
+.ui-slider-horizontal .ui-slider-range { top: 0; height: 100%; }
+.ui-slider-horizontal .ui-slider-range-min { left: 0; }
+.ui-slider-horizontal .ui-slider-range-max { right: 0; }
+.ui-slider-horizontal { width:200px; background:url(../../images/ui/ui-slider-back_h.png); height:44px; border:none; }
+.ui-slider-vertical .ui-slider-handle { left:7px; margin-left:1px; margin-bottom: -15px; }
+.ui-slider-vertical .ui-slider-handle:hover { cursor:n-resize; }
+.ui-slider-vertical .ui-slider-range { left: 0; width: 0px; }
+.ui-slider-vertical .ui-slider-range-min { bottom: 0; }
+.ui-slider-vertical .ui-slider-range-max { top: 0; }

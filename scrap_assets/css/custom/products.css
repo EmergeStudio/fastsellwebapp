@@ -1,0 +1,44 @@
+/**
+ * customers.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+	Sunbox
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+
+
+
+/* SUNBOX
+--------------------------------------------------------------------------------------- */
+.sunBox .contentCenter .popup .inset input.inpDefinitionName {
+    margin-bottom: 0px;
+}
+.sunBox .contentCenter .popup .inset .definitionFieldContainer.deleteable input {
+    width: 300px;
+}
+.sunBox .inset .btnDeleteDefinitionField {
+    display: block;
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 28px 4px 0px 6px;
+    text-indent: -1000px;
+    background-image: url(../../images/icons/cross_grey.png);
+    background-position: top;
+    overflow: hidden;
+}
+.sunBox .inset .btnDeleteDefinitionField:hover {
+    cursor: pointer;
+    background-position: bottom;
+}

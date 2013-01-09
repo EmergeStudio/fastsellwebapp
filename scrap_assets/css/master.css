@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+
+/**
+ * Cascade CSS Framework designed to make life easier
+ * master.css
+ * 
+ * @package cascade css
+ * @author Michelle Britton & Chris Cook
+ * @version 1.0
+ * @copyright Michelle Britton & Chris Cook 2008
+ */
+
+/**
+ * This file is a browser reset and attempts to unify the display of all web browsers
+ */
+ 
+@import "library/reset.css";
+
+/**
+ * These are the files that you edit to customise your website
+ */
+ 
+@import "custom/global_preset.css";
+@import "custom/generic.css";

@@ -1,0 +1,55 @@
+/**
+ * login.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.pageSignup .middle h2 {
+	display:block;
+	text-align:center;
+	margin-top:42px;
+}
+.pageSignup .middle .signupContain {
+	width:330px;
+	margin:0px auto;
+	margin-top:40px;
+}
+.pageSignup .middle .signupContain input, .pageSignup .middle .signupContain textarea {
+	margin-bottom:15px;
+	font-size:14px;
+	font-weight:300;
+	line-height:20px;
+}
+.pageSignup .middle .signupContain textarea {
+	height:85px;
+}
+.pageSignup .middle .loginLink {
+	display:block;
+	width:90px;
+	text-align:center;
+	margin:0px auto;
+	margin-top:45px;
+	color:#999;
+}
+.pageSignup .middle .loginLink:hover {
+	color:#39a5e1;
+}
+.pageSignup .middle p {
+	color:#737373;
+	text-shadow:#F1F1F1 1px 1px 0px;
+	padding:0px 4px 4px 4px;
+}
+.pageSignup .middle .btnSignUp {
+	margin-left:120px;
+}

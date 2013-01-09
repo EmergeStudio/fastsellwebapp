@@ -1,0 +1,18 @@
+/**
+ * Cascade CSS Framework designed to make life easier
+ * ie7.css
+ * 
+ * @package cascade css
+ * @author Michelle Britton & Chris Cook
+ * @version 1.0
+ * @copyright Michelle Britton & Chris Cook 2008
+ */
+
+/** 
+ * Do not delete this import statement
+ */
+@import "../library/ie_reset.css";
+
+/** 
+ * Insert IE7 specific CSS here
+ */
