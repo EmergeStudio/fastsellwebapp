@@ -97,7 +97,8 @@
     position: absolute;
     font-size: 22px;
     margin-left: -33px;
-    margin-top: -1px;
+    margin-top: -2px;
+    text-shadow: none;
 }
 #header #topBar .mainNav li div.mainNavLink.mainNavSettings {
 	background-image:url(../../images/navigation/top_link_settings.png);

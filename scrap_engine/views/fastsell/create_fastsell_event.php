@@ -131,23 +131,6 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo close_div();
 
-			echo form_label('Close Date:');
-			$inp_data		= array
-			(
-				'name'		=> 'inpCloseDate',
-				'class'		=> 'inpCloseDate scrap_date'
-			);
-			echo form_input($inp_data);
-			echo clear_float();
-
-			echo open_div('time');
-
-				echo $this->scrap_string->hours_select('closeHoursSelect');
-				echo $this->scrap_string->minutes_select('closeMinutesSelect');
-				echo clear_float();
-
-			echo close_div();
-
 		echo close_div();
 
 		echo open_div('showDescription inset floatLeft');
@@ -174,6 +157,10 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 		// Clear float
 		echo clear_float();
+
+		// Some hidden data
+		echo hidden_div('no_id', 'hdEventId');
+		echo hidden_div('no_banner', 'hdBannerImagePath');
 
 	echo close_div();
 

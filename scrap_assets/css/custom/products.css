@@ -16,6 +16,116 @@
 
 /* GENERAL
 --------------------------------------------------------------------------------------- */
+.pageProductDefinitions .listContain a span {
+    display: block;
+    float: left;
+    width: 20px;
+    padding-right: 5px;
+    font-size: 18px;
+    color: #217fb3;
+}
+.pageProducts .rightContent .nothingSelected {
+    display: block;
+    height: 143px;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    text-indent: -1000px;
+    overflow: hidden;
+    background-image: url(../../images/universal/message_select_product_left.png);
+    background-position: top;
+    background-repeat: no-repeat;
+}
+.pageProducts .messageAddAProduct {
+    display: block;
+    width: 840px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/add_a_product.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.pageProducts .messageAddAProduct:hover {
+    cursor: pointer;
+}
+.pageProducts .messageAddAProduct:active {
+    margin-bottom: 0px;
+    margin-top: 1px;
+}
+
+.itemContainer {
+    display: block;
+    width: 840px;
+    margin-bottom: 10px;
+    border: 1px solid #f3f3f3;
+    -webkit-box-shadow: 0px 1px 1px #c8c8c8;
+    -moz-box-shadow: 0px 1px 1px #c8c8c8;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    background: -webkit-linear-gradient(#f8f8f8, #ebebeb);
+    background: -moz-linear-gradient(#f8f8f8, #ebebeb);
+}
+.itemContainer:hover {
+    cursor: pointer;
+    border: 1px solid #fafafa;
+    border-top: 1px solid #f3f3f3;
+    background: -webkit-linear-gradient(#fafafa, #fafafa);
+    background: -moz-linear-gradient(#fafafa, #fafafa);
+}
+.itemContainer table {
+    margin: 10px 12px;
+}
+.itemContainer table td {
+    padding: 0px 10px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.itemContainer table td.fullCell {
+    width: 100%;
+    white-space: normal;
+    text-align: left;
+}
+.itemContainer table td .itemName {
+    color: #000;
+    font-size: 14px;
+    width: 180px;
+    overflow: hidden;
+}
+.itemContainer table td .itemNumber {
+    font-size: 12px;
+    font-weight: 300;
+}
+.itemContainer table td.itemDescription, .itemContainer table td .vendorName {
+    font-size: 12px;
+    color: #555555;
+    font-weight: 300;
+}
+.itemContainer table td .vendorName {
+    width: 100px;
+}
+.itemContainer table td .itemInformation {
+    display: none;
+}
+.itemInformation .itemName {
+    color: #000;
+    font-size: 16px;
+}
+.itemInformation .itemVendor, .itemInformation .itemNumber {
+    font-size: 12px;
+    font-weight: 300;
+}
+.itemInformation .itemDescription {
+    color: #555555;
+    font-weight: 300;
+    margin-top: 10px;
+}
+.itemInformation .itemImage {
+    margin-top: 20px;
+}
 
 
 
@@ -41,4 +151,64 @@
 .sunBox .inset .btnDeleteDefinitionField:hover {
     cursor: pointer;
     background-position: bottom;
+}
+.sunBox .contentCenter .popup div.popupIcon {
+    font-size: 70px;
+}
+.sunBox .contentCenter .popup .includedFields span {
+    color: #406eb8;
+    margin-right: 10px;
+}
+/* Add product */
+.sunBox.popAddProduct .contentCenter .popup .leftColumn {
+    width: 340px;
+}
+.sunBox.popAddProduct .contentCenter .popup .leftColumn .icon {
+    float: left;
+    margin-right: 8px;
+    margin-top: -3px;
+    font-size: 20px;
+}
+.sunBox.popAddProduct .definitionSelection {
+    margin: 0px 3px 1px 3px;
+    padding: 13px 10px 10px 10px;
+    background-color: #f2f2f2;
+}
+.sunBox.popAddProduct .definitionSelection:hover {
+    cursor: pointer;
+    background-color: #fff;
+}
+.sunBox.popAddProduct .definitionSelection.active {
+    margin: 0px 0px 1px 0px;
+    padding: 16px 15px 13px 15px;
+    background-color: #fff;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+}
+.sunBox.popAddProduct .definitionSelection .icon-clipboard {
+    color: #989898;
+}
+.sunBox.popAddProduct .definitionSelection .icon-checkmark-2 {
+    color: #25aae1;
+}
+.sunBox.popAddProduct .definitionSelection .icon-checkmark-2, .sunBox.popAddProduct .definitionSelection.active .icon-clipboard {
+    display: none;
+}
+.sunBox.popAddProduct .definitionSelection.active .icon-checkmark-2, .sunBox.popAddProduct .definitionSelection .icon-clipboard {
+    display: block;
+}
+.sunBox.popAddProduct .inpProductDescription {
+    height: 68px;
+}
+.sunBox.popAddProduct .includedFields .fieldContainer {
+    float: left;
+    width: 170px;
+    margin-top: 8px;
+}
+.sunBox.popAddProduct .includedFields input {
+    width: 115px;
+}
+.sunBox.popAddProduct .includedFields .ui-datepicker-trigger {
+    margin-left: 5px;
 }

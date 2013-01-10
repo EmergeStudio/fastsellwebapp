@@ -20,12 +20,17 @@ class Products extends CI_Controller
 	{
 		// ----- APPLICATION PROFILER --------------------------------
 		$this->output->enable_profiler(FALSE);
+
+		// ----- SOME VARIABLES -----------------------------
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
 		
 		
 		// ----- HEADER ------------------------------------		
 		// Some variables
 		$dt_header['title'] 	        = 'My Products';
 		$dt_header['crt_page']	        = 'pageProducts';
+		$dt_header['extra_css']         = array('products');
+		$dt_header['extra_js']          = array('products');
 		
 		// Load header
 		$this->load->view('universal/header', $dt_header);
@@ -35,6 +40,14 @@ class Products extends CI_Controller
 		// Navigation view
 		$dt_nav['app_page']		        = 'pageProducts';
 		$this->load->view('universal/navigation', $dt_nav);
+
+		// Get the products
+		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
+		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+		$dt_body['products']            = $call_products;
+
+		// Load the view
+		$this->load->view('products/main_products_page', $dt_body);
 		
 		
 		// ----- FOOTER ------------------------------------
@@ -53,10 +66,14 @@ class Products extends CI_Controller
 		$this->output->enable_profiler(FALSE);
 
 
+		// ----- SOME VARIABLES ------------------------------
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
+
+
 		// ----- HEADER ------------------------------------
 		// Some variables
 		$dt_header['title'] 	        = 'Product Definitions';
-		$dt_header['crt_page']	        = 'pageProducts';
+		$dt_header['crt_page']	        = 'pageProductDefinitions';
 		$dt_header['extra_js']          = array('product_definitions');
 		$dt_header['extra_css']         = array('products');
 
@@ -69,8 +86,13 @@ class Products extends CI_Controller
 		$dt_nav['app_page']		        = 'pageProducts';
 		$this->load->view('universal/navigation', $dt_nav);
 
+		// Get the definitions
+		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+		$dt_body['definitions']         = $call_definitions;
+
 		// Load view
-		$this->load->view('products/main_definitions_page');
+		$this->load->view('products/main_definitions_page', $dt_body);
 
 
 		// ----- FOOTER ------------------------------------

@@ -194,7 +194,7 @@ if($crt_page != 'pageLogin')
 							
 							echo close_div();
 						
-							echo full_div('<span class="icon-megaphone"></span>Notifications', 'mainNavLink mainNavNotifications');
+							echo full_div('<span class="icon-signal"></span>Notifications', 'mainNavLink mainNavNotifications');
 							
 							// Sub navigation
 							echo open_div('subNav subNavNotifications');

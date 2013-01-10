@@ -322,6 +322,20 @@ Created By: Chris Humboldt (www.chrismodem.com)
 			}
 		});
 	};
+
+
+    // ---------- SUNBOX CHANGE POPUP WIDTH
+    $.fn.sunBox.popup_change_width = function($class, $width)
+    {
+        $window_w	= $(window).width();
+
+        $('.' + $class + ' .contentCenter').width($width);
+        $('.' + $class + ' .titleTopCenter').width($width);
+        $('.' + $class + ' .botBlock').css({ paddingLeft : (($width / 2) - 55) });
+
+        $('.' + $class).hide();
+        $('.' + $class).css({ left: (($window_w - ($width + 8)) / 2) });
+    };
 	
 	
 	// ---------- CLOSE POPUP

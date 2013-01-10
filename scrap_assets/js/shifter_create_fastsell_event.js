@@ -7,6 +7,10 @@ $(document).ready(function(){
 	var $scroll_pos			= 0;
 	var $offset 			= $('.shifter').offset();
 
+    // ---------- AJAX PATHS
+    var $base_path				= $('#hdPath').val();
+    var $ajax_base_path 		= $base_path + 'ajax_handler_fastsells/';
+
 
 // ------------------------------------------------------------------------------EXECUTE
 	
@@ -60,39 +64,123 @@ $(document).ready(function(){
 	{
 		// Next pane
 		$('.shifterNav .btnShifterNext').live('click', function()
-		{		
-			// Some variables
-			$this					= $(this);
+		{
+            // Some variables
+            $this					= $(this);
             $pane_position		    = jQuery.trim($('.hdPanePosition').text());
-			
-			// Check that you cant go further
-			if($pane_position != $cnt_shifters)
-			{
-				// Increase the pane position
+
+            // Check that you cant go further
+            if($pane_position != $cnt_shifters)
+            {
+                // Increase the pane position
                 $pane_position++;
                 $('.hdPanePosition').text($pane_position);
-				
-				// Get the scroll position
-				$scroll_pos			= $('body').scrollTop();
-				
-				// Scroll pane
-				$fc_fix_position();
-				
-				// Modify button DOMs
-				$('.shifterNav .btnShifterBack').parent().show();
-				
-				if($pane_position == $cnt_shifters)
-				{
-					// Hide next button
-					$this.parent().hide();
-					
-					// Show the complete button
-					$('.shifterNav .btnComplete').parent().show();
-				}
-				
-				// Shifter the indicator
-				$fc_shift_indicator();
-			}
+
+                // Get the scroll position
+                $scroll_pos			= $('body').scrollTop();
+
+                // Create / Update the event
+                if($pane_position == 2)
+                {
+                    // Some variables
+                    $error                      = false;
+                    $fastsell_name              = $('input[name="inpShowName"]').val();
+                    $fastsell_description       = $('textarea [name="inpShowDescription"]').val();
+                    $start_date                 = $('input[name="inpStartDate"]').val();
+                    $start_time                 = $('select[name="startHoursSelect"]').val() + $('select[name="startMinutesSelect"]') + '00';
+                    $end_date                   = $('input[name="inpEndDate"]').val();
+                    $end_time                   = $('select[name="endHoursSelect"]').val() + $('select[name="endMinutesSelect"]') + '00';
+                    $event_id                   = $('.hdEventId').text();
+                    $event_banner               = $('.hdBannerImagePath').text();
+
+                    if($error == false)
+                    {
+                        if($fastsell_name.length < 1)
+                        {
+                            $error			= true;
+                            $.scrap_note_time('Please provide a title for your FastSell event', 4000, 'cross');
+                            $('input[name="inpShowName"]').addClass('redBorder');
+                        }
+                    }
+                    if($error == false)
+                    {
+                        if($.scrap_check_date($start_date) == false)
+                        {
+                            $error			= true;
+                            $.scrap_note_time('You need a start date for your FastSell', 4000, 'cross');
+                            $('input[name="inpStartDate"]').addClass('redBorder');
+                        }
+                    }
+                    if($error == false)
+                    {
+                        if($.scrap_check_date($end_date) == false)
+                        {
+                            $error			= true;
+                            $.scrap_note_time('You need an end date for your FastSell', 4000, 'cross');
+                            $('input[name="inpEndDate"]').addClass('redBorder');
+                        }
+                    }
+
+                    if($error == false)
+                    {
+                        $fastsell_path              = 'create_fastsell'
+                        if($event_id != 'no_id')
+                        {
+                            $fastsell_path          = 'update_fastsell'
+                        }
+                        $.post($ajax_base_path + $fastsell_path,
+                        {
+                            fastsell_name	        : $fastsell_name,
+                            fastsell_description	: $fastsell_description,
+                            start_date		        : $start_date,
+                            start_time			    : $start_time,
+                            end_date			    : $end_date,
+                            end_time			    : $end_time,
+                            event_id			    : $event_id,
+                            event_banner	        : $event_banner
+                        },
+                        function($data)
+                        {
+                            $data	= jQuery.trim($data);
+                            console.log($data);
+
+                            if($data == '9876')
+                            {
+                                $.scrap_logout();
+                            }
+                            else
+                            {
+                            }
+                        });
+                    }
+                    else
+                    {
+                        // Edit the DOM
+                        $('.hdPanePosition').text(1);
+                        $pane_position          = 1;
+                        $('.shifterNav').show();
+                    }
+                }
+
+                // Edit the variables
+                if($pane_position == $cnt_shifters)
+                {
+                    // Hide next button
+                    $this.parent().hide();
+
+                    // Show the complete button
+                    $('.shifterNav .btnComplete').parent().show();
+                }
+
+                // Shifter the indicator
+                $fc_shift_indicator();
+
+                // Scroll pane
+                $fc_fix_position();
+
+                // Modify button DOMs
+                $('.shifterNav .btnShifterBack').parent().show();
+            }
 		});
 		
 		// Previous pane

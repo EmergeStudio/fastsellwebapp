@@ -39,7 +39,7 @@ echo open_div('appNavigationContainer middle');
 
 					echo '<li>';
 
-						echo anchor('fastsells', 'View FastSells', 'class="sectionNavSubLink"');
+						echo anchor('fastsells', 'Your FastSells', 'class="sectionNavSubLink"');
 
 					echo '</li>';
 
@@ -70,7 +70,7 @@ echo open_div('appNavigationContainer middle');
 
 					echo '<li>';
 
-						echo anchor('products', 'Products Catalogue', 'class="sectionNavSubLink"');
+						echo anchor('products', 'Your Products', 'class="sectionNavSubLink"');
 
 					echo '</li>';
 
@@ -121,7 +121,7 @@ echo open_div('appNavigationContainer middle');
 
 					echo '<li>';
 
-						echo anchor('customers', 'Customers List', 'class="sectionNavSubLink"');
+						echo anchor('customers', 'Your Customers', 'class="sectionNavSubLink"');
 
 					echo '</li>';
 
