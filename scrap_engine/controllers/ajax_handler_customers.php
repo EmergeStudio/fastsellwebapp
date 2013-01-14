@@ -163,7 +163,6 @@ class Ajax_handler_customers extends CI_Controller
 
 				// Recode
 				$new_json				= json_encode($json_sample);
-				//echo $new_json;
 
 				// Submit the new customer
 				$new_customer			= $this->scrap_web->webserv_call('customers/.json', $new_json, 'put');

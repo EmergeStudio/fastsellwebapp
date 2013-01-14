@@ -17,6 +17,10 @@ $(document).ready(function(){
 	$fc_set_shifter();
 	
 	$fc_shifter_navigation();
+
+    $fc_customer_links();
+
+    $fc_add_product();
 	
 	$('.scrap_date').datepicker(
 	{
@@ -31,6 +35,112 @@ $(document).ready(function(){
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- ADD PRODUCT
+    function $fc_add_product()
+    {
+        $('.btnAddProduct').live('click', function()
+        {
+            // Some variables
+            $parent				    = '';
+            $error                  = false;
+            $this                   = $(this);
+            $parent				    = $this.parents('tr');
+            $product_id             = $parent.find('.hdProductId').text();
+            $stock                  = $parent.find('input[name="inpUnits"]').val();
+            $price                  = $parent.find('input[name="inpPrice"]').val();
+            $event_id               = $('.hdEventId').text();
+
+            // Clear fields
+            $parent.find('input[name="inpUnits"]').val('');
+            $parent.find('input[name="inpPrice"]').val('');
+
+            // Add the product
+            $.scrap_note_loader('Adding your product');
+            $.post($ajax_base_path + 'fastsell_create_product',
+            {
+                product_id		    : $product_id,
+                stock		        : $stock,
+                price		        : $price,
+                event_id			: $event_id
+            },
+            function($data)
+            {
+                $data	            = jQuery.trim($data);
+
+                $.scrap_note_hide('Your product has been added', 4000, 'tick');
+                $fc_refresh_added_product_list();
+            });
+        });
+    }
+
+    // ----- REFRESH PRODUCT LIST
+    function $fc_refresh_added_product_list()
+    {
+        // Some variables
+        $event_id               = $('.hdEventId').text();
+
+        // The AJAX call
+        $.post($ajax_base_path + 'get_added_products',
+        {
+            event_id		    : $event_id
+        },
+        function($data)
+        {
+            $data	            = jQuery.trim($data);
+            //console.log($data);
+
+            $('.ajaxProductsInFastSell').html($data);
+        });
+    }
+
+    // ----- CUSTOMER LINKS
+    function $fc_customer_links()
+    {
+        $('.userList input[name="checkAddCustomer"]').live('change', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $customer_id            = $this.val();
+            $parent				    = $this.parents('tr');
+            $event_id               = $('.hdEventId').text();
+
+            // Edit DOM
+            $('.chosenUsers p, .chosenUsers .divHeight:first').hide();
+            $('.chosenUsers .message').addClass('usersSelected');
+            $('.chosenUsers .message .divHeight').css({ height : 20 });
+            $('.chosenUsers .chosenUsersList').fadeIn();
+
+            // Link customers
+            $('.chosenUsersList .coolTable').prepend($parent);
+
+            // Add the customer
+            $.post($ajax_base_path + 'fastsell_customer_link',
+            {
+                event_id		    : $event_id,
+                customer_id			: $customer_id ,
+                type                : 'add'
+            }, function($data){ console.log($data); });
+        });
+
+        $('.chosenUsers input[name="checkAddCustomer"]').live('change', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $parent				    = $this.parents('tr');
+
+            // Unlink customers
+            $('.userList .coolTable').prepend($parent);
+
+            // Add the customer
+            $.post($ajax_base_path + 'fastsell_customer_link',
+            {
+                event_id		    : $event_id,
+                customer_id			: $customer_id,
+                type                : 'remove'
+            }, function($data){ console.log($data); });
+        });
+    }
 
 	// ----- SETUP THE SHIFTER
 	function $fc_set_shifter()
@@ -87,9 +197,9 @@ $(document).ready(function(){
                     $fastsell_name              = $('input[name="inpShowName"]').val();
                     $fastsell_description       = $('textarea [name="inpShowDescription"]').val();
                     $start_date                 = $('input[name="inpStartDate"]').val();
-                    $start_time                 = $('select[name="startHoursSelect"]').val() + $('select[name="startMinutesSelect"]') + '00';
+                    $start_time                 = $('select[name="startHoursSelect"]').val() + $('select[name="startMinutesSelect"]').val() + '00';
                     $end_date                   = $('input[name="inpEndDate"]').val();
-                    $end_time                   = $('select[name="endHoursSelect"]').val() + $('select[name="endMinutesSelect"]') + '00';
+                    $end_time                   = $('select[name="endHoursSelect"]').val() + $('select[name="endMinutesSelect"]').val() + '00';
                     $event_id                   = $('.hdEventId').text();
                     $event_banner               = $('.hdBannerImagePath').text();
 
@@ -123,10 +233,16 @@ $(document).ready(function(){
 
                     if($error == false)
                     {
-                        $fastsell_path              = 'create_fastsell'
-                        if($event_id != 'no_id')
+                        // Create / Update fastsell call
+                        if($event_id == 'no_id')
                         {
-                            $fastsell_path          = 'update_fastsell'
+                            $fastsell_path          = 'create_fastsell';
+                            $.scrap_note_loader('Creating a basic FastSell event');
+                        }
+                        else
+                        {
+                            $fastsell_path          = 'update_fastsell';
+                            $.scrap_note_loader('Updating your FastSell event');
                         }
                         $.post($ajax_base_path + $fastsell_path,
                         {
@@ -142,7 +258,7 @@ $(document).ready(function(){
                         function($data)
                         {
                             $data	= jQuery.trim($data);
-                            console.log($data);
+                            //console.log($data);
 
                             if($data == '9876')
                             {
@@ -150,6 +266,26 @@ $(document).ready(function(){
                             }
                             else
                             {
+                                $ex_data            = $data.split(':');
+
+                                if($ex_data[0] == 'okitsbeencreated')
+                                {
+                                    $.scrap_note_time('This FastSell event has been created', 4000, 'tick');
+                                    $('.hdEventId').text($ex_data[1]);
+                                }
+                                else if($ex_data[0] == 'okitsbeenupdated')
+                                {
+                                    $.scrap_note_time('This FastSell event has been updated', 4000, 'tick');
+                                }
+                                else
+                                {
+                                    $.scrap_note_time($data, 4000, 'cross');
+
+                                    // Edit the DOM
+                                    $('.hdPanePosition').text(1);
+                                    $pane_position          = 1;
+                                    $('.shifterNav').show();
+                                }
                             }
                         });
                     }

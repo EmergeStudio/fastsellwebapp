@@ -10,7 +10,7 @@ if($products['error'] == FALSE)
 	$this->table->set_heading('', 'Product Name', array('data' => 'Product Fields', 'class' => 'fullCell'), 'Stock Units', 'Price', '');
 
 	// Rows
-	foreach($json_products->catalog_items as $product)
+	foreach($json_products->fastsell_items as $product)
 	{
 		// Profile image
 		$img_properties		= array
@@ -21,26 +21,18 @@ if($products['error'] == FALSE)
 		);
 
 		// Units input
-		$inp_units			= array
-		(
-			'name'			=> 'inpUnits',
-			'class'         => 'inpUnits'
-		);
+		$inp_units			= $product->stock_count;
 
 		// Price input
-		$inp_price			= array
-		(
-			'name'			=> 'inpPrice',
-			'class'         => 'inpPrice'
-		);
+		$inp_price			= '$'.$product->price;
 
 		// Product name
-		$product_name       = $product->catalog_item_field_values[0]->value;
+		$product_name       = $product->catalog_item->catalog_item_field_values[0]->value;
 
 		// Product fields
 		$loop_cnt               = 0;
 		$product_fields         = '';
-		foreach($product->catalog_item_field_values as $product_field)
+		foreach($product->catalog_item->catalog_item_field_values as $product_field)
 		{
 			$loop_cnt++;
 			if($loop_cnt > 1)
@@ -51,7 +43,7 @@ if($products['error'] == FALSE)
 		$product_fields         = $this->scrap_string->remove_lc(trim($product_fields));
 
 		// Table row
-		$this->table->add_row(img($img_properties), anchor('products/view/'.$product->id, $product_name), array('data' => $product_fields, 'class' => 'fullCell greyTxt'), form_input($inp_units), form_input($inp_price), make_button('Add', 'btnAddProduct').hidden_div($product->id, 'hdProductId'));
+		$this->table->add_row(img($img_properties), anchor('products/view/'.$product->id, $product_name), array('data' => $product_fields, 'class' => 'fullCell greyTxt'), $inp_units, $inp_price, make_button('Remove', 'btnRemoveProduct').hidden_div($product->id, 'hdProductId'));
 	}
 
 	// Generate table

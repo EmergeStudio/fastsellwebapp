@@ -21,6 +21,10 @@ class Dashboard extends CI_Controller
 		// ----- APPLICATION PROFILER --------------------------------
 		$this->output->enable_profiler(FAlSE);
 		$this->load->library('table');
+
+
+		// ----- SOME VARIABLES ------------------------------
+		$acc_type                       = $this->session->userdata('sv_acc_type');
 		
 		
 		// ----- HEADER ------------------------------------		
@@ -33,12 +37,24 @@ class Dashboard extends CI_Controller
 		
 		
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageDashboard';
-		$this->load->view('universal/navigation', $dt_nav);
+		if($acc_type == 'show_host')
+		{
+			// Navigation view
+			$dt_nav['app_page']	            = 'pageDashboard';
+			$this->load->view('universal/navigation', $dt_nav);
 
-		// Load the view
-		$this->load->view('dashboard/main_dashboard');
+			// Load the view
+			$this->load->view('dashboard/main_dashboard');
+		}
+		elseif($acc_type == 'customer')
+		{
+			// Navigation view
+			$dt_nav['app_page']	            = 'pageDashboard';
+			$this->load->view('universal/customer_navigation', $dt_nav);
+
+			// Load the view
+			$this->load->view('dashboard/customer_dashboard');
+		}
 		
 		
 		// ----- FOOTER ------------------------------------

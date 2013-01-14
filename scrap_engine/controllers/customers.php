@@ -42,7 +42,7 @@ class Customers extends CI_Controller
 		$dt_nav['app_page']	            = 'pageCustomers';
 		$this->load->view('universal/navigation', $dt_nav);
 
-		// Get all the customer
+		// Get all the customers
 		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;

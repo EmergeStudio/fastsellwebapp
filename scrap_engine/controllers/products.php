@@ -98,6 +98,51 @@ class Products extends CI_Controller
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| UPLOAD VIA MASTER FILE
+	|--------------------------------------------------------------------------
+	*/
+	function upload_master_file()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FAlSE);
+
+
+		// Some variables
+		$show_host_id				= $this->scrap_web->get_show_host_id();
+
+
+		// ----- HEADER ------------------------------------
+		// Some variables
+		$dt_header['title'] 		= 'Customers';
+		$dt_header['crt_page']		= 'pageProducts';
+		$dt_header['extra_js']		= array('products_upload_shifter');
+		$dt_header['extra_css']		= array('items', 'scrap_shifter');
+
+		// Load header
+		$this->load->view('universal/header', $dt_header);
+
+
+		// ----- CONTENT ------------------------------------
+		// Navigation view
+		$dt_nav['app_page']		= 'pageProducts';
+		$this->load->view('universal/navigation', $dt_nav);
+
+		// Get the definitions
+		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+		$dt_body['item_defs']           = $call_definitions;
+
+		// Content view
+		$this->load->view('products/products_master_file_upload', $dt_body);
+
+
+		// ----- FOOTER ------------------------------------
+		$this->load->view('universal/footer');
+	}
 }
 
 /* End of file products.php */

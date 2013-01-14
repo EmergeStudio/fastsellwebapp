@@ -21,7 +21,7 @@ echo open_div('rightColumn');
 	echo div_height(25);
 
 	// Included fields
-	echo open_div('inset includedFields');
+	echo open_div('inset includedDefinitionFields');
 
 		echo form_label('Included Fields');
 		echo full_div('The following fields will automatically be available on all items that are based on this definition.');

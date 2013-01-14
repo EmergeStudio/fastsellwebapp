@@ -47,7 +47,7 @@ $(document).ready(function(){
         // Show the popup
         $('.btnAddProduct').live('click', function()
         {
-            $('body').sunBox.popup_change_width('popAddProduct', 795);
+            $('body').sunBox.popup_change_width('popAddProduct', 1175);
             $('body').sunBox.show_popup('popAddProduct');
             $('body').sunBox.adjust_popup_height('popAddProduct');
 
@@ -96,6 +96,17 @@ $(document).ready(function(){
                     // Edit DOM
                     $('.popAddProduct .rightColumn').html($data).css({ opacity : 1 });
                     $('body').sunBox.adjust_popup_height('popAddProduct');
+
+                    $('.scrap_date').datepicker(
+                    {
+                        showOn				: 'both',
+                        buttonImage			: 'scrap_assets/images/icons/calendar.png',
+                        buttonImageOnly		: true,
+                        dateFormat			: 'yy-mm-dd',
+                        changeYear			: true,
+                        changeMonth			: true,
+                        minDate				: '+0'
+                    });
                 }
             });
         });
@@ -150,6 +161,7 @@ $(document).ready(function(){
                         $product_fields	    += ']';
                     }
                 });
+                //console.log($product_fields);
 
                 // Submit the new document type for adding
                 $.scrap_note_loader('Adding the new product');
@@ -172,7 +184,6 @@ $(document).ready(function(){
                     else if($data == 'wassuccessfullycreated')
                     {
                         $fc_refresh_products_list();
-                        $fc_adjust_product_height();
                         $('.popAddProduct input').val('');
 
                         // Close the popup
@@ -205,7 +216,8 @@ $(document).ready(function(){
             else
             {
                 // Refresh the content
-                $('.leftContent .content').html($data);
+                $('.leftContent .listContain').html($data);
+                $fc_adjust_product_height();
             }
         });
     }

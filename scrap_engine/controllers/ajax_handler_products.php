@@ -381,6 +381,129 @@ class Ajax_handler_products extends CI_Controller
 			echo 9876;
 		}
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| CHECK PRODUCTS UPLOAD
+	|--------------------------------------------------------------------------
+	*/
+	function check_products_upload()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+			$def_id                         = $this->input->post('dropItemDefinitions');
+			//echo $def_id;
+
+			if(isset($_FILES['uploadedFile']) && !empty($_FILES['uploadedFile']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFile']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Submit the file
+			$url_file_convert           = 'masterdata/multipartmasterdata.xls';
+			$call_file_convert          = $this->scrap_web->webserv_call($url_file_convert, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form');
+			$json_file_convert          = $call_file_convert['result'];
+			$encode_file_convert        = json_encode($json_file_convert);
+			//echo $encode_file_convert;
+
+			// Submit the JSON
+			$url_file_check             = 'catalogitems/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=true&catalogitemdefid='.$def_id;
+			$call_file_check            = $this->scrap_web->webserv_call($url_file_check, $encode_file_convert, 'put', FALSE, FALSE);
+			$dt_body['row_check']       = $call_file_check;
+			//echo json_encode($call_file_check['result']);
+
+			// Load the view
+			$this->load->view('products/check_rows_products', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| UPLOAD PRODUCTS
+	|--------------------------------------------------------------------------
+	*/
+	function upload_products()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+			$headers                        = $this->scrap_string->remove_flc($this->input->post('headers'));
+			$rows                           = $this->scrap_string->remove_flc($this->input->post('rows'));
+			$definition_id                  = $this->input->post('definition_id');
+			$ex_headers                     = explode('][', $headers);
+			$ex_rows                        = explode('][', $rows);
+
+			// Top level JSON
+			$ar_json                        = array('id' => null, 'message' => null, 'worksheets' => '', 'error_code' => null, 'error_description' => null, 'type_name' => 'workbook');
+
+			// Worksheet JSON
+			$ar_worksheets                  = array();
+			$ar_worksheet                   = array('id' => null, 'message' => null, 'headers' => '', 'rows' => '', 'error_code' => null, 'error_description' => null, 'type_name' => 'sheet', 'sheet_name' => 'Customer Create Master Data');
+
+			// Header JSON
+			$ar_header                      = array();
+			foreach($ex_headers as $header)
+			{
+				array_push($ar_header, $header);
+			}
+
+			// Rows array
+			$ar_rows                        = array();
+			foreach($ex_rows as $row_item)
+			{
+				// Some variables
+				$columns                    = $this->scrap_string->remove_flc($row_item);
+				$ex_columns                 = explode('}{', $columns);
+				$ar_row                     = array('id' => null, 'message' => null, 'columns' => '', 'error_code' => -1, 'error_description' => null, 'type_name' => 'row');
+				$ar_columns                 = array();
+
+				// Set the columns
+				foreach($ex_columns as $column_item)
+				{
+					$ar_column              = array('id' => null, 'message' => null, 'value' => $column_item, 'error_code' => null, 'error_description' => null, 'type_name' => 'column');
+					array_push($ar_columns, $ar_column);
+				}
+
+				// Push the columns and rows into the arrays
+				$ar_row['columns']          = $ar_columns;
+				array_push($ar_rows, $ar_row);
+			}
+
+			// Generate the JSON
+			$ar_worksheet['rows']           = $ar_rows;
+			$ar_worksheet['headers']        = $ar_header;
+			array_push($ar_worksheets, $ar_worksheet);
+			$ar_json['worksheets']          = $ar_worksheets;
+			$json_items                     = json_encode($ar_json);
+			//echo $json_items;
+
+			// Submit the JSON
+			$url_insert_items               = 'catalogitems/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=false&catalogitemdefid='.$definition_id;
+			$call_insert_items              = $this->scrap_web->webserv_call($url_insert_items, $json_items, 'put', FALSE, FALSE);
+			$dt_body['row_check']           = $call_insert_items;
+
+
+			// Load the view
+			$this->load->view('show_host/error_rows_products', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
 }
 
 /* End of file ajax_handler_products.php */

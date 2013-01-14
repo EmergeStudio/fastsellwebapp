@@ -182,6 +182,17 @@ class Scrap_string
 	{
 		return date("H:i",(strtotime($date))).nbs(2).'<span class="greyTxt">('.date("l, d M Y",(strtotime($date))).')</span>';
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| MAKE LONG DATE
+	|--------------------------------------------------------------------------
+	*/
+	function make_micro_time($date)
+	{
+		return microtime($date);
+	}
 	
 	
 	/*

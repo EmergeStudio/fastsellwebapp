@@ -148,7 +148,7 @@ $(document).ready(function(){
 		{
 			if($(this).hasClass('blueButton'))
 			{
-				$(this).css({ backgroundImage : 'url()', backgroundColor : '#5490f2' });
+				$(this).css({ backgroundColor : '#0789b5' });
 			}
 			else if($(this).hasClass('pinkButton'))
 			{
@@ -168,7 +168,7 @@ $(document).ready(function(){
 		{
 			if($(this).hasClass('blueButton'))
 			{
-				$(this).css({ backgroundImage : 'url('+ $base_path +'scrap_assets/images/universal/btn_blue_back.jpg)', backgroundPosition : 'bottom'});
+				$(this).css({ backgroundColor : '#1ba2d0' });
 			}
 			else if($(this).hasClass('pinkButton'))
 			{

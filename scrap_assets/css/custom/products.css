@@ -24,6 +24,21 @@
     font-size: 18px;
     color: #217fb3;
 }
+.pageProductDefinitions .listContain .definitionIcon {
+    font-size: 25px;
+    color: #fcb040;
+}
+.pageProductDefinitions .listContain .productField {
+    float: left;
+    margin: 4px;
+    padding: 3px 28px 3px 12px;
+}
+.pageProductDefinitions .listContain .productField span {
+    position: absolute;
+    margin-left: 5px;
+    margin-top: 2px;
+}
+
 .pageProducts .rightContent .nothingSelected {
     display: block;
     height: 143px;
@@ -155,12 +170,21 @@
 .sunBox .contentCenter .popup div.popupIcon {
     font-size: 70px;
 }
-.sunBox .contentCenter .popup .includedFields span {
+.sunBox .contentCenter .popup .spacing {
+    margin-right: 22px;
+}
+.sunBox .contentCenter .popup .includedDefinitionFields span {
     color: #406eb8;
     margin-right: 10px;
 }
 /* Add product */
 .sunBox.popAddProduct .contentCenter .popup .leftColumn {
+    width: 340px;
+}
+.sunBox.popAddProduct .contentCenter .popup .rightColumn {
+    width: 760px;
+}
+.sunBox.popAddProduct .contentCenter .popup .rightColumn .inset {
     width: 340px;
 }
 .sunBox.popAddProduct .contentCenter .popup .leftColumn .icon {

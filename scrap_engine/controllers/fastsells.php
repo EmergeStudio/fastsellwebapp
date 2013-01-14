@@ -20,21 +20,57 @@ class Fastsells extends CI_Controller
 	{
 		// ----- APPLICATION PROFILER --------------------------------
 		$this->output->enable_profiler(FALSE);
+
+
+		// ----- SOME VARiABLES ------------------------------
+		$acc_type                       = $this->session->userdata('sv_acc_type');
+		if($acc_type == 'show_host')
+		{
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+		}
+		elseif($acc_type == 'customer')
+		{
+			$customer_id                = $this->scrap_web->get_customer_org_id();
+		}
 		
 		
 		// ----- HEADER ------------------------------------		
 		// Some variables
 		$dt_header['title'] 	        = 'FastSells';
 		$dt_header['crt_page']	        = 'pageFastSells';
+		$dt_header['extra_css']         = array('fastsells');
+		$dt_header['extra_js']          = array('plugin_countdown', 'fastsells');
 		
 		// Load header
 		$this->load->view('universal/header', $dt_header);
 		
 		
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageFastSells';
-		$this->load->view('universal/navigation', $dt_nav);
+		if($acc_type == 'show_host')
+		{
+			// Navigation view
+			$dt_nav['app_page']	            = 'pageFastSells';
+			$this->load->view('universal/navigation', $dt_nav);
+
+			// Get the fastsells
+			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id;
+			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells);
+			$dt_body['fastsells']           = $call_fastsells;
+		}
+		else
+		{
+			// Navigation view
+			$dt_nav['app_page']	            = 'pageFastSells';
+			$this->load->view('universal/navigation', $dt_nav);
+
+			// Get the fastsells
+			$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
+			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
+			$dt_body['fastsells']           = $call_fastsells;
+		}
+
+		// Load the view
+		$this->load->view('fastsells/main_fastsells_page', $dt_body);
 		
 		
 		// ----- FOOTER ------------------------------------
@@ -53,8 +89,8 @@ class Fastsells extends CI_Controller
 		$this->output->enable_profiler(FALSE);
 
 
-		// ----- SOME LOADS ------------------------------------
-		$this->load->library('table');
+		// ----- SOME VARIABLES ------------------------------
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
 
 
 		// ----- HEADER ------------------------------------
@@ -73,8 +109,18 @@ class Fastsells extends CI_Controller
 		$dt_nav['app_page']	            = 'pageFastSells';
 		$this->load->view('universal/navigation', $dt_nav);
 
+		// Get all the customers
+		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
+		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+		$dt_body['customers']           = $call_customers;
+
+		// Get the products
+		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
+		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+		$dt_body['products']            = $call_products;
+
 		// Load the view
-		$this->load->view('fastsell/create_fastsell_event');
+		$this->load->view('fastsells/create_fastsell_event', $dt_body);
 
 
 		// ----- FOOTER ------------------------------------

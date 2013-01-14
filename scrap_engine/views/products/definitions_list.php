@@ -8,7 +8,7 @@ if($definitions['error'] == FALSE)
 	$json_definitions			= $definitions['result'];
 
 	// Table heading
-	$this->table->set_heading(array('data' => 'Definition Name', 'class' => 'txtLeft'), array('data' => 'Fields', 'class' => 'fullCell'), '', '');
+	$this->table->set_heading('', array('data' => 'Definition Name', 'class' => 'txtLeft'), array('data' => 'Fields', 'class' => 'fullCell'), '', '');
 
 	// Loop through and display customer
 	foreach($json_definitions->catalog_item_definitions as $definition)
@@ -19,6 +19,9 @@ if($definitions['error'] == FALSE)
 		// Table data
 		$ar_fields              = array();
 
+		// Icon
+		array_push($ar_fields, full_div('', 'icon-clipboard definitionIcon'));
+
 		// Definition name
 		array_push($ar_fields, array('data' => $definition->name, 'class' => 'txtLeft definitionName'));
 
@@ -26,7 +29,7 @@ if($definitions['error'] == FALSE)
 		$fields                 = '';
 		foreach($definition_fields as $definition_field)
 		{
-			$fields             .= $definition_field->field_name.', ';
+			$fields             .= make_button($definition_field->field_name.'<span class="icon-cross"></span>', 'productField', '', 'left');
 		}
 		$fields                 = $this->scrap_string->remove_lc(trim($fields));
 		array_push($ar_fields, array('data' => $fields, 'class' => 'fullCell'));

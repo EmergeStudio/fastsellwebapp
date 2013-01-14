@@ -89,7 +89,7 @@ class Scrap_wall
 				$this->CI->session->set_userdata('sv_java_id', $java_id);
 				$this->CI->session->set_userdata('sv_logged_in', 'loggedInTrueTradeShow');
 				$this->CI->session->set_userdata('sv_username', $username);
-				$this->CI->session->set_userdata('sv_acc_view', $acc_type);	
+				$this->CI->session->set_userdata('sv_acc_type', $acc_type);
 				$this->CI->session->set_userdata('sv_admin', $admin);	
 				$this->CI->session->set_userdata('sv_sys_admin', $sys_admin);
                 $this->CI->session->set_userdata('sv_manage_mode', FALSE);

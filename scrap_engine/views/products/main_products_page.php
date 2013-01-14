@@ -48,7 +48,7 @@ echo open_div('middle');
 			echo open_div('controlBar');
 
 				// Add definition
-				echo make_button('Add Product', 'btnAddProduct btnAdd greenButton', '', 'right');
+				echo make_button('Add Product', 'btnAddProduct btnAdd blueButton', '', 'right');
 
 				echo open_div('floatLeft');
 

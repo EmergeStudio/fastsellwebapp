@@ -158,10 +158,6 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		// Clear float
 		echo clear_float();
 
-		// Some hidden data
-		echo hidden_div('no_id', 'hdEventId');
-		echo hidden_div('no_banner', 'hdBannerImagePath');
-
 	echo close_div();
 
 	// Shifter pane 2
@@ -194,6 +190,28 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 				echo open_div('uploaderContainer').form_upload($inp_data).close_div();
 				echo clear_float();
 				echo div_height(50);
+
+			echo close_div();
+
+			// Chose users
+			echo open_div('chosenUsersList displayNone');
+
+				echo div_height(20);
+
+				// Rows
+				$checkbox_remove_all_customers  = array
+				(
+					'name'                      => 'checkRemoveAllCustomers',
+					'class'                     => 'checkRemoveAllCustomers tooltip',
+					'checked'                   => TRUE,
+					'title'                     => 'Tick to remove all these customers from the FastSell'
+				);
+
+				// Heading
+				$this->table->set_heading(form_checkbox($checkbox_remove_all_customers), '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
+
+				// Generate table
+				echo $this->table->generate();
 
 			echo close_div();
 
@@ -262,7 +280,11 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 		// Load the products list
 		echo div_height(20);
-		$this->load->view('products/add_products_list');
+		echo open_div('products');
+
+			$this->load->view('products/add_products_list');
+
+		echo close_div();
 
 		echo div_height(20);
 		echo full_div('', 'line');
@@ -272,6 +294,10 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		echo full_div('', 'icon-box headingIcon lightGrey');
 		echo heading('Products In Your FastSell', 2);
 		echo div_height(20);
+
+		echo open_div('ajaxProductsInFastSell');
+
+		echo close_div();
 
 	echo close_div();
 
@@ -305,6 +331,10 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 	// End of shifter navigation
 	echo close_div();
+
+	// Some hidden data
+	echo hidden_div('no_id', 'hdEventId');
+	echo hidden_div('no_banner', 'hdBannerImagePath');
 
 
 // End of middle div

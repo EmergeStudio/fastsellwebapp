@@ -99,7 +99,7 @@
     padding: 25px;
     width: 490px;
 }
-.shifterPane_2 .chosenUsers table .evenRow, .shifterPane_2 .userList table .evenRow, .shifterPane_2 .userList table tr {
+.shifterPane_2 table .evenRow, .shifterPane_2 table .evenRow, .shifterPane_2 table tr {
     background-color: #fff;
 }
 .middle .shifterPane_2 .scrapButton.blueButton {
@@ -109,7 +109,8 @@
 .pageFastSells .shifterPane_2 .uploaderContainer {
     margin: 0px auto;
     width: 185px;
-    margin-top: 230px;
+    margin-top: 210px;
+    margin-bottom: 50px;
 }
 .pageFastSells .shifterPane_2 .uploaderContainer .uploader {
     background-color: #fff;
@@ -140,4 +141,10 @@
 }
 .middle .shifterPane_3 .productsMasterFileUpload h3 {
     padding: 8px 0px 0px 0px;
+}
+.middle .shifterPane_2 .messageSelectFromLeftOrUpload.usersSelected {
+    background-position: 36px -100px;
+}
+.middle .shifterPane_2 .messageSelectFromLeftOrUpload.usersSelected .uploaderContainer {
+    margin-top: 50px;
 }

@@ -1,0 +1,267 @@
+/**
+ * items.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+	Sunbox
+	Shifter Pane
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.rightContent .nothingSelected {
+    display: block;
+    height: 143px;
+    margin-top: 10px;
+    text-indent: -1000px;
+    overflow: hidden;
+    background-image: url(../../images/universal/message_select_product_left.png);
+    background-position: top;
+    background-repeat: no-repeat;
+}
+.itemContainer {
+	display: block;
+	width: 840px;
+	margin-bottom: 10px;
+	border: 1px solid #f3f3f3;
+	-webkit-box-shadow: 0px 1px 1px #c8c8c8;
+  	-moz-box-shadow: 0px 1px 1px #c8c8c8;
+	-moz-border-radius:4px;  
+	-webkit-border-radius:4px;
+	background: -webkit-linear-gradient(#f8f8f8, #ebebeb);
+  	background: -moz-linear-gradient(#f8f8f8, #ebebeb);
+}
+.itemContainer:hover {
+    cursor: pointer;
+	border: 1px solid #fafafa;
+	border-top: 1px solid #f3f3f3;
+	background: -webkit-linear-gradient(#fafafa, #fafafa);
+  	background: -moz-linear-gradient(#fafafa, #fafafa);
+}
+.itemContainer table {
+    margin: 10px 12px;
+}
+.itemContainer table td {
+    padding: 0px 10px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.itemContainer table td.fullCell {
+    width: 100%;
+    white-space: normal;
+    text-align: left;
+}
+.itemContainer table td .itemName {
+    color: #000;
+    font-size: 14px;
+    width: 180px;
+    overflow: hidden;
+}
+.itemContainer table td .itemNumber {
+    font-size: 12px;
+    font-weight: 300;
+}
+.itemContainer table td.itemDescription, .itemContainer table td .vendorName {
+    font-size: 12px;
+    color: #555555;
+    font-weight: 300;
+}
+.itemContainer table td .vendorName {
+    width: 100px;
+}
+.itemContainer table td .itemInformation {
+    display: none;
+}
+.itemInformation .itemName {
+    color: #000;
+    font-size: 16px;
+}
+.itemInformation .itemVendor, .itemInformation .itemNumber {
+    font-size: 12px;
+    font-weight: 300;
+}
+.itemInformation .itemDescription {
+    color: #555555;
+    font-weight: 300;
+    margin-top: 10px;
+}
+.itemInformation .itemImage {
+    margin-top: 20px;
+}
+.coolTable.itemDefinitions th {
+    padding: 14px 8px;
+}
+.coolTable.itemDefinitions td {
+    padding: 20px 6px;
+}
+.messageAddItem:hover {
+    cursor: pointer;
+}
+.messageAddItem {
+    display: block;
+    width: 840px;
+    height: 200px;
+    margin: 20px 0px;
+    text-indent: -1000px;
+    background-image: url('../../images/universal/message_add_item.png');
+    overflow: hidden;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+.messageAddDefinition:hover {
+    cursor: pointer;
+}
+.messageAddDefinition {
+    display: block;
+    width: 840px;
+    height: 200px;
+    margin: 20px 0px;
+    text-indent: -1000px;
+    background-image: url('../../images/universal/message_add_new_definition.png');
+    overflow: hidden;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+}
+
+
+
+/* SUNBOX
+--------------------------------------------------------------------------------------- */
+.sunBox .contentCenter .popup .inset input.inpItemDefName {
+    margin-bottom: 0px;
+}
+.sunBox .contentCenter .popup .inset .definitionFieldContainer.deleteable input {
+    width: 300px;
+}
+.sunBox .inset .btnDeleteDefinitionField {
+    display: block;
+    float: right;
+    width: 24px;
+    height: 24px;
+    margin: 28px 4px 0px 6px;
+    text-indent: -1000px;
+    background-image: url(../../images/icons/cross_grey.png);
+    background-position: top;
+    overflow: hidden;
+}
+.sunBox .inset .btnDeleteDefinitionField:hover {
+    cursor: pointer;
+    background-position: bottom;
+}
+.sunBox .contentCenter .popup .uploadContainer {
+    padding: 22px 14px 21px 14px;
+}
+.sunBox .contentCenter .popup .uploadContainer h4 {
+    padding-left: 8px;
+}
+.sunBox .contentCenter .popup .uploadContainer input {
+    margin-bottom:0px;
+    font-size:12px;
+    background-color:white;
+}
+.sunBox .contentCenter .popup .inset input.inpItemNumber {
+    margin-bottom:0px;
+}
+
+
+
+/* SHIFTER PANE
+--------------------------------------------------------------------------------------- */
+.middle .shifterPane_3 .listContain, .middle .shifterPane_4 .listContain {
+    padding: 0px;
+}
+.shifterPane_2 .inset {
+    padding: 30px;
+}
+.shifterPane_2 div.uploader input {
+    width:190px;
+    margin-bottom:0px;
+}
+.shifterPane_2 div.uploader input:hover {
+    cursor: pointer;
+}
+.shifterPane_2 .messageCheckItemDefinition {
+    display: block;
+    position: absolute;
+    width: 675px;
+    height: 114px;
+    margin-left: 415px;
+    margin-top: 10px;
+    background-image: url(../../images/universal/message_check_definition.png);
+    text-indent: -1000px;
+    overflow: hidden;
+}
+.shifterPane.shifterPane_2 .selector, .shifterPane.shifterPane_2 .selector select {
+    width:240px;
+}
+.shifterPane.shifterPane_2 .selector span {
+    width:200px;
+}
+.shifterPane_3 .checkDataContainer {
+    display:none;
+}
+.shifterPane_3 .loader, .shifterPane_4 .loader {
+    width: 100%;
+    margin: 21px 0px;
+    padding-top: 35px;
+    text-align: center;
+    font-size: 16px;
+    background-image: url(../../images/universal/ajax_loader10.gif);
+    background-position: top center;
+    background-repeat: no-repeat;
+}
+.shifterPane_3 .coolTable.items, .shifterPane_4 .coolTable.items {
+    display: block;
+    width: 1120px;
+    overflow: auto;
+}
+.shifterPane_3 .coolTable.items td .cross, .shifterPane_3 .coolTable.items td .tick, .shifterPane_4 .coolTable.items td .cross, .shifterPane_4 .coolTable.items td .tick {
+    display:block;
+    width:15px;
+    height:15px;
+    background-repeat: no-repeat;
+    text-indent: -1000px;
+    overflow: hidden;
+}
+.checkDataContainer .shifterPane_3 .coolTable.items td:hover {
+    cursor: pointer;
+}
+.shifterPane_3 .coolTable.items td.editingField {
+    background-color: #fffdd9;
+}
+.shifterPane_3 .coolTable.items td .cross, .shifterPane_4 .coolTable.items td .cross {
+    background-image: url(../../images/icons/small_cross_3.png);
+}
+.shifterPane_3 .coolTable.items td .tick, .shifterPane_4 .coolTable.items td .tick {
+    background-image: url(../../images/icons/small_tick_2.png);
+}
+.shifterPane_3 .coolTable.items td input, .shifterPane_4 .coolTable.items td input {
+    margin: 0px;
+    padding: 0px;
+    border: none;
+    background: none;
+    font-size: 13px;
+    line-height: normal;
+    font-family: 'Helvetica Neue', Helvetica, Arial;
+    color: #585858;
+}
+.shifterPane_3 .coolTable.items td.errorWidth, .shifterPane_3 .coolTable.items td.errorWidth div, .shifterPane_4 .coolTable.items td.errorWidth, .shifterPane_4 .coolTable.items td.errorWidth div {
+    max-width: 170px;
+}
+.shifterPane_3 .coolTable.items td.errorWidth div, .shifterPane_4 .coolTable.items td.errorWidth div {
+    display: block;
+    width: 170px;
+    white-space: normal;
+}
+.shifterPane_4 .loader {
+    margin: 46px 0px 21px 0px;
+}
