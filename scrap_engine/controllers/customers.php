@@ -84,7 +84,7 @@ class Customers extends CI_Controller
 
 		// ----- CONTENT ------------------------------------
 		// Navigation view
-		$dt_nav['app_page']		= 'pageCustomers';
+		$dt_nav['app_page']		    = 'pageCustomers';
 		$this->load->view('universal/navigation', $dt_nav);
 
 		// Content view
@@ -93,6 +93,94 @@ class Customers extends CI_Controller
 
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| SAVE ADDRESS
+	|--------------------------------------------------------------------------
+	*/
+	function save_ADDRESS()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		// Some variables
+		$customer_org_id            = $this->scrap_web->get_customer_org_id();
+		$address_1                  = $this->input->post('address1');
+		$city                       = $this->input->post('city');
+		$state                      = $this->input->post('state');
+		$postal_code                = $this->input->post('postalCode');
+		$return_url                 = $this->input->post('hdReturnUrl');
+
+		// Get current address
+		$url_address                = 'addresses/.jsons?customerid='.$customer_org_id;
+		$call_address               = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
+
+		// Validate
+		if($call_address['error'] == FALSE)
+		{
+			// Get customer organization details
+			$url_customer                       = 'customers/.json?id='.$customer_org_id;
+			$call_customer                      = $this->scrap_web->webserv_call($url_customer, FALSE, 'get', FALSE, FALSE);
+			$json_customer                      = $call_customer['result'];
+
+			// Edit the address
+			$json_customer->addresses[0]->city                 = $city;
+			$json_customer->addresses[0]->address_one          = $address_1;
+			$json_customer->addresses[0]->postal_code          = $postal_code;
+			$json_customer->addresses[0]->state_province       = $state;
+			$json_customer->addresses[0]->address_type->id     = 1;
+
+			// Encode JSON
+			$update_json                        = json_encode($json_customer);
+
+			// Update the customer
+			$update_customer                    = $this->scrap_web->webserv_call('customers/.json', $update_json, 'post');
+
+			// Redirect
+			redirect($return_url);
+		}
+		else
+		{
+			$call_error                         = $call_address['result'];
+			if($call_error->error_code == 10005)
+			{
+				// Get sample
+				$url_sample                     = 'addresses/sample.json';
+				$call_sample                    = $this->scrap_web->webserv_call($url_sample);
+				$json_sample                    = $call_sample['result'];
+
+				// Edit the sample
+				$json_sample->city              = $city;
+				$json_sample->address_one       = $address_1;
+				$json_sample->postal_code       = $postal_code;
+				$json_sample->state_province    = $state;
+				$json_sample->address_type->id  = 1;
+
+				// Get customer organization details
+				$url_customer                   = 'customers/.json?id='.$customer_org_id;
+				$call_customer                  = $this->scrap_web->webserv_call($url_customer, FALSE, 'get', FALSE, FALSE);
+				$json_customer                  = $call_customer['result'];
+
+				// Edit customer
+				$json_customer->addresses       = array($json_sample);
+
+				// Encode JSON
+				$update_json                    = json_encode($json_customer);
+
+				// Update the customer
+				$update_customer                = $this->scrap_web->webserv_call('customers/.json', $update_json, 'post');
+
+				// Redirect
+				redirect($return_url);
+			}
+			else
+			{
+				redirect('fastsells');
+			}
+		}
 	}
 }
 

@@ -115,10 +115,11 @@ $(document).ready(function(){
         $('.popAddProduct .returnTrue').live('click', function()
         {
             // Some variables
-            $error					= false;
-            $product_number		    = $('.popAddProduct input[name="inpProductNumber"]').val();
-            $product_definition     = $('.popAddProduct .definitionSelection.active').find('.hdDefinitionId').text();
-            $product_fields		    = '';
+            $error					    = false;
+            $product_number		        = $('.popAddProduct input[name="inpProductNumber"]').val();
+            $product_definition         = $('.popAddProduct .definitionSelection.active').find('.hdDefinitionId').text();
+            $product_fields_required    = '';
+            $product_fields_extra       = '';
 
             // Validate
             if($error == false)
@@ -137,7 +138,7 @@ $(document).ready(function(){
                 // Get the indexing fields
                 $loop_cnt                   = 0;
 
-                $('.popAddProduct .fieldContainer').each(function()
+                $('.popAddProduct .fieldContainerRequired').each(function()
                 {
                     $loop_cnt++;
                     // Some variables
@@ -155,13 +156,37 @@ $(document).ready(function(){
                     // Validate
                     if($field_value != '')
                     {
-                        $product_fields	    += '[';
-                        $product_fields	    += $field_value + ':';
-                        $product_fields	    += $field_id;
-                        $product_fields	    += ']';
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += $field_value + ':';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
+                    }
+                    else
+                    {
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += 'NOT_SET:';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
                     }
                 });
-                //console.log($product_fields);
+
+                $('.popAddProduct .fieldContainerExtra').each(function()
+                {
+                    $loop_cnt++;
+                    // Some variables
+                    $this                   = $(this);
+                    $field_value            = $this.find('input').val();
+                    $field_id               = $this.find('.hiddenDiv').text();
+
+                    // Validate
+                    if($field_value != '')
+                    {
+                        $product_fields_extra	    += '[';
+                        $product_fields_extra	    += $field_value + ':';
+                        $product_fields_extra	    += $field_id;
+                        $product_fields_extra	    += ']';
+                    }
+                });
 
                 // Submit the new document type for adding
                 $.scrap_note_loader('Adding the new product');
@@ -171,11 +196,13 @@ $(document).ready(function(){
                 {
                     product_number			    : $product_number,
                     product_definition			: $product_definition,
-                    product_fields			    : $product_fields
+                    product_fields_required	    : $product_fields_required,
+                    product_fields_extra	    : $product_fields_extra
                 },
                 function($data)
                 {
                     $data	= jQuery.trim($data);
+                    console.log($data);
 
                     if($data == '9876')
                     {

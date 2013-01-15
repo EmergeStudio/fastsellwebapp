@@ -7,7 +7,6 @@ if($products['error'] == FALSE)
 	// Data
 	$json_items                             = $products['result'];
 
-
 	// Product item
 	foreach($json_items->catalog_items as $item)
 	{

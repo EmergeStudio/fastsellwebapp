@@ -1,0 +1,115 @@
+/**
+ * customers.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+	Sunbox
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.pageFastSellBuy .middle .whiteBack.coolScreen .rightContent .content {
+    padding: 0px;
+}
+.quickOrder tr {
+    background: -webkit-linear-gradient(#fcfcfc, #f9f9f9);
+    background: -moz-linear-gradient(#fcfcfc, #f9f9f9);
+}
+.quickOrder th {
+    color: #888888;
+    font-weight: 200;
+    white-space: nowrap;
+}
+.quickOrder th, .quickOrder td {
+    padding: 12px 5px;
+    border-top: solid 1px #fff;
+    border-bottom: solid 1px #efefef;
+    vertical-align: middle;
+}
+.quickOrder th.itemHeading, .quickOrder td.totalText {
+    width: 100%;
+}
+.quickOrder th.itemHeading, .quickOrder td.totalAmount, .quickOrder td.totalText, .quickOrder td.productTotal {
+    text-align: right;
+}
+.quickOrder .productHeading, .quickOrder td.productName {
+    padding-left: 28px;
+}
+.quickOrder td.totalAmount, .quickOrder th.itemHeading, .quickOrder td.productTotal {
+    padding-right: 28px;
+}
+.quickOrder td.totalAmount, .quickOrder td.productTotal {
+    color: #069802;
+}
+
+
+/* SUNBOX
+--------------------------------------------------------------------------------------- */
+.sunBox.popBuyProduct .inset * {
+    color: #444444;
+    text-shadow: #FFF 1px 1px 0px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .leftColumn {
+    float: left;
+    width: 200px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn {
+    width: 575px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .icon {
+    width: 35px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .icon div {
+    font-size: 22px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn h3 {
+    margin-bottom: 0px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn td {
+    padding-bottom: 15px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .value {
+    padding-top: 2px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .inset {
+    padding: 20px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .productInformation {
+    width: 350px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .productInformation .quantity {
+    padding-top: 8px;
+    padding-left: 8px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .priceDiscountStock {
+    float: right;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-box-shadow: rgba(0,0,0,0.34) 0px 1px 3px;
+    -webkit-box-shadow: rgba(0,0,0,0.34) 0px 1px 3px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .priceDiscountStock * {
+    display: block;
+    text-align: center;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .priceDiscountStock .price {
+    margin-bottom: 10px;
+    color: #458c00;
+    font-size: 22px;
+}
+.sunBox.popBuyProduct .contentCenter .popup .rightColumn .priceDiscountStock .discount {
+    margin-bottom: 5px;
+    color: #179fce;
+    font-size: 18px;
+}

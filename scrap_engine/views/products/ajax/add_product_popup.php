@@ -21,7 +21,7 @@ if($definitions['error'] == FALSE)
 					$loop_cnt_4++;
 					if($loop_cnt_4 == 1)
 					{
-						echo open_div('fieldContainer');
+						echo open_div('fieldContainerRequired');
 
 							echo form_label('Product Name');
 							$inp_data			= array
@@ -36,7 +36,7 @@ if($definitions['error'] == FALSE)
 					}
 					else if($loop_cnt_4 == 2)
 					{
-						echo open_div('fieldContainer');
+						echo open_div('fieldContainerRequired');
 
 							echo form_label('Description');
 							$txt_data			= array
@@ -80,7 +80,7 @@ if($definitions['error'] == FALSE)
 					    $loop_cnt_1++;
 					    if($loop_cnt_1 > $cnt_defaultFields)
 					    {
-						    echo open_div('fieldContainer');
+						    echo open_div('fieldContainerExtra');
 
 							    echo form_label($definition_field->field_name);
 							    $inp_data			= array
@@ -109,7 +109,7 @@ if($definitions['error'] == FALSE)
 			$loop_cnt_3++;
 			if(($loop_cnt_3 <= $cnt_defaultFields) && ($loop_cnt_3 > 2))
 			{
-				echo open_div('fieldContainer');
+				echo open_div('fieldContainerRequired');
 
 				echo form_label($definition_field->field_name);
 

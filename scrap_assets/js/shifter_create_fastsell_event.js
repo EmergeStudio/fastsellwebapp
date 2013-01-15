@@ -195,7 +195,7 @@ $(document).ready(function(){
                     // Some variables
                     $error                      = false;
                     $fastsell_name              = $('input[name="inpShowName"]').val();
-                    $fastsell_description       = $('textarea [name="inpShowDescription"]').val();
+                    $fastsell_description       = $('textarea[name="inpShowDescription"]').val();
                     $start_date                 = $('input[name="inpStartDate"]').val();
                     $start_time                 = $('select[name="startHoursSelect"]').val() + $('select[name="startMinutesSelect"]').val() + '00';
                     $end_date                   = $('input[name="inpEndDate"]').val();

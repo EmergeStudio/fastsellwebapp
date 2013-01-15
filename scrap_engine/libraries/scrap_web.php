@@ -350,6 +350,29 @@ class Scrap_web
 
 	/*
 	|--------------------------------------------------------------------------
+	| GET CUSTOMER USER ID
+	|--------------------------------------------------------------------------
+	*/
+	function get_customer_user_id($user_id = FALSE)
+	{
+		// Some variables
+		if($user_id == FALSE)
+		{
+			$user_id			= $this->CI->session->userdata('sv_user_id');
+		}
+
+		// Get show host id
+		$url_cust_user_id		= 'customerusers/.json?userid='.$user_id;
+		$call_cust_usert_id		= $this->webserv_call($url_cust_user_id, FALSE, 'get', FALSE, FALSE);
+		$json_cust_user_id		= $call_cust_usert_id['result'];
+
+		// Return
+		return $json_cust_user_id->id;
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| GET CUSTOMER ORGANIZATION ID
 	|--------------------------------------------------------------------------
 	*/

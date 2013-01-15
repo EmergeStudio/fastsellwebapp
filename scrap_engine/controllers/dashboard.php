@@ -25,12 +25,22 @@ class Dashboard extends CI_Controller
 
 		// ----- SOME VARIABLES ------------------------------
 		$acc_type                       = $this->session->userdata('sv_acc_type');
+		if($acc_type == 'show_host')
+		{
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+		}
+		elseif($acc_type == 'customer')
+		{
+			$customer_id                = $this->scrap_web->get_customer_org_id();
+		}
 		
 		
 		// ----- HEADER ------------------------------------		
 		// Some variables
 		$dt_header['title'] 	        = 'FastSell Dashboard';
 		$dt_header['crt_page']	        = 'pageDashboard';
+		$dt_header['extra_css']         = array('fastsells');
+		$dt_header['extra_js']          = array('plugin_countdown', 'fastsells');
 		
 		// Load header
 		$this->load->view('universal/header', $dt_header);
@@ -52,8 +62,18 @@ class Dashboard extends CI_Controller
 			$dt_nav['app_page']	            = 'pageDashboard';
 			$this->load->view('universal/customer_navigation', $dt_nav);
 
+			// Get the fastsells
+			$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
+			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
+			$dt_body['fastsells']           = $call_fastsells;
+
+			// Get current address
+			$url_address                    = 'addresses/.jsons?customerid='.$customer_id;
+			$call_address                   = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
+			$dt_body['address']             = $call_address;
+
 			// Load the view
-			$this->load->view('dashboard/customer_dashboard');
+			$this->load->view('dashboard/customer_dashboard', $dt_body);
 		}
 		
 		

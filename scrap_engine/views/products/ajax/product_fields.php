@@ -18,7 +18,7 @@ if($crt_definition['error'] == FALSE)
 				$loop_cnt_4++;
 				if($loop_cnt_4 == 1)
 				{
-					echo open_div('fieldContainer');
+					echo open_div('fieldContainerRequired');
 
 						echo form_label('Product Name');
 						$inp_data			= array
@@ -33,7 +33,7 @@ if($crt_definition['error'] == FALSE)
 				}
 				else if($loop_cnt_4 == 2)
 				{
-					echo open_div('fieldContainer');
+					echo open_div('fieldContainerRequired');
 
 						echo form_label('Description');
 						$txt_data			= array
@@ -77,7 +77,7 @@ if($crt_definition['error'] == FALSE)
 				$loop_cnt_1++;
 				if($loop_cnt_1 > $cnt_defaultFields)
 				{
-					echo open_div('fieldContainer');
+					echo open_div('fieldContainerExtra');
 
 					echo form_label($definition_field->field_name);
 					$inp_data			= array
@@ -106,26 +106,26 @@ if($crt_definition['error'] == FALSE)
 		$loop_cnt_3++;
 		if(($loop_cnt_3 <= $cnt_defaultFields) && ($loop_cnt_3 > 2))
 		{
-			echo open_div('fieldContainer');
+			echo open_div('fieldContainerRequired');
 
-			echo form_label($definition_field->field_name);
+				echo form_label($definition_field->field_name);
 
-			if(($loop_cnt_3 == $cnt_defaultFields - 1) || ($loop_cnt_3 == $cnt_defaultFields))
-			{
-				$class          = 'inpProductFieldAdded scrap_date';
-			}
-			else
-			{
-				$class          = 'inpProductFieldAdded';
-			}
+				if(($loop_cnt_3 == $cnt_defaultFields - 1) || ($loop_cnt_3 == $cnt_defaultFields))
+				{
+					$class          = 'inpProductFieldAdded scrap_date';
+				}
+				else
+				{
+					$class          = 'inpProductFieldAdded';
+				}
 
-			$inp_data			= array
-			(
-				'name'			=> 'inpProductFieldAdded',
-				'class'			=> $class
-			);
-			echo form_input($inp_data);
-			echo hidden_div($definition_field->id);
+				$inp_data			= array
+				(
+					'name'			=> 'inpProductFieldAdded',
+					'class'			=> $class
+				);
+				echo form_input($inp_data);
+				echo hidden_div($definition_field->id);
 
 			echo close_div();
 		}

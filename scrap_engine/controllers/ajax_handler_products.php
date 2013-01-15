@@ -284,7 +284,8 @@ class Ajax_handler_products extends CI_Controller
 			$user_id                    = $this->session->userdata('sv_user_id');
 			$product_number             = $this->input->post('product_number');
 			$product_definition         = $this->input->post('product_definition');
-			$product_fields             = $this->input->post('product_fields');
+			$product_fields_required    = $this->input->post('product_fields_required');
+			$product_fields_extra       = $this->input->post('product_fields_extra');
 
 			// JSON sample
 			$url_sample                 = 'catalogitems/sample.json';
@@ -302,9 +303,27 @@ class Ajax_handler_products extends CI_Controller
 				$json_sample->catalog_item_definition->id   = $product_definition;
 				$json_sample->is_fastsell_based             = TRUE;
 
-				$ex_item_fields             = explode('][', $this->scrap_string->remove_flc($product_fields));
-				$ar_field_values            = array();
-				foreach($ex_item_fields as $item_field_values)
+				$ex_item_fields_required                    = explode('][', $this->scrap_string->remove_flc($product_fields_required));
+				$ex_item_fields_extra                       = explode('][', $this->scrap_string->remove_flc($product_fields_extra));
+				$ar_field_values                            = array();
+				foreach($ex_item_fields_required as $item_field_values)
+				{
+					$ex_item_field_values   = explode(':', $item_field_values);
+					$field_id               = $ex_item_field_values[1];
+					$field_value            = $ex_item_field_values[0];
+
+					$url_item_sample        = 'catalogitemfieldvalues/sample.json';
+					$call_item_sample       = $this->scrap_web->webserv_call($url_item_sample);
+					$json_item_sample       = $call_item_sample['result'];
+
+					$json_item_sample->value                                = $field_value;
+					$json_item_sample->show_host_organization->id           = $show_host_id;
+					$json_item_sample->catalog_item_definition->id          = $product_definition;
+					$json_item_sample->catalog_item_definition_field->id    = $field_id;
+
+					array_push($ar_field_values, $json_item_sample);
+				}
+				foreach($ex_item_fields_extra as $item_field_values)
 				{
 					$ex_item_field_values   = explode(':', $item_field_values);
 					$field_id               = $ex_item_field_values[1];

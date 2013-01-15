@@ -4,9 +4,6 @@
 // Check that we have fastsells
 if($fastsells['error'] == FALSE)
 {
-	// Heading
-	echo heading('<span class="icon-ticket yellow"></span>FastSells Coming Up', 3);
-
 	// Get the result
 	$json_fastsells			    = $fastsells['result'];
 
@@ -14,7 +11,7 @@ if($fastsells['error'] == FALSE)
 	foreach($json_fastsells->fastsell_events as $fastsell)
 	{
 		// An item container
-		echo '<a href="fastsells/event/'.$fastsell->id.'" class="itemContainer" >';
+		echo '<a href="fastsells/event/'.$fastsell->id.'" class="itemContainer small" >';
 
 			// Table
 			echo '<table><tr>';
@@ -25,7 +22,7 @@ if($fastsells['error'] == FALSE)
 					$img_properties         = array
 					(
 						'src'               => 'scrap_assets/images/universal/default_event_image.png',
-						'width'             => '275px'
+						'width'             => '175px'
 					);
 
 					echo full_div(img($img_properties), 'inset');

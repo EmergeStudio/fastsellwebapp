@@ -225,7 +225,7 @@
 .sunBox.popAddProduct .inpProductDescription {
     height: 68px;
 }
-.sunBox.popAddProduct .includedFields .fieldContainer {
+.sunBox.popAddProduct .includedFields .fieldContainerRequired {
     float: left;
     width: 170px;
     margin-top: 8px;
