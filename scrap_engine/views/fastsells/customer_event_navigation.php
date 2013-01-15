@@ -1,6 +1,23 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <?php
+// Data
+if($order == FALSE)
+{
+	$crt_total              = 0.00;
+}
+else
+{
+	$crt_total              = 0;
+	foreach($crt_order->fastsell_order_to_items as $order_item)
+	{
+		$quantity           = $order_item->quantity;
+		$price              = $order_item->fastsell_item->price;
+		$crt_total          = $crt_total + ($quantity * $price);
+	}
+	$crt_total              = number_format($crt_total, 2);
+}
+
 // HTML
 echo open_div('bannerBack');
 
@@ -95,7 +112,7 @@ echo open_div('bannerBack');
 				echo '</li>';
 
 				// Orders link
-				if($app_page == 'pageOrders')
+				if($app_page == 'pageFastSellMyOrder')
 				{
 					echo '<li class="active myOrder">';
 				}
@@ -104,7 +121,7 @@ echo open_div('bannerBack');
 					echo '<li class="myOrder">';
 				}
 
-					echo anchor('fastsells/my_order', '<span class="icon-shopping-cart yellow"></span>My Order'.nbs(2).'$0.00', 'class="sectionNavLink"');
+					echo anchor('fastsells/my_order', '<span class="icon-shopping-cart yellow"></span>My Order'.nbs(2).'$'.$crt_total, 'class="sectionNavLink"');
 
 				echo '</li>';
 

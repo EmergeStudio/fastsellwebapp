@@ -187,6 +187,30 @@ class Fastsells extends CI_Controller
 				// Get customer user id
 				$cust_user_id               = $this->scrap_web->get_customer_user_id();
 
+				// See if any orders exists
+				$url_orders                 = 'fastsellorders/.jsons?fastselleventid='.$fastsell_id.'&customeruserid='.$cust_user_id;
+				$call_orders                = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
+				if($call_orders['error'] == TRUE)
+				{
+					$dt_body['order']       = FALSE;
+					$dt_nav['order']        = FALSE;
+				}
+				else
+				{
+					// Orders
+					$json_orders            = $call_orders['result'];
+					$order_id               = $json_orders->fastsell_orders[0]->id;
+
+					// Current order
+					$url_crt_order          = 'fastsellorders/.json?id='.$order_id;
+					$call_crt_order         = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
+
+					$dt_body['order']       = TRUE;
+					$dt_body['crt_order']   = $call_crt_order['result'];
+					$dt_nav['order']        = TRUE;
+					$dt_nav['crt_order']    = $call_crt_order['result'];
+				}
+
 				// Navigation view
 				$dt_nav['app_page']	        = 'pageFastSellInfo';
 				$dt_nav['fastsell_info']    = $fastsell_info;
@@ -197,14 +221,6 @@ class Fastsells extends CI_Controller
 				$url_products               = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset=0&limit=5';
 				$call_products              = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
 				$dt_body['products']        = $call_products;
-
-				// See if any orders exists
-				$url_orders                 = 'fastsellorders/.jsons?fastselleventid='.$fastsell_id.'&customeruserid='.$cust_user_id;
-				$call_orders                = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
-				if($call_orders['error'] == TRUE)
-				{
-					$dt_body['order']       = FALSE;
-				}
 
 				// Load the view
 				$this->load->view('fastsells/customer_event_info', $dt_body);
@@ -235,7 +251,7 @@ class Fastsells extends CI_Controller
 		// ----- SOME VARIABLES ------------------------------
 		$acc_type                           = $this->session->userdata('sv_acc_type');
 		$fastsell_id                        = $this->session->userdata('sv_show_set');
-
+		$customer_user_id                   = $this->scrap_web->get_customer_user_id();
 
 		// Get the event information
 		$url_fastsell                       = 'fastsellevents/.json?id='.$fastsell_id;
@@ -254,10 +270,10 @@ class Fastsells extends CI_Controller
 
 			// ----- HEADER ------------------------------------
 			// Some variables
-			$dt_header['title'] 	        = 'Buy Product';
-			$dt_header['crt_page']	        = 'pageFastSellBuy';
-			$dt_header['extra_css']         = array('fastsells', 'fastsell_buy');
-			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_buy');
+			$dt_header['title'] 	            = 'Buy Product';
+			$dt_header['crt_page']	            = 'pageFastSellBuy';
+			$dt_header['extra_css']             = array('fastsells', 'fastsell_buy');
+			$dt_header['extra_js']              = array('plugin_countdown', 'fastsell_buy');
 
 			// Load header
 			$this->load->view('universal/header', $dt_header);
@@ -266,16 +282,53 @@ class Fastsells extends CI_Controller
 			// ----- CONTENT ------------------------------------
 			if($acc_type == 'customer')
 			{
+				// See if any orders exists
+				$url_orders                         = 'fastsellorders/.jsons?fastselleventid='.$fastsell_id.'&customeruserid='.$customer_user_id;
+				$call_orders                        = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
+				if($call_orders['error'] == TRUE)
+				{
+					$dt_body['order']               = FALSE;
+					$dt_nav['order']                = FALSE;
+				}
+				else
+				{
+					// Orders
+					$json_orders                    = $call_orders['result'];
+					$order_id                       = $json_orders->fastsell_orders[0]->id;
+
+					// Current order
+					$url_crt_order                  = 'fastsellorders/.json?id='.$order_id;
+					$call_crt_order                 = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
+
+					// Get the product names
+					$ar_product_names               = array();
+					foreach($call_crt_order['result']->fastsell_order_to_items as $order_item)
+					{
+						// Get the product
+						$url_product                = 'fastsellitems/.json?id='.$order_item->fastsell_item->id;
+						$call_product               = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
+						$json_product               = $call_product['result'];
+
+						$ar_product_names[$order_item->fastsell_item->id]  = $json_product->catalog_item->catalog_item_field_values[0]->value;
+					}
+
+					$dt_body['ar_product_names']    = $ar_product_names;
+					$dt_body['order']               = TRUE;
+					$dt_body['crt_order']           = $call_crt_order['result'];
+					$dt_nav['order']                = TRUE;
+					$dt_nav['crt_order']            = $call_crt_order['result'];
+				}
+
 				// Navigation view
-				$dt_nav['app_page']	        = 'pageFastSellBuy';
-				$dt_nav['fastsell_info']    = $fastsell_info;
-				$dt_nav['started']          = $started;
+				$dt_nav['app_page']	                = 'pageFastSellBuy';
+				$dt_nav['fastsell_info']            = $fastsell_info;
+				$dt_nav['started']                  = $started;
 				$this->load->view('fastsells/customer_event_navigation', $dt_nav);
 
 				// Get the products
-				$url_products               = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset=0&limit=20';
-				$call_products              = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
-				$dt_body['products']        = $call_products;
+				$url_products                       = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset=0&limit=20';
+				$call_products                      = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+				$dt_body['products']                = $call_products;
 
 				// Load the view
 				$this->load->view('products/main_buy_page', $dt_body);
@@ -356,25 +409,12 @@ class Fastsells extends CI_Controller
 
 				// Encode
 				$update_json                = json_encode($json_crt_order);
-				echo $update_json;
 
 				// Create new order
 				$update_order               = $this->scrap_web->webserv_call('fastsellorders/.json', $update_json, 'post');
 
 				// Redirect
-				//redirect($return_url);
-
-				// Load the content view
-				if($update_order['error'] == FALSE)
-				{
-					echo 'okitsdone';
-				}
-				else
-				{
-					// Return the error message
-					$json				= $update_order['result'];
-					echo $json->error_description;
-				}
+				redirect($return_url);
 			}
 			else
 			{
@@ -404,25 +444,12 @@ class Fastsells extends CI_Controller
 
 					// Encode JSON
 					$new_json               = json_encode($json_sample);
-					//echo $new_json;
 
 					// Create new order
 					$new_order              = $this->scrap_web->webserv_call('fastsellorders/.json', $new_json, 'put');
 
 					// Redirect
 					redirect($return_url);
-
-//					// Load the content view
-//					if($new_order['error'] == FALSE)
-//					{
-//						echo 'okitsdone';
-//					}
-//					else
-//					{
-//						// Return the error message
-//						$json				= $new_order['result'];
-//						echo $json->error_description;
-//					}
 				}
 				else
 				{
@@ -473,7 +500,7 @@ class Fastsells extends CI_Controller
 			$dt_header['title'] 	        = 'My Order';
 			$dt_header['crt_page']	        = 'pageFastSellMyOrder';
 			$dt_header['extra_css']         = array('fastsells');
-			$dt_header['extra_js']          = array('plugin_countdown');
+			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_buy');
 
 			// Load header
 			$this->load->view('universal/header', $dt_header);
@@ -483,12 +510,49 @@ class Fastsells extends CI_Controller
 			if($acc_type == 'customer')
 			{
 				// Get customer user id
-				$cust_user_id               = $this->scrap_web->get_customer_user_id();
+				$customer_user_id                   = $this->scrap_web->get_customer_user_id();
+
+				// See if any orders exists
+				$url_orders                         = 'fastsellorders/.jsons?fastselleventid='.$fastsell_id.'&customeruserid='.$customer_user_id;
+				$call_orders                        = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
+				if($call_orders['error'] == TRUE)
+				{
+					$dt_body['order']               = FALSE;
+					$dt_nav['order']                = FALSE;
+				}
+				else
+				{
+					// Orders
+					$json_orders                    = $call_orders['result'];
+					$order_id                       = $json_orders->fastsell_orders[0]->id;
+
+					// Current order
+					$url_crt_order                  = 'fastsellorders/.json?id='.$order_id;
+					$call_crt_order                 = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
+
+					// Get the product names
+					$ar_product_names               = array();
+					foreach($call_crt_order['result']->fastsell_order_to_items as $order_item)
+					{
+						// Get the product
+						$url_product                = 'fastsellitems/.json?id='.$order_item->fastsell_item->id;
+						$call_product               = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
+						$json_product               = $call_product['result'];
+
+						$ar_product_names[$order_item->fastsell_item->id]  = $json_product->catalog_item->catalog_item_field_values[0]->value;
+					}
+
+					$dt_body['ar_product_names']    = $ar_product_names;
+					$dt_body['order']               = TRUE;
+					$dt_body['crt_order']           = $call_crt_order['result'];
+					$dt_nav['order']                = TRUE;
+					$dt_nav['crt_order']            = $call_crt_order['result'];
+				}
 
 				// Navigation view
-				$dt_nav['app_page']	        = 'pageFastSellInfo';
-				$dt_nav['fastsell_info']    = $fastsell_info;
-				$dt_nav['started']          = $started;
+				$dt_nav['app_page']	                = 'pageFastSellMyOrder';
+				$dt_nav['fastsell_info']            = $fastsell_info;
+				$dt_nav['started']                  = $started;
 				$this->load->view('fastsells/customer_event_navigation', $dt_nav);
 			}
 

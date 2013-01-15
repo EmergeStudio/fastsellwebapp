@@ -16,7 +16,7 @@
 
 /* GENERAL
 --------------------------------------------------------------------------------------- */
-.pageFastSellInfo .middle.appNavigationContainer, .pageFastSellBuy .middle.appNavigationContainer {
+.pageFastSellInfo .middle.appNavigationContainer, .pageFastSellBuy .middle.appNavigationContainer, .pageFastSellMyOrder .middle.appNavigationContainer {
     margin-top: 40px;
 }
 .bannerBack .timLeft {
