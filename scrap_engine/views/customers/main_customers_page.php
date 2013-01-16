@@ -11,7 +11,7 @@ echo open_div('middle');
 		echo open_div('controlBar');
 
 			// Add customer
-			echo make_button('Add Customer', 'btnAddCustomer btnAdd greenButton', '', 'right');
+			echo make_button('Add Customer', 'btnAddCustomer btnAdd blueButton', '', 'right');
 
 			echo open_div('floatLeft');
 

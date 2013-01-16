@@ -49,6 +49,56 @@
 .quickOrder td.totalAmount, .quickOrder td.productTotal {
     color: #069802;
 }
+/* Small item container */
+.itemContainer.small h4 {
+    margin-bottom: 5px;
+}
+.itemContainer.small table td {
+    padding: 8px 8px;
+}
+.itemContainer.small table td .greyTxt {
+    font-size: 12px;
+    line-height: 16px;
+}
+.itemContainer.small table td .extraValue {
+    float:left;
+    margin-right: 10px;
+}
+.itemContainer.small table td.productDetails {
+    width: 400px;
+}
+.itemContainer.small table td.msrp {
+    width: 130px;
+}
+.itemContainer.small table td .priceDiscountStock {
+    float: right;
+    padding: 15px;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-box-shadow: rgba(0,0,0,0.34) 0px 1px 3px;
+    -webkit-box-shadow: rgba(0,0,0,0.34) 0px 1px 3px;
+}
+.itemContainer.small table td .price {
+    display: block;
+    margin-bottom: 5px;
+    color: #458c00;
+    font-size: 20px;
+    text-align: center;
+}
+.itemContainer.small table td .discount {
+    display: block;
+    margin-bottom: 2px;
+    color: #179fce;
+    font-size: 16px;
+    text-align: center;
+}
+.itemContainer.small table td .quantity {
+    display: block;
+    text-align: center;
+}
 
 
 /* SUNBOX

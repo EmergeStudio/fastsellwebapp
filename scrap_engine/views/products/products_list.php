@@ -5,94 +5,105 @@
 if($products['error'] == FALSE)
 {
 	// Data
-	$json_items                             = $products['result'];
+	$json_products                          = $products['result'];
 
 	// Product item
-	foreach($json_items->catalog_items as $item)
+	foreach($json_products->catalog_items as $product)
 	{
-		echo open_div('itemContainer');
+		// An item container
+		echo open_div('itemContainer small');
 
 			// Table
 			echo '<table><tr>';
 
+				// Banner image
 				echo '<td>';
 
-				$img_properties         = array
-				(
-					'src'               => 'scrap_assets/images/temp/item_image.jpg'
-				);
-				echo img($img_properties);
+					$img_properties         = array
+					(
+						'src'               => 'scrap_assets/images/universal/default_product_image.jpg',
+						'width'             => 60
+					);
 
-				// Product information
-				echo open_div('itemInformation');
-
-					echo full_div($item->catalog_item_field_values[0]->value, 'itemName');
-					echo full_div($item->item_number, 'itemNumber greyTxt');
-					echo open_div('itemDescription');
-
-						$fields                 = '';
-						$loop_fields            = 1;
-						foreach($item->catalog_item_field_values as $field_value)
-						{
-							if($loop_fields > 1)
-							{
-								//$fields             .= ' '.$field_value->.': '.$field_value->value.',';
-								$fields             .= ' '.$field_value->value.'<br>';
-							}
-							else
-							{
-								$loop_fields++;
-							}
-						}
-						echo $fields;
-						echo close_div();
-
-						$img_properties_2       = array
-						(
-							'src'               => 'scrap_assets/images/temp/carrots_big.jpg',
-							'width'             => 213
-						);
-						echo full_div(img($img_properties_2), 'inset itemImage');
-
-						// Hidden data
-						echo hidden_div($item->id, 'hdItemId');
-
-					echo close_div();
+					echo full_div(img($img_properties), 'inset');
 
 				echo '</td>';
 
-				echo '<td>';
+				// Product details
+				echo '<td class="productDetails">';
 
-					echo full_div($item->catalog_item_field_values[0]->value, 'itemName');
-					echo full_div($item->item_number, 'itemNumber greyTxt');
-
-				echo '</td>';
-
-				echo '<td class="fullCell itemDescription">';
-
-					$fields                 = '';
-					$loop_fields            = 1;
-					foreach($item->catalog_item_field_values as $field_value)
+					// Basic details
+					echo div_height(8);
+					$loop_cnt_1             = 0;
+					foreach($product->catalog_item_field_values as $catalogue_fields)
 					{
-						if($loop_fields > 1)
+						$loop_cnt_1++;
+						if($loop_cnt_1 == 1)
 						{
-							//$fields             .= ' '.$field_value->.': '.$field_value->value.',';
-							$fields             .= ' '.$field_value->value.',';
+							echo heading($catalogue_fields->value.' ('.$product->item_number.')', 5);
+						}
+						elseif($loop_cnt_1 == 2)
+						{
+							echo full_div($catalogue_fields->value, 'greyTxt');
 						}
 						else
 						{
-							$loop_fields++;
+							break;
 						}
 					}
-					echo $this->scrap_string->remove_lc($fields);
+
+					// Extra fields
+					$loop_cnt_2             = 0;
+					foreach($product->catalog_item_field_values as $catalogue_fields)
+					{
+						$loop_cnt_2++;
+						if($loop_cnt_2 == 1)
+						{
+							echo div_height(6);
+						}
+						if($loop_cnt_2 > 6)
+						{
+							//echo full_div('<b>'.$catalogue_fields->catalog_item_definition_field->field_name.':</b> '.$catalogue_fields->value, 'extraValue');
+							echo full_div('<b>Field Name:</b> '.$catalogue_fields->value, 'extraValue');
+						}
+					}
+					echo clear_float();
 
 				echo '</td>';
 
-				echo '<td></td>';
+				// Stock & MSRP
+				echo '<td class="msrp">';
+
+					$loop_cnt_3             = 0;
+					foreach($product->catalog_item_field_values as $catalogue_fields)
+					{
+						if($loop_cnt_3 == 1)
+						{
+							echo div_height(3);
+						}
+						$loop_cnt_3++;
+						if($loop_cnt_3 == 3)
+						{
+							//echo full_div('<b>'.$catalogue_fields->catalog_item_definition_field->field_name.'</b>');
+							echo full_div('<b>Field Name</b>');
+							echo full_div('$'.$catalogue_fields->value);
+						}
+						elseif($loop_cnt_3 == 4)
+						{
+							echo div_height(5);
+							//echo full_div('<b>'.$catalogue_fields->catalog_item_definition_field->field_name.'</b>');
+							echo full_div('<b>Field Name</b>');
+							echo full_div($catalogue_fields->value);
+						}
+					}
+
+				echo '</td>';
 
 			echo '</tr></table>';
 
-		// End of product item
+			// Hidden data
+			echo hidden_div($product->id, 'hdProductId');
+
 		echo close_div();
 	}
 }

@@ -12,9 +12,32 @@ $(document).ready(function(){
 
 
 // ------------------------------------------------------------------------------EXECUTE
+
+    $('.scrap_date').datepicker(
+    {
+        showOn				: 'both',
+        buttonImage			: '../../scrap_assets/images/icons/calendar.png',
+        buttonImageOnly		: true,
+        dateFormat			: 'yy-mm-dd',
+        changeYear			: true,
+        changeMonth			: true,
+        minDate				: '+0'
+    });
+
+    $fc_save_event_changes();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- SAVE EVENT CHANGES
+    function $fc_save_event_changes()
+    {
+        $('.btnSaveChanges').live('click', function()
+        {
+            // Submit
+            $('.frmSaveEventChanges').submit();
+        });
+    }
 
 
 });

@@ -70,10 +70,8 @@
     margin-bottom: 0px;
     margin-top: 1px;
 }
-
 .itemContainer {
     display: block;
-    width: 840px;
     margin-bottom: 10px;
     border: 1px solid #f3f3f3;
     -webkit-box-shadow: 0px 1px 1px #c8c8c8;
@@ -94,10 +92,9 @@
     margin: 10px 12px;
 }
 .itemContainer table td {
-    padding: 0px 10px;
+    padding: 15px 10px;
     text-align: center;
-    vertical-align: middle;
-    white-space: nowrap;
+    vertical-align: top;
 }
 .itemContainer table td.fullCell {
     width: 100%;
@@ -140,6 +137,59 @@
 }
 .itemInformation .itemImage {
     margin-top: 20px;
+}
+.itemContainer .inset {
+    padding: 10px;
+}
+/* Small item container */
+.itemContainer.small h5 {
+    margin-bottom: 5px;
+}
+.itemContainer.small table td {
+    padding: 8px 8px;
+}
+.itemContainer.small table td .greyTxt {
+    font-size: 12px;
+    line-height: 16px;
+}
+.itemContainer.small table td .extraValue {
+    float:left;
+    margin-right: 10px;
+}
+.itemContainer.small table td.productDetails {
+    width: 600px;
+}
+.itemContainer.small table td.msrp {
+    width: 130px;
+}
+.itemContainer.small table td .priceDiscountStock {
+    float: right;
+    padding: 15px;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-box-shadow: rgba(0,0,0,0.34) 0px 1px 3px;
+    -webkit-box-shadow: rgba(0,0,0,0.34) 0px 1px 3px;
+}
+.itemContainer.small table td .price {
+    display: block;
+    margin-bottom: 5px;
+    color: #458c00;
+    font-size: 20px;
+    text-align: center;
+}
+.itemContainer.small table td .discount {
+    display: block;
+    margin-bottom: 2px;
+    color: #179fce;
+    font-size: 16px;
+    text-align: center;
+}
+.itemContainer.small table td .quantity {
+    display: block;
+    text-align: center;
 }
 
 

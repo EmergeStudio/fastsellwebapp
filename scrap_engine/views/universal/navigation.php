@@ -32,24 +32,7 @@ echo open_div('appNavigationContainer middle');
 				echo '<li>';
 			}
 
-				echo full_div('<span class="icon-ticket yellow"></span>FastSells', 'sectionNavLink fastsells');
-
-				// Sub navigation
-				echo '<ul class="subNav">';
-
-					echo '<li>';
-
-						echo anchor('fastsells', 'Your FastSells', 'class="sectionNavSubLink"');
-
-					echo '</li>';
-
-					echo '<li>';
-
-						echo anchor('fastsells/create_event', 'Create New FastSell', 'class="sectionNavSubLink"');
-
-					echo '</li>';
-
-				echo '</ul>';
+				echo anchor('fastsells', '<span class="icon-ticket yellow"></span>FastSells', 'class="sectionNavLink"');
 
 			echo '</li>';
 
@@ -91,18 +74,18 @@ echo open_div('appNavigationContainer middle');
 			echo '</li>';
 
 			// Orders link
-			if($app_page == 'pageOrders')
-			{
-				echo '<li class="active">';
-			}
-			else
-			{
-				echo '<li>';
-			}
-
-				echo anchor('orders', '<span class="icon-shopping-cart blue"></span>Orders', 'class="sectionNavLink"');
-
-			echo '</li>';
+//			if($app_page == 'pageOrders')
+//			{
+//				echo '<li class="active">';
+//			}
+//			else
+//			{
+//				echo '<li>';
+//			}
+//
+//				echo anchor('orders', '<span class="icon-shopping-cart blue"></span>Orders', 'class="sectionNavLink"');
+//
+//			echo '</li>';
 
 			// Contacts link
 			if($app_page == 'pageCustomers')

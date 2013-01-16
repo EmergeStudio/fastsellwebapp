@@ -1,0 +1,49 @@
+/**
+ * customers.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.pageFastSellMyOrder .controlBar .bigIcon {
+    width: 115px;
+    padding-top: 6px;
+    height: 94px;
+    margin-left: 13px;
+    font-size: 80px;
+    color: #25aae1;
+    border-right: 1px solid rgba(0,0,0,0.2);
+}
+.pageFastSellMyOrder .controlBar .orderDetails {
+    width: 400px;
+    height: 60px;
+    padding: 20px 25px;
+    font-size: 80px;
+    border-left: 1px solid #fff;
+}
+.pageFastSellMyOrder .controlBar .orderDeliveryAddress {
+    padding: 20px 25px;
+    width: 500px;
+}
+.pageFastSellMyOrder .controlBar .orderDeliveryAddress .deliveryAddress {
+    width: 120px;
+}
+.pageFastSellMyOrder table .leftText {
+    text-align: left;
+}
+.pageFastSellMyOrder table .rightText {
+    text-align: right;
+}
+.pageFastSellMyOrder table .productPrice {
+    color: #069802;
+}

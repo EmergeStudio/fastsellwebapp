@@ -86,21 +86,6 @@ echo open_div('middle');
 
 		echo close_div();
 
-		// Move product
-		echo open_div('whiteBack');
-
-			// Heading
-			echo div_height(6);
-			echo full_div('', 'icon-question headingIcon blue');
-			echo heading('A FastSell', 2);
-			echo div_height(8);
-
-			// Content
-			echo '<p>Have product you need to move quickly?</p>';
-			echo '<p>Create a FastSell and let your customers know immediately about the great savings they can make by buying now.</p>';
-
-		echo close_div();
-
 	// End of small right column
 	echo close_div();
 
@@ -121,8 +106,7 @@ echo open_div('middle');
 			// Heading
 			echo div_height(6);
 			echo full_div('', 'icon-shopping-cart headingIcon blue');
-			echo heading('My Latest Orders', 2);
-			echo div_height(8);
+			echo heading('My Recent Orders', 2);
 
 			// Order list - quick
 			$this->load->view('orders/orders_list');

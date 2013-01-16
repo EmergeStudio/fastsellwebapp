@@ -15,3 +15,75 @@
 
 /* GENERAL
 --------------------------------------------------------------------------------------- */
+.pageFastSellInfo .showDescription.floatLeft input, .pageFastSellInfo .showDescription.floatLeft textarea {
+    width: 500px;
+}
+.pageFastSellInfo .showDescription.floatLeft textarea {
+    height: 150px;
+}
+label {
+    margin-top: 25px;
+}
+input.scrap_date {
+    width: 215px;
+    margin-right: 10px;
+}
+input {
+    width: 400px;
+    color: #888;
+    margin-bottom: 15px;
+}
+div.selector {
+    float: left;
+    width: 73px;
+    margin-right: 10px;
+    margin-left: -3px;
+}
+div.selector select {
+    width: 85px;
+}
+div.selector span {
+    width: 50px;
+}
+.timeLabel label {
+    margin-top: 5px;
+}
+.inset.showDescription, .inset.showCloseDate {
+    padding: 25px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+.inset.showDescription {
+    width: 510px;
+}
+.time {
+    margin-top: -10px;
+}
+.messageDateAndTime {
+    position: absolute;
+    display: block;
+    width: 587px;
+    height: 95px;
+    margin: 320px 0px 0px 294px;
+    text-indent: -1000px;
+    background-image: url('../../images/universal/message_date_and_time.png');
+    overflow: hidden;
+}
+.messageCloseDate {
+    position: absolute;
+    display: block;
+    width: 745px;
+    height: 62px;
+    margin: 40px 0px 0px 325px;
+    text-indent: -1000px;
+    background-image: url('../../images/universal/message_close_date.png');
+    overflow: hidden;
+}
+.inset.showDescription.floatRight {
+    background-image: url(../../images/messages/date_stuff.png);
+    background-repeat: no-repeat;
+    background-position: 250px 108px;
+}
+.ui-datepicker-trigger:hover {
+    cursor: pointer;
+}

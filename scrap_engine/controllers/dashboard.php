@@ -32,6 +32,7 @@ class Dashboard extends CI_Controller
 		elseif($acc_type == 'customer')
 		{
 			$customer_id                = $this->scrap_web->get_customer_org_id();
+			$customer_user_id           = $this->scrap_web->get_customer_user_id();
 		}
 		
 		
@@ -53,8 +54,16 @@ class Dashboard extends CI_Controller
 			$dt_nav['app_page']	            = 'pageDashboard';
 			$this->load->view('universal/navigation', $dt_nav);
 
+			// Get the fastsells
+			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id;
+			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
+			$dt_body['fastsells']           = $call_fastsells;
+
+			// Orders
+			$dt_body['orders']['error']     = TRUE;
+
 			// Load the view
-			$this->load->view('dashboard/main_dashboard');
+			$this->load->view('dashboard/main_dashboard', $dt_body);
 		}
 		elseif($acc_type == 'customer')
 		{
@@ -71,6 +80,11 @@ class Dashboard extends CI_Controller
 			$url_address                    = 'addresses/.jsons?customerid='.$customer_id;
 			$call_address                   = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
 			$dt_body['address']             = $call_address;
+
+			// Orders
+			$url_orders                     = 'fastsellorders/.jsons?customeruserid='.$customer_user_id;
+			$call_orders                    = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
+			$dt_body['orders']              = $call_orders;
 
 			// Load the view
 			$this->load->view('dashboard/customer_dashboard', $dt_body);
