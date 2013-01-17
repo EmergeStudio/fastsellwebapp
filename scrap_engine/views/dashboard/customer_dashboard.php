@@ -103,17 +103,24 @@ echo open_div('middle');
 		// Current orders
 		echo open_div('whiteBack');
 
-			// Heading
-			echo div_height(6);
-			echo full_div('', 'icon-shopping-cart headingIcon blue');
-			echo heading('My Recent Orders', 2);
+			if($orders['error'] == FALSE)
+			{
+				// Heading
+				echo div_height(6);
+				echo full_div('', 'icon-shopping-cart headingIcon blue');
+				echo heading('My Recent Orders', 2);
 
-			// Order list - quick
-			$this->load->view('orders/orders_list');
+				// Order list - quick
+				$this->load->view('orders/orders_list');
 
-			// Link button
-			echo div_height(30);
-			echo make_button('View All Orders', '', 'orders');
+				// Link button
+				echo div_height(30);
+				echo make_button('View All Orders', '', 'orders');
+			}
+			else
+			{
+				echo full_div('Nor Orders', 'messageNoOrders1');
+			}
 
 		echo close_div();
 

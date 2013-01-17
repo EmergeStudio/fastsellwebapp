@@ -5,16 +5,18 @@
 if($customers['error'] == FALSE)
 {
 	// Get the customers result
-	$json_customers			= $customers['result'];
+	$json_customers			    = $customers['result'];
 
 	// Table heading
 	$this->table->set_heading('', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number', '', '');
 
 	// Loop through and display customer
-	foreach($json_customers->customer_to_show_hosts as $customer_to_show_host)
+	foreach($json_customers->customer_organizations as $customer)
 	{
-		// Some variables
-		$customer_details       =   $customer_to_show_host->customer_organization;
+		// Get the customer number
+		$url_customer               = 'customertoshowhosts/.json?showhostid='.$show_host_id.'&customerid='.$customer->id;
+		$call_customer              = $this->scrap_web->webserv_call($url_customer, FALSE, 'get', FALSE, FALSE);
+		$json_customers             = $call_customer['result'];
 
 		// Table data
 		$ar_fields              = array();
@@ -29,13 +31,13 @@ if($customers['error'] == FALSE)
 		array_push($ar_fields, img($img_properties));
 
 		// Customer name
-		array_push($ar_fields, array('data' => $customer_details->name, 'class' => 'fullCell'));
+		array_push($ar_fields, array('data' => $customer->name, 'class' => 'fullCell'));
 
 		// Customer number
-		array_push($ar_fields, $customer_to_show_host->customer_number);
+		array_push($ar_fields, $json_customers->customer_number);
 
 		// View orders
-		array_push($ar_fields, anchor('fastsells/view_customer_order/'.$customer_details->id, 'View Orders'));
+		array_push($ar_fields, anchor('fastsells/view_customer_order/'.$customer->id, 'View Orders'));
 
 		// Buttons
 		$html   = '';
@@ -44,8 +46,7 @@ if($customers['error'] == FALSE)
 			$html   .= make_button('', 'btnRemoveCustomer btnCross iconOnly', '', 'left', 'Remove this customer from the FastSell');
 
 			// Hidden data
-			$html   .= hidden_div($customer_details->id, 'hdCustomerId');
-			$html   .= hidden_div($customer_to_show_host->id, 'hdCustomerToShowHostId');
+			$html   .= hidden_div($customer->id, 'hdCustomerId');
 
 		$html   .= close_div();
 		array_push($ar_fields, $html);

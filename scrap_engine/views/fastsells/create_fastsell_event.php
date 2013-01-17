@@ -32,9 +32,7 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo full_div('Who To Notify?', 'shifterBlock');
 
-			echo full_div('Add Products', 'shifterBlock');
-
-			echo full_div('Create FastSell Event', 'shifterBlock shifterEnd');
+			echo full_div('Add Products', 'shifterBlock shifterEnd');
 
 			// Clear float
 			echo clear_float();
@@ -52,47 +50,47 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		echo heading('FastSell Details', 2);
 		echo div_height(15);
 
-		// Show banner
-		echo open_div('inset showBanner');
-
-			echo full_div('', 'uploadedBannerContainer');
-
-			echo open_div('uploadBannerMessage');
-
-				echo img('scrap_assets/images/icons/upload_images_icon.png');
-
-				echo full_div('', 'loader');
-
-			echo close_div();
-
-		echo close_div();
-
-		// Upload space
-		echo div_height(20);
-		echo open_div('uploadBanner');
-
-			echo open_div('uploaderContainer');
-
-				// Upload form
-				echo form_open_multipart('ajax_handler_shows/upload_temp_banner', 'class="frmUploadBanner"');
-
-					$inp_data		= array
-					(
-						'name'		=> 'uploadedFile',
-						'class'		=> 'uploadedFile'
-					);
-					echo form_upload($inp_data);
-					echo clear_float();
-
-				// Close the form
-				echo form_close();
-
-			echo close_div();
-
-		echo close_div();
-
-		// Some height
-		echo div_height(30);
+//		// Show banner
+//		echo open_div('inset showBanner');
+//
+//			echo full_div('', 'uploadedBannerContainer');
+//
+//			echo open_div('uploadBannerMessage');
+//
+//				echo img('scrap_assets/images/icons/upload_images_icon.png');
+//
+//				echo full_div('', 'loader');
+//
+//			echo close_div();
+//
+//		echo close_div();
+//
+//		// Upload space
+//		echo div_height(20);
+//		echo open_div('uploadBanner');
+//
+//			echo open_div('uploaderContainer');
+//
+//				// Upload form
+//				echo form_open_multipart('ajax_handler_shows/upload_temp_banner', 'class="frmUploadBanner"');
+//
+//					$inp_data		= array
+//					(
+//						'name'		=> 'uploadedFile',
+//						'class'		=> 'uploadedFile'
+//					);
+//					echo form_upload($inp_data);
+//					echo clear_float();
+//
+//				// Close the form
+//				echo form_close();
+//
+//			echo close_div();
+//
+//		echo close_div();
+//
+//		// Some height
+//		echo div_height(30);
 
 		// Show Details
 		echo open_div('inset showDescription floatRight');
@@ -163,6 +161,13 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 	// Shifter pane 2
 	echo open_div('shifterPane shifterPane_2');
 
+		// Upload master file
+		echo open_div('customerMasterFileUpload floatRight');
+
+			echo make_button('Upload Master Data File', 'btnAdd btnUploadCustomers blueButton');
+
+		echo close_div();
+
 		// Heading
 		echo full_div('', 'icon-users headingIcon lightGrey');
 		echo heading('Who Do You Want To Notify Of This FastSell?', 2);
@@ -178,20 +183,6 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 			echo heading('Customers Who Will Be Notified', 3);
 			echo '<p>These selected customers will be notified of this FastSell and be able to purchase any one of your selected products.</p>';
 			echo div_height(15);
-
-			// Message
-			echo open_div('message messageSelectFromLeftOrUpload');
-
-				$inp_data		= array
-				(
-					'name'		=> 'uploadedFile2',
-					'class'		=> 'uploadedFile2'
-				);
-				echo open_div('uploaderContainer').form_upload($inp_data).close_div();
-				echo clear_float();
-				echo div_height(50);
-
-			echo close_div();
 
 			// Chose users
 			echo open_div('chosenUsersList displayNone');
@@ -248,24 +239,18 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 	// Shifter pane 3
 	echo open_div('shifterPane shifterPane_3');
 
+		// Upload master file
+		echo open_div('productsMasterFileUpload floatRight');
+
+			echo make_button('Upload Master Data File', 'btnAdd btnUploadProducts blueButton');
+
+		echo close_div();
+
 		// Heading
 		echo full_div('', 'icon-box headingIcon lightGrey');
 		echo heading('What Products Are You Wanting To Sell?', 2);
 		echo '<p>Select items in your product catalogue to add to the FastSell and set your desired price.</p>';
 		echo div_height(20);
-
-		// Upload master file
-		echo open_div('productsMasterFileUpload floatRight');
-
-			echo heading('Link Products Via Master File:'.nbs(4), 3, 'class="floatLeft"');
-			$inp_data		= array
-			(
-				'name'		=> 'uploadedFile3',
-				'class'		=> 'uploadedFile3'
-			);
-			echo form_upload($inp_data);
-
-		echo close_div();
 
 		// Search products
 		$inp_data			= array
@@ -301,25 +286,12 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 	echo close_div();
 
-	// Shifter pane 4
-	echo open_div('shifterPane shifterPane_4');
-
-		// Heading
-		echo full_div('', 'icon-checkmark headingIcon lightGrey');
-		echo heading('All Done But You Can Make Changes', 2);
-
-		// Content
-		echo '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et tortor quis nunc vehicula dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed arcu risusipsum dolor sit amet, consectetur adipiscing elit. Curabitur et tortor quis</p>';
-		echo '<p>Sit amet, consectetur adipiscing elit. Curabitur et tortor quis nunc vehicula dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed arcu risusipsum dolor sit amet, consectetur adipiscing elit. Curabitur et tortor quis.</p>';
-
-	echo close_div();
-
 	// Shifter navigation
 	echo open_div('shifterNav');
 
 		echo make_button('Next Step', 'btnShifterNext', '', 'right');
 
-		echo make_button('Finish FastSell Create', 'btnComplete', '', 'right', '', FALSE);
+		echo make_button('Ok All Done', 'btnComplete', 'fastsells', 'right', '', FALSE);
 
 		echo make_button('Go Back', 'btnShifterBack', '', '', '', FALSE);
 

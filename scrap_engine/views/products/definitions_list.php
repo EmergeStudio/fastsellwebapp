@@ -8,7 +8,7 @@ if($definitions['error'] == FALSE)
 	$json_definitions			= $definitions['result'];
 
 	// Table heading
-	$this->table->set_heading('', array('data' => 'Definition Name', 'class' => 'txtLeft'), array('data' => 'Fields', 'class' => 'fullCell'), '', '');
+	$this->table->set_heading('', array('data' => 'Group Name', 'class' => 'txtLeft'), array('data' => 'Fields', 'class' => 'fullCell'), '', '');
 
 	// Loop through and display customer
 	foreach($json_definitions->catalog_item_definitions as $definition)
@@ -20,16 +20,25 @@ if($definitions['error'] == FALSE)
 		$ar_fields              = array();
 
 		// Icon
-		array_push($ar_fields, full_div('', 'icon-clipboard definitionIcon'));
+		array_push($ar_fields, ''/*full_div('', 'icon-clipboard definitionIcon')*/);
 
 		// Definition name
 		array_push($ar_fields, array('data' => $definition->name, 'class' => 'txtLeft definitionName'));
 
 		// Fields
 		$fields                 = '';
+		$loop_count             = 0;
 		foreach($definition_fields as $definition_field)
 		{
-			$fields             .= make_button($definition_field->field_name.'<span class="icon-cross"></span>', 'productField', '', 'left');
+			$loop_count++;
+			if($loop_count < 3)
+			{
+				$fields             .= make_button($definition_field->field_name, 'productField2', '', 'left');
+			}
+			else
+			{
+				$fields             .= make_button($definition_field->field_name.hidden_div($definition_field->id, 'hdFieldId').'<span class="icon-cross"></span>', 'productField', '', 'left');
+			}
 		}
 		$fields                 = $this->scrap_string->remove_lc(trim($fields));
 		array_push($ar_fields, array('data' => $fields, 'class' => 'fullCell'));
@@ -41,8 +50,7 @@ if($definitions['error'] == FALSE)
 		$html   = '';
 		$html   .= open_div('extraOptions');
 
-			$html   .= make_button('', 'btnEditDefinition btnEdit iconOnly', '', 'left', 'Edit this product definition');
-			$html   .= make_button('', 'btnDeleteDefinition btnCross iconOnly', '', 'left', 'Delete this product definition');
+			$html   .= full_div('', 'btnDeleteDefinition icon-cross', 'Delete this product group');
 
 			// Hidden data
 			$html   .= hidden_div($definition->name, 'hdDefinitionName');
@@ -57,5 +65,9 @@ if($definitions['error'] == FALSE)
 
 	// Generate table
 	echo $this->table->generate();
+}
+else
+{
+	echo full_div('No Definitions', 'messageNoDefinitions btnAddDefinition');
 }
 ?>

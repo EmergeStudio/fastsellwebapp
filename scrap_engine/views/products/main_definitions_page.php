@@ -10,7 +10,7 @@ echo open_div('middle');
 		echo open_div('controlBar');
 
 			// Add definition
-			echo make_button('Add Definition', 'btnAddDefinition btnAdd blueButton', '', 'right');
+			echo make_button('Add Group', 'btnAddDefinition btnAdd blueButton', '', 'right');
 
 			echo open_div('floatLeft');
 

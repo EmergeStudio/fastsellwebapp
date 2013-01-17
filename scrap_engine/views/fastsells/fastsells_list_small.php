@@ -68,4 +68,15 @@ if($fastsells['error'] == FALSE)
 		echo '</a>';
 	}
 }
+else
+{
+	if($this->scrap_web->get_show_host_id() != FALSE)
+	{
+		echo anchor('fastsells/create_event', 'Create Fastsell', 'class="messageCreateAFastSell"');
+	}
+	else
+	{
+		echo full_div('No Fastsells', 'messageNoFastSells');
+	}
+}
 ?>

@@ -146,7 +146,7 @@ if($definitions['error'] == FALSE)
 		echo open_div('inset');
 
 			// Heading
-			echo form_label('Select Your Product Definition');
+			echo form_label('Select Your Product Group');
 			echo div_height(10);
 
 			// Get the definitions result

@@ -59,15 +59,15 @@ echo open_div('appNavigationContainer middle');
 
 					echo '<li>';
 
-						echo anchor('products/definitions', 'Product Definitions', 'class="sectionNavSubLink"');
+						echo anchor('products/definitions', 'Product Groups', 'class="sectionNavSubLink"');
 
 					echo '</li>';
 
-					echo '<li>';
-
-						echo anchor('products/upload_master_file', 'Upload Via Master File', 'class="sectionNavSubLink lastLink"');
-
-					echo '</li>';
+//					echo '<li>';
+//
+//						echo anchor('products/upload_master_file', 'Upload Via Master File', 'class="sectionNavSubLink lastLink"');
+//
+//					echo '</li>';
 
 				echo '</ul>';
 

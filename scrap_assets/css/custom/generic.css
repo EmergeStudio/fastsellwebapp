@@ -222,6 +222,9 @@
 	padding-right:6px;
 	text-shadow:#313131 1px 1px 0px;
 }
+.leftText {
+    text-align: left;
+}
 
 
 
@@ -513,10 +516,13 @@ html {
 	white-space:nowrap;
 }
 .middle .coolTable td {
-	padding:14px 6px;
+	padding: 16px 8px;
 	text-align:center;
 	vertical-align:middle;
 	white-space:nowrap;
+}
+.middle .coolTable td.rightText {
+    text-align: right;
 }
 .middle .coolTable td.fullCell, .middle .coolTable th.fullCell {
 	width:100%;
@@ -808,6 +814,14 @@ html {
     background-image: url(../../images/messages/select_from_side_or_upload.png);
     background-repeat: no-repeat;
     background-position: 36px 50px;
+}
+.middle .coolTable .extraOptions .icon-cross {
+    font-size: 30px;
+    text-shadow: none;
+}
+.middle .coolTable .extraOptions .icon-cross:hover {
+    cursor: pointer;
+    color: #d61818;
 }
 
 

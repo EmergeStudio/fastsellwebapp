@@ -7,7 +7,7 @@ echo open_div('rightColumn');
 	// Item definition
 	echo open_div('inset');
 
-		echo form_label('Definition Name');
+		echo form_label('Group Name');
 		$inp_data			= array
 		(
 			'name'			=> 'inpDefinitionName',
@@ -24,15 +24,15 @@ echo open_div('rightColumn');
 	echo open_div('inset includedDefinitionFields');
 
 		echo form_label('Included Fields');
-		echo full_div('The following fields will automatically be available on all items that are based on this definition.');
+		echo full_div('The following fields will automatically be created with this group and are required in all upload files.');
 		echo div_height(15);
 
 		echo full_div('<span class="icon-checkmark-2"></span>Product Name');
 		echo full_div('<span class="icon-checkmark-2"></span>Description');
-		echo full_div('<span class="icon-checkmark-2"></span>MSRP');
-		echo full_div('<span class="icon-checkmark-2"></span>Pack & Size');
-		echo full_div('<span class="icon-checkmark-2"></span>Expiry Date');
-		echo full_div('<span class="icon-checkmark-2"></span>Shelf Date');
+
+		echo div_height(15);
+		echo form_label('Display Discount');
+		echo full_div('If you want a discount to be displayed on your product then include a field called <b>MSRP</b>.');
 
 	echo close_div();
 

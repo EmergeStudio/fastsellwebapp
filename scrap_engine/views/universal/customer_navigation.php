@@ -37,7 +37,7 @@ echo open_div('appNavigationContainer middle');
 			echo '</li>';
 
 			// Orders link
-			if($app_page == 'pageOrders')
+			if($app_page == 'pageMyOrders')
 			{
 				echo '<li class="active">';
 			}

@@ -7,7 +7,7 @@ if($products['error'] == FALSE)
 	$json_products          = $products['result'];
 
 	// Table heading
-	$this->table->set_heading('', 'Product Name', array('data' => 'Product Fields', 'class' => 'fullCell'), 'Stock Units', 'Price', '');
+	$this->table->set_heading('', 'Product Name', array('data' => 'Product Fields', 'class' => 'fullCell'), 'Stock', 'Price', '');
 
 	// Rows
 	foreach($json_products->catalog_items as $product)
@@ -45,7 +45,10 @@ if($products['error'] == FALSE)
 			$loop_cnt++;
 			if($loop_cnt > 1)
 			{
-				$product_fields     .= $product_field->value.', ';
+				if($product_field->value != 'NOT_SET')
+				{
+					$product_fields     .= $product_field->value.', ';
+				}
 			}
 		}
 		$product_fields         = $this->scrap_string->remove_lc(trim($product_fields));

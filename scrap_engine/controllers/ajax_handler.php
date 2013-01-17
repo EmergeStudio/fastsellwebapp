@@ -64,6 +64,47 @@ class Ajax_handler extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| LOG ME IN STAIC
+	|--------------------------------------------------------------------------
+	|
+	| Here the user is logged in, else an error mesage is sent back to notify
+	| them of the failure.
+	|
+	*/
+	function log_in_static()
+	{
+		// Check to see if there is any direct access through the url
+		if($this->input->post('inp_username') && $this->input->post('inp_password'))
+		{
+			// Posted variables
+			$pv_username	= $this->input->post('inp_username');
+			$pv_password	= $this->input->post('inp_password');
+			$pv_encrypt		= 'yes';
+
+			// Login user into ithawt app
+			$login_user     = $this->scrap_wall->login_user($pv_username, $pv_password, $pv_encrypt, FALSE);
+
+			if($login_user == 'userloginsuccess')
+			{
+				// Login success
+				redirect('http://www.fastsellfoods.com/app/dashboard');
+			}
+			else
+			{
+				// Login failure
+				redirect('http://www.fastsellfoods.com/');
+			}
+		}
+		else
+		{
+			// No direct access is allowed !
+			redirect('http://www.fastsellfoods.com/');
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| HTML VIEW
 	|--------------------------------------------------------------------------
 	*/

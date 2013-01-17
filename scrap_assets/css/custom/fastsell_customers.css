@@ -1,0 +1,51 @@
+/**
+ * customers.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+	Sunbox
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+
+
+/* SUNBOX
+--------------------------------------------------------------------------------------- */
+.sunBox.popAddCustomers img {
+    display: none;
+}
+.sunBox.popAddCustomers td, .sunBox.popAddCustomers th {
+    padding: 10px 5px;
+}
+.sunBox.popAddCustomers table {
+    width: 100%;
+}
+.sunBox.popAddCustomers td {
+    vertical-align: middle;
+    border-top: 1px solid #b9b9b9;
+}
+.sunBox.popAddCustomers td.fullCell, .sunBox.popAddCustomers th.fullCell {
+    width:100%;
+    white-space:normal;
+    text-align:left;
+}
+.sunBox.popAddCustomers th div {
+    display: block;
+    width: 200px;
+}
+.sunBox.popCustomerMasterDataFile .contentCenter .popup .inset input {
+    display: block;
+    background-color: #fff;
+    margin: 0px;
+    margin: 0px auto;
+    width: 400px;
+}

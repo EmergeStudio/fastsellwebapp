@@ -20,7 +20,7 @@ class Scrap_wall
 	| LOGIN USER
 	|--------------------------------------------------------------------------
 	*/
-	function login_user($pv_username, $pv_password, $pvEncrypt)
+	function login_user($pv_username, $pv_password, $pvEncrypt, $output = TRUE)
 	{	
 		if(isset($pv_username) && isset($pv_password))
 		{
@@ -96,7 +96,14 @@ class Scrap_wall
 				$this->CI->session->set_userdata('sv_show_set', FALSE);
 					
 				// Successful login
-				echo 'userloginsuccess';
+				if($output == TRUE)
+				{
+					echo 'userloginsuccess';
+				}
+				else
+				{
+					return 'userloginsuccess';
+				}
 			}
 			else
 			{

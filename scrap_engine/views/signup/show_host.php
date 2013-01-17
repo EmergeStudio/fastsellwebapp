@@ -4,9 +4,6 @@
 // Open middle div
 echo open_div('middle');
 
-	// Sign up heading
-	echo heading('Show Host Sign Up', 2);
-
 	// Sign up container
 	echo open_div('signupContain inset');
 		

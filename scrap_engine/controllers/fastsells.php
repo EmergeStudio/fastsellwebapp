@@ -178,6 +178,7 @@ class Fastsells extends CI_Controller
 			{
 				// Some variables
 				$show_host_id               = $this->scrap_web->get_show_host_id();
+				$dt_body['show_host_id']    = $show_host_id;
 
 				// Navigation view
 				$dt_nav['app_page']	        = 'pageFastSellInfo';
@@ -194,7 +195,7 @@ class Fastsells extends CI_Controller
 				$dt_body['products']        = $call_products;
 
 				// Get all the customers
-				$url_customers              = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
+				$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
 				$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 				$dt_body['customers']       = $call_customers;
 
@@ -757,9 +758,9 @@ class Fastsells extends CI_Controller
 			// ----- HEADER ------------------------------------
 			// Some variables
 			$dt_header['title'] 	        = 'FastSell';
-			$dt_header['crt_page']	        = 'pageFastSellInfo';
-			$dt_header['extra_css']         = array('fastsells', 'fastsell_event', 'fastsell_buy');
-			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_event', 'fastsell_buy');
+			$dt_header['crt_page']	        = 'pageFastSellProducts';
+			$dt_header['extra_css']         = array('fastsells', 'fastsell_products');
+			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_products');
 
 			// Load header
 			$this->load->view('universal/header', $dt_header);
@@ -785,7 +786,7 @@ class Fastsells extends CI_Controller
 				$dt_body['products']        = $call_products;
 
 				// Load the view
-				//$this->load->view('fastsells/event_info', $dt_body);
+				$this->load->view('fastsells/manage_products', $dt_body);
 
 
 				// ----- FOOTER ------------------------------------
@@ -795,6 +796,135 @@ class Fastsells extends CI_Controller
 		else
 		{
 			redirect('fastsells');
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| FASTSELL CUSTOMERS
+	|--------------------------------------------------------------------------
+	*/
+	function customers()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+
+		// ----- SOME VARIABLES ------------------------------
+		$acc_type                           = $this->session->userdata('sv_acc_type');
+		$fastsell_id                        = $this->session->userdata('sv_show_set');
+
+
+		// Get the event information
+		$url_fastsell                       = 'fastsellevents/.json?id='.$fastsell_id;
+		$call_fastsell                      = $this->scrap_web->webserv_call($url_fastsell, FALSE, 'get', FALSE, FALSE);
+
+		if($call_fastsell['error'] == FALSE)
+		{
+			// Set the session variables
+			$this->session->set_userdata('sv_show_set', $fastsell_id);
+
+			// FastSell information
+			$fastsell_info                  = $call_fastsell['result'];
+			$started                        = FALSE;
+			if(date('Y-m-d His') >= $fastsell_info->event_start_date)
+			{
+				$started                    = TRUE;
+			}
+
+			// ----- HEADER ------------------------------------
+			// Some variables
+			$dt_header['title'] 	        = 'FastSell';
+			$dt_header['crt_page']	        = 'pageFastSellCustomers';
+			$dt_header['extra_css']         = array('fastsells', 'fastsell_customers');
+			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_customers');
+
+			// Load header
+			$this->load->view('universal/header', $dt_header);
+
+			// ----- CONTENT ------------------------------------
+			if($acc_type == 'show_host')
+			{
+				// Some variables
+				$show_host_id               = $this->scrap_web->get_show_host_id();
+				$dt_body['show_host_id']    = $show_host_id;
+
+				// Navigation view
+				$dt_nav['app_page']	        = 'pageFastSellCustomers';
+				$dt_nav['fastsell_info']    = $fastsell_info;
+				$dt_nav['started']          = $started;
+				$this->load->view('fastsells/event_navigation', $dt_nav);
+
+				// Content
+				$dt_body['fastsell_info']   = $fastsell_info;
+
+				// Get all the customers
+				$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
+				$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+				$dt_body['customers']       = $call_customers;
+
+				// Load the view
+				$this->load->view('fastsells/manage_customers', $dt_body);
+
+
+				// ----- FOOTER ------------------------------------
+				$this->load->view('universal/footer');
+			}
+		}
+		else
+		{
+			redirect('fastsells');
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| LINK CUSTOMERS VIA MASTER DATA FILE
+	|--------------------------------------------------------------------------
+	*/
+	function customer_master_data_upload()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+			$fastsell_id                = $this->session->userdata('sv_show_set');
+
+			if(isset($_FILES['uploadedFile']) && !empty($_FILES['uploadedFile']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFile']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Convert the file
+			$url_file_convert           = 'masterdata/multipartmasterdata.xls';
+			$call_file_convert          = $this->scrap_web->webserv_call($url_file_convert, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form');
+			$json_file_convert          = $call_file_convert['result'];
+			$encode_file_convert        = json_encode($json_file_convert);
+			//echo $encode_file_convert.'<br>';
+
+			// Create customer - If needed
+			$url_insert                 = 'customertoshowhosts/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=false';
+			$call_insert                = $this->scrap_web->webserv_call($url_insert, $encode_file_convert, 'put');
+
+			// Link customer
+			$url_link                   = 'fastsellevents/customers/masterdata.json?fastselleventid='.$fastsell_id.'&validateinnercontentonly=false';
+			$call_link                  = $this->scrap_web->webserv_call($url_link, $encode_file_convert, 'put');
+
+			// Redirect
+			redirect('fastsells/customers');
+		}
+		else
+		{
+			echo 9876;
 		}
 	}
 }

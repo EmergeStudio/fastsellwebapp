@@ -341,10 +341,17 @@ class Scrap_web
         // Get show host id
         $url_show_host_id		= 'showhostusers/.json?userid='.$user_id;
         $call_show_host_id		= $this->webserv_call($url_show_host_id);
-        $json_show_host_id		= $call_show_host_id['result'];
 
         // Return
-        return $json_show_host_id->show_host_organization->id;
+	    if($call_show_host_id['error'] == FALSE)
+	    {
+		    $json_show_host_id		= $call_show_host_id['result'];
+            return $json_show_host_id->show_host_organization->id;
+	    }
+	    else
+	    {
+		    return FALSE;
+	    }
     }
 
 

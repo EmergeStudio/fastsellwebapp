@@ -30,13 +30,18 @@
 }
 .pageProductDefinitions .listContain .productField {
     float: left;
-    margin: 4px;
-    padding: 3px 28px 3px 12px;
+    margin: 5px 10px 5px 0px;
+    padding: 5px 28px 5px 14px;
 }
 .pageProductDefinitions .listContain .productField span {
     position: absolute;
     margin-left: 5px;
     margin-top: 2px;
+}
+.pageProductDefinitions .listContain .productField2 {
+    float: left;
+    margin: 5px 10px 5px 0px;
+    padding: 5px 14px;
 }
 
 .pageProducts .rightContent .nothingSelected {
@@ -190,6 +195,56 @@
 .itemContainer.small table td .quantity {
     display: block;
     text-align: center;
+}
+.pageProducts .rightContent .itemInformation label {
+    margin-top: 15px;
+}
+.pageProducts .rightContent .itemInformation input, .pageProducts .rightContent .itemInformation textarea {
+    width: 240px;
+}
+.pageProducts .rightContent .itemInformation textarea {
+    padding: 9px 0px 8px 6px;
+    height: 60px;
+}
+.messageNoProductDefinitions {
+    display: block;
+    width: 830px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/create_product_group.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.messageNoProductDefinitions:hover {
+    cursor: pointer;
+}
+.messageNoProductDefinitions:active {
+    margin-bottom: 0px;
+    margin-top: 1px;
+}
+.messageNoDefinitions {
+    display: block;
+    width: 830px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/create_product_definitions.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.messageNoDefinitions:hover {
+    cursor: pointer;
+}
+.messageNoDefinitions:active {
+    margin-bottom: 0px;
+    margin-top: 1px;
 }
 
 

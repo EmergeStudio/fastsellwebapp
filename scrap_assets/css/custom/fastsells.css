@@ -16,7 +16,12 @@
 
 /* GENERAL
 --------------------------------------------------------------------------------------- */
-.pageFastSellInfo .middle.appNavigationContainer, .pageFastSellBuy .middle.appNavigationContainer, .pageFastSellMyOrder .middle.appNavigationContainer {
+.pageFastSellInfo .middle.appNavigationContainer,
+.pageFastSellBuy .middle.appNavigationContainer,
+.pageFastSellMyOrder .middle.appNavigationContainer,
+.pageFastSellCustomers .middle.appNavigationContainer,
+.pageFastSellProducts .middle.appNavigationContainer
+{
     margin-top: 40px;
 }
 .bannerBack .timLeft {
@@ -153,9 +158,21 @@
 .itemContainer .inset {
     padding: 10px;
 }
+.itemContainer h4 {
+    display: block;
+    margin-bottom: 5px;
+    margin-top: 8px;
+    width: 480px;
+}
+.itemContainer h4.counterHeadings {
+    width: 285px;
+}
 /* Small item container */
 .itemContainer.small h4 {
+    display: block;
     margin-bottom: 5px;
+    margin-top: 5px;
+    width: 275px;
 }
 .itemContainer.small table td {
     padding: 8px 8px;
@@ -233,6 +250,72 @@ h2 {
 }
 .pageFastSellInfo .rightColSmall .headingIcon {
     height: 40px;
+}
+.messageCreateAFastSell {
+    display: block;
+    width: 830px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/add_fastsell.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.messageCreateAFastSell:hover {
+    cursor: pointer;
+}
+.messageCreateAFastSell:active {
+    margin-bottom: 0px;
+    margin-top: 1px;
+}
+.messageNoOrders1 {
+    display: block;
+    width: 830px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/no_orders_1.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.messageNoFastSells {
+    display: block;
+    width: 830px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/no_fastsells_1.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.messageBuyProduct {
+    display: block;
+    width: 830px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/no_order_yet.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.messageBuyProduct:hover {
+    cursor: pointer;
+}
+.messageBuyProduct:active {
+    margin-bottom: 0px;
+    margin-top: 1px;
 }
 
 

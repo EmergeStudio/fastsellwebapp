@@ -16,6 +16,8 @@ $(document).ready(function(){
     $fc_add_definition();
 
     $fc_delete_definition();
+
+    $fc_remove_field();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
@@ -24,7 +26,7 @@ $(document).ready(function(){
     function $fc_add_definition()
     {
         // Add a document type popup
-        $('body').sunBox.popup('Add Product Definition', 'popAddDefinition',
+        $('body').sunBox.popup('Add Product Group', 'popAddDefinition',
         {
             ajax_path		: $ajax_base_path + 'add_definition_popup',
             close_popup		: false,
@@ -83,15 +85,6 @@ $(document).ready(function(){
                     $('.popAddDefinition input[name="inpDefinitionName"]').addClass('redBorder');
                 }
             }
-//            if($error == false)
-//            {
-//                if($('.popAddDefinition .allDefinitionFields input[name="inpDefinitionField"]:first').val() == '')
-//                {
-//                    $error			= true;
-//                    $.scrap_note_time('Please provide at least one product definition field', 4000, 'cross');
-//                    $('.popAddDefinition .allDefinitionFields input[name="inpDefinitionField"]:first').addClass('redBorder');
-//                }
-//            }
 
             // Successful validation
             if($error == false)
@@ -222,6 +215,75 @@ $(document).ready(function(){
                 // Refresh the content
                 $('.singleColumn .listContain').html($data);
             }
+        });
+    }
+
+    // ----- REMOVE A DEFINITION FIELD
+    function $fc_remove_field()
+    {
+        // Don't delete
+        $('.productField2').live('click', function()
+        {
+            // Some variables
+            $field_name                 = $(this).text();
+
+            // Display message
+            $.scrap_note_time('<b>' + $field_name + '</b> is a required field and cannot be delete', 4000, 'cross');
+        });
+
+        // Delete field
+        $('.productField').live('click', function()
+        {
+            // Some variables
+            $definition_id              = $(this).parents('tr').find('.hdDefinitionId').text();
+            $field_id                   = $(this).find('.hdFieldId').text();
+
+            $('body').sunBox.message(
+            {
+                content			: 'You sure you want to delete this product field?<br><br>(<b>Please Note</b> that by doing this you will <b>delete all</b> field values for products that have already been inserted into this group.)',
+                btn_true		: 'Yup I\'m Sure',
+                btn_false		: 'Oh Gosh No!',
+                message_title	: 'Just Checking',
+                callback		: function($return)
+                {
+                    if($return == true)
+                    {
+                        // Loader
+                        $.scrap_remove_overlay();
+                        $.scrap_note_loader('Deleting the field');
+
+                        // Delete
+                        $.post($ajax_base_path + 'delete_definition_field',
+                        {
+                            definition_id       : $definition_id,
+                            field_id		    : $field_id
+                        },
+                        function($data)
+                        {
+                            $data	= jQuery.trim($data);
+                            console.log($data);
+
+                            if($data == '9876')
+                            {
+                                $.scrap_logout();
+                            }
+                            else if($data == 'wassuccessfullyupdated')
+                            {
+                                $fc_refresh_definitions();
+                                $.scrap_note_hide();
+                            }
+                            else
+                            {
+                                $.scrap_note_time($data, 4000, 'cross');
+                            }
+                        });
+                    }
+                    else if($return == false)
+                    {
+                        $.scrap_remove_overlay();
+                    }
+                }
+            });
         });
     }
 

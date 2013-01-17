@@ -16,9 +16,79 @@ $(document).ready(function(){
     $fc_adjust_product_height();
 
     $fc_add_a_product();
+
+    $fc_view_product();
+
+    $fc_save_product_changes();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- SAVE PRODUCT CHANGES
+    function $fc_save_product_changes()
+    {
+        $('.rightContent .itemInformation .btnSaveProductChanges').live('click', function()
+        {
+            // Some variables
+            $product_fields             = '';
+            $product_id                 = $('.rightContent .itemInformation .hdProductId').text();
+            $product_number             = $('.rightContent .itemInformation input[name="itemNumber"]').val();
+
+            // Get fields
+            $('.rightContent .itemInformation .fieldContainer').each(function()
+            {
+                $field_id               = $(this).find('.hdDefinitionFieldId').text();
+                $field_value            = $(this).find('input[name="productField"]').val();
+                if($field_id == 2)
+                {
+                    $field_value        = $(this).find('textarea[name="productField"]').val();
+                }
+
+                $product_fields         += '[' + $field_id + '::' + $field_value + ']';
+            });
+
+            // Get new item fields
+            $.scrap_note_loader('Updating the product');
+
+            $.post($ajax_base_path + 'update_product_fields',
+            {
+                product_fields		    : $product_fields,
+                product_id              : $product_id,
+                product_number          : $product_number
+            },
+            function($data)
+            {
+                $data                   = jQuery.trim($data);
+                //console.log($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else
+                {
+                    $.scrap_note_time('The product has been update', 4000, 'tick');
+                    $fc_refresh_products_list();
+                }
+            });
+        });
+    }
+
+    // ----- VIEW PRODUCT
+    function $fc_view_product()
+    {
+        $('.itemContainer').live('click', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $product_information    = $this.find('.productInformation').html();
+
+            // Edit DOM
+            $('.nothingSelected').hide();
+            $('.rightContent .itemInformation').html($product_information);
+            $fc_adjust_product_height();
+        });
+    }
 
     // ----- ADJUST PRODUCT HEIGHT
     function $fc_adjust_product_height()
@@ -202,7 +272,7 @@ $(document).ready(function(){
                 function($data)
                 {
                     $data	= jQuery.trim($data);
-                    console.log($data);
+                    //console.log($data);
 
                     if($data == '9876')
                     {

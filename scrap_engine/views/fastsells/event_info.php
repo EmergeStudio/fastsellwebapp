@@ -111,10 +111,10 @@ echo open_div('middle');
 		echo div_height(8);
 
 		// Load the view
-		$this->load->view('products/fastsell_products_list');
+		$this->load->view('products/fastsell_products_list_small');
 
-		echo div_height(20);
-		echo make_button('View More', 'fastsells/products');
+		echo div_height(30);
+		echo make_button('View More', '', 'fastsells/products');
 
 	echo close_div();
 
@@ -131,7 +131,7 @@ echo open_div('middle');
 		$this->load->view('customers/fastsell_customers_list');
 
 		echo div_height(30);
-		echo make_button('View More', 'fastsells/customers');
+		echo make_button('View More', '', 'fastsells/customers');
 
 	echo close_div();
 

@@ -130,8 +130,8 @@ class Ajax_handler_customers extends CI_Controller
 			$password               = $this->scrap_string->random_string();
 
 			// Scrappy web call
-			$url_sample				= 'customers/sample.json';
-			$call_sample			= $this->scrap_web->webserv_call($url_sample);
+			$url_sample				    = 'customers/sample.json';
+			$call_sample			    = $this->scrap_web->webserv_call($url_sample);
 
 			// Validate
 			if($call_sample['error'] == FALSE)
@@ -160,6 +160,7 @@ class Ajax_handler_customers extends CI_Controller
 				$json_sample->customer_owner->user->username		= $username;
 				$json_sample->customer_owner->user->password		= sha1($password);
 				$json_sample->time_zone->id                         = 15;
+				$json_sample->customer_owner->user->clear_password  = $password;
 
 				// Recode
 				$new_json				= json_encode($json_sample);
@@ -328,6 +329,100 @@ class Ajax_handler_customers extends CI_Controller
 
 			// Load the view
 			$this->load->view('customers/error_rows_customers', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD CUSTOMERS POPUP
+	|--------------------------------------------------------------------------
+	*/
+	function add_customers_popup()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+
+			// Get all the customers
+			$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
+			$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+			$dt_body['customers']           = $call_customers;
+
+			// Get the view
+			$this->load->view('customers/ajax/add_customers_popup', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| REFRESH ADDED CUSTOMERS LIST
+	|--------------------------------------------------------------------------
+	*/
+	function get_added_customers()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$fastsell_id                = $this->input->post('event_id');
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+			$dt_body['show_host_id']    = $show_host_id;
+
+			// Get all the customers
+			$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
+			$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+			$dt_body['customers']       = $call_customers;
+
+			// Load the view
+			$this->load->view('customers/fastsell_customers_list', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD CUSTOMERS VIA MASTER DATA FILE POPUP
+	|--------------------------------------------------------------------------
+	*/
+	function add_master_data_file_popup()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Get the view
+			$this->load->view('customers/ajax/add_customers_via_master_data_popup');
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD CUSTOMERS VIA MASTER DATA FILE POPUP
+	|--------------------------------------------------------------------------
+	*/
+	function add_master_data_file_popup_2()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Get the view
+			$this->load->view('customers/ajax/add_customers_via_master_data_popup_2');
 		}
 		else
 		{

@@ -115,6 +115,15 @@
 .pageFastSells .shifterPane_2 .uploaderContainer .uploader {
     background-color: #fff;
 }
+.shifterPane_2 .customerMasterFileUpload {
+    margin-top: -8px;
+}
+.shifterPane_2 .customerMasterFileUpload h3 {
+    padding: 8px 0px 0px 0px;
+}
+.shifterPane_2 .customerMasterFileUpload span {
+    padding: 8px 0px 0px 0px;
+}
 .middle .shifterPane_3 .inpSearchProducts {
     width: 360px;
     margin-right: 10px;
@@ -147,4 +156,19 @@
 }
 .middle .shifterPane_2 .messageSelectFromLeftOrUpload.usersSelected .uploaderContainer {
     margin-top: 50px;
+}
+
+
+
+.sunBox.popCustomerMasterDataFile .contentCenter .popup .inset input {
+    display: block;
+    background-color: #fff;
+    margin: 0px;
+    margin: 0px auto;
+    width: 400px;
+}
+.sunBox.popProductsMasterDataFile .contentCenter .popup .inset input {
+    display: block;
+    background-color: #fff;
+    margin: 0px;
 }

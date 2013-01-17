@@ -66,61 +66,61 @@ div.newOverlay {
 </style>
 <![endif]-->
 <?php
-if($crt_page != 'pageLogin')
-{
-	// Get custom theme
-	$comp_id				= $this->session->userdata('sv_comp_id');
-	$this->db->where('thm_comp_id', $comp_id);
-	$qry					= $this->db->get('compass.tbl_themes');
-	
-	if($qry->num_rows == 1)
-	{
-		$theme				= $qry->row();
-		if(($theme->thm_logo != 'none'))
-		{
-			$logo				= TRUE;
-		}
-		else
-		{
-			$logo				= FALSE;
-		}
-		
-		echo '<style>';
-		
-			if($theme->thm_background != 'none')
-			{
-				echo 'html{ background-image: url('.base_url().$theme->thm_background.'); background-repeat: no-repeat; background-position:left top; }';
-			}
-			else
-			{
-				if($theme->thm_background_color != '')
-				{
-					echo 'html{ background-image: none; }';
-				}
-			}
-		
-			if($theme->thm_background_color != '')
-			{
-				echo 'html{ background-color: '.$theme->thm_background_color.'; }';
-			}
-		
-			if($theme->thm_link_static != '')
-			{
-				echo 'a, .makeLink, .middle a, .middle .makeLink { color: '.$theme->thm_link_static.'; }';
-			}
-		
-			if($theme->thm_link_hover != '')
-			{
-				echo 'a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover { color: '.$theme->thm_link_hover.'; }';
-			}
-		
-		echo '</style>';
-	}
-	else 
-	{
-		$logo				= FALSE;
-	}
-}
+//if($crt_page != 'pageLogin')
+//{
+//	// Get custom theme
+//	$comp_id				= $this->session->userdata('sv_comp_id');
+//	$this->db->where('thm_comp_id', $comp_id);
+//	$qry					= $this->db->get('compass.tbl_themes');
+//
+//	if($qry->num_rows == 1)
+//	{
+//		$theme				= $qry->row();
+//		if(($theme->thm_logo != 'none'))
+//		{
+//			$logo				= TRUE;
+//		}
+//		else
+//		{
+//			$logo				= FALSE;
+//		}
+//
+//		echo '<style>';
+//
+//			if($theme->thm_background != 'none')
+//			{
+//				echo 'html{ background-image: url('.base_url().$theme->thm_background.'); background-repeat: no-repeat; background-position:left top; }';
+//			}
+//			else
+//			{
+//				if($theme->thm_background_color != '')
+//				{
+//					echo 'html{ background-image: none; }';
+//				}
+//			}
+//
+//			if($theme->thm_background_color != '')
+//			{
+//				echo 'html{ background-color: '.$theme->thm_background_color.'; }';
+//			}
+//
+//			if($theme->thm_link_static != '')
+//			{
+//				echo 'a, .makeLink, .middle a, .middle .makeLink { color: '.$theme->thm_link_static.'; }';
+//			}
+//
+//			if($theme->thm_link_hover != '')
+//			{
+//				echo 'a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover { color: '.$theme->thm_link_hover.'; }';
+//			}
+//
+//		echo '</style>';
+//	}
+//	else
+//	{
+//		$logo				= FALSE;
+//	}
+//}
 ?>
 </head>
 <body>
@@ -178,42 +178,42 @@ if($crt_page != 'pageLogin')
 					// Main navigation
 					echo '<ul class="mainNav floatRight">';
 				
-						// Notifications link
-						if($crt_page == 'pageNotifications')
-						{
-							echo '<li class="superActive">';
-						}
-						else
-						{
-							echo '<li>';
-						}
-							// Counter
-							echo open_div('counter blue');
-							
-								echo full_div('6', 'count');
-							
-							echo close_div();
-						
-							echo full_div('<span class="icon-signal"></span>Notifications', 'mainNavLink mainNavNotifications');
-							
-							// Sub navigation
-							echo open_div('subNav subNavNotifications');
-							
-								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 1</a>', 'notificationLine');
-								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 2</a>', 'notificationLine');
-								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 3</a>', 'notificationLine');
-								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 4</a>', 'notificationLine');
-								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 5</a>', 'notificationLine');
-								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 6</a>', 'notificationLine');
-							
-								// Veiw all notifications
-								echo div_height(15);
-								echo make_button('View All Notifications', '', 'notifications');
-							
-							// End of sub navigation
-							echo close_div();					
-						
-						echo '</li>';
+//						// Notifications link
+//						if($crt_page == 'pageNotifications')
+//						{
+//							echo '<li class="superActive">';
+//						}
+//						else
+//						{
+//							echo '<li>';
+//						}
+//							// Counter
+//							echo open_div('counter blue');
+//
+//								echo full_div('6', 'count');
+//
+//							echo close_div();
+//
+//							echo full_div('<span class="icon-signal"></span>Notifications', 'mainNavLink mainNavNotifications');
+//
+//							// Sub navigation
+//							echo open_div('subNav subNavNotifications');
+//
+//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 1</a>', 'notificationLine');
+//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 2</a>', 'notificationLine');
+//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 3</a>', 'notificationLine');
+//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 4</a>', 'notificationLine');
+//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 5</a>', 'notificationLine');
+//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 6</a>', 'notificationLine');
+//
+//								// Veiw all notifications
+//								echo div_height(15);
+//								echo make_button('View All Notifications', '', 'notifications');
+//
+//							// End of sub navigation
+//							echo close_div();
+//
+//						echo '</li>';
 				
 						// User link
 						if($crt_page == 'pageUserDetails')
@@ -252,15 +252,14 @@ if($crt_page != 'pageLogin')
 										// Landing page
 										echo div_height(10);
 										echo full_div('Landing Page');
-			
+
 										// Landing page drop down
 										echo div_height(4);
 										$ar_landing_page	= array
 										(
 											'dashboard' 	=> 'Dashboard',
-											'events'		=> 'Show Events',
-											'my_orders'		=> 'My Orders',
-											'manage/users'	=> 'User Accounts'
+											'fastsells'		=> 'FastSells',
+											'my_orders'		=> 'My Orders'
 										);
 										$landing_page	= 'dashboard';
 										echo form_dropdown('drpdwnLandingPage', $ar_landing_page, $landing_page);

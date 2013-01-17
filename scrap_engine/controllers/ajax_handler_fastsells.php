@@ -89,6 +89,9 @@ class Ajax_handler_fastsells extends CI_Controller
 						// Some variables
 						$json_fastsell                  = $new_fastsell['result'];
 
+						// Set the session variables
+						$this->session->set_userdata('sv_show_set', $json_fastsell->id);
+
 						// Clone the definitions
 						$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
 						$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
@@ -352,6 +355,62 @@ class Ajax_handler_fastsells extends CI_Controller
 
 			// Load the view
 			$this->load->view('products/added_products_fastsell_create', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| LINK CUSTOMERS VIA MASTER DATA FILE
+	|--------------------------------------------------------------------------
+	*/
+	function customer_master_data_upload()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+			$dt_body['show_host_id']    = $show_host_id;
+			$fastsell_id                = $this->session->userdata('sv_show_set');
+
+			if(isset($_FILES['uploadedFile']) && !empty($_FILES['uploadedFile']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFile']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Convert the file
+			$url_file_convert           = 'masterdata/multipartmasterdata.xls';
+			$call_file_convert          = $this->scrap_web->webserv_call($url_file_convert, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form');
+			$json_file_convert          = $call_file_convert['result'];
+			$encode_file_convert        = json_encode($json_file_convert);
+			//echo $encode_file_convert.'<br>';
+
+			// Create customer - If needed
+			$url_insert                 = 'customertoshowhosts/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=false';
+			$call_insert                = $this->scrap_web->webserv_call($url_insert, $encode_file_convert, 'put');
+
+			// Link customer
+			$url_link                   = 'fastsellevents/customers/masterdata.json?fastselleventid='.$fastsell_id.'&validateinnercontentonly=false';
+			$call_link                  = $this->scrap_web->webserv_call($url_link, $encode_file_convert, 'put');
+
+			// Get all the customers
+			$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
+			$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+			$dt_body['customers']       = $call_customers;
+
+			// Load the view
+			$this->load->view('customers/fastsell_customers_list', $dt_body);
 		}
 		else
 		{

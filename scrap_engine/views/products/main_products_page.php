@@ -12,10 +12,7 @@ echo open_div('middle');
 			// Control bar
 			echo open_div('controlBar');
 
-				//echo heading('Item Definitions', 3);
-				echo make_button('Edit', 'btnEditItem btnEdit', '', 'left');
-				echo make_button('Delete', 'btnDeleteItem btnCross', '', 'left');
-				echo clear_float();
+				echo heading('Product Information', 3);
 
 			// End of control bar
 			echo close_div();
@@ -47,8 +44,15 @@ echo open_div('middle');
 			// Control bar
 			echo open_div('controlBar');
 
-				// Add definition
-				echo make_button('Add Product', 'btnAddProduct btnAdd blueButton', '', 'right');
+				// Add product
+				if($definitions['error'] == FALSE)
+				{
+					echo make_button('Add Product', 'btnAddProduct btnAdd blueButton', '', 'right');
+				}
+				else
+				{
+					echo make_button('Go To Product Groups', 'blueButton', 'products/definitions', 'right');
+				}
 
 				echo open_div('floatLeft');
 

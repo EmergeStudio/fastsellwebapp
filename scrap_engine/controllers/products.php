@@ -46,6 +46,11 @@ class Products extends CI_Controller
 		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
 		$dt_body['products']            = $call_products;
 
+		// Get the definitions
+		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+		$dt_body['definitions']         = $call_definitions;
+
 		// Load the view
 		$this->load->view('products/main_products_page', $dt_body);
 		
@@ -142,6 +147,65 @@ class Products extends CI_Controller
 
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| LINK / CREATE PRODUCTS VIA MASTER DATA FILE
+	|--------------------------------------------------------------------------
+	*/
+	function products_master_data_upload()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+			$fastsell_id                = $this->session->userdata('sv_show_set');
+			$product_definition         = $this->input->post('dropItemDefinitions');
+
+			if(isset($_FILES['uploadedFile']) && !empty($_FILES['uploadedFile']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFile']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Convert the file
+			$url_file_convert           = 'masterdata/multipartmasterdata.xls';
+			$call_file_convert          = $this->scrap_web->webserv_call($url_file_convert, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form');
+			$json_file_convert          = $call_file_convert['result'];
+			$encode_file_convert        = json_encode($json_file_convert);
+			//echo $encode_file_convert.'<br>';
+
+			// Link / Create products
+			$url_link                   = 'fastsellitems/masterdata.json?showhostid='.$show_host_id.'&fastselleventid='.$fastsell_id.'&fastsellitemdefid='.$product_definition.'&validateinnercontentonly=false';
+			$call_link                  = $this->scrap_web->webserv_call($url_link, $encode_file_convert, 'put', FALSE, FALSE);
+
+			// Validate the result
+			if($call_link['error'] == FALSE)
+			{
+				echo 'wassuccessfullycreated';
+			}
+			else
+			{
+				// Return the error message
+				$json				        = $call_link['result'];
+				echo $json->error_description;
+			}
+
+			// Redirect
+			redirect('fastsells/products');
+		}
+		else
+		{
+			echo 9876;
+		}
 	}
 }
 

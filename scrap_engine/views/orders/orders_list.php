@@ -45,4 +45,8 @@ if($orders['error'] == FALSE)
 	// Generate table
 	echo $this->table->generate();
 }
+else
+{
+	echo full_div('Nor Orders', 'messageNoOrders1');
+}
 ?>
