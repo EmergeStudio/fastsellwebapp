@@ -12,22 +12,21 @@ if($products['error'] == FALSE)
 	// Rows
 	foreach($json_products->catalog_items as $product)
 	{
-		// Build the information array
-//		$ar_information         = array();
-//		foreach($product->catalog_item->catalog_item_field_values as $product_field)
-//		{
-//			$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
-//			$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
-//			$product_value                          = $product_field->value;
-//
-//			$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value);
-//		}
-//		ksort($ar_information);
-
-		// Profile image
+		// Get the image
+		$src                    = $this->scrap_web->get_profile_image(100000000000000);
+		$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$product->id.'%2Fimage';
+		$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+		if($call_product_image['error'] == FALSE)
+		{
+			$json_product_image         = $call_product_image['result'];
+			if($json_product_image->is_empty == FALSE)
+			{
+				$src                    = $json_product_image->server_local_files[0]->path;
+			}
+		}
 		$img_properties		= array
 		(
-			'src'			=> $this->scrap_web->get_profile_image(100000000000000),
+			'src'			=> $src,
 			'height'		=> '35',
 			'class'			=> 'profileImage'
 		);

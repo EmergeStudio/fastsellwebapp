@@ -172,22 +172,23 @@ class Ajax_handler extends CI_Controller
 				
  			// Submit the changes
  			$new_show_host			= $this->scrap_web->webserv_call('showhosts/.json', $new_json, 'put');
+			echo 'userloginsuccess';
 
  			// Validate the result
- 			if($new_show_host['error'] == FALSE)
- 			{
- 				// New show host
-				$encrypt				= 'yes';
-
-				// Login user into ithawt app
-				$this->scrap_wall->login_user($username, $password, $encrypt);
- 			}
- 			else
- 			{
- 				// Return the error message
- 				$json					= $new_show_host['result'];
- 				echo $json->error_description;
- 			}
+// 			if($new_show_host['error'] == FALSE)
+// 			{
+// 				// New show host
+//				$encrypt				= 'yes';
+//
+//				// Login user into ithawt app
+//				$this->scrap_wall->login_user($username, $password, $encrypt);
+// 			}
+// 			else
+// 			{
+// 				// Return the error message
+// 				$json					= $new_show_host['result'];
+// 				echo $json->error_description;
+// 			}
  		}
  		else
  		{

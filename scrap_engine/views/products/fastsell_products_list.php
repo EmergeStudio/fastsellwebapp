@@ -24,10 +24,21 @@ if($products['error'] == FALSE)
 		}
 		ksort($ar_information);
 
-		// Profile image
+		// Get the image
+		$src                    = 'scrap_assets/images/universal/default_product_image.jpg';
+		$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$product->catalog_item->id.'%2Fimage';
+		$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+		if($call_product_image['error'] == FALSE)
+		{
+			$json_product_image         = $call_product_image['result'];
+			if($json_product_image->is_empty == FALSE)
+			{
+				$src                    = $json_product_image->server_local_files[0]->path;
+			}
+		}
 		$img_properties		    = array
 		(
-			'src'			    => 'scrap_assets/images/universal/default_product_image.jpg',
+			'src'			    => $src,
 			'height'		    => '50',
 			'class'			    => 'profileImage'
 		);

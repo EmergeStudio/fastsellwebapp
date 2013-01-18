@@ -12,10 +12,21 @@ if($products['error'] == FALSE)
 	// Rows
 	foreach($json_products->fastsell_items as $product)
 	{
-		// Profile image
+		// Profile image// Get the image
+		$src                    = $this->scrap_web->get_profile_image(100000000000000);
+		$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$product->id.'%2Fimage';
+		$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+		if($call_product_image['error'] == FALSE)
+		{
+			$json_product_image         = $call_product_image['result'];
+			if($json_product_image->is_empty == FALSE)
+			{
+				$src                    = $json_product_image->server_local_files[0]->path;
+			}
+		}
 		$img_properties		= array
 		(
-			'src'			=> $this->scrap_web->get_profile_image(100000000000000),
+			'src'			=> $src,
 			'height'		=> '35',
 			'class'			=> 'profileImage'
 		);

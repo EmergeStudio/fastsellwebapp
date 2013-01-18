@@ -287,7 +287,7 @@
     width: 340px;
 }
 .sunBox.popAddProduct .contentCenter .popup .rightColumn {
-    width: 760px;
+    width: 370px;
 }
 .sunBox.popAddProduct .contentCenter .popup .rightColumn .inset {
     width: 340px;
@@ -340,4 +340,38 @@
 }
 .sunBox.popAddProduct .includedFields .ui-datepicker-trigger {
     margin-left: 5px;
+}
+
+.sunBox .contentCenter .popup div.blockProductImage {
+    width: 200px;
+    margin: 0px auto;
+    margin-top: 30px;
+    padding: 19px 20px;
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -webkit-box-shadow: 1px 1px 2px #c1c1c1;
+    -moz-box-shadow: 1px 1px 2px #c1c1c1;
+}
+.sunBox .contentCenter .popup div.icon-camera {
+    display: block;
+    font-size: 100px;
+    color: #fcb040;
+    text-align: center;
+}
+.sunBox .contentCenter .popup div.blockProductImage input {
+    width: 190px;
+    margin-top: 15px;
+}
+
+.blockProductImage2 {
+    width: 180px;
+    margin: 0px auto;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -webkit-box-shadow: 1px 1px 2px #c1c1c1;
+    -moz-box-shadow: 1px 1px 2px #c1c1c1;
 }

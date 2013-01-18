@@ -38,6 +38,10 @@ $(document).ready(function(){
     $fc_upload_master_data_file();
 
     $fc_upload_master_data_file_2();
+
+    $fc_remove_customer();
+
+    $fc_remove_product();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
@@ -437,6 +441,20 @@ $(document).ready(function(){
                                 {
                                     $.scrap_note_time('This FastSell event has been created', 4000, 'tick');
                                     $('.hdEventId').text($ex_data[1]);
+
+                                    if($('input[name="uploadedFileFastsellImage"]').val() != '')
+                                    {
+                                        $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                                        $('.blockFastSellImage').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                                        $('.blockFastSellImage .frmFastSellImage').attr('target', $iframe_name);
+                                        $('.blockFastSellImage .frmFastSellImage').submit();
+
+                                        $('iframe[name="'+ $iframe_name +'"]').load(function()
+                                        {
+                                            $data		= jQuery.trim($('.blockFastSellImage iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                                            console.log($data);
+                                        });
+                                    }
                                 }
                                 else if($ex_data[0] == 'okitsbeenupdated')
                                 {
@@ -548,5 +566,87 @@ $(document).ready(function(){
 		// Animate the completed indicator
 		$('.shifter .activeBarContain').delay(100).animate({ width : $new_width }, 500, 'easeOutCubic');
 	}
+
+    // ---------- REMOVE A CUSTOMER
+    function $fc_remove_customer()
+    {
+        $('.btnRemoveCustomer').live('click', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $parent                 = $this.parents('.extraOptions');
+            $customer_id            = $parent.find('.hdCustomerId').text();
+            $event_id               = $('.hdEventId').text();
+
+            // Add the customer
+            // Add the customer
+            $.post($base_path + 'ajax_handler_fastsells/fastsell_customer_link',
+            {
+                event_id		    : $event_id,
+                customer_id			: $customer_id ,
+                type                : 'remove'
+            },
+            function($data)
+            {
+                //console.log($data);
+                $.scrap_note_time('Customer has been removed from this FastSell', 4000, 'tick');
+                $fc_refresh_customer_list();
+            });
+        });
+    }
+
+    // ---------- REFRESH CUSTOMER LIST
+    function $fc_refresh_customer_list()
+    {
+        // Some variables
+        $event_id               = $('.hdEventId').text();
+
+        // The AJAX call
+        $.post($base_path + 'ajax_handler_customers/get_added_customers',
+        {
+            event_id		    : $event_id
+        },
+        function($data)
+        {
+            $data	            = jQuery.trim($data);
+            //console.log($data);
+
+            $('.chosenUsersList').html($data);
+        });
+    }
+
+    // ---------- REMOVE A PRODUCT
+    function $fc_remove_product()
+    {
+        $('.btnRemoveProduct').live('click', function()
+        {
+            // Some variables
+            $this               = $(this);
+            $parent             = $this.parents('.extraOptions');
+            $product_id         = $parent.find('.hdProductId').text();
+            $event_id           = $('.hdEventId').text();
+
+            $.scrap_note_loader('Removing your product');
+            $.post($base_path + 'ajax_handler_fastsells/fastsell_remove_product',
+                {
+                    product_id		    : $product_id,
+                    event_id			: $event_id
+                },
+                function($data)
+                {
+                    $data	            = jQuery.trim($data);
+
+                    if($data == 'okitsbeenremoved')
+                    {
+                        $.scrap_note_time('Your product has been removed', 4000, 'tick');
+                        $fc_refresh_added_product_list();
+                    }
+                    else
+                    {
+                        $.scrap_note_time($data, 4000, 'cross');
+                    }
+                });
+        });
+    }
 
 });

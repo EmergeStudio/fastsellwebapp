@@ -124,12 +124,12 @@ class Ajax_handler_fastsells extends CI_Controller
 						// Create directory
 						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
-						if($new_directory['error'] == TRUE)
-						{
-							// Return the error message
-							$json				= $new_directory['result'];
-							echo $json->error_description;
-						}
+//						if($new_directory['error'] == TRUE)
+//						{
+//							// Return the error message
+//							$json				= $new_directory['result'];
+//							echo $json->error_description;
+//						}
 
 						// Clone the definitions
 						$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
@@ -486,6 +486,41 @@ class Ajax_handler_fastsells extends CI_Controller
 
 			// Load the view
 			$this->load->view('customers/fastsell_customers_list', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| UPLOAD FASTSELL IMAGE
+	|--------------------------------------------------------------------------
+	*/
+	function add_event_image()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$fastsell_id                = $this->session->userdata('sv_show_set');
+
+			if(isset($_FILES['uploadedFileFastsellImage']) && !empty($_FILES['uploadedFileFastsellImage']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Upload the file
+			$url_file_upload            = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$_FILES['uploadedFileFastsellImage']['name'];
+			$call_file_upload           = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', TRUE);
 		}
 		else
 		{

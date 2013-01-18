@@ -289,6 +289,123 @@ class Ajax_handler_products extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| UPLOAD PRODUCT IMAGE
+	|--------------------------------------------------------------------------
+	*/
+	function add_product_image()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$product_id                = $this->input->post('hdProductId');
+			//echo $product_id;
+
+			if(isset($_FILES['uploadedFileProductImage']) && !empty($_FILES['uploadedFileProductImage']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileProductImage']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Create the banner folder
+			$url_sample_path                = 'serverlocalfiles/sample.json';
+			$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+			$json_sample_path               = $call_sample_path['result'];
+
+			// Edit DOM
+			$json_sample_path->path         = 'scrap_products/'.$product_id.'/image';
+			$json_new_folder                = json_encode($json_sample_path);
+
+			// Create directory
+			$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+
+			// Upload the file
+			$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage']['name'];
+			$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', TRUE);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| UPLOAD PRODUCT IMAGE
+	|--------------------------------------------------------------------------
+	*/
+	function add_product_image_2()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$product_id                = $this->input->post('hdProductId2');
+			//echo $product_id;
+
+			if(isset($_FILES['uploadedFileProductImage2']) && !empty($_FILES['uploadedFileProductImage2']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileProductImage2']);
+
+				$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$product_id.'%2Fimage';
+				$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+
+				if($call_product_image['error'] == FALSE)
+				{
+					$json_fastsell_image    = $call_product_image['result'];
+
+					if($json_fastsell_image->is_empty == TRUE)
+					{
+						// Create the banner folder
+						$url_sample_path                = 'serverlocalfiles/sample.json';
+						$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+						$json_sample_path               = $call_sample_path['result'];
+
+						// Edit DOM
+						$json_sample_path->path         = 'scrap_products/'.$product_id.'/image';
+						$json_new_folder                = json_encode($json_sample_path);
+
+						// Create directory
+						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+
+						// Upload the file
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage2']['name'];
+						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
+					}
+					else
+					{
+						foreach($json_fastsell_image->server_local_files as $file_info)
+						{
+							$url_delete                 = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$file_info->name;
+							$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+						}
+
+						// Upload the file
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage2']['name'];
+						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
+					}
+
+					echo base_url().'scrap_products/'.$product_id.'/image/'.$_FILES['uploadedFileProductImage2']['name'];
+				}
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| GET PRODUCT FIELDS
 	|--------------------------------------------------------------------------
 	*/
@@ -398,7 +515,8 @@ class Ajax_handler_products extends CI_Controller
 				// Validate the result
 				if($new_item['error'] == FALSE)
 				{
-					echo 'wassuccessfullycreated';
+					$json_new_item              = $new_item['result'];
+					echo 'wassuccessfullycreated::'.$json_new_item->id;
 				}
 				else
 				{
@@ -617,6 +735,33 @@ class Ajax_handler_products extends CI_Controller
 
 			// Load the view
 			$this->load->view('products/fastsell_products_list', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| REFRESH ADDED PRODUCT LIST
+	|--------------------------------------------------------------------------
+	*/
+	function get_added_products_2()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$event_id                       = $this->input->post('event_id');
+
+			// Get fastsell products
+			$url_fs_products                = 'fastsellitems/.jsons?fastselleventid='.$event_id.'&includevalues=true&includecatalogvalues=true';
+			$call_fs_products               = $this->scrap_web->webserv_call($url_fs_products, FALSE, 'get', FALSE, FALSE);
+			$dt_body['products']            = $call_fs_products;
+
+			// Load the view
+			$this->load->view('products/fastsell_products_list_small', $dt_body);
 		}
 		else
 		{

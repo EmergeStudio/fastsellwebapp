@@ -85,6 +85,24 @@ $(document).ready(function(){
                 }
             });
         });
+
+        $('.rightContent .itemInformation input[name="uploadedFileProductImage2"]').live('change', function()
+        {
+            $.scrap_note_loader('Uploading the new product image');
+
+            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+            $('.rightContent .itemInformation').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+            $('.rightContent .itemInformation .frmProductImage2').attr('target', $iframe_name);
+            $('.rightContent .itemInformation .frmProductImage2').submit();
+
+            $('iframe[name="'+ $iframe_name +'"]').load(function()
+            {
+                $data		= jQuery.trim($('.rightContent .itemInformation iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                $('.rightContent .itemInformation img').attr({ 'src' : $data });
+                $.scrap_note_time('The product image has been uplaoded', 4000, 'tick');
+                $fc_refresh_products_list();
+            });
+        });
     }
 
     // ----- VIEW PRODUCT
@@ -130,7 +148,7 @@ $(document).ready(function(){
         // Show the popup
         $('.btnAddProduct').live('click', function()
         {
-            $('body').sunBox.popup_change_width('popAddProduct', 1175);
+            $('body').sunBox.popup_change_width('popAddProduct', 790);
             $('body').sunBox.show_popup('popAddProduct');
             $('body').sunBox.adjust_popup_height('popAddProduct');
 
@@ -285,16 +303,41 @@ $(document).ready(function(){
                 function($data)
                 {
                     $data	= jQuery.trim($data);
+                    $data   = $data.split('::');
                     //console.log($data);
 
-                    if($data == '9876')
+                    if($data[0] == '9876')
                     {
                         $.scrap_logout();
                     }
-                    else if($data == 'wassuccessfullycreated')
+                    else if($data[0] == 'wassuccessfullycreated')
                     {
+                        if($('.popAddProduct input[name="uploadedFileProductImage"]').val() != '')
+                        {
+                            $('.popAddProduct input[name="hdProductId"]').val($data[1]);
+                            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                            $('.popAddProduct .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                            $('.popAddProduct .frmProductImage').attr('target', $iframe_name);
+                            $('.popAddProduct .frmProductImage').submit();
+
+                            $('iframe[name="'+ $iframe_name +'"]').load(function()
+                            {
+                                $data		= jQuery.trim($('.popAddProduct .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                                console.log($data);
+
+                                // Display error
+                                if($data == 'wassuccessfullyuploaded')
+                                {
+                                    $('.popAddProduct input').val('');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $('.popAddProduct input').val('');
+                        }
+
                         $fc_refresh_products_list();
-                        $('.popAddProduct input').val('');
 
                         // Close the popup
                         $.scrap_note_time('The new product has been added', 4000, 'tick');
@@ -302,7 +345,7 @@ $(document).ready(function(){
                     }
                     else
                     {
-                        $.scrap_note_time($data, 4000, 'cross');
+                        $.scrap_note_time($data[0], 4000, 'cross');
                     }
                 });
             }
@@ -327,6 +370,7 @@ $(document).ready(function(){
             {
                 // Refresh the content
                 $('.leftContent .listContain').html($data);
+                $('.leftContent .listContain input:file').uniform();
                 $fc_adjust_product_height();
             }
         });

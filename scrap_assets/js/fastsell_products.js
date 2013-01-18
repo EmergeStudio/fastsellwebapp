@@ -37,16 +37,15 @@ $(document).ready(function(){
         });
     }
 
-    // ---------- UPLOAD MASTER DATA FILE
     function $fc_upload_master_data_file()
     {
         // Buy products popup
         $('body').sunBox.popup('Upload Master Data File', 'popProductsMasterDataFile',
-        {
-            ajax_path		    : $ajax_base_path + 'add_master_data_file_popup',
-            close_popup		    : false,
-            callback 		    : function($return){}
-        });
+            {
+                ajax_path		    : $base_path + 'ajax_handler_products/add_master_data_file_popup_2',
+                close_popup		    : false,
+                callback 		    : function($return){}
+            });
 
         // Show the popup
         $('.btnUploadDataFile').live('click', function()
@@ -59,7 +58,37 @@ $(document).ready(function(){
         // Submit
         $('.popProductsMasterDataFile .returnTrue').live('click', function()
         {
-            $('.frmProductsMasterDataUpload').submit();
+            // Submit the information
+            $.scrap_note_loader('Uploading products now');
+
+            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+            $('.popProductsMasterDataFile .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+            $('.popProductsMasterDataFile .frmProductsMasterDataUpload').attr('target', $iframe_name);
+            $('.popProductsMasterDataFile .frmProductsMasterDataUpload').submit();
+
+            $('iframe[name="'+ $iframe_name +'"]').load(function()
+            {
+                $data		= jQuery.trim($('.popProductsMasterDataFile .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                //console.log($data);
+
+                // Display error
+                if($data == 'wassuccessfullyuploaded')
+                {
+                    $.scrap_note_time('Products have been uploaded', 4000, 'tick');
+                    $('body').sunBox.close_popup('popProductsMasterDataFile');
+                    $fc_refresh_added_product_list();
+                }
+                else
+                {
+                    $.scrap_note_hide();
+                    $.scrap_message($data);
+                    $('.sunMessage .returnFalse').live('click', function()
+                    {
+                        $('.popProductsMasterDataFile').css({ zIndex : '300' });
+                        $('.sunMessage').hide();
+                    });
+                }
+            });
         });
     }
 

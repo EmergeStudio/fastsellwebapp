@@ -17,7 +17,7 @@ echo open_div('middle');
 			echo div_height(8);
 
 			// Show Details
-			echo form_open('fastsells/save_event_changes', 'class="frmSaveEventChanges"');
+			echo form_open_multipart('fastsells/save_event_changes', 'class="frmSaveEventChanges"');
 
 				echo open_div('inset showDescription floatRight');
 
@@ -88,6 +88,22 @@ echo open_div('middle');
 
 					echo form_textarea($inp_data);
 
+					// FastSell image
+					echo open_div('blockFastSellImage');
+
+						echo full_div('', 'icon-camera');
+
+						echo form_label('FastSell Image:');
+						$inp_data		= array
+						(
+							'name'		=> 'uploadedFileFastsellImage',
+							'class'		=> 'uploadedFileFastsellImage'
+						);
+						echo form_upload($inp_data);
+						echo clear_float();
+
+					echo close_div();
+
 				echo close_div();
 
 				// Clear float
@@ -118,7 +134,9 @@ echo open_div('middle');
 		echo div_height(8);
 
 		// Load the view
-		$this->load->view('products/fastsell_products_list_small');
+		echo open_div('ajaxProductsInFastSell');
+			$this->load->view('products/fastsell_products_list_small');
+		echo close_div();
 
 		echo div_height(30);
 		echo make_button('View More', '', 'fastsells/products');

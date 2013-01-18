@@ -4,7 +4,7 @@
 if($definitions['error'] == FALSE)
 {
 	// Data
-	$cnt_defaultFields          = 6;
+	$cnt_defaultFields          = 2;
 	$crt_definition             = $crt_definition['result'];
 
 	// Right column
@@ -100,42 +100,6 @@ if($definitions['error'] == FALSE)
 
 		echo close_div();
 
-		// Included fields
-		echo open_div('inset includedFields');
-
-		$loop_cnt_3           = 0;
-		foreach($crt_definition->catalog_item_definition_fields as $definition_field)
-		{
-			$loop_cnt_3++;
-			if(($loop_cnt_3 <= $cnt_defaultFields) && ($loop_cnt_3 > 2))
-			{
-				echo open_div('fieldContainerRequired');
-
-				echo form_label($definition_field->field_name);
-
-				if(($loop_cnt_3 == $cnt_defaultFields - 1) || ($loop_cnt_3 == $cnt_defaultFields))
-				{
-					$class          = 'inpProductFieldAdded scrap_date';
-				}
-				else
-				{
-					$class          = 'inpProductFieldAdded';
-				}
-
-				$inp_data			= array
-				(
-					'name'			=> 'inpProductFieldAdded',
-					'class'			=> $class
-				);
-				echo form_input($inp_data);
-				echo hidden_div($definition_field->id);
-
-				echo close_div();
-			}
-		}
-
-		echo close_div();
-
 	// End of right column
 	echo close_div();
 
@@ -173,6 +137,22 @@ if($definitions['error'] == FALSE)
 			}
 
 		echo close_div();
+
+		// Product image
+		echo open_div('blockProductImage').form_open_multipart('ajax_handler_products/add_product_image', 'class="frmProductImage"');
+
+			echo full_div('', 'icon-camera');
+
+			$inp_data		= array
+			(
+				'name'		=> 'uploadedFileProductImage',
+				'class'		=> 'uploadedFileProductImage'
+			);
+			echo form_hidden('hdProductId');
+			echo form_upload($inp_data);
+			echo clear_float();
+
+		echo form_close().close_div();
 
 	// End of left column
 	echo close_div();

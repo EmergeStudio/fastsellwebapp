@@ -129,6 +129,22 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo close_div();
 
+			// FastSell image
+			echo open_div('blockFastSellImage').form_open_multipart('ajax_handler_fastsells/add_event_image', 'class="frmFastSellImage"');
+
+				echo full_div('', 'icon-camera');
+
+				echo form_label('FastSell Image:');
+				$inp_data		= array
+				(
+					'name'		=> 'uploadedFileFastsellImage',
+					'class'		=> 'uploadedFileFastsellImage'
+				);
+				echo form_upload($inp_data);
+				echo clear_float();
+
+			echo form_close().close_div();
+
 		echo close_div();
 
 		echo open_div('showDescription inset floatLeft');

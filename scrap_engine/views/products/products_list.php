@@ -32,9 +32,22 @@ if($products['error'] == FALSE)
 				// Banner image
 				echo '<td>';
 
+					// Get the image
+					$src                    = 'scrap_assets/images/universal/default_product_image.jpg';
+					$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$product->id.'%2Fimage';
+					$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+					if($call_product_image['error'] == FALSE)
+					{
+						$json_product_image         = $call_product_image['result'];
+						if($json_product_image->is_empty == FALSE)
+						{
+							$src                    = $json_product_image->server_local_files[0]->path;
+						}
+					}
+
 					$img_properties         = array
 					(
-						'src'               => 'scrap_assets/images/universal/default_product_image.jpg',
+						'src'               => $src,
 						'width'             => 60
 					);
 
@@ -78,11 +91,28 @@ if($products['error'] == FALSE)
 				// HTML
 				$img_properties         = array
 				(
-					'src'               => 'scrap_assets/images/universal/default_product_image_medium.jpg',
+					'src'               => $src,
 					'width'             => 212
 				);
 
-				echo full_div(img($img_properties), 'inset');
+				echo open_div('inset');
+
+					echo img($img_properties);
+
+						echo open_div('blockProductImage2').form_open_multipart('ajax_handler_products/add_product_image_2', 'class="frmProductImage2"');
+
+							$inp_data		= array
+							(
+								'name'		=> 'uploadedFileProductImage2',
+								'class'		=> 'uploadedFileProductImage2'
+							);
+							echo form_hidden('hdProductId2', $product->id);
+							echo form_upload($inp_data);
+							echo clear_float();
+
+						echo form_close().close_div();
+
+				echo close_div();
 		        echo div_height(10);
 
 				$loop_cnt_2             = 0;

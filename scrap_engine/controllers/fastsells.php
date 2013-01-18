@@ -167,7 +167,7 @@ class Fastsells extends CI_Controller
 			$dt_header['title'] 	        = 'FastSell';
 			$dt_header['crt_page']	        = 'pageFastSellInfo';
 			$dt_header['extra_css']         = array('fastsells', 'fastsell_event', 'fastsell_buy');
-			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_event', 'fastsell_buy', 'fastsell_customers');
+			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_event', 'fastsell_buy');
 
 			// Load header
 			$this->load->view('universal/header', $dt_header);
@@ -737,6 +737,50 @@ class Fastsells extends CI_Controller
 
 			// Submit the update
 			$update_fastsell                = $this->scrap_web->webserv_call('fastsellevents/.json', $update_json, 'post');
+
+			if(isset($_FILES['uploadedFileFastsellImage']) && !empty($_FILES['uploadedFileFastsellImage']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
+
+				$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner';
+				$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+
+				if($call_fastsell_image['error'] == FALSE)
+				{
+					$json_fastsell_image    = $call_fastsell_image['result'];
+
+					if($json_fastsell_image->is_empty == TRUE)
+					{
+						// Create the banner folder
+						$url_sample_path                = 'serverlocalfiles/sample.json';
+						$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+						$json_sample_path               = $call_sample_path['result'];
+
+						// Edit DOM
+						$json_sample_path->path         = 'scrap_shows/'.$fastsell_id.'/banner';
+						$json_new_folder                = json_encode($json_sample_path);
+
+						// Create directory
+						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+
+						// Upload the file
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$_FILES['uploadedFileFastsellImage']['name'];
+						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
+					}
+					else
+					{
+						foreach($json_fastsell_image->server_local_files as $file_info)
+						{
+							$url_delete                 = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$file_info->name;
+							$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+						}
+
+						// Upload the file
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$_FILES['uploadedFileFastsellImage']['name'];
+						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
+					}
+				}
+			}
 		}
 
 		// Redirect

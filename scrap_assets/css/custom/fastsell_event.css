@@ -98,3 +98,21 @@ div.selector span {
     color: #fff;
     text-shadow: none;
 }
+
+.middle .blockFastSellImage {
+    margin-top: 30px;
+    padding: 19px 20px;
+    background-color: #fff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -webkit-box-shadow: 1px 1px 2px #c1c1c1;
+    -moz-box-shadow: 1px 1px 2px #c1c1c1;
+}
+.middle .blockFastSellImage .icon-camera {
+    float: right;
+    font-size: 50px;
+    color: #fcb040;
+}
+.middle .blockFastSellImage label {
+    margin-top: 0px;
+}

@@ -19,9 +19,22 @@ if($fastsells['error'] == FALSE)
 				// Banner image
 				echo '<td>';
 
+					// Get the image
+					$src                    = 'scrap_assets/images/universal/default_event_image.png';
+					$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell->id.'%2Fbanner';
+					$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+					if($call_fastsell_image['error'] == FALSE)
+					{
+						$json_fastsell_image        = $call_fastsell_image['result'];
+						if($json_fastsell_image->is_empty == FALSE)
+						{
+							$src                        = $json_fastsell_image->server_local_files[0]->path;
+						}
+					}
+
 					$img_properties         = array
 					(
-						'src'               => 'scrap_assets/images/universal/default_event_image.png',
+						'src'               => $src,
 						'width'             => '175px'
 					);
 
