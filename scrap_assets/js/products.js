@@ -20,9 +20,22 @@ $(document).ready(function(){
     $fc_view_product();
 
     $fc_save_product_changes();
+
+    $fc_search();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- SAVE PRODUCT CHANGES
+    function $fc_search()
+    {
+        $('.frmSearch input').focus();
+
+        $('.btnSearch').live('click', function()
+        {
+            $('.frmSearch').submit();
+        });
+    }
 
     // ----- SAVE PRODUCT CHANGES
     function $fc_save_product_changes()

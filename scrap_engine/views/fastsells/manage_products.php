@@ -19,17 +19,14 @@ echo open_div('middle');
 				// Basic search
 				echo open_div('basicSearch floatLeft');
 
-					// Input field
-					echo form_input('inpProductSearch', '', 'class="floatLeft"');
+					echo form_open('fastsells/products', 'class="frmSearch"');
 
-					// Search button
-					echo make_button('Search', 'btnProductSearch blueButton', '', 'left');
+						echo form_input('inpSearchText', $search_text, 'class="floatLeft"');
+						echo make_button('Search', 'btnSearch blueButton', '', 'left');
+						echo make_button('Reset', '', 'products', 'left');
+						echo clear_float();
 
-					// Reset button
-					echo make_button('Reset', '', 'fastsells/products', 'left');
-
-					// Clear float
-					echo clear_float();
+					echo form_close();
 
 				// End of basic search
 				echo close_div();

@@ -25,31 +25,6 @@ $(document).ready(function(){
 	
 // ------------------------------------------------------------------------------FUNCTIONS
 
-    // ---------- REMOVE A CUSTOMER
-    function $fc_remove_customer()
-    {
-        $('.btnRemoveCustomer').live('click', function()
-        {
-            // Some variables
-            $this                   = $(this);
-            $parent                 = $parents('.extraOptions');
-            $customer_id            = $parent.find('.hdCustomerId').text();
-
-            // Add the customer
-//            $.post($ajax_base_path + 'fastsell_remove_customer',
-//            {
-//                event_id		    : $event_id,
-//                customer_id			: $customer_id
-//            },
-//            function($data)
-//            {
-//                //console.log($data);
-//                $.scrap_note_time('Customer has been added to this FastSell', 4000, 'tick');
-//                $fc_refresh_customer_list();
-//            });
-        });
-    }
-
     // ---------- UPLOAD MASTER DATA FILE
     function $fc_upload_master_data_file()
     {
@@ -139,6 +114,34 @@ $(document).ready(function(){
             {
                 //console.log($data);
                 $.scrap_note_time('Customer has been added to this FastSell', 4000, 'tick');
+                $fc_refresh_customer_list();
+            });
+        });
+    }
+
+    // ---------- REMOVE A CUSTOMER
+    function $fc_remove_customer()
+    {
+        $('.btnRemoveCustomer').live('click', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $parent                 = $this.parents('.extraOptions');
+            $customer_id            = $parent.find('.hdCustomerId').text();
+            $event_id               = $('.hdEventId').text();
+
+            // Add the customer
+            // Add the customer
+            $.post($base_path + 'ajax_handler_fastsells/fastsell_customer_link',
+            {
+                event_id		    : $event_id,
+                customer_id			: $customer_id ,
+                type                : 'remove'
+            },
+            function($data)
+            {
+                //console.log($data);
+                $.scrap_note_time('Customer has been removed from this FastSell', 4000, 'tick');
                 $fc_refresh_customer_list();
             });
         });

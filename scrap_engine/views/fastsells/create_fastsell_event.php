@@ -239,43 +239,69 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 	// Shifter pane 3
 	echo open_div('shifterPane shifterPane_3');
 
-		// Upload master file
-		echo open_div('productsMasterFileUpload floatRight');
+		echo open_div('centerMessage');
 
-			echo make_button('Upload Master Data File', 'btnAdd btnUploadProducts blueButton');
+			echo heading('What Products Are You Wanting To Sell?', 2);
+
+			echo open_div('iconSet');
+
+                echo full_div('', 'iconImage icon-box');
+				echo full_div('', 'iconImage icon-arrow-right');
+				echo full_div('', 'iconImage icon-sale');
+				echo clear_float();
+
+			echo close_div();
+
+			echo open_div('buttonOptions');
+
+				echo make_button('Manually Add Product', 'btnAdd btnAddProductPopup blueButton', '', 'left');
+				echo full_div('OR', 'orText floatLeft');
+				echo make_button('Upload Master Data File', 'btnAdd btnUploadProducts blueButton', '', 'left');
+				echo clear_float();
+
+			echo close_div();
 
 		echo close_div();
+
+//		// Upload master file
+//		echo open_div('productsMasterFileUpload floatRight');
+//
+//			echo make_button('Upload Master Data File', 'btnAdd btnUploadProducts blueButton');
+//
+//		echo close_div();
+//
+//		// Heading
+//		echo full_div('', 'icon-box headingIcon lightGrey');
+//		echo heading('What Products Are You Wanting To Sell?', 2);
+//		echo '<p>Select items in your product catalogue to add to the FastSell and set your desired price.</p>';
+//		echo div_height(20);
+
+//		// Search products
+//		$inp_data			= array
+//		(
+//			'name'			=> 'inpSearchProducts',
+//			'class'         => 'inpSearchProducts floatLeft'
+//		);
+//		echo form_input($inp_data);
+//		echo make_button('Search', 'btnSearchProducts blueButton', '', 'left');
+//		echo make_button('Reset', 'btnSearchReset', '', 'left');
+//		echo clear_float();
+//
+//		// Load the products list
+//		echo div_height(20);
+//		echo open_div('products');
+//
+//			$this->load->view('products/add_products_list');
+//
+//		echo close_div();
+//
+//		echo div_height(20);
+//		echo full_div('', 'line');
+//		echo div_height(40);
 
 		// Heading
-		echo full_div('', 'icon-box headingIcon lightGrey');
-		echo heading('What Products Are You Wanting To Sell?', 2);
-		echo '<p>Select items in your product catalogue to add to the FastSell and set your desired price.</p>';
-		echo div_height(20);
-
-		// Search products
-		$inp_data			= array
-		(
-			'name'			=> 'inpSearchProducts',
-			'class'         => 'inpSearchProducts floatLeft'
-		);
-		echo form_input($inp_data);
-		echo make_button('Search', 'btnSearchProducts blueButton', '', 'left');
-		echo make_button('Reset', 'btnSearchReset', '', 'left');
-		echo clear_float();
-
-		// Load the products list
-		echo div_height(20);
-		echo open_div('products');
-
-			$this->load->view('products/add_products_list');
-
-		echo close_div();
-
-		echo div_height(20);
 		echo full_div('', 'line');
 		echo div_height(40);
-
-		// Heading
 		echo full_div('', 'icon-box headingIcon lightGrey');
 		echo heading('Products In Your FastSell', 2);
 		echo div_height(20);
@@ -291,7 +317,7 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 		echo make_button('Next Step', 'btnShifterNext', '', 'right');
 
-		echo make_button('Ok All Done', 'btnComplete', 'fastsells', 'right', '', FALSE);
+		echo make_button('Ok All Done', 'btnComplete', 'fastsells/deploy', 'right', '', FALSE);
 
 		echo make_button('Go Back', 'btnShifterBack', '', '', '', FALSE);
 

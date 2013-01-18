@@ -12,38 +12,52 @@ if($products['error'] == FALSE)
 	// Rows
 	foreach($json_products->fastsell_items as $product)
 	{
+		// Build the information array
+		$ar_information         = array();
+		foreach($product->catalog_item->catalog_item_field_values as $product_field)
+		{
+			$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
+			$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
+			$product_value                          = $product_field->value;
+
+			$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value);
+		}
+		ksort($ar_information);
+
 		// Profile image
-		$img_properties		= array
+		$img_properties		    = array
 		(
-			'src'			=> $this->scrap_web->get_profile_image(100000000000000),
-			'height'		=> '35',
-			'class'			=> 'profileImage'
+			'src'			    => 'scrap_assets/images/universal/default_product_image.jpg',
+			'height'		    => '50',
+			'class'			    => 'profileImage'
 		);
 
 		// Units input
-		$inp_units			= $product->stock_count;
+		$inp_units			    = $product->stock_count;
 
 		// Price input
-		$inp_price			= '$'.$product->price;
-
-		// Product name
-		$product_name       = $product->catalog_item->catalog_item_field_values[0]->value;
+		$inp_price			    = full_span('$'.$product->price, 'greenTxt');
 
 		// Product fields
 		$loop_cnt               = 0;
-		$product_fields         = '';
-		foreach($product->catalog_item->catalog_item_field_values as $product_field)
+		foreach($ar_information as $product_field)
 		{
 			$loop_cnt++;
-			if($loop_cnt == 2)
+			if($loop_cnt == 1)
 			{
-				$product_fields     .= $product_field->value.', ';
+				$product_name   = $product_field[1];
 			}
 		}
-		$product_fields         = $this->scrap_string->remove_lc(trim($product_fields));
 
 		// Table row
-		$this->table->add_row(img($img_properties), array('data' => full_div($product_name).full_div($product_fields), 'class' => 'fullCell greyTxt'), $inp_units, $inp_price, make_button('', 'btnRemoveProduct btnCross iconOnly', '', '', 'Remove This Product From The FastSell').hidden_div($product->id, 'hdProductId'));
+		$this->table->add_row
+		(
+			img($img_properties),
+			full_div($product_name, 'leftText'),
+			$inp_units,
+			$inp_price,
+			full_div(full_div('', 'btnRemoveProduct icon-cross', 'Remove This Product From The FastSell').hidden_div($product->id, 'hdProductId'), 'extraOptions')
+		);
 	}
 
 	// Generate table

@@ -8,7 +8,7 @@ if($customers['error'] == FALSE)
 	$json_customers			    = $customers['result'];
 
 	// Table heading
-	$this->table->set_heading('', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number', '', '');
+	$this->table->set_heading('', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number', '');
 
 	// Loop through and display customer
 	foreach($json_customers->customer_organizations as $customer)
@@ -37,13 +37,13 @@ if($customers['error'] == FALSE)
 		array_push($ar_fields, $json_customers->customer_number);
 
 		// View orders
-		array_push($ar_fields, anchor('fastsells/view_customer_order/'.$customer->id, 'View Orders'));
+		//array_push($ar_fields, anchor('fastsells/view_customer_order/'.$customer->id, 'View Orders'));
 
 		// Buttons
 		$html   = '';
 		$html   .= open_div('extraOptions');
 
-			$html   .= make_button('', 'btnRemoveCustomer btnCross iconOnly', '', 'left', 'Remove this customer from the FastSell');
+			$html   .= full_div('', 'btnRemoveCustomer icon-cross', 'Remove this customer from the FastSell');
 
 			// Hidden data
 			$html   .= hidden_div($customer->id, 'hdCustomerId');

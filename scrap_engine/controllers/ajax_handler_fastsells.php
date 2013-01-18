@@ -47,11 +47,31 @@ class Ajax_handler_fastsells extends CI_Controller
 			$fastsell_name                  = $this->input->post('fastsell_name');
 			$fastsell_description           = $this->input->post('fastsell_description');
 			$start_date                     = $this->input->post('start_date');
-			$start_time                     = $this->input->post('start_time');
+			$start_hour                     = $this->input->post('start_hour');
+			$start_minute                   = $this->input->post('start_minute');
 			$end_date                       = $this->input->post('end_date');
-			$end_time                       = $this->input->post('end_time');
+			$end_hour                       = $this->input->post('end_hour');
+			$end_minute                     = $this->input->post('end_minute');
 			$event_id                       = $this->input->post('event_id');
 			$event_banner                   = $this->input->post('event_banner');
+
+			// Edit time
+			if(strlen($start_hour) == 1)
+			{
+				$start_hour             = '0'.$start_hour;
+			}
+			if(strlen($start_minute) == 1)
+			{
+				$start_minute          = '0'.$start_minute;
+			}
+			if(strlen($end_hour) == 1)
+			{
+				$end_hour               = '0'.$end_hour;
+			}
+			if(strlen($end_minute) == 1)
+			{
+				$end_minute            = '0'.$end_minute;
+			}
 
 			// Check that its an event create
 			if($event_id == 'no_id')
@@ -70,8 +90,8 @@ class Ajax_handler_fastsells extends CI_Controller
 					$json_sample->user->id                                  = $user_id;
 					$json_sample->currency->id                              = 1;
 					$json_sample->location                                  = null;
-					$json_sample->event_end_date                            = $end_date.' '.$end_time;
-					$json_sample->event_start_date                          = $start_date.' '.$start_time;
+					$json_sample->event_end_date                            = $end_date.' '.$end_hour.$end_minute.'00';
+					$json_sample->event_start_date                          = $start_date.' '.$start_hour.$start_minute.'00';
 					$json_sample->fastsell_event_type->id                   = 1;
 					$json_sample->show_host_organization->id                = $show_host_id;
 					$json_sample->customer_organizations                    = null;
@@ -91,6 +111,25 @@ class Ajax_handler_fastsells extends CI_Controller
 
 						// Set the session variables
 						$this->session->set_userdata('sv_show_set', $json_fastsell->id);
+
+						// Create the banner folder
+						$url_sample_path                = 'serverlocalfiles/sample.json';
+						$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+						$json_sample_path               = $call_sample_path['result'];
+
+						// Edit DOM
+						$json_sample_path->path         = 'scrap_shows/'.$json_fastsell->id.'/banner';
+						$json_new_folder                = json_encode($json_sample_path);
+
+						// Create directory
+						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+
+						if($new_directory['error'] == TRUE)
+						{
+							// Return the error message
+							$json				= $new_directory['result'];
+							echo $json->error_description;
+						}
 
 						// Clone the definitions
 						$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
@@ -338,6 +377,41 @@ class Ajax_handler_fastsells extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| REMOVE FASTSELL PRODUCT
+	|--------------------------------------------------------------------------
+	*/
+	function fastsell_remove_product()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$user_id                        = $this->session->userdata('sv_user_id');
+			$product_id                     = $this->input->post('product_id');
+			$event_id                       = $this->input->post('event_id');
+
+			// Create product
+			$remove_fastsell_product        = $this->scrap_web->webserv_call('fastsellitems/.json?id='.$product_id, FALSE, 'delete');
+
+			if($remove_fastsell_product['error'] == FALSE)
+			{
+				echo 'okitsbeenremoved';
+			}
+			else
+			{
+				// Return the error message
+				$json				        = $remove_fastsell_product['result'];
+				echo $json->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| REFRESH ADDED PRODUCT LIST
 	|--------------------------------------------------------------------------
 	*/
@@ -354,7 +428,8 @@ class Ajax_handler_fastsells extends CI_Controller
 			$dt_body['products']            = $call_fs_products;
 
 			// Load the view
-			$this->load->view('products/added_products_fastsell_create', $dt_body);
+			$this->load->view('products/fastsell_products_list', $dt_body);
+			//$this->load->view('products/added_products_fastsell_create', $dt_body);
 		}
 		else
 		{

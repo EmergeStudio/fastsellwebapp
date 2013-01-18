@@ -59,10 +59,14 @@ echo open_div('middle');
 					// Basic search
 					echo open_div('basicSearch floatLeft');
 
-						echo form_input('inpProductsSearch', '', 'class="floatLeft"');
-						echo make_button('Search', 'btnProductsSearch', '', 'left');
-						echo make_button('Reset', '', 'products', 'left');
-						echo clear_float();
+						echo form_open('products', 'class="frmSearch"');
+
+							echo form_input('inpSearchText', $search_text, 'class="floatLeft"');
+							echo make_button('Search', 'btnSearch blueButton', '', 'left');
+							echo make_button('Reset', '', 'products', 'left');
+							echo clear_float();
+
+						echo form_close();
 
 					// End of basic search
 					echo close_div();

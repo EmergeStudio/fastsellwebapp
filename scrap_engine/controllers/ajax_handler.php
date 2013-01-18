@@ -163,7 +163,8 @@ class Ajax_handler extends CI_Controller
 			$json_sample->show_host_owner->user->lastname					= $surname;
 			$json_sample->show_host_owner->user->username					= $username;
 			$json_sample->show_host_owner->user->password					= sha1($password);
-			$json_sample->time_zone->id                                     = 15;
+			$json_sample->show_host_owner->user->clear_password			    = $password;
+			$json_sample->time_zone->id                                     = 6;
 				
  			// Recode
  			$new_json				= json_encode($json_sample);

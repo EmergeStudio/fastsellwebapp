@@ -8,7 +8,7 @@ if($definitions['error'] == FALSE)
 	$json_definitions			= $definitions['result'];
 
 	// Table heading
-	$this->table->set_heading('', array('data' => 'Group Name', 'class' => 'txtLeft'), array('data' => 'Fields', 'class' => 'fullCell'), '', '');
+	$this->table->set_heading('', array('data' => 'Group Name', 'class' => 'txtLeft'), array('data' => 'Fields', 'class' => 'fullCell'), '');
 
 	// Loop through and display customer
 	foreach($json_definitions->catalog_item_definitions as $definition)
@@ -44,7 +44,7 @@ if($definitions['error'] == FALSE)
 		array_push($ar_fields, array('data' => $fields, 'class' => 'fullCell'));
 
 		// View orders
-		array_push($ar_fields, anchor('products/by_definition/'.$definition->id, '<span class="icon-box"></span>View Products'));
+		//array_push($ar_fields, anchor('products/by_definition/'.$definition->id, '<span class="icon-box"></span>View Products'));
 
 		// Buttons
 		$html   = '';

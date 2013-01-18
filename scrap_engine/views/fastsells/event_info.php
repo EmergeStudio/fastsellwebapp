@@ -57,6 +57,13 @@ echo open_div('middle');
 
 					echo close_div();
 
+					// Start now
+					if($started == FALSE)
+					{
+						echo div_height(30);
+						echo make_button('<span class="icon-dial"></span>Start Now', 'btnStartNow blueButton', 'fastsells/start_now');
+					}
+
 				echo close_div();
 
 				echo open_div('showDescription inset floatLeft');
@@ -128,7 +135,9 @@ echo open_div('middle');
 		echo div_height(8);
 
 		// Load the view
-		$this->load->view('customers/fastsell_customers_list');
+		echo open_div('ajaxCustomersInFastSell');
+			$this->load->view('customers/fastsell_customers_list');
+		echo close_div();
 
 		echo div_height(30);
 		echo make_button('View More', '', 'fastsells/customers');
@@ -140,4 +149,7 @@ echo open_div('middle');
 
 // End of middle div
 echo close_div();
+
+// Some hidden data
+echo hidden_div($this->session->userdata('sv_show_set'), 'hdEventId');
 ?>

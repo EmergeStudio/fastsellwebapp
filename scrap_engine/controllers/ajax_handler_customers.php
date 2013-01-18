@@ -159,7 +159,7 @@ class Ajax_handler_customers extends CI_Controller
 				$json_sample->customer_owner->user->lastname		= $surname;
 				$json_sample->customer_owner->user->username		= $username;
 				$json_sample->customer_owner->user->password		= sha1($password);
-				$json_sample->time_zone->id                         = 15;
+				$json_sample->time_zone->id                         = 6;
 				$json_sample->customer_owner->user->clear_password  = $password;
 
 				// Recode
@@ -188,33 +188,16 @@ class Ajax_handler_customers extends CI_Controller
 	}
 
 
+
 	/*
 	|--------------------------------------------------------------------------
-	| DELETE CUSTOMER
+	| REMOVE CUSTOMER
 	|--------------------------------------------------------------------------
 	*/
-	function delete_customer()
+	function fastsell_remove_customer()
 	{
 		if($this->scrap_wall->login_check_ajax() == TRUE)
 		{
-			// Some variables
-			$customer_to_show_host_id   = $this->input->post('customer_to_show_host_id');
-
-			// Delete the customer
-			$url_customer               = 'customertoshowhosts/.json?id='.$customer_to_show_host_id;
-			$delete_customer            = $this->scrap_web->webserv_call($url_customer, FALSE, 'delete');
-
-			// Load the content view
-			if($delete_customer['error'] == FALSE)
-			{
-				echo 'okitsdone';
-			}
-			else
-			{
-				// Return the error message
-				$json				= $delete_customer['result'];
-				echo $json->error_description;
-			}
 		}
 		else
 		{

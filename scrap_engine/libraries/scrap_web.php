@@ -357,6 +357,44 @@ class Scrap_web
 
 	/*
 	|--------------------------------------------------------------------------
+	| GET CATALOGUE ITEM INFORMATION
+	|--------------------------------------------------------------------------
+	*/
+	function get_catalogue_item_fields($product_id = FALSE)
+	{
+		// Make the call
+		if($product_id != FALSE)
+		{
+			$url_catalogue_item             = 'catalogitems/.json?id='.$product_id;
+			$call_catalogue_item            = $this->webserv_call($url_catalogue_item, FALSE, 'get', FALSE, FALSE);
+
+			// Return
+			if($call_catalogue_item['error'] == FALSE)
+			{
+				$json_catalogue_item        = $call_catalogue_item['result'];
+				$ar_fields                  = array();
+
+				foreach($json_catalogue_item->catalog_item_field_values as $field)
+				{
+					$ar_fields[$field->catalog_item_definition_field->id]   = $field->catalog_item_definition_field->field_name;
+				}
+
+				return $ar_fields;
+			}
+			else
+			{
+				return FALSE;
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| GET CUSTOMER USER ID
 	|--------------------------------------------------------------------------
 	*/

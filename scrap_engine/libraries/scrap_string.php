@@ -303,6 +303,17 @@ class Scrap_string
 	{
 		return date('Y-m-d H:i:s');
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| CURRENT DATABASE DATE AND TIME
+	|--------------------------------------------------------------------------
+	*/
+	function crt_db_date_time_2()
+	{
+		return date('Y-m-d His');
+	}
 	
 	
 	/*

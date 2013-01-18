@@ -97,7 +97,7 @@ class Fastsells extends CI_Controller
 		// Some variables
 		$dt_header['title'] 	        = 'Create New FastSell';
 		$dt_header['crt_page']	        = 'pageFastSells';
-		$dt_header['extra_css']         = array('scrap_shifter', 'create_fastsell');
+		$dt_header['extra_css']         = array('scrap_shifter', 'create_fastsell', 'fastsell_products');
 		$dt_header['extra_js']          = array('shifter_create_fastsell_event');
 
 		// Load header
@@ -114,10 +114,10 @@ class Fastsells extends CI_Controller
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
 
-		// Get the products
-		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
-		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
-		$dt_body['products']            = $call_products;
+//		// Get the products
+//		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
+//		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+//		$dt_body['products']            = $call_products;
 
 		// Load the view
 		$this->load->view('fastsells/create_fastsell_event', $dt_body);
@@ -167,7 +167,7 @@ class Fastsells extends CI_Controller
 			$dt_header['title'] 	        = 'FastSell';
 			$dt_header['crt_page']	        = 'pageFastSellInfo';
 			$dt_header['extra_css']         = array('fastsells', 'fastsell_event', 'fastsell_buy');
-			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_event', 'fastsell_buy');
+			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_event', 'fastsell_buy', 'fastsell_customers');
 
 			// Load header
 			$this->load->view('universal/header', $dt_header);
@@ -329,7 +329,29 @@ class Fastsells extends CI_Controller
 						$call_product               = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
 						$json_product               = $call_product['result'];
 
-						$ar_product_names[$order_item->fastsell_item->id]  = $json_product->catalog_item->catalog_item_field_values[0]->value;
+						foreach($json_product->catalog_item->catalog_item_field_values as $product_field)
+						{
+							$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
+							$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
+							$product_value                          = $product_field->value;
+							$product_id                             = $product_field->id;
+
+							$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value, $product_id);
+
+							if($defintion_field_name == 'MSRP')
+							{
+								$msrp                               = $product_value;
+							}
+						}
+						ksort($ar_information);
+						$product_name               = '';
+						foreach($ar_information as $key => $value)
+						{
+							$product_name           = $value[1];
+							break;
+						}
+
+						$ar_product_names[$order_item->fastsell_item->id]  = $product_name;
 					}
 
 					$dt_body['ar_product_names']    = $ar_product_names;
@@ -724,6 +746,44 @@ class Fastsells extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| START EVENT NOW
+	|--------------------------------------------------------------------------
+	*/
+	function start_now()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		// Some variables
+		$fastsell_id                        = $this->session->userdata('sv_show_set');
+		$crt_time                           = $this->scrap_string->crt_db_date_time_2();
+
+		// Get fastsell information
+		$url_fastsell                       = 'fastsellevents/.json?id='.$fastsell_id;
+		$call_fastsell                      = $this->scrap_web->webserv_call($url_fastsell, FALSE, 'get', FALSE, FALSE);
+
+		if($call_fastsell['error'] == FALSE)
+		{
+			$json_fastsell                  = $call_fastsell['result'];
+
+			// Edit the fastsell
+			$json_fastsell->event_start_date        = $crt_time;
+
+			// Encode
+			$update_json                    = json_encode($json_fastsell);
+
+			// Submit the update
+			$update_fastsell                = $this->scrap_web->webserv_call('fastsellevents/.json', $update_json, 'post');
+		}
+
+		// Redirect
+		redirect('fastsells/event/'.$fastsell_id);
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| FASTSELL PRODUCTS
 	|--------------------------------------------------------------------------
 	*/
@@ -781,7 +841,20 @@ class Fastsells extends CI_Controller
 				$dt_body['fastsell_info']   = $fastsell_info;
 
 				// Get the products
-				$url_products               = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset=0&limit=20';
+				$offset                         = 0;
+				$limit                          = 20;
+				$search_text                    = '';
+
+				// Search
+				if($this->input->post('inpSearchText'))
+				{
+					$search_text                = $this->input->post('inpSearchText');
+				}
+
+				$dt_body['search_text']         = $search_text;
+
+				// Get the products
+				$url_products               = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset='.$offset.'&limit='.$limit.'&searchtext='.$search_text;
 				$call_products              = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
 				$dt_body['products']        = $call_products;
 
@@ -797,6 +870,28 @@ class Fastsells extends CI_Controller
 		{
 			redirect('fastsells');
 		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| FASTSELL DELPOY
+	|--------------------------------------------------------------------------
+	*/
+	function deploy()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		// Some variables
+		$fastsell_id                    = $this->session->userdata('sv_show_set');
+
+		// Send out the notifications
+		$url_send_notifications         = 'fastsellevents/notifycustomers.json?fastselleventid='.$fastsell_id;
+		$call_send_notifications        = $this->scrap_web->webserv_call($url_send_notifications);
+
+		// Redirect
+		redirect('fastsells');
 	}
 
 

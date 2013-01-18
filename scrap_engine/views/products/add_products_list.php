@@ -12,6 +12,18 @@ if($products['error'] == FALSE)
 	// Rows
 	foreach($json_products->catalog_items as $product)
 	{
+		// Build the information array
+//		$ar_information         = array();
+//		foreach($product->catalog_item->catalog_item_field_values as $product_field)
+//		{
+//			$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
+//			$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
+//			$product_value                          = $product_field->value;
+//
+//			$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value);
+//		}
+//		ksort($ar_information);
+
 		// Profile image
 		$img_properties		= array
 		(

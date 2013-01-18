@@ -27,9 +27,10 @@ echo form_open_multipart('ajax_handler_products/products_master_data_upload', 'c
 
 		$json_item_defs             = $item_defs['result'];
 		$ar_item_definitions        = array();
-		foreach($json_item_defs->catalog_item_definitions as $item_definition)
+		foreach($json_item_defs->fastsell_item_definitions as $item_definition)
 		{
-			$ar_item_definitions[$item_definition->id]      = $item_definition->name;
+			$ex_item_definition     = explode('_', $item_definition->name);
+			$ar_item_definitions[$item_definition->id]      = $ex_item_definition[2];
 		}
 		echo form_dropdown('dropItemDefinitions', $ar_item_definitions);
 

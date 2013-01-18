@@ -17,16 +17,18 @@ echo open_div('middle');
 
 				echo open_div('floatLeft');
 
-				// Basic search
-				echo open_div('basicSearch floatLeft');
+				echo div_height(32);
 
-					echo form_input('inpFastSellSearch', '', 'class="floatLeft"');
-					echo make_button('Search', 'btnFastSellSearch', '', 'left');
-					echo make_button('Reset', '', 'fastsells', 'left');
-					echo clear_float();
-
-				// End of basic search
-				echo close_div();
+//				// Basic search
+//				echo open_div('basicSearch floatLeft');
+//
+//					echo form_input('inpFastSellSearch', '', 'class="floatLeft"');
+//					echo make_button('Search', 'btnFastSellSearch', '', 'left');
+//					echo make_button('Reset', '', 'fastsells', 'left');
+//					echo clear_float();
+//
+//				// End of basic search
+//				echo close_div();
 
 			echo close_div();
 

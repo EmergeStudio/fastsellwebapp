@@ -3,15 +3,25 @@
 <?php
 // Data
 $json_product               = $product['result'];
-$loop_cnt_4         = 0;
+
+// Build the information array
+$ar_information         = array();
+$msrp                   = FALSE;
 foreach($json_product->catalog_item->catalog_item_field_values as $product_field)
 {
-	$loop_cnt_4++;
-	if($loop_cnt_4 == 3)
+	$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
+	$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
+	$product_value                          = $product_field->value;
+	$product_id                             = $product_field->id;
+
+	$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value, $product_id);
+
+	if($defintion_field_name == 'MSRP')
 	{
-		$msrp       = $product_field->value;
+		$msrp                               = $product_value;
 	}
 }
+ksort($ar_information);
 
 // Form
 echo form_open('fastsells/buy_product', 'class="frmBuyProduct"');
@@ -27,9 +37,12 @@ echo form_open('fastsells/buy_product', 'class="frmBuyProduct"');
 
 				echo full_div('$'.$json_product->price, 'price');
 
-				$discount           = round($json_product->price / $msrp, 2);
-				$discount           = 100 - ($discount * 100);
-				echo full_div($discount.'% off', 'discount');
+					if($msrp != FALSE)
+					{
+						$discount           = round($json_product->price / $msrp, 2);
+						$discount           = 100 - ($discount * 100);
+						echo full_div($discount.'% off', 'discount');
+					}
 
 				echo full_div('('.$json_product->stock_count.' available)', 'stock');
 
@@ -38,7 +51,7 @@ echo form_open('fastsells/buy_product', 'class="frmBuyProduct"');
 			echo '<table class="productInformation">';
 
 				$loop_cnt_1         = 0;
-				foreach($json_product->catalog_item->catalog_item_field_values as $product_field)
+				foreach($ar_information as $key => $value)
 				{
 					$loop_cnt_1++;
 					if($loop_cnt_1 == 1)
@@ -46,30 +59,7 @@ echo form_open('fastsells/buy_product', 'class="frmBuyProduct"');
 						echo '<tr>';
 
 							echo '<td class="icon">'.full_div('', 'icon-box').'</td>';
-							echo '<td class="value">'.heading($product_field->value, 3).'</td>';
-
-						echo '</tr>';
-					}
-					elseif($loop_cnt_1 == 2)
-					{
-						echo '<tr>';
-
-							echo '<td class="icon">'.full_div('', 'icon-clipboard').'</td>';
-							echo '<td class="value">';
-
-								echo $product_field->value.div_height(10);
-
-								$loop_cnt_2         = 0;
-								foreach($json_product->catalog_item->catalog_item_field_values as $product_field_2)
-								{
-									$loop_cnt_2++;
-									if($loop_cnt_2 > 6)
-									{
-										echo full_div('<b>'.$product_field_2->catalog_item_definition_field->field_name.':</b> '.$product_field_2->value);
-									}
-								}
-
-							echo '</td>';
+							echo '<td class="value">'.heading($value[1], 3).'</td>';
 
 						echo '</tr>';
 					}
@@ -77,21 +67,29 @@ echo form_open('fastsells/buy_product', 'class="frmBuyProduct"');
 
 				echo '<tr>';
 
-					echo '<td class="icon">'.full_div('', 'icon-dollar').'</td>';
+					echo '<td class="icon">'.full_div('', 'icon-clipboard').'</td>';
+					echo '<td class="value">';
 
-						echo '<td class="value">';
-
-							$loop_cnt_3         = 0;
-							foreach($json_product->catalog_item->catalog_item_field_values as $product_field)
+						$loop_cnt_2         = 0;
+						foreach($ar_information as $key => $value)
+						{
+							$loop_cnt_2++;
+							if($loop_cnt_2 > 1)
 							{
-								$loop_cnt_3++;
-								if(($loop_cnt_3 > 2) && ($loop_cnt_3 < 7))
+								if($loop_cnt_2 == 2)
 								{
-									echo full_div('<b>'.$product_field->catalog_item_definition_field->field_name.':</b> '.$product_field->value);
+									echo full_div('<b>'.$value[0].':</b>');
+									echo full_div($value[1]);
+									echo div_height(10);
+								}
+								else
+								{
+									echo full_div('<b>'.$value[0].':</b> '.$value[1]);
 								}
 							}
+						}
 
-						echo '</td>';
+					echo '</td>';
 
 				echo '</tr>';
 

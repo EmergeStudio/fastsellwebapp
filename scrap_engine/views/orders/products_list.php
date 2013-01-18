@@ -27,22 +27,36 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 	$json_product           = $call_product['result'];
 
 	$loop_cnt               = 0;
-	foreach($json_product->catalog_item->catalog_item_field_values as $field_value)
+
+	// Build the information array
+	$ar_information         = array();
+	foreach($json_product->catalog_item->catalog_item_field_values as $product_field)
+	{
+		$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
+		$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
+		$product_value                          = $product_field->value;
+		$product_id                             = $product_field->id;
+
+		$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value, $product_id);
+	}
+	ksort($ar_information);
+
+	foreach($ar_information as $key => $value)
 	{
 		$loop_cnt++;
 		if($loop_cnt == 1)
 		{
-			$product_name   = $field_value->value;
+			$product_name   = $value[1];
 		}
 		elseif($loop_cnt == 2)
 		{
-			$product_fields .= $field_value->value.div_height(5);
+			$product_fields .= $value[1].div_height(5);
 		}
 		else
 		{
-			if($field_value->value != 'NOT_SET')
+			if($value[1] != 'NOT_SET')
 			{
-				$product_fields .= '<b>'.$field_value->catalog_item_definition_field->field_name.': </b>'.$field_value->value.', ';
+				$product_fields .= '<b>'.$value[0].': </b>'.$value[1].', ';
 			}
 		}
 	}
@@ -70,7 +84,7 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 	$html   = '';
 	$html   .= open_div('extraOptions');
 
-		$html   .= make_button('Remove', 'btnRemoveProduct btnCross', '', '', 'Remove This Product');
+		$html   .= full_div('', 'btnRemoveProduct icon-cross', 'Remove This Product');
 
 		// Hidden data
 		$html   .= hidden_div($order_item->id, 'hdOrderItemId');

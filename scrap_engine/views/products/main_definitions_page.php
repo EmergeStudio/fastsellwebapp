@@ -14,16 +14,18 @@ echo open_div('middle');
 
 			echo open_div('floatLeft');
 
-				// Basic search
-				echo open_div('basicSearch floatLeft');
+				echo heading('Your Product Groups', 3);
 
-					echo form_input('inpDefinitionSearch', '', 'class="floatLeft"');
-					echo make_button('Search', 'btnDefinitionSearch', '', 'left');
-					echo make_button('Reset', '', 'products/definitions', 'left');
-					echo clear_float();
-
-				// End of basic search
-				echo close_div();
+//				// Basic search
+//				echo open_div('basicSearch floatLeft');
+//
+//					echo form_input('inpDefinitionSearch', '', 'class="floatLeft"');
+//					echo make_button('Search', 'btnDefinitionSearch', '', 'left');
+//					echo make_button('Reset', '', 'products/definitions', 'left');
+//					echo clear_float();
+//
+//				// End of basic search
+//				echo close_div();
 
 			echo close_div();
 

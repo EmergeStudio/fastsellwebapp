@@ -21,6 +21,8 @@ $(document).ready(function(){
     $fc_customer_links();
 
     $fc_add_product();
+
+    $fc_add_products();
 	
 	$('.scrap_date').datepicker(
 	{
@@ -177,6 +179,63 @@ $(document).ready(function(){
         });
     }
 
+    // ---------- ADD PRODUCTS
+    function $fc_add_products()
+    {
+        // Buy products popup
+        $('body').sunBox.popup('Add More Products', 'popAddProducts',
+            {
+                ajax_path		    : $base_path + 'ajax_handler_products/add_products_popup',
+                close_popup		    : false,
+                callback 		    : function($return){}
+            });
+
+        // Show the popup
+        $('.btnAddProductPopup').live('click', function()
+        {
+            $('body').sunBox.popup_change_width('popAddProducts', 1050);
+            $('body').sunBox.show_popup('popAddProducts');
+            $('body').sunBox.adjust_popup_height('popAddProducts');
+        });
+
+        // Add product
+        $('.btnAddProduct').live('click', function()
+        {
+            // Some variables
+            $parent				    = '';
+            $error                  = false;
+            $this                   = $(this);
+            $parent				    = $this.parents('tr');
+            $product_id             = $parent.find('.hdProductId').text();
+            $stock                  = $parent.find('input[name="inpUnits"]').val();
+            $price                  = $parent.find('input[name="inpPrice"]').val();
+            $event_id               = $('.hdEventId').text();
+
+            console.log($product_id + ' -- ' + $stock + ' -- ' + $price + ' -- ' + $event_id);
+
+            // Clear fields
+            $parent.find('input[name="inpUnits"]').val('');
+            $parent.find('input[name="inpPrice"]').val('');
+
+            // Add the product
+            $.scrap_note_loader('Adding your product');
+            $.post($base_path + 'ajax_handler_fastsells/fastsell_create_product',
+            {
+                product_id		    : $product_id,
+                stock		        : $stock,
+                price		        : $price,
+                event_id			: $event_id
+            },
+            function($data)
+            {
+                $data	            = jQuery.trim($data);
+
+                $.scrap_note_time('Your product has been added', 4000, 'tick');
+                $fc_refresh_added_product_list();
+            });
+        });
+    }
+
     // ----- REFRESH PRODUCT LIST
     function $fc_refresh_added_product_list()
     {
@@ -271,7 +330,6 @@ $(document).ready(function(){
 		}
 	}
 	
-	
 	// ----- THE SHIFTER NAVIGATION
 	function $fc_shifter_navigation()
 	{
@@ -300,9 +358,11 @@ $(document).ready(function(){
                     $fastsell_name              = $('input[name="inpShowName"]').val();
                     $fastsell_description       = $('textarea[name="inpShowDescription"]').val();
                     $start_date                 = $('input[name="inpStartDate"]').val();
-                    $start_time                 = $('select[name="startHoursSelect"]').val() + $('select[name="startMinutesSelect"]').val() + '00';
+                    $start_hour                 = $('select[name="startHoursSelect"]').val();
+                    $start_minute               = $('select[name="startMinutesSelect"]').val();
                     $end_date                   = $('input[name="inpEndDate"]').val();
-                    $end_time                   = $('select[name="endHoursSelect"]').val() + $('select[name="endMinutesSelect"]').val() + '00';
+                    $end_hour                   = $('select[name="endHoursSelect"]').val();
+                    $end_minute                 = $('select[name="endMinutesSelect"]').val();
                     $event_id                   = $('.hdEventId').text();
                     $event_banner               = $('.hdBannerImagePath').text();
 
@@ -352,16 +412,18 @@ $(document).ready(function(){
                             fastsell_name	        : $fastsell_name,
                             fastsell_description	: $fastsell_description,
                             start_date		        : $start_date,
-                            start_time			    : $start_time,
+                            start_hour			    : $start_hour,
+                            start_minute			: $start_minute,
                             end_date			    : $end_date,
-                            end_time			    : $end_time,
+                            end_hour			    : $end_hour,
+                            end_minute			    : $end_minute,
                             event_id			    : $event_id,
                             event_banner	        : $event_banner
                         },
                         function($data)
                         {
                             $data	= jQuery.trim($data);
-                            //console.log($data);
+                            console.log($data);
 
                             if($data == '9876')
                             {
@@ -457,8 +519,7 @@ $(document).ready(function(){
 			}
 		});
 	}
-	
-	
+
 	// ----- FIX POSITION
 	function $fc_fix_position()
 	{
@@ -470,8 +531,7 @@ $(document).ready(function(){
         $('.shifterPane').hide();
         $('.shifterPane_' + $pane_position).fadeIn();
 	}
-	
-	
+
 	// ----- SHIFT THE INDICATOR
 	function $fc_shift_indicator()
 	{

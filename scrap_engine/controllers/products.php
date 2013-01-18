@@ -42,7 +42,20 @@ class Products extends CI_Controller
 		$this->load->view('universal/navigation', $dt_nav);
 
 		// Get the products
-		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
+		$offset                         = 0;
+		$limit                          = 20;
+		$search_text                    = '';
+
+		// Search
+		if($this->input->post('inpSearchText'))
+		{
+			$search_text                = $this->input->post('inpSearchText');
+		}
+
+		$dt_body['search_text']         = $search_text;
+
+		// Make the call
+		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text;
 		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
 		$dt_body['products']            = $call_products;
 

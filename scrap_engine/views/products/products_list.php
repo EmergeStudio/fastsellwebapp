@@ -10,6 +10,19 @@ if($products['error'] == FALSE)
 	// Product item
 	foreach($json_products->catalog_items as $product)
 	{
+		// Build the information array
+		$ar_information         = array();
+		foreach($product->catalog_item_field_values as $product_field)
+		{
+			$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
+			$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
+			$product_value                          = $product_field->value;
+			$product_id                             = $product_field->id;
+
+			$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value, $product_id);
+		}
+		ksort($ar_information);
+
 		// An item container
 		echo open_div('itemContainer small');
 
@@ -35,67 +48,25 @@ if($products['error'] == FALSE)
 					// Basic details
 					echo div_height(8);
 					$loop_cnt_1             = 0;
-					foreach($product->catalog_item_field_values as $catalogue_fields)
+					foreach($ar_information as $key => $value)
 					{
 						$loop_cnt_1++;
 						if($loop_cnt_1 == 1)
 						{
-							echo heading($catalogue_fields->value.' ('.$product->item_number.')', 5);
+							echo heading($value[1].' ('.$product->item_number.')', 5);
 						}
 						elseif($loop_cnt_1 == 2)
 						{
-							echo full_div($catalogue_fields->value, 'greyTxt');
+							echo full_div($value[1], 'greyTxt');
+							echo div_height(6);
 						}
 						else
 						{
-							break;
+							echo full_div('<b>'.$value[0].':</b> '.$value[1], 'extraValue');
 						}
 					}
 
-					// Extra fields
-					$loop_cnt_2             = 0;
-					foreach($product->catalog_item_field_values as $catalogue_fields)
-					{
-						$loop_cnt_2++;
-						if($loop_cnt_2 == 1)
-						{
-							echo div_height(6);
-						}
-						if($loop_cnt_2 > 6)
-						{
-							//echo full_div('<b>'.$catalogue_fields->catalog_item_definition_field->field_name.':</b> '.$catalogue_fields->value, 'extraValue');
-							echo full_div('<b>Field Name:</b> '.$catalogue_fields->value, 'extraValue');
-						}
-					}
 					echo clear_float();
-
-				echo '</td>';
-
-				// Stock & MSRP
-				echo '<td class="msrp">';
-
-					$loop_cnt_3             = 0;
-					foreach($product->catalog_item_field_values as $catalogue_fields)
-					{
-						if($loop_cnt_3 == 1)
-						{
-							echo div_height(3);
-						}
-						$loop_cnt_3++;
-						if($loop_cnt_3 == 3)
-						{
-							//echo full_div('<b>'.$catalogue_fields->catalog_item_definition_field->field_name.'</b>');
-							echo full_div('<b>Field Name</b>');
-							echo full_div('$'.$catalogue_fields->value);
-						}
-						elseif($loop_cnt_3 == 4)
-						{
-							echo div_height(5);
-							//echo full_div('<b>'.$catalogue_fields->catalog_item_definition_field->field_name.'</b>');
-							echo full_div('<b>Field Name</b>');
-							echo full_div($catalogue_fields->value);
-						}
-					}
 
 				echo '</td>';
 
@@ -103,11 +74,6 @@ if($products['error'] == FALSE)
 
 			// Product information
 			echo open_div('productInformation displayNone');
-
-				// Get product info
-				$url_product            = 'catalogitems/.json?id='.$product->id;
-				$call_product           = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
-				$json_product           = $call_product['result'];
 
 				// HTML
 				$img_properties         = array
@@ -117,28 +83,13 @@ if($products['error'] == FALSE)
 				);
 
 				echo full_div(img($img_properties), 'inset');
+		        echo div_height(10);
 
-				$loop_cnt_1             = 0;
-				foreach($json_product->catalog_item_field_values as $catalogue_fields)
+				$loop_cnt_2             = 0;
+				foreach($ar_information as $key => $value)
 				{
-					$loop_cnt_1++;
-					if($loop_cnt_1 == 1)
-					{
-						// Name
-						echo open_div('fieldContainer');
-
-							$ar_input       = array
-							(
-								'name'      => 'productField',
-								'value'     => $catalogue_fields->value
-							);
-							echo form_label('Product Name');
-							echo form_input($ar_input);
-							echo hidden_div($catalogue_fields->catalog_item_definition_field->id, 'hdDefinitionFieldId');
-
-						echo close_div();
-					}
-					elseif($loop_cnt_1 == 2)
+					$loop_cnt_2++;
+					if($loop_cnt_2 == 2)
 					{
 						// Description
 						echo open_div('fieldContainer');
@@ -146,11 +97,11 @@ if($products['error'] == FALSE)
 							$ar_input       = array
 							(
 								'name'      => 'productField',
-								'value'     => $catalogue_fields->value
+								'value'     => $value[1]
 							);
-							echo form_label('Product Description');
+							echo form_label($value[0]);
 							echo form_textarea($ar_input);
-							echo hidden_div($catalogue_fields->catalog_item_definition_field->id, 'hdDefinitionFieldId');
+							echo hidden_div($key, 'hdDefinitionFieldId');
 
 						echo close_div();
 
@@ -165,66 +116,16 @@ if($products['error'] == FALSE)
 					}
 					else
 					{
-						break;
-					}
-				}
-
-				// Extra fields
-				$loop_cnt_2             = 0;
-				foreach($json_product->catalog_item_field_values as $catalogue_fields)
-				{
-					$loop_cnt_2++;
-
-					if($loop_cnt_2 > 6)
-					{
 						echo open_div('fieldContainer');
 
 							$ar_input       = array
 							(
 								'name'      => 'productField',
-								'value'     => $catalogue_fields->value
+								'value'     => $value[1]
 							);
+							echo form_label($value[0]);
 							echo form_input($ar_input);
-							echo hidden_div($catalogue_fields->catalog_item_definition_field->id, 'hdDefinitionFieldId');
-
-						echo close_div();
-					}
-				}
-
-				// Stock and MSRP
-				$loop_cnt_3             = 0;
-				foreach($json_product->catalog_item_field_values as $catalogue_fields)
-				{
-					$loop_cnt_3++;
-					if($loop_cnt_3 == 3)
-					{
-						// MSRP
-						echo open_div('fieldContainer');
-
-							$ar_input       = array
-							(
-								'name'      => 'productField',
-								'value'     => $catalogue_fields->value
-							);
-							echo form_label('MSRP');
-							echo form_input($ar_input);
-							echo hidden_div($catalogue_fields->catalog_item_definition_field->id, 'hdDefinitionFieldId');
-
-						echo close_div();
-					}
-					elseif($loop_cnt_3 == 4)
-					{
-						// Pack & Size
-						echo open_div('fieldContainer');
-
-							$ar_input       = array
-							(
-								'name'      => 'productField',
-								'value'     => $catalogue_fields->value
-							);
-							echo form_label('Pack & Size');
-							echo form_input($ar_input);
-							echo hidden_div($catalogue_fields->catalog_item_definition_field->id, 'hdDefinitionFieldId');
+							echo hidden_div($key, 'hdDefinitionFieldId');
 
 						echo close_div();
 					}

@@ -635,10 +635,10 @@ class Ajax_handler_products extends CI_Controller
 		if($this->scrap_wall->login_check_ajax() == TRUE)
 		{
 			// Some variables
-			$show_host_id                   = $this->scrap_web->get_show_host_id();
+			$fastsell_id                    = $this->session->userdata('sv_show_set');
 
 			// Get the definitions
-			$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+			$url_definitions                = 'fastsellitemdefinitions/.jsons?fastselleventid='.$fastsell_id;
 			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
 			$dt_body['item_defs']           = $call_definitions;
 
@@ -666,7 +666,7 @@ class Ajax_handler_products extends CI_Controller
 
 			// Get the definitions
 			$url_definitions                = 'fastsellitemdefinitions/.jsons?fastselleventid='.$fastsell_id;
-			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, TRUE);
+			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
 			$dt_body['item_defs']           = $call_definitions;
 
 			// Get the view
@@ -780,19 +780,19 @@ class Ajax_handler_products extends CI_Controller
 			//echo $json_update;
 
 			// Update
-			//$call_product               = $this->scrap_web->webserv_call('catalogitems/.json', $json_update, 'post');
+			$call_product               = $this->scrap_web->webserv_call('catalogitems/.json', $json_update, 'post');
 
 			// Validate the result
-//			if($call_product['error'] == FALSE)
-//			{
-//				echo 'wassuccessfullycreated';
-//			}
-//			else
-//			{
-//				// Return the error message
-//				$json				        = $call_product['result'];
-//				echo $json->error_description;
-//			}
+			if($call_product['error'] == FALSE)
+			{
+				echo 'wassuccessfullycreated';
+			}
+			else
+			{
+				// Return the error message
+				$json				        = $call_product['result'];
+				echo $json->error_description;
+			}
 		}
 		else
 		{

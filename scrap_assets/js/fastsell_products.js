@@ -17,10 +17,25 @@ $(document).ready(function(){
 
     $fc_add_products();
 
+    $fc_remove_product();
+
     $fc_upload_master_data_file();
+
+    $fc_search();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- SAVE PRODUCT CHANGES
+    function $fc_search()
+    {
+        $('.frmSearch input').focus();
+
+        $('.btnSearch').live('click', function()
+        {
+            $('.frmSearch').submit();
+        });
+    }
 
     // ---------- UPLOAD MASTER DATA FILE
     function $fc_upload_master_data_file()
@@ -123,6 +138,40 @@ $(document).ready(function(){
 
                 $.scrap_note_time('Your product has been added', 4000, 'tick');
                 $fc_refresh_added_product_list();
+            });
+        });
+    }
+
+    // ---------- REMOVE A PRODUCT
+    function $fc_remove_product()
+    {
+        $('.btnRemoveProduct').live('click', function()
+        {
+            // Some variables
+            $this               = $(this);
+            $parent             = $this.parents('.extraOptions');
+            $product_id         = $parent.find('.hdProductId').text();
+            $event_id           = $('.hdEventId').text();
+
+            $.scrap_note_loader('Removing your product');
+            $.post($base_path + 'ajax_handler_fastsells/fastsell_remove_product',
+            {
+                product_id		    : $product_id,
+                event_id			: $event_id
+            },
+            function($data)
+            {
+                $data	            = jQuery.trim($data);
+
+                if($data == 'okitsbeenremoved')
+                {
+                    $.scrap_note_time('Your product has been removed', 4000, 'tick');
+                    $fc_refresh_added_product_list();
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
             });
         });
     }
