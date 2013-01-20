@@ -21,7 +21,8 @@ if($products['error'] == FALSE)
 			$json_product_image         = $call_product_image['result'];
 			if($json_product_image->is_empty == FALSE)
 			{
-				$src                    = $json_product_image->server_local_files[0]->path;
+				$image_path             = $json_product_image->server_local_files[0]->path;
+				$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
 			}
 		}
 		$img_properties		= array

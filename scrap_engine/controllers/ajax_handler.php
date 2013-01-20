@@ -77,9 +77,10 @@ class Ajax_handler extends CI_Controller
 		if($this->input->post('inp_username') && $this->input->post('inp_password'))
 		{
 			// Posted variables
-			$pv_username	= $this->input->post('inp_username');
-			$pv_password	= $this->input->post('inp_password');
+			$pv_username	= trim($this->input->post('inp_username'));
+			$pv_password	= trim($this->input->post('inp_password'));
 			$pv_encrypt		= 'yes';
+			//echo $this->input->post('user[username]').' -- '.$this->input->post('user[password]');
 
 			// Login user into ithawt app
 			$login_user     = $this->scrap_wall->login_user($pv_username, $pv_password, $pv_encrypt, FALSE);
@@ -97,6 +98,7 @@ class Ajax_handler extends CI_Controller
 		}
 		else
 		{
+			//echo 'error 3';
 			// No direct access is allowed !
 			redirect('http://www.fastsellfoods.com/');
 		}
@@ -172,23 +174,23 @@ class Ajax_handler extends CI_Controller
 				
  			// Submit the changes
  			$new_show_host			= $this->scrap_web->webserv_call('showhosts/.json', $new_json, 'put');
-			echo 'userloginsuccess';
+			//echo 'userloginsuccess';
 
  			// Validate the result
-// 			if($new_show_host['error'] == FALSE)
-// 			{
-// 				// New show host
-//				$encrypt				= 'yes';
-//
-//				// Login user into ithawt app
-//				$this->scrap_wall->login_user($username, $password, $encrypt);
-// 			}
-// 			else
-// 			{
-// 				// Return the error message
-// 				$json					= $new_show_host['result'];
-// 				echo $json->error_description;
-// 			}
+ 			if($new_show_host['error'] == FALSE)
+ 			{
+ 				// New show host
+				$encrypt				= 'yes';
+
+				// Login user into ithawt app
+				$this->scrap_wall->login_user($username, $password, $encrypt);
+ 			}
+ 			else
+ 			{
+ 				// Return the error message
+ 				$json					= $new_show_host['result'];
+ 				echo $json->error_description;
+ 			}
  		}
  		else
  		{

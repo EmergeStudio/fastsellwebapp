@@ -49,7 +49,7 @@ echo open_div('bannerBack');
 		}
 
 		// Heading
-		echo heading($fastsell_info->name, 2);
+		echo heading('FastSell: '.$fastsell_info->name, 2);
 
 		// Clear float
 		echo clear_float();
@@ -90,7 +90,7 @@ echo open_div('bannerBack');
 					echo '<li>';
 				}
 
-					echo anchor('fastsells/products', '<span class="icon-box blue"></span>Products', 'class="sectionNavLink"');
+					echo anchor('fastsells/products', '<span class="icon-box blue"></span>FastSell Products', 'class="sectionNavLink"');
 
 				echo '</li>';
 
@@ -104,7 +104,7 @@ echo open_div('bannerBack');
 					echo '<li>';
 				}
 
-					echo anchor('fastsells/customers', '<span class="icon-users blue"></span>Customers', 'class="sectionNavLink"');
+					echo anchor('fastsells/customers', '<span class="icon-users blue"></span>FastSell Customers', 'class="sectionNavLink"');
 
 				echo '</li>';
 

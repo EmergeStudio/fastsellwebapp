@@ -4,7 +4,7 @@
 echo open_div('inset');
 
 	// Table heading
-	$this->table->set_heading('Customer Name', 'Customer Number', 'User First Name', 'User Surname', 'User Email Address', '');
+	$this->table->set_heading('Customer Name', 'Customer Number', 'User First Name', 'User Last Name', 'User Email Address', '');
 
 	// Table data
 	$ar_fields              = array();

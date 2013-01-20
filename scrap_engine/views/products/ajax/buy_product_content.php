@@ -1,145 +1,158 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <?php
-// Data
-$json_product               = $product['result'];
-
-// Build the information array
-$ar_information         = array();
-$msrp                   = FALSE;
-foreach($json_product->catalog_item->catalog_item_field_values as $product_field)
+if($address['error'] == FALSE)
 {
-	$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
-	$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
-	$product_value                          = $product_field->value;
-	$product_id                             = $product_field->id;
+	// Data
+	$json_product               = $product['result'];
 
-	$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value, $product_id);
-
-	if($defintion_field_name == 'MSRP')
+	// Build the information array
+	$ar_information         = array();
+	$msrp                   = FALSE;
+	foreach($json_product->catalog_item->catalog_item_field_values as $product_field)
 	{
-		$msrp                               = $product_value;
+		$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
+		$defintion_field_name                   = $product_field->catalog_item_definition_field->field_name;
+		$product_value                          = $product_field->value;
+		$product_id                             = $product_field->id;
+
+		$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value, $product_id);
+
+		if($defintion_field_name == 'MSRP')
+		{
+			$msrp                               = $product_value;
+		}
 	}
-}
-ksort($ar_information);
+	ksort($ar_information);
 
-// Form
-echo form_open('fastsells/buy_product', 'class="frmBuyProduct"');
+	// Form
+	echo form_open('fastsells/buy_product', 'class="frmBuyProduct"');
 
-	// Right column
-	echo open_div('rightColumn');
+		// Right column
+		echo open_div('rightColumn');
 
-		// Product information
-		echo open_div('inset');
+			// Product information
+			echo open_div('inset');
 
-			// Price / discount / stock
-			echo open_div('priceDiscountStock');
+				// Price / discount / stock
+				echo open_div('priceDiscountStock');
 
-				echo full_div('$'.$json_product->price, 'price');
+					echo full_div('$'.$json_product->price, 'price');
 
-					if($msrp != FALSE)
-					{
-						$discount           = round($json_product->price / $msrp, 2);
-						$discount           = 100 - ($discount * 100);
-						echo full_div($discount.'% off', 'discount');
-					}
-
-				echo full_div('('.$json_product->stock_count.' available)', 'stock');
-
-			echo close_div();
-
-			echo '<table class="productInformation">';
-
-				$loop_cnt_1         = 0;
-				foreach($ar_information as $key => $value)
-				{
-					$loop_cnt_1++;
-					if($loop_cnt_1 == 1)
-					{
-						echo '<tr>';
-
-							echo '<td class="icon">'.full_div('', 'icon-box').'</td>';
-							echo '<td class="value">'.heading($value[1], 3).'</td>';
-
-						echo '</tr>';
-					}
-				}
-
-				echo '<tr>';
-
-					echo '<td class="icon">'.full_div('', 'icon-clipboard').'</td>';
-					echo '<td class="value">';
-
-						$loop_cnt_2         = 0;
-						foreach($ar_information as $key => $value)
+						if($msrp != FALSE)
 						{
-							$loop_cnt_2++;
-							if($loop_cnt_2 > 1)
-							{
-								if($loop_cnt_2 == 2)
-								{
-									echo full_div('<b>'.$value[0].':</b>');
-									echo full_div($value[1]);
-									echo div_height(10);
-								}
-								else
-								{
-									echo full_div('<b>'.$value[0].':</b> '.$value[1]);
-								}
-							}
+							$discount           = round($json_product->price / $msrp, 2);
+							$discount           = 100 - ($discount * 100);
+							echo full_div($discount.'% off', 'discount');
 						}
 
-					echo '</td>';
+					echo full_div('('.$json_product->stock_count.' available)', 'stock');
 
-				echo '</tr>';
+				echo close_div();
 
-				echo '<tr>';
+				echo '<table class="productInformation">';
 
-					echo '<td class="icon">'.full_div('', 'icon-shopping-cart').'</td>';
+					$loop_cnt_1         = 0;
+					foreach($ar_information as $key => $value)
+					{
+						$loop_cnt_1++;
+						if($loop_cnt_1 == 1)
+						{
+							echo '<tr>';
 
-						echo '<td class="value" style="padding-bottom:0px;">';
+								echo '<td class="icon">'.full_div('', 'icon-box').'</td>';
+								echo '<td class="value">'.heading($value[1], 3).'</td>';
 
-	                        $ar_input           = array
-		                    (
-			                    'name'          => 'inpQuantity',
-			                    'class'         => 'floatLeft',
-			                    'style'         => 'width:150px; margin:0px;'
-		                    );
-							echo form_label('Quantity');
-							echo form_input($ar_input);
-							echo full_div('('.$json_product->stock_count.' available)', 'floatLeft quantity');
-							echo hidden_div($json_product->stock_count, 'hdStockCount');
-							echo form_hidden('hdProductId', $json_product->id);
-							echo form_hidden('hdReturnURL', '');
-							echo clear_float();
+							echo '</tr>';
+						}
+					}
+
+					echo '<tr>';
+
+						echo '<td class="icon">'.full_div('', 'icon-clipboard').'</td>';
+						echo '<td class="value">';
+
+							$loop_cnt_2         = 0;
+							foreach($ar_information as $key => $value)
+							{
+								$loop_cnt_2++;
+								if($loop_cnt_2 > 1)
+								{
+									if($loop_cnt_2 == 2)
+									{
+										echo full_div('<b>'.$value[0].':</b>');
+										echo full_div($value[1]);
+										echo div_height(10);
+									}
+									else
+									{
+										echo full_div('<b>'.$value[0].':</b> '.$value[1]);
+									}
+								}
+							}
 
 						echo '</td>';
 
-				echo '</tr>';
+					echo '</tr>';
 
-			echo '</table>';
+					echo '<tr>';
 
+						echo '<td class="icon">'.full_div('', 'icon-shopping-cart').'</td>';
+
+							echo '<td class="value" style="padding-bottom:0px;">';
+
+		                        $ar_input           = array
+			                    (
+				                    'name'          => 'inpQuantity',
+				                    'class'         => 'floatLeft',
+				                    'style'         => 'width:150px; margin:0px;'
+			                    );
+								echo form_label('Quantity');
+								echo form_input($ar_input);
+								echo full_div('('.$json_product->stock_count.' available)', 'floatLeft quantity');
+								echo hidden_div($json_product->stock_count, 'hdStockCount');
+								echo form_hidden('hdProductId', $json_product->id);
+								echo form_hidden('hdReturnURL', '');
+								echo clear_float();
+
+							echo '</td>';
+
+					echo '</tr>';
+
+				echo '</table>';
+
+			echo close_div();
+
+		// End of right column
 		echo close_div();
 
-	// End of right column
-	echo close_div();
+		// Left column
+		echo open_div('leftColumn');
 
-	// Left column
-	echo open_div('leftColumn');
+			// Add user icon
+			$img_properties		    = array
+			(
+				'src'               => 'scrap_assets/images/universal/default_product_image_medium.jpg',
+				'width'             => 170
+			);
+			echo open_div('inset').img($img_properties).close_div();
 
-		// Add user icon
-		$img_properties		    = array
-		(
-			'src'               => 'scrap_assets/images/universal/default_product_image_medium.jpg',
-			'width'             => 170
-		);
-		echo open_div('inset').img($img_properties).close_div();
+		// End of side column
+		echo close_div();
 
-	// End of side column
-	echo close_div();
+		// Clear float
+		echo clear_float();
 
-	// Clear float
-	echo clear_float();
+	echo form_close();
+}
+else
+{
+	// Heading
+	echo heading('Please Edit Your Delivery Address', 3);
 
-echo form_close();
+	// Content
+	echo '<p>An address is required in order to place an order.  Click the button below to go do it quickly.</p>';
+	echo div_height(10);
+	echo make_button('Click Here To Edit Address', '', 'dashboard');
+}
 ?>

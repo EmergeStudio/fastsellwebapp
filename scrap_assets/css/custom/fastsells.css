@@ -317,6 +317,26 @@ h2 {
     margin-bottom: 0px;
     margin-top: 1px;
 }
+.messageNoProductDefinitions {
+    display: block;
+    width: 830px;
+    height: 200px;
+    margin: 0px auto;
+    margin-bottom: 1px;
+    background-image: url(../../images/messages/create_product_group.png);
+    text-indent: -1000px;
+    overflow: hidden;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+.messageNoProductDefinitions:hover {
+    cursor: pointer;
+}
+.messageNoProductDefinitions:active {
+    margin-bottom: 0px;
+    margin-top: 1px;
+}
 
 
 

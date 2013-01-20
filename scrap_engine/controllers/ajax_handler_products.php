@@ -824,6 +824,34 @@ class Ajax_handler_products extends CI_Controller
 	}
 
 
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD PRODUCTS VIA MASTER DATA FILE POPUP
+	|--------------------------------------------------------------------------
+	*/
+	function add_master_data_file_popup_3()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$fastsell_id                    = $this->session->userdata('sv_show_set');
+
+			// Get the definitions
+			$url_definitions                = 'fastsellitemdefinitions/.jsons?fastselleventid='.$fastsell_id;
+			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+			$dt_body['item_defs']           = $call_definitions;
+
+			// Get the view
+			$this->load->view('products/ajax/add_products_via_master_data_popup_2', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
 	/*
 	|--------------------------------------------------------------------------
 	| LINK / CREATE PRODUCTS VIA MASTER DATA FILE

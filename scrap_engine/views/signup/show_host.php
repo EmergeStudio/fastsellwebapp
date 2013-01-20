@@ -8,7 +8,7 @@ echo open_div('middle');
 	echo open_div('signupContain inset');
 		
 		// Account name
-		echo form_label('Account Name');
+		echo form_label('Company Name');
 		$inp_acc_name		= array
 		(
 			'name'			=> 'inpAccName'
@@ -36,7 +36,7 @@ echo open_div('middle');
 		echo form_input($inp_first_name);
 		
 		// Surname
-		echo form_label('Surname');
+		echo form_label('Last Name');
 		$inp_surname		= array
 		(
 			'name'			=> 'inpSurname'
@@ -58,6 +58,14 @@ echo open_div('middle');
 			'name'			=> 'inpPassword'
 		);
 		echo form_password($inp_password);
+
+		// Conform password
+		echo form_label('Confirm Password');
+		$inp_password_2		= array
+		(
+			'name'			=> 'inpPassword2'
+		);
+		echo form_password($inp_password_2);
 
 		// Email address
 		echo form_label('Email Address');

@@ -57,17 +57,17 @@ $(document).ready(function(){
             // Add the customer
             // Add the customer
             $.post($base_path + 'ajax_handler_fastsells/fastsell_customer_link',
-                {
-                    event_id		    : $event_id,
-                    customer_id			: $customer_id ,
-                    type                : 'remove'
-                },
-                function($data)
-                {
-                    //console.log($data);
-                    $.scrap_note_time('Customer has been removed from this FastSell', 4000, 'tick');
-                    $fc_refresh_customer_list();
-                });
+            {
+                event_id		    : $event_id,
+                customer_id			: $customer_id ,
+                type                : 'remove'
+            },
+            function($data)
+            {
+                //console.log($data);
+                $.scrap_note_time('Customer has been removed from this FastSell', 4000, 'tick');
+                $fc_refresh_customer_list();
+            });
         });
     }
 

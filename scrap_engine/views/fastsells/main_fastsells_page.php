@@ -12,7 +12,10 @@ echo open_div('middle');
 				// Add definition
 				if($this->scrap_web->get_show_host_id() != FALSE)
 				{
-					echo make_button('Create FastSell', 'btnAdd blueButton', 'fastsells/create_event', 'right');
+					if($definitions['error'] == FALSE)
+					{
+						echo make_button('Create FastSell', 'btnAdd blueButton', 'fastsells/create_event', 'right');
+					}
 				}
 
 				echo open_div('floatLeft');

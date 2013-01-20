@@ -56,6 +56,11 @@ class Fastsells extends CI_Controller
 			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id;
 			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells);
 			$dt_body['fastsells']           = $call_fastsells;
+
+			// Get the definitions
+			$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+			$dt_body['definitions']         = $call_definitions;
 		}
 		else
 		{
@@ -113,6 +118,11 @@ class Fastsells extends CI_Controller
 		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
+
+		// Get the definitions
+		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+		$dt_body['definitions']         = $call_definitions;
 
 //		// Get the products
 //		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
@@ -177,8 +187,71 @@ class Fastsells extends CI_Controller
 			if($acc_type == 'show_host')
 			{
 				// Some variables
-				$show_host_id               = $this->scrap_web->get_show_host_id();
-				$dt_body['show_host_id']    = $show_host_id;
+				$show_host_id                   = $this->scrap_web->get_show_host_id();
+				$dt_body['show_host_id']        = $show_host_id;
+				$user_id                        = $this->session->userdata('sv_user_id');
+
+				// Get fastsell definition
+				$url_fs_definition              = 'fastsellitemdefinitions/.jsons?fastselleventid='.$fastsell_id;
+				$call_fs_definition             = $this->scrap_web->webserv_call($url_fs_definition, FALSE, 'get', FALSE, FALSE);
+
+				// Clone the definitions
+				$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+				$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+
+				if($call_definitions['error'] == FALSE)
+				{
+					// Get JSON
+					$json_definitions           = $call_definitions['result'];
+
+					// Get sample jason
+					$url_sample                 = 'fastsellitemdefinitions/sample.json';
+					$call_sample                = $this->scrap_web->webserv_call($url_sample);
+
+					// Clone each definition
+					// Validate
+					if($call_sample['error'] == FALSE)
+					{
+						// Sample
+						$json_sample			        = $call_sample['result'];
+						$json_fs_definitions            = $call_fs_definition['result'];
+
+						foreach($json_definitions->catalog_item_definitions as $product_definition)
+						{
+							$exists                     = FALSE;
+							if($call_fs_definition['error'] == FALSE)
+							{
+								foreach($json_fs_definitions->fastsell_item_definitions as $fs_definition)
+								{
+									$fs_definition_1        = $this->scrap_web->webserv_call('fastsellitemdefinitions/.json?id='.$fs_definition->id, FALSE, 'get', FALSE, FALSE);
+									$js_fs_definition_1     = $fs_definition_1['result'];
+									if($js_fs_definition_1->catalog_item_definition->id == $product_definition->id)
+									{
+										$exists             = TRUE;
+									}
+								}
+							}
+
+							if($exists == FALSE)
+							{
+								// Change the data
+								$json_sample->name                              = 'fsed_'.$fastsell_id.'_'.$product_definition->name;
+								$json_sample->user->id                          = $user_id;
+								$json_sample->show_host_organization->id        = $show_host_id;
+								$json_sample->catalog_item_definition->id       = $product_definition->id;
+								$json_sample->fastsell_event->id                = $fastsell_id;
+								$json_sample->fastsell_item_definition_fields   = null;
+
+								// Recode
+								$new_show_definition_json                       = json_encode($json_sample);
+								//echo $new_show_definition_json.'<br><br>';
+
+								// Submit the insert
+								$new_show_definition                            = $this->scrap_web->webserv_call('fastsellitemdefinitions/.json', $new_show_definition_json, 'put', FALSE, FALSE);
+							}
+						}
+					}
+				}
 
 				// Navigation view
 				$dt_nav['app_page']	        = 'pageFastSellInfo';
@@ -190,14 +263,17 @@ class Fastsells extends CI_Controller
 				$dt_body['fastsell_info']   = $fastsell_info;
 
 				// Get the products
-				$url_products               = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset=0&limit=5';
-				$call_products              = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
-				$dt_body['products']        = $call_products;
+				$url_products                   = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset=0&limit=5';
+				$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+				$dt_body['products']            = $call_products;
 
 				// Get all the customers
-				$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
-				$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
-				$dt_body['customers']       = $call_customers;
+				$url_customers                  = 'customers/.jsons?fastselleventid='.$fastsell_id;
+				$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+				$dt_body['customers']           = $call_customers;
+
+				// Send the definitions
+				$dt_body['definitions']         = $call_definitions;
 
 				// Load the view
 				$this->load->view('fastsells/event_info', $dt_body);
@@ -451,9 +527,21 @@ class Fastsells extends CI_Controller
 
 				// Encode
 				$update_json                = json_encode($json_crt_order);
+				//echo $update_json;
 
 				// Create new order
 				$update_order               = $this->scrap_web->webserv_call('fastsellorders/.json', $update_json, 'post');
+
+//				if($update_order['error'] == FALSE)
+//				{
+//					echo 'ok';
+//				}
+//				else
+//				{
+//					// Return the error message
+//					$json				= $update_order['result'];
+//					echo $json->error_description;
+//				}
 
 				// Redirect
 				redirect($return_url);
@@ -461,8 +549,6 @@ class Fastsells extends CI_Controller
 			else
 			{
 				// New order
-
-				// Get current address
 				$url_address                = 'addresses/.jsons?customerid='.$customer_ord_id;
 				$call_address               = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
 				$json_address               = $call_address['result'];
@@ -489,6 +575,17 @@ class Fastsells extends CI_Controller
 
 					// Create new order
 					$new_order              = $this->scrap_web->webserv_call('fastsellorders/.json', $new_json, 'put');
+
+//					if($new_order['error'] == FALSE)
+//					{
+//						echo 'ok';
+//					}
+//					else
+//					{
+//						// Return the error message
+//						$json				= $new_order['result'];
+//						echo $json->error_description;
+//					}
 
 					// Redirect
 					redirect($return_url);
@@ -892,7 +989,7 @@ class Fastsells extends CI_Controller
 				// Search
 				if($this->input->post('inpSearchText'))
 				{
-					$search_text                = $this->input->post('inpSearchText');
+					$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
 				}
 
 				$dt_body['search_text']         = $search_text;

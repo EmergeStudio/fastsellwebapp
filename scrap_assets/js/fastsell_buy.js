@@ -35,10 +35,10 @@ $(document).ready(function(){
 
             // Set the counter
             $(this).countdown(
-                {
-                    // Time stamp
-                    timestamp	        : (new Date($ex_date[0], ($ex_date[1]-1), ($ex_date[2]-20), $hours, $minutes, $seconds)).getTime() + 20*24*60*60*1000
-                });
+            {
+                // Time stamp
+                timestamp	        : (new Date($ex_date[0], ($ex_date[1]-1), ($ex_date[2]-20), $hours, $minutes, $seconds)).getTime() + 20*24*60*60*1000
+            });
         });
     }
 
@@ -76,6 +76,16 @@ $(document).ready(function(){
                 if($data == '9876')
                 {
                     $.scrap_logout();
+                }
+                else if($data == 'noaddress')
+                {
+                    $.scrap_note_hide();
+                    $.scrap_message('<h3>Please Edit Your Delivery Address</h3><p>An address is required so that you can place an order.  Click the button below to do it quickly.</p><div class="divHeight" style="height:10px"></div><div class="nothing"><a href="'+ $base_path +'dashboard" class="scrapButton2"><div class="btnIcon"></div>Click Here To Edit Address</a><div class="clearFloat"></div></div>');
+                    $('.sunMessage .modalClose').live('click', function()
+                    {
+                        $('.sunMessage').remove();
+                        $.scrap_remove_overlay();
+                    });
                 }
                 else
                 {

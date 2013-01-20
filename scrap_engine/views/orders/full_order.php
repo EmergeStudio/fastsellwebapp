@@ -36,10 +36,10 @@ if($order != FALSE)
 							echo '<td>';
 
 								echo div_height(2);
-								echo $address->addresses[0]->address_one.', ';
-								echo $address->addresses[0]->city.', ';
-								echo $address->addresses[0]->state_province.', ';
-								echo $address->addresses[0]->postal_code;
+								echo $crt_order->billing_address->address_one.', ';
+								echo $crt_order->billing_address->city.', ';
+								echo $crt_order->billing_address->state_province.', ';
+								echo $crt_order->billing_address->postal_code;
 
 							echo '</td>';
 
@@ -69,7 +69,7 @@ if($order != FALSE)
 			// Order items
 			echo open_div('listContain');
 
-				$this->load->view('orders/products_list');
+				$this->load->view('orders/products_list_show_host');
 
 			echo close_div();
 

@@ -412,6 +412,40 @@ class Ajax_handler_customers extends CI_Controller
 			echo 9876;
 		}
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DELTETE CUSTOMER
+	|--------------------------------------------------------------------------
+	*/
+	function delete_customer()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$customer_to_show_host_id       = $this->input->post('customer_to_show_host_id');
+
+			// Remove link
+			$url_remove                     = 'customertoshowhosts/.json?id='.$customer_to_show_host_id;
+			$call_remove                       = $this->scrap_web->webserv_call($url_remove, FALSE, 'delete');
+
+			if($call_remove['error'] == FALSE)
+			{
+				echo 'okitsdone';
+			}
+			else
+			{
+				// Return the error message
+				$json				= $call_remove['result'];
+				echo $json->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
 	
 }
 /* End of file ajax_handler_customers.php */

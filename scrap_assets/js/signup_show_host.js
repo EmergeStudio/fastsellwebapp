@@ -124,7 +124,7 @@ $(document).ready(function(){
 					if($data == 'userloginsuccess')
 					{
 						// Reset the loader
-						$.scrap_note_loader('You are signed up!  You\'re now going into FastSell.');
+						//$.scrap_note_loader('You are signed up!  You\'re now going into FastSell.');
 						$('#frmLogin').submit();
 					}
 					else

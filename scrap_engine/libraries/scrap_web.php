@@ -132,6 +132,23 @@ class Scrap_web
 				
 				break;
 
+			// JSON option
+			case 'straight'	:
+
+				//curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+
+				// Result
+				$result 			= curl_exec($ch);
+				$curl_info	 		= curl_getinfo($ch);
+				curl_close($ch);
+
+				// Return
+				$ar_return['curl_info']		= $curl_info;
+				$ar_return['result']		= $result;
+				$ar_return['error']		    = FALSE;
+
+				break;
+
             // JSON option
             case 'multipart_form'	:
 
@@ -199,9 +216,33 @@ class Scrap_web
 		
 		// Return
 		$ar_return['content_type']	= $curl_info['content_type'];
-		$ar_return['result']		= $result;
+		//$ar_return['result']		= $result;
 		
 		return $ar_return;
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| IMAGE CALL
+	|--------------------------------------------------------------------------
+	*/
+	function image_call($url)
+	{
+		// Setup
+		$exp_url					= explode('?', $url, 2);
+
+		$new_url					= $this->CI->config->item('scrap_web_address').$exp_url[0];
+//		if($this->CI->session->userdata('sv_java_id'))
+//		{
+//			$new_url				.= ';jsessionid='.$this->CI->session->userdata('sv_java_id');
+//		}
+		if(!empty($exp_url[1]))
+		{
+			$new_url				.= '?'.$exp_url[1];
+		}
+
+		return $new_url;
 	}
 
 

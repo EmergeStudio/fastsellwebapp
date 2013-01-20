@@ -35,14 +35,13 @@ if($customers['error'] == FALSE)
 		array_push($ar_fields, $customer_to_show_host->customer_number);
 
 		// View orders
-		array_push($ar_fields, anchor('order/by_customer/'.$customer_details->id, 'View Orders'));
+		array_push($ar_fields, anchor('customers/orders/'.$customer_details->id, 'View Orders'));
 
 		// Buttons
 		$html   = '';
 		$html   .= open_div('extraOptions');
 
-			$html   .= make_button('', 'btnEditCustomer btnEdit iconOnly', '', 'left', 'Change this customers details');
-			$html   .= make_button('', 'btnDeleteCustomer btnCross iconOnly', '', 'left', 'Delete this customer');
+			$html   .= full_div('', 'btnDeleteCustomer icon-cross', 'Delete this customer');
 
 			// Hidden data
 			$html   .= hidden_div($customer_details->id, 'hdCustomerId');

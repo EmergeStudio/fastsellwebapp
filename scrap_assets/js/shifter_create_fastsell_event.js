@@ -60,9 +60,19 @@ $(document).ready(function(){
         // Show the popup
         $('.btnUploadProducts').live('click', function()
         {
-            $('.popProductsMasterDataFile .returnTrue').text('Upload');
-            $('body').sunBox.show_popup('popProductsMasterDataFile');
-            $('body').sunBox.adjust_popup_height('popProductsMasterDataFile');
+            $.post($base_path + 'ajax_handler_products/add_master_data_file_popup_3',
+            {
+                get_it		        : 'get_it'
+            },
+            function($data)
+            {
+                $data	            = jQuery.trim($data);
+
+                $('.popProductsMasterDataFile .popup').html($data);
+                $('.popProductsMasterDataFile .returnTrue').text('Upload');
+                $('body').sunBox.show_popup('popProductsMasterDataFile');
+                $('body').sunBox.adjust_popup_height('popProductsMasterDataFile');
+            });
         });
 
         // Submit
@@ -188,11 +198,11 @@ $(document).ready(function(){
     {
         // Buy products popup
         $('body').sunBox.popup('Add More Products', 'popAddProducts',
-            {
-                ajax_path		    : $base_path + 'ajax_handler_products/add_products_popup',
-                close_popup		    : false,
-                callback 		    : function($return){}
-            });
+        {
+            ajax_path		    : $base_path + 'ajax_handler_products/add_products_popup',
+            close_popup		    : false,
+            callback 		    : function($return){}
+        });
 
         // Show the popup
         $('.btnAddProductPopup').live('click', function()

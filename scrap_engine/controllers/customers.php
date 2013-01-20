@@ -182,6 +182,100 @@ class Customers extends CI_Controller
 			}
 		}
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| CUSTOMER ORDERS
+	|--------------------------------------------------------------------------
+	*/
+	function orders()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+
+		// ----- SOME VARIABLES ---------------------------------
+		$customer_user_id               = $this->uri->segment(3);
+
+
+		// ----- HEADER ------------------------------------
+		// Some variables
+		$dt_header['title'] 	        = 'FastSell Customers';
+		$dt_header['crt_page']	        = 'pageCustomers';
+		$dt_header['extra_js']          = array('customers');
+		$dt_header['extra_css']         = array('customers', 'fastsells');
+
+		// Load header
+		$this->load->view('universal/header', $dt_header);
+
+
+		// ----- CONTENT ------------------------------------
+		// Navigation view
+		$dt_nav['app_page']	            = 'pageCustomers';
+		$this->load->view('universal/navigation', $dt_nav);
+
+		// Orders
+		$url_orders                     = 'fastsellorders/.jsons?customeruserid='.$customer_user_id;
+		$call_orders                    = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
+		$dt_body['orders']              = $call_orders;
+
+		// Load the view
+		$this->load->view('orders/main_orders_page_show_host', $dt_body);
+
+
+		// ----- FOOTER ------------------------------------
+		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| CUSTOMER ORDER
+	|--------------------------------------------------------------------------
+	*/
+	function order()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+
+		// ----- SOME VARIABLES ---------------------------------
+		$order_id                       = $this->uri->segment(3);
+
+
+		// ----- HEADER ------------------------------------
+		// Some variables
+		$dt_header['title'] 	        = 'FastSell Customers';
+		$dt_header['crt_page']	        = 'pageCustomers';
+		$dt_header['extra_js']          = array('customers');
+		$dt_header['extra_css']         = array('customers', 'fastsell_my_order');
+
+		// Load header
+		$this->load->view('universal/header', $dt_header);
+
+
+		// ----- CONTENT ------------------------------------
+		// Navigation view
+		$dt_nav['app_page']	            = 'pageCustomers';
+		$this->load->view('universal/navigation', $dt_nav);
+
+		// Current order
+		$url_crt_order                  = 'fastsellorders/.json?id='.$order_id;
+		$call_crt_order                 = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
+		$json_order                     = $call_crt_order['result'];
+
+		// Parse variables
+		$dt_body['order']               = TRUE;
+		$dt_body['crt_order']           = $call_crt_order['result'];
+
+		// Load the view
+		$this->load->view('orders/full_order', $dt_body);
+
+
+		// ----- FOOTER ------------------------------------
+		$this->load->view('universal/footer');
+	}
 }
 
 /* End of file customers.php */

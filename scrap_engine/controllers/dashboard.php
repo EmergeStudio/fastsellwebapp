@@ -59,6 +59,11 @@ class Dashboard extends CI_Controller
 			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
 			$dt_body['fastsells']           = $call_fastsells;
 
+			// Get the definitions
+			$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+			$dt_body['definitions']         = $call_definitions;
+
 			// Orders
 			$dt_body['orders']['error']     = TRUE;
 

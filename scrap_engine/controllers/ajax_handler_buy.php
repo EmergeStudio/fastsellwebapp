@@ -84,15 +84,28 @@ class Ajax_handler_buy extends CI_Controller
 		if($this->scrap_wall->login_check_ajax() == TRUE)
 		{
 			// Some variables
-			$product_id                 = $this->input->post('product_id');
+			$product_id                     = $this->input->post('product_id');
+			$customer_id                    = $this->scrap_web->get_customer_org_id();
 
 			// Get the product
-			$url_product                = 'fastsellitems/.json?id='.$product_id;
-			$call_product               = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
-			$dt_body['product']         = $call_product;
+			$url_product                    = 'fastsellitems/.json?id='.$product_id;
+			$call_product                   = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
+			$dt_body['product']             = $call_product;
+
+			// Get current address
+			$url_address                    = 'addresses/.jsons?customerid='.$customer_id;
+			$call_address                   = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
+			$dt_body['address']             = $call_address;
 
 			// Load the view
-			$this->load->view('products/ajax/buy_product_content', $dt_body);
+			if($call_address['error'] == FALSE)
+			{
+				$this->load->view('products/ajax/buy_product_content', $dt_body);
+			}
+			else
+			{
+				echo 'noaddress';
+			}
 		}
 		else
 		{

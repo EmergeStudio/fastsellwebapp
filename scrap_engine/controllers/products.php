@@ -49,13 +49,13 @@ class Products extends CI_Controller
 		// Search
 		if($this->input->post('inpSearchText'))
 		{
-			$search_text                = $this->input->post('inpSearchText');
+			$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
 		}
 
 		$dt_body['search_text']         = $search_text;
 
 		// Make the call
-		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text;
+		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
 		$dt_body['products']            = $call_products;
 

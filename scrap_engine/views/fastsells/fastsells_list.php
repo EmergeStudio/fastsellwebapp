@@ -31,7 +31,8 @@ if($fastsells['error'] == FALSE)
 						$json_fastsell_image        = $call_fastsell_image['result'];
 						if($json_fastsell_image->is_empty == FALSE)
 						{
-							$src                    = $json_fastsell_image->server_local_files[0]->path;
+							$image_path             = $json_fastsell_image->server_local_files[0]->path;
+							$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
 						}
 					}
 
@@ -88,7 +89,14 @@ else
 {
 	if($this->scrap_web->get_show_host_id() != FALSE)
 	{
-		echo anchor('fastsells/create_event', 'Create Fastsell', 'class="messageCreateAFastSell"');
+		if($definitions['error'] == FALSE)
+		{
+			echo anchor('fastsells/create_event', 'Create Fastsell', 'class="messageCreateAFastSell"');
+		}
+		else
+		{
+			echo anchor('products/definitions', 'Create Product Defnition', 'class="messageNoProductDefinitions"');
+		}
 	}
 	else
 	{
