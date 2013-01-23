@@ -128,6 +128,7 @@ $(document).ready(function(){
         // Show the popup
         $('.btnAddProductPopup').live('click', function()
         {
+            $('.popAddProducts .returnTrue').hide();
             $('body').sunBox.popup_change_width('popAddProducts', 1050);
             $('body').sunBox.show_popup('popAddProducts');
             $('body').sunBox.adjust_popup_height('popAddProducts');
@@ -146,7 +147,7 @@ $(document).ready(function(){
             $price                  = $parent.find('input[name="inpPrice"]').val();
             $event_id               = $('.hdEventId').text();
 
-            console.log($product_id + ' -- ' + $stock + ' -- ' + $price + ' -- ' + $event_id);
+            //console.log($product_id + ' -- ' + $stock + ' -- ' + $price + ' -- ' + $event_id);
 
             // Clear fields
             $parent.find('input[name="inpUnits"]').val('');

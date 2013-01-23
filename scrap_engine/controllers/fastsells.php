@@ -527,7 +527,7 @@ class Fastsells extends CI_Controller
 
 				// Encode
 				$update_json                = json_encode($json_crt_order);
-				//echo $update_json;
+				echo $update_json;
 
 				// Create new order
 				$update_order               = $this->scrap_web->webserv_call('fastsellorders/.json', $update_json, 'post');
@@ -544,7 +544,7 @@ class Fastsells extends CI_Controller
 //				}
 
 				// Redirect
-				redirect($return_url);
+				//redirect($return_url);
 			}
 			else
 			{
@@ -572,6 +572,7 @@ class Fastsells extends CI_Controller
 
 					// Encode JSON
 					$new_json               = json_encode($json_sample);
+					echo $new_json;
 
 					// Create new order
 					$new_order              = $this->scrap_web->webserv_call('fastsellorders/.json', $new_json, 'put');
@@ -588,7 +589,7 @@ class Fastsells extends CI_Controller
 //					}
 
 					// Redirect
-					redirect($return_url);
+					//redirect($return_url);
 				}
 				else
 				{

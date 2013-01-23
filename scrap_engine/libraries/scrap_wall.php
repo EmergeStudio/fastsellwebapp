@@ -36,7 +36,8 @@ class Scrap_wall
 			{
 				$password 		= $pv_password;
 			}
-			
+			$pv_username            = str_replace(' ', '%20', $pv_username);
+
 			// Authenticate user
 			$url				= 'auth/.json?username='.$pv_username.'&password='.$password;
 			$auth_user			= $this->CI->scrap_web->webserv_call($url);

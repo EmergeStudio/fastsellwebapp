@@ -207,6 +207,7 @@ $(document).ready(function(){
         // Show the popup
         $('.btnAddProductPopup').live('click', function()
         {
+            $('.popAddProducts .returnTrue').hide();
             $('body').sunBox.popup_change_width('popAddProducts', 1050);
             $('body').sunBox.show_popup('popAddProducts');
             $('body').sunBox.adjust_popup_height('popAddProducts');
