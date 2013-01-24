@@ -88,10 +88,32 @@ echo open_div('middle');
 
 					echo form_textarea($inp_data);
 
-					// FastSell image
 					echo open_div('blockFastSellImage');
 
-						echo full_div('', 'icon-camera');
+						echo open_div('fastSellImage');
+							// Get the image
+							$src                    = 'scrap_assets/images/universal/default_event_image.png';
+							$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
+							$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+							if($call_fastsell_image['error'] == FALSE)
+							{
+								$json_fastsell_image        = $call_fastsell_image['result'];
+								if($json_fastsell_image->is_empty == FALSE)
+								{
+									$image_path             = $json_fastsell_image->server_local_files[0]->path;
+									$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+								}
+							}
+
+							$img_properties         = array
+							(
+								'src'               => $src,
+								'width'             => '250px'
+							);
+
+							echo full_div(img($img_properties));
+
+						echo close_div();
 
 						echo form_label('FastSell Image:');
 						$inp_data		= array

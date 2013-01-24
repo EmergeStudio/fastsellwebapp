@@ -51,6 +51,26 @@
 #header #topBar .mainNav.userNav li {
 	background-position:left;
 }
+#header #topBar .accountType {
+    float: right;
+    padding: 9px 18px 9px 44px;
+    margin: 7px 5px 0px 5px;
+    color:#fff;
+    text-shadow:none;
+    font-weight:500;
+    font-size: 14px;
+    font-weight: 200;
+    background-color: #fcb040;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+}
+#header #topBar .accountType .icon {
+    position: absolute;
+    font-size: 22px;
+    margin: -3px 0px 0px -30px;
+    text-shadow: none;
+}
 #header #topBar .mainNav li a.mainNavLink, #header #topBar .mainNav li div.mainNavLink {
 	padding:16px 14px 16px 14px;
 	font-size:15px;

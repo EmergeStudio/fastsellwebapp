@@ -1,11 +1,17 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <?php
+// Some height
+echo div_height(50);
+
 // Open middle div
 echo open_div('middle').open_div('whiteBack coolScreen');
 
 	// Control bar
 	echo open_div('controlBar plain');
+
+		// Go back button
+		echo anchor('fastsells', '<span class="icon-arrow-left"></span>Back To FastSells', 'class="goBackButton"');
 
 		// Shifter
 		echo open_div('shifter');
@@ -50,48 +56,6 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		echo heading('FastSell Details', 2);
 		echo div_height(15);
 
-//		// Show banner
-//		echo open_div('inset showBanner');
-//
-//			echo full_div('', 'uploadedBannerContainer');
-//
-//			echo open_div('uploadBannerMessage');
-//
-//				echo img('scrap_assets/images/icons/upload_images_icon.png');
-//
-//				echo full_div('', 'loader');
-//
-//			echo close_div();
-//
-//		echo close_div();
-//
-//		// Upload space
-//		echo div_height(20);
-//		echo open_div('uploadBanner');
-//
-//			echo open_div('uploaderContainer');
-//
-//				// Upload form
-//				echo form_open_multipart('ajax_handler_shows/upload_temp_banner', 'class="frmUploadBanner"');
-//
-//					$inp_data		= array
-//					(
-//						'name'		=> 'uploadedFile',
-//						'class'		=> 'uploadedFile'
-//					);
-//					echo form_upload($inp_data);
-//					echo clear_float();
-//
-//				// Close the form
-//				echo form_close();
-//
-//			echo close_div();
-//
-//		echo close_div();
-//
-//		// Some height
-//		echo div_height(30);
-
 		// Show Details
 		echo open_div('inset showDescription floatRight');
 
@@ -129,22 +93,6 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo close_div();
 
-			// FastSell image
-			echo open_div('blockFastSellImage').form_open_multipart('ajax_handler_fastsells/add_event_image', 'class="frmFastSellImage"');
-
-				echo full_div('', 'icon-camera');
-
-				echo form_label('FastSell Image:');
-				$inp_data		= array
-				(
-					'name'		=> 'uploadedFileFastsellImage',
-					'class'		=> 'uploadedFileFastsellImage'
-				);
-				echo form_upload($inp_data);
-				echo clear_float();
-
-			echo form_close().close_div();
-
 		echo close_div();
 
 		echo open_div('showDescription inset floatLeft');
@@ -166,6 +114,22 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 			);
 
 			echo form_textarea($inp_data);
+
+			// FastSell image
+			echo open_div('blockFastSellImage').form_open_multipart('ajax_handler_fastsells/add_temp_event_image', 'class="frmFastSellImage"');
+
+				echo full_div('', 'icon-camera fastSellImage');
+
+				echo form_label('FastSell Image:');
+				$inp_data		= array
+				(
+					'name'		=> 'uploadedFileFastsellImage',
+					'class'		=> 'uploadedFileFastsellImage'
+				);
+				echo form_upload($inp_data);
+				echo clear_float();
+
+			echo form_close().close_div();
 
 		echo close_div();
 

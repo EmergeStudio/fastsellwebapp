@@ -207,15 +207,24 @@
     -webkit-box-shadow: 1px 1px 2px #c1c1c1;
     -moz-box-shadow: 1px 1px 2px #c1c1c1;
 }
-.middle .shifterPane_1 .blockFastSellImage .icon-camera {
+.middle .shifterPane_1 .blockFastSellImage .fastSellImage {
     float: right;
     font-size: 50px;
     color: #fcb040;
+    width: 250px;
+    text-align: right;
+}
+.middle .shifterPane_1 .blockFastSellImage .fastSellImage .loader {
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 25px;
+    background-image: url(../../images/universal/ajax_loader10.gif);
+    background-position: top;
+    background-repeat: no-repeat;
 }
 .middle .shifterPane_1 .blockFastSellImage label {
     margin-top: 0px;
 }
-
 
 
 .sunBox.popCustomerMasterDataFile .contentCenter .popup .inset input {
@@ -229,4 +238,34 @@
     display: block;
     background-color: #fff;
     margin: 0px;
+}
+div.uploader input {
+    height: 30px;
+}
+
+.middle .goBackButton {
+    color: #fff;
+    position: absolute;
+    padding: 12px 18px 12px 16px;
+    margin-top: 16px;
+    margin-right: 0px;
+    font-size: 14px;
+    font-weight: 200;
+    text-shadow: none;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px solid #1ba2d0;
+    background-color: #1ba2d0;
+    background-image: none;
+}
+.middle .goBackButton:hover {
+    border:1px solid #016689;
+    color:#fff;
+}
+.middle .goBackButton span {
+    font-size: 12px;
+    color: #fff;
+    text-shadow: none;
+    margin-right: 8px;
 }

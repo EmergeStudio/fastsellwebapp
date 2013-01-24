@@ -64,7 +64,7 @@ class Ajax_handler extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
-	| LOG ME IN STAIC
+	| LOG ME IN STATIC
 	|--------------------------------------------------------------------------
 	|
 	| Here the user is logged in, else an error mesage is sent back to notify
@@ -93,7 +93,7 @@ class Ajax_handler extends CI_Controller
 			else
 			{
 				// Login failure
-				redirect('http://www.fastsellfoods.com/');
+				redirect('http://www.fastsellfoods.com/index.php?error=true');
 			}
 		}
 		else

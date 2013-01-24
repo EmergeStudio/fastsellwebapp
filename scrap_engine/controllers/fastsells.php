@@ -112,7 +112,7 @@ class Fastsells extends CI_Controller
 		// ----- CONTENT ------------------------------------
 		// Navigation view
 		$dt_nav['app_page']	            = 'pageFastSells';
-		$this->load->view('universal/navigation', $dt_nav);
+		//$this->load->view('universal/navigation', $dt_nav);
 
 		// Get all the customers
 		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
@@ -123,11 +123,6 @@ class Fastsells extends CI_Controller
 		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
 		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
 		$dt_body['definitions']         = $call_definitions;
-
-//		// Get the products
-//		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
-//		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
-//		$dt_body['products']            = $call_products;
 
 		// Load the view
 		$this->load->view('fastsells/create_fastsell_event', $dt_body);
@@ -544,7 +539,7 @@ class Fastsells extends CI_Controller
 //				}
 
 				// Redirect
-				//redirect($return_url);
+				redirect($return_url);
 			}
 			else
 			{
@@ -589,7 +584,7 @@ class Fastsells extends CI_Controller
 //					}
 
 					// Redirect
-					//redirect($return_url);
+					redirect($return_url);
 				}
 				else
 				{

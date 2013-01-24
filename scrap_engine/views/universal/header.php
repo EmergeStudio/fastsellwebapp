@@ -151,7 +151,7 @@ div.newOverlay {
 			echo open_div('innerTop');
 			
 				// Logo
-				if($crt_page == 'pageLogin')
+				if(($crt_page == 'pageLogin') || ($crt_page == 'pageSignup'))
 				{
 					echo open_div('logoContain centerLogo');
 				}
@@ -172,7 +172,7 @@ div.newOverlay {
 				echo close_div();
 				
 				// Navigation links
-				if($crt_page != 'pageLogin')
+				if(($crt_page != 'pageLogin') && ($crt_page != 'pageSignup'))
 				{
 					
 					// Main navigation
@@ -216,6 +216,15 @@ div.newOverlay {
 //						echo '</li>';
 				
 						// User link
+						if($this->session->userdata('sv_acc_type') == 'show_host')
+						{
+							echo full_div('<span class="icon icon-sale"></span>Seller', 'accountType');
+						}
+						else
+						{
+							echo full_div('<span class="icon icon-basket"></span>Buyer', 'accountType');
+						}
+
 						if($crt_page == 'pageUserDetails')
 						{
 							echo '<li class="superActive userNavLink">';

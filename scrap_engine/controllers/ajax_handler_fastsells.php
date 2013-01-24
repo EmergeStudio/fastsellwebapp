@@ -527,6 +527,90 @@ class Ajax_handler_fastsells extends CI_Controller
 			echo 9876;
 		}
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| UPLOAD FASTSELL IMAGE 2
+	|--------------------------------------------------------------------------
+	*/
+	function add_event_image_2()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$fastsell_id                = $this->session->userdata('sv_show_set');
+
+			if(isset($_FILES['uploadedFileFastsellImage']) && !empty($_FILES['uploadedFileFastsellImage']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Upload the file
+			$url_file_upload            = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$_FILES['uploadedFileFastsellImage']['name'];
+			$call_file_upload           = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', TRUE);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| UPLOAD TEMPORARY FASTSELL IMAGE
+	|--------------------------------------------------------------------------
+	*/
+	function add_temp_event_image()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$random_folder              = $this->scrap_string->random_string_letter();
+
+			// Create the banner folder
+			$url_sample_path                = 'serverlocalfiles/sample.json';
+			$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+			$json_sample_path               = $call_sample_path['result'];
+
+			// Edit DOM
+			$json_sample_path->path         = 'scrap_shows_temp/temp_'.$random_folder.'_temp';
+			$json_new_folder                = json_encode($json_sample_path);
+
+			// Create directory
+			$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+
+			if(isset($_FILES['uploadedFileFastsellImage']) && !empty($_FILES['uploadedFileFastsellImage']))
+			{
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
+			}
+			else
+			{
+				$document_file			= FALSE;
+			}
+
+			// Upload the file
+			$url_file_upload            = 'serverlocalfiles/.json?path=scrap_shows_temp/temp_'.$random_folder.'_temp/'.$_FILES['uploadedFileFastsellImage']['name'];
+			$call_file_upload           = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
+
+			echo $this->config->item('scrap_web_address').'serverlocalfiles/file?path=scrap_shows_temp/temp_'.$random_folder.'_temp/'.$_FILES['uploadedFileFastsellImage']['name'];
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
 	
 }
 /* End of file ajax_handler_fastsells.php */

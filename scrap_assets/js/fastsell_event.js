@@ -29,9 +29,22 @@ $(document).ready(function(){
     $fc_remove_customer();
 
     $fc_remove_product();
+
+    $fc_upload_new_image();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- UPLOAD NEW IMAGE
+    function $fc_upload_new_image()
+    {
+        $('input[name="uploadedFileFastsellImage"]').live('change', function()
+        {
+            $('.shifterPane_1 .fastSellImage').removeClass('icon-camera').html('<div class="loader">Uploading Your Selected Image</div>');
+
+            $('.frmSaveEventChanges').submit();
+        });
+    }
 
     // ---------- SAVE EVENT CHANGES
     function $fc_save_event_changes()

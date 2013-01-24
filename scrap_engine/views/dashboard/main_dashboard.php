@@ -33,7 +33,7 @@ echo open_div('middle');
 
 				// Create button
 				echo div_height(15);
-				echo make_button('Click To Product Group', 'blueButton btnAdd', 'products/definitions');
+				echo make_button('Click To Add A Product Group', 'blueButton btnAdd', 'products/definitions');
 			}
 
 		echo close_div();

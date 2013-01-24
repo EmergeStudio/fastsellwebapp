@@ -42,9 +42,33 @@ $(document).ready(function(){
     $fc_remove_customer();
 
     $fc_remove_product();
+
+    $fc_upload_temp_image();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- UPLOAD TEMP IMAGE
+    function $fc_upload_temp_image()
+    {
+        $('input[name="uploadedFileFastsellImage"]').live('change', function()
+        {
+            $('.shifterPane_1 .fastSellImage').removeClass('icon-camera').html('<div class="loader">Uploading Your Selected Image</div>');
+
+            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+            $('.shifterPane_1 .blockFastSellImage').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+            $('.shifterPane_1 .frmFastSellImage').attr('target', $iframe_name);
+            $('.shifterPane_1 .frmFastSellImage').submit();
+
+            $('iframe[name="'+ $iframe_name +'"]').load(function()
+            {
+                $data		= jQuery.trim($('.shifterPane_1 .blockFastSellImage iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                console.log($data);
+
+                $('.shifterPane_1 .blockFastSellImage .fastSellImage').html('<img src="'+ $data +'" width="250px" alt="">')
+            });
+        });
+    }
 
     // ---------- UPLOAD MASTER DATA FILE
     function $fc_upload_master_data_file_2()
@@ -456,6 +480,7 @@ $(document).ready(function(){
                                     if($('input[name="uploadedFileFastsellImage"]').val() != '')
                                     {
                                         $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                                        $('.blockFastSellImage .frmFastSellImage').attr({ 'action' : $base_path + 'ajax_handler_fastsells' });
                                         $('.blockFastSellImage').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
                                         $('.blockFastSellImage .frmFastSellImage').attr('target', $iframe_name);
                                         $('.blockFastSellImage .frmFastSellImage').submit();

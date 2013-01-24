@@ -505,6 +505,39 @@ class Scrap_string
 		
 		return $string;
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| RANDOM STRING  LETTER
+	|--------------------------------------------------------------------------
+	*/
+	function random_string_letter($length = 10)
+	{
+		$chars      = "abcdefghijkmnopqrstuvwxyz";
+		$chars_2    = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		srand((double)microtime()*1000000);
+		$i          = 0;
+		$string     = '';
+
+		while ($i <= ($length - 2))
+		{
+			$num 		= rand() % 66;
+			$tmp 		= substr($chars, $num, 1);
+			$string	= $string . $tmp;
+			$i++;
+		}
+
+		while ($i <= ($length))
+		{
+			$num 		= rand() % 66;
+			$tmp 		= substr($chars_2, $num, 1);
+			$string	= $string . $tmp;
+			$i++;
+		}
+
+		return $string;
+	}
 	
 	
 	/*
