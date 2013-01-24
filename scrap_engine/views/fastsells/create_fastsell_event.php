@@ -93,6 +93,22 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo close_div();
 
+			// FastSell image
+			echo open_div('blockFastSellImage').form_open_multipart('ajax_handler_fastsells/add_temp_event_image', 'class="frmFastSellImage"');
+
+				echo full_div('', 'icon-camera fastSellImage');
+
+				echo form_label('FastSell Image:');
+				$inp_data		= array
+				(
+					'name'		=> 'uploadedFileFastsellImage',
+					'class'		=> 'uploadedFileFastsellImage'
+				);
+				echo form_upload($inp_data);
+				echo clear_float();
+
+			echo form_close().close_div();
+
 		echo close_div();
 
 		echo open_div('showDescription inset floatLeft');
@@ -112,24 +128,15 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 				'name'		=> 'inpShowDescription',
 				'class'		=> 'inpShowDescription'
 			);
-
 			echo form_textarea($inp_data);
 
-			// FastSell image
-			echo open_div('blockFastSellImage').form_open_multipart('ajax_handler_fastsells/add_temp_event_image', 'class="frmFastSellImage"');
-
-				echo full_div('', 'icon-camera fastSellImage');
-
-				echo form_label('FastSell Image:');
-				$inp_data		= array
-				(
-					'name'		=> 'uploadedFileFastsellImage',
-					'class'		=> 'uploadedFileFastsellImage'
-				);
-				echo form_upload($inp_data);
-				echo clear_float();
-
-			echo form_close().close_div();
+			echo form_label('Terms and Conditions:');
+			$inp_data		= array
+			(
+				'name'		=> 'inpTermsAndConditions',
+				'class'		=> 'inpTermsAndConditions'
+			);
+			echo form_textarea($inp_data);
 
 		echo close_div();
 

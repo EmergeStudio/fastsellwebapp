@@ -46,19 +46,63 @@ $(document).ready(function(){
     // ---------- DELETE
     function $fc_remove_product()
     {
-        $('.btnRemoveProduct').live('click', function()
+        // Select all
+        $('input[name="checkRemoveAll"]').live('click', function()
+        {
+            $('input[name="checkRemoveAll"]').parent().removeClass('checked');
+
+            $('.listContain input[name="checkRemoveProduct"]').each(function()
+            {
+                $this               = $(this);
+
+                if($this.is(':checked'))
+                {}
+                else
+                {
+                    $this.parent().addClass('checked');
+                    $this.attr('checked', 'checked');
+                }
+            });
+        });
+
+        // Remove selected
+        $('.linkRemove').live('click', function()
         {
             // Some variables
-            $this               = $(this);
-            $parent             = $this.parents('tr');
-            $order_item_id      = $parent.find('.hdOrderItemId').text();
+            $ids                    = '';
 
-            // Set the value
-            $('input[name="hdOrderItemIdSelect"]').val($order_item_id);
+            // Go through and get the ticked ids
+            $('.listContain input[name="checkRemoveProduct"]').each(function()
+            {
+                $this               = $(this);
+
+                if($this.is(':checked'))
+                {
+                    $ids            += '[' + $this.val() + ']';
+                }
+            });
+
+            //Set the value
+            $('input[name="hdOrderItemIdSelect"]').val($ids);
 
             // Submit
             $('.frmOrderDeleteProduct').submit();
         });
+
+
+//        $('.btnRemoveProduct').live('click', function()
+//        {
+//            // Some variables
+//            $this               = $(this);
+//            $parent             = $this.parents('tr');
+//            $order_item_id      = $parent.find('.hdOrderItemId').text();
+//
+//            // Set the value
+//            $('input[name="hdOrderItemIdSelect"]').val($order_item_id);
+//
+//            // Submit
+//            $('.frmOrderDeleteProduct').submit();
+//        });
     }
 
 

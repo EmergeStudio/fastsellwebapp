@@ -396,6 +396,7 @@ $(document).ready(function(){
                     $error                      = false;
                     $fastsell_name              = $('input[name="inpShowName"]').val();
                     $fastsell_description       = $('textarea[name="inpShowDescription"]').val();
+                    $terms_and_conditions       = $('textarea[name="inpTermsAndConditions"]').val();
                     $start_date                 = $('input[name="inpStartDate"]').val();
                     $start_hour                 = $('select[name="startHoursSelect"]').val();
                     $start_minute               = $('select[name="startMinutesSelect"]').val();
@@ -450,6 +451,7 @@ $(document).ready(function(){
                         {
                             fastsell_name	        : $fastsell_name,
                             fastsell_description	: $fastsell_description,
+                            terms_and_conditions    : $terms_and_conditions,
                             start_date		        : $start_date,
                             start_hour			    : $start_hour,
                             start_minute			: $start_minute,

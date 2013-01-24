@@ -46,6 +46,7 @@ class Ajax_handler_fastsells extends CI_Controller
 			$show_host_id                   = $this->scrap_web->get_show_host_id();
 			$fastsell_name                  = $this->input->post('fastsell_name');
 			$fastsell_description           = $this->input->post('fastsell_description');
+			$fastsell_terms_and_conditions  = $this->input->post('terms_and_conditions');
 			$start_date                     = $this->input->post('start_date');
 			$start_hour                     = $this->input->post('start_hour');
 			$start_minute                   = $this->input->post('start_minute');
@@ -87,6 +88,7 @@ class Ajax_handler_fastsells extends CI_Controller
 					// Edit the values
 					$json_sample->name                                      = $fastsell_name;
 					$json_sample->description                               = $fastsell_description;
+					$json_sample->terms_and_conditions                      = $fastsell_terms_and_conditions;
 					$json_sample->user->id                                  = $user_id;
 					$json_sample->currency->id                              = 1;
 					$json_sample->location                                  = null;
@@ -99,9 +101,10 @@ class Ajax_handler_fastsells extends CI_Controller
 
 					// Recode
 					$new_json				            = json_encode($json_sample);
+					//echo $new_json;
 
 					// Submit the new fastsell event
-					$new_fastsell		                = $this->scrap_web->webserv_call('fastsellevents/.json', $new_json, 'put');
+					$new_fastsell		                = $this->scrap_web->webserv_call('fastsellevents/.json', $new_json, 'put', FALSE, FALSE, TRUE);
 
 					// Validate the result
 					if($new_fastsell['error'] == FALSE)
@@ -110,7 +113,7 @@ class Ajax_handler_fastsells extends CI_Controller
 						$json_fastsell                  = $new_fastsell['result'];
 
 						// Set the session variables
-						$this->session->set_userdata('sv_show_set', $json_fastsell->id);
+						$this->session->set_userdata('sv_show_set', $json_fastsell['id']);
 
 						// Create the banner folder
 						$url_sample_path                = 'serverlocalfiles/sample.json';
@@ -118,7 +121,7 @@ class Ajax_handler_fastsells extends CI_Controller
 						$json_sample_path               = $call_sample_path['result'];
 
 						// Edit DOM
-						$json_sample_path->path         = 'scrap_shows/'.$json_fastsell->id.'/banner';
+						$json_sample_path->path         = 'scrap_shows/'.$json_fastsell['id'].'/banner';
 						$json_new_folder                = json_encode($json_sample_path);
 
 						// Create directory
@@ -154,11 +157,11 @@ class Ajax_handler_fastsells extends CI_Controller
 								foreach($json_definitions->catalog_item_definitions as $product_definition)
 								{
 									// Change the data
-									$json_sample->name                              = 'fsed_'.$json_fastsell->id.'_'.$product_definition->name;
+									$json_sample->name                              = 'fsed_'.$json_fastsell['id'].'_'.$product_definition->name;
 									$json_sample->user->id                          = $user_id;
 									$json_sample->show_host_organization->id        = $show_host_id;
 									$json_sample->catalog_item_definition->id       = $product_definition->id;
-									$json_sample->fastsell_event->id                = $json_fastsell->id;
+									$json_sample->fastsell_event->id                = $json_fastsell['id'];
 									$json_sample->fastsell_item_definition_fields   = null;
 
 									// Recode
@@ -172,7 +175,7 @@ class Ajax_handler_fastsells extends CI_Controller
 
 						// Return
 						$return                         = 'okitsbeencreated:';
-						$return                         .= $json_fastsell->id;
+						$return                         .= $json_fastsell['id'];
 						echo $return;
 					}
 					else

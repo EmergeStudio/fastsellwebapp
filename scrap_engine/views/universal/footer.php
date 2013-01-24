@@ -12,11 +12,11 @@
     <div id="footerContent">
     	
         <div class="floatLeft">
-        	For information regarding the legal stuff visit <a href="http://www.fastsell.com/legal_stuff" target="_blank">www.fastsell.com/legal_stuff</a>.<br /> You can also contact us at <a href="mailto:info@fastsell.com" target="_blank">info@fastsell.com</a>
+        	For information regarding the legal stuff visit <a href="http://www.fastsellfoods.com/legal_stuff" target="_blank">www.fastsellfoods.com/legal_stuff</a>.<br /> You can also contact us at <a href="mailto:info@fastsellfoods.com" target="_blank">info@fastsellfoods.com</a>
         </div>
         
         <div class="floatRight">
-    		No images or content can be used outside of a valid FastSell Subscription.<br />This application is strictly the property of Emerge Studio LLC.
+    		No images or content can be used outside of a valid FastSell Subscription.<br />This application is strictly the property of Emerge Studio LLC and Data Connect.
     	</div>
         
         <div class="clearFloat"></div>

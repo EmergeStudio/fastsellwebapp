@@ -100,7 +100,7 @@ class Ajax_handler extends CI_Controller
 		{
 			//echo 'error 3';
 			// No direct access is allowed !
-			redirect('http://www.fastsellfoods.com/');
+			redirect('http://www.fastsellfoods.com/index.php?error=true');
 		}
 	}
 
@@ -146,7 +146,7 @@ class Ajax_handler extends CI_Controller
 			
 		// Scrappy web call
 		$url_sample					= 'showhosts/sample.json';
-		$call_sample				= $this->scrap_web->webserv_call($url_sample);
+		$call_sample				= $this->scrap_web->webserv_call($url_sample, FALSE, 'get', FALSE, FALSE, TRUE);
 			
  		// Validate
  		if($call_sample['error'] == FALSE)
@@ -159,18 +159,17 @@ class Ajax_handler extends CI_Controller
  			$ar_emails['is_primary']                                     	= TRUE;
  			$ar_emails['email']												= $email_address;
  			
-			$json_sample->name												= $acc_name;
-			$json_sample->show_host_owner->user->user_emails				= array($ar_emails);
-			$json_sample->show_host_owner->user->firstname					= $first_name;
-			$json_sample->show_host_owner->user->lastname					= $surname;
-			$json_sample->show_host_owner->user->username					= $username;
-			$json_sample->show_host_owner->user->password					= sha1($password);
-			$json_sample->show_host_owner->user->clear_password			    = $password;
-			$json_sample->time_zone->id                                     = 6;
+			$json_sample['name']											= $acc_name;
+			$json_sample['show_host_owner']['user']['user_emails']			= array($ar_emails);
+			$json_sample['show_host_owner']['user']['firstname']			= $first_name;
+			$json_sample['show_host_owner']['user']['lastname']				= $surname;
+			$json_sample['show_host_owner']['user']['username']				= $username;
+			$json_sample['show_host_owner']['user']['password']				= sha1($password);
+			$json_sample['show_host_owner']['user']['clear_password']		= $password;
+			$json_sample['time_zone']['id']                                 = 6;
 				
  			// Recode
  			$new_json				= json_encode($json_sample);
- 			//echo $new_json;
 				
  			// Submit the changes
  			$new_show_host			= $this->scrap_web->webserv_call('showhosts/.json', $new_json, 'put');

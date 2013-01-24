@@ -57,6 +57,44 @@ echo open_div('middle');
 
 					echo close_div();
 
+					echo open_div('blockFastSellImage');
+
+						echo open_div('fastSellImage');
+						// Get the image
+						$src                    = 'scrap_assets/images/universal/default_event_image.png';
+						$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
+						$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+						if($call_fastsell_image['error'] == FALSE)
+						{
+							$json_fastsell_image        = $call_fastsell_image['result'];
+							if($json_fastsell_image->is_empty == FALSE)
+							{
+								$image_path             = $json_fastsell_image->server_local_files[0]->path;
+								$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+							}
+						}
+
+						$img_properties         = array
+						(
+							'src'               => $src,
+							'width'             => '250px'
+						);
+
+						echo full_div(img($img_properties));
+
+						echo close_div();
+
+						echo form_label('FastSell Image:');
+						$inp_data		= array
+						(
+							'name'		=> 'uploadedFileFastsellImage',
+							'class'		=> 'uploadedFileFastsellImage'
+						);
+						echo form_upload($inp_data);
+						echo clear_float();
+
+					echo close_div();
+
 					// Start now
 					if($started == FALSE)
 					{
@@ -85,46 +123,16 @@ echo open_div('middle');
 						'class'		=> 'inpShowDescription',
 						'value'     => $fastsell_info->description
 					);
-
 					echo form_textarea($inp_data);
 
-					echo open_div('blockFastSellImage');
-
-						echo open_div('fastSellImage');
-							// Get the image
-							$src                    = 'scrap_assets/images/universal/default_event_image.png';
-							$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
-							$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
-							if($call_fastsell_image['error'] == FALSE)
-							{
-								$json_fastsell_image        = $call_fastsell_image['result'];
-								if($json_fastsell_image->is_empty == FALSE)
-								{
-									$image_path             = $json_fastsell_image->server_local_files[0]->path;
-									$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
-								}
-							}
-
-							$img_properties         = array
-							(
-								'src'               => $src,
-								'width'             => '250px'
-							);
-
-							echo full_div(img($img_properties));
-
-						echo close_div();
-
-						echo form_label('FastSell Image:');
-						$inp_data		= array
-						(
-							'name'		=> 'uploadedFileFastsellImage',
-							'class'		=> 'uploadedFileFastsellImage'
-						);
-						echo form_upload($inp_data);
-						echo clear_float();
-
-					echo close_div();
+					echo form_label('Terms and Conditions:');
+					$inp_data		= array
+					(
+						'name'		=> 'inpTermsAndConditions',
+						'class'		=> 'inpTermsAndConditions',
+						'value'     => $fastsell_info->terms_and_conditions
+					);
+					echo form_textarea($inp_data);
 
 				echo close_div();
 

@@ -18,12 +18,140 @@ $(document).ready(function(){
 
     $fc_add_customers();
 
+    $fc_add_customers_2();
+
     $fc_upload_master_data_file();
 
     $fc_remove_customer();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- ADD CUSTOMERS
+    function $fc_add_customers_2()
+    {
+        // Add a customer popup
+        $('body').sunBox.popup('Add New Customer', 'popAddCustomer',
+            {
+                ajax_path		: $ajax_base_path + 'add_customer_popup',
+                close_popup		: false,
+                callback 		: function($return){}
+            });
+
+        // Show the popup
+        $('.btnAddNewCustomerPopup').live('click', function()
+        {
+            $('body').sunBox.popup_change_width('popAddCustomer', 1100);
+            $('body').sunBox.show_popup('popAddCustomer');
+            $('body').sunBox.adjust_popup_height('popAddCustomer');
+            $('.popAddCustomer .returnTrue').hide();
+        });
+
+        //
+
+        // Add the customer
+        $('.popAddCustomer .btnAddCustomerNow').live('click', function()
+        {
+            // Some variables
+            $error              = false;
+            $customer_name      = $('.popAddCustomer input[name="inpCustomerName"]').val();
+            $customer_number    = $('.popAddCustomer input[name="inpCustomerNumber"]').val();
+            $first_name         = $('.popAddCustomer input[name="inpFirstName"]').val();
+            $surname            = $('.popAddCustomer input[name="inpSurname"]').val();
+            $email_address      = $('.popAddCustomer input[name="inpEmailAddress"]').val();
+            $html               = '';
+
+            // Validate
+            if($error == false)
+            {
+                if($customer_name == '')
+                {
+                    $error		= true;
+                    $('.popAddCustomer input[name="inpCustomerName"]').addClass('redBorder');
+                    $.scrap_note_time('Please provide a customer name', 4000, 'cross');
+                }
+            }
+
+            // Customer number
+            if($error == false)
+            {
+                if($customer_number == '')
+                {
+                    $error		= true;
+                    $('.popAddCustomer input[name="inpCustomerNumber"]').addClass('redBorder');
+                    $.scrap_note_time('Please provide a customer number', 4000, 'cross');
+                }
+            }
+
+            // Email
+            if($error == false)
+            {
+                if($.scrap_is_email($email_address) == false)
+                {
+                    $error		= true;
+                    $('.popAddCustomer input[name="inpEmailAddress"]').addClass('redBorder');
+                    $.scrap_note_time('Your email address does not check out', 4000, 'cross');
+                }
+            }
+
+            if($error == false)
+            {
+                // Some variables
+                $this_row           = 'newLine_' + $.scrap_random_string();
+                $list_type          = 'normalList';
+
+                // Table row
+                $html   += '<tr class="topLine displayNone '+ $this_row +'">';
+
+                $html   += '<td>'+ $customer_name +'</td>';
+                $html   += '<td>'+ $customer_number +'</td>';
+                $html   += '<td>'+ $first_name +'</td>';
+                $html   += '<td>'+ $surname +'</td>';
+                $html   += '<td>'+ $email_address +'</td>';
+                $html   += '<td><div class="loader"></div></td>';
+
+                $html   += '</tr>';
+
+                // Edit DOM
+                $('.popAddCustomer table tr:last').after($html);
+                $('.popAddCustomer table tr.displayNone').fadeIn('fast');
+                $('body').sunBox.adjust_popup_height('popAddCustomer');
+
+                // Insert the customer
+                $.post($ajax_base_path + 'add_customer_2',
+                {
+                    inpCustomerName			: $customer_name,
+                    inpCustomerNumber		: $customer_number,
+                    inpName			        : $first_name,
+                    inpSurname			    : $surname,
+                    inpEmail			    : $email_address
+                },
+                function($data)
+                {
+                    $data	= jQuery.trim($data);
+
+                    if($data == '9876')
+                    {
+                        $.scrap_logout();
+                    }
+                    else if($data != 'okitsdone')
+                    {
+                        $.scrap_note_time($data, 4000, 'cross');
+                        $('.'+ $this_row +' .loader').addClass('cross').removeClass('loader');
+                    }
+                    else
+                    {
+                        // Edit the DOM
+                        $('.'+ $this_row +' .loader').addClass('tick').removeClass('loader');
+
+                        // Refresh the data
+                        $.scrap_note_time('Customer has been added to this FastSell', 4000, 'tick');
+                        $fc_refresh_customer_list();
+                    }
+                });
+            }
+        });
+    }
 
     // ---------- UPLOAD MASTER DATA FILE
     function $fc_upload_master_data_file()

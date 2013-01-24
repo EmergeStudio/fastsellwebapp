@@ -326,7 +326,7 @@ class Ajax_handler_products extends CI_Controller
 
 			// Upload the file
 			$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage']['name'];
-			$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', TRUE);
+			$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 		}
 		else
 		{

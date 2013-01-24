@@ -19,7 +19,7 @@
     width: 500px;
 }
 .pageFastSellInfo .showDescription.floatLeft textarea {
-    height: 150px;
+    height: 120px;
 }
 label {
     margin-top: 25px;
@@ -130,4 +130,34 @@ div.selector span {
     background-image: url(../../images/universal/ajax_loader10.gif);
     background-position: top;
     background-repeat: no-repeat;
+}
+.middle .tblFastSellInfo .headingIcon {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+    font-size: 45px;
+}
+.middle img.eventBannerImage {
+    position: absolute;
+    margin-left: 620px;
+}
+.middle .tblFastSellInfo h2 {
+    padding: 15px 10px 0px 10px;
+}
+.middle .tblFastSellInfo .title {
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 200;
+    text-align: right;
+    color: #888888;
+}
+.middle .tblFastSellInfo .content {
+    padding: 8px 10px 7px 10px;
+    font-size: 15px;
+    font-weight: 200;
+    line-height: 24px;
+}
+.middle .tblFastSellInfo .content b {
+    font-size: 15px;
+    font-weight: bold;
 }

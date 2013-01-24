@@ -265,9 +265,6 @@ $(document).ready(function(){
 			$main_user_link_w		= $('#topBar .userNavLink .mainNavLink').width();
 			$sub_user_link_w		= $('#topBar .userNavLink .subNav').width();
 			
-			//alert($main_user_link_w);
-			console.log($sub_user_link_w + ' -- ' + $main_user_link_w);
-			
 			// Adjust accordingly
 			if($sub_user_link_w > $main_user_link_w)
 			{
@@ -317,8 +314,6 @@ $(document).ready(function(){
 			function($data)
 			{	
 				$data	= jQuery.trim($data);
-				//console.log($data);
-				//$('body').prepend($data);
 				
 				if($data == '9876')
 				{
@@ -551,7 +546,6 @@ $(document).ready(function(){
 				function($data)
 				{	
 					$data	= jQuery.trim($data);
-					//console.log($check_update);
 					
 					if($data == '9876')
 					{
@@ -595,7 +589,6 @@ $(document).ready(function(){
             function($data)
             {
                 $data	= jQuery.trim($data);
-                console.log($data);
 
                 if($data == '9876')
                 {
@@ -619,7 +612,6 @@ $(document).ready(function(){
             function($data)
             {
                 $data	= jQuery.trim($data);
-                console.log($data);
 
                 if($data == '9876')
                 {

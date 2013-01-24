@@ -117,6 +117,8 @@ class Ajax_handler_customers extends CI_Controller
 	*/
 	function add_customer()
 	{
+		error_reporting(0);
+
 		if($this->scrap_wall->login_check_ajax() == TRUE)
 		{
 			// Some variables
@@ -164,6 +166,7 @@ class Ajax_handler_customers extends CI_Controller
 
 				// Recode
 				$new_json				= json_encode($json_sample);
+				//echo $new_json;
 
 				// Submit the new customer
 				$new_customer			= $this->scrap_web->webserv_call('customers/.json', $new_json, 'put');
@@ -171,6 +174,106 @@ class Ajax_handler_customers extends CI_Controller
 				// Validate the result
 				if($new_customer['error'] == FALSE)
 				{
+					echo 'okitsdone';
+				}
+				else
+				{
+					// Return the error message
+					$json				= $new_customer['result'];
+					echo $json->error_description;
+				}
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD CUSTOMER 2
+	|--------------------------------------------------------------------------
+	*/
+	function add_customer_2()
+	{
+		error_reporting(0);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$user_id                = $this->session->userdata('sv_user_id');
+			$customer_name          = $this->input->post('inpCustomerName');
+			$customer_number        = $this->input->post('inpCustomerNumber');
+			$first_name             = $this->input->post('inpName');
+			$surname                = $this->input->post('inpSurname');
+			$email                  = $this->input->post('inpEmail');
+			$username               = $first_name.$surname.$this->scrap_string->random_string(5);
+			$password               = $this->scrap_string->random_string();
+
+			// Scrappy web call
+			$url_sample				    = 'customers/sample.json';
+			$call_sample			    = $this->scrap_web->webserv_call($url_sample);
+
+			// Validate
+			if($call_sample['error'] == FALSE)
+			{
+				// Get show host id
+				$show_host_id			= $this->scrap_web->get_show_host_id();
+
+				// Sample
+				$json_sample			= $call_sample['result'];
+
+				// Change the data
+				$ar_emails									        = array();
+				$ar_emails['is_primary']              		        = TRUE;
+				$ar_emails['email']							        = $email;
+
+				$json_sample->name                                  = $customer_name;
+
+				$customer_to_show_host                              = $json_sample->customer_to_show_host;
+				$customer_to_show_host->show_host_organization      = $show_host_id;
+				$customer_to_show_host->customer_number             = $customer_number;
+
+				// Customer user
+				$json_sample->customer_owner->user->user_emails	    = array($ar_emails);
+				$json_sample->customer_owner->user->firstname		= $first_name;
+				$json_sample->customer_owner->user->lastname		= $surname;
+				$json_sample->customer_owner->user->username		= $username;
+				$json_sample->customer_owner->user->password		= sha1($password);
+				$json_sample->time_zone->id                         = 6;
+				$json_sample->customer_owner->user->clear_password  = $password;
+
+				// Recode
+				$new_json				= json_encode($json_sample);
+				//echo $new_json;
+
+				// Submit the new customer
+				$new_customer			= $this->scrap_web->webserv_call('customers/.json', $new_json, 'put');
+
+				// Validate the result
+				if($new_customer['error'] == FALSE)
+				{
+					// Some variables
+					$event_id                       = $this->session->userdata('sv_show_set');
+					$json_new_customer              = $new_customer['result'];
+					$customer_id                    = $json_new_customer->id;
+					$call_type                      = 'put';
+
+					// Sample code
+					$json_link                      = array
+					(
+						'customer_organizations'    => array(array('id' => $customer_id))
+					);
+
+					// Recode
+					$link_json		                = json_encode($json_link);
+
+					// Submit the fastsell customer link
+					$link_customer		            = $this->scrap_web->webserv_call('fastsellevents/customers/.jsons?fastselleventid='.$event_id, $link_json, $call_type, FALSE, FALSE);
+
 					echo 'okitsdone';
 				}
 				else

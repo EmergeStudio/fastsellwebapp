@@ -12,7 +12,8 @@ echo open_div('middle');
 
 			// Add product
 			echo make_button('Upload Master Data File', 'btnUploadDataFile btnAdd blueButton', '', 'right');
-			echo make_button('Add More Customers', 'btnAddCustomersPopup btnAdd blueButton', '', 'right');
+			echo make_button('Link More Customers', 'btnAddCustomersPopup btnAdd blueButton', '', 'right');
+			echo make_button('Add New Customers', 'btnAddNewCustomerPopup btnAdd blueButton', '', 'right');
 
 			echo open_div('floatLeft');
 

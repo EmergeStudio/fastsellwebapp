@@ -13,17 +13,6 @@ echo open_div('middle');
 
 				echo heading('A List Of Orders', 3);
 
-//				// Basic search
-//				echo open_div('basicSearch floatLeft');
-//
-//					echo form_input('inpOrderSearch', '', 'class="floatLeft"');
-//					echo make_button('Search', 'btnOrderSearch', '', 'left');
-//					echo make_button('Reset', '', 'my_orders', 'left');
-//					echo clear_float();
-//
-//				// End of basic search
-//				echo close_div();
-
 			echo close_div();
 
 			// Clear float

@@ -69,7 +69,18 @@ if($order != FALSE)
 			// Order items
 			echo open_div('listContain');
 
-				$this->load->view('orders/products_list_show_host');
+				if($this->session->userdata('sv_acc_type') == 'show_host')
+				{
+					$this->load->view('orders/products_list_show_host');
+				}
+				else
+				{
+					$this->load->view('orders/products_list_my_order');
+
+					echo div_height(20);
+					echo make_button('Complete Checkout', 'btnCheckout blueButton', 'fastsells/checkout/'.$crt_order->id, 'right');
+					echo clear_float();
+				}
 
 			echo close_div();
 

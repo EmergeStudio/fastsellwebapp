@@ -243,13 +243,25 @@ div.newOverlay {
 								// Right content
 								echo open_div('floatRight');
 									
-									echo div_height(2);
+									echo div_height(10);
 									
 									// Logout
 									echo make_button('Logout', '', 'logout', 'right');
 								
 									echo open_div('profileInner');
-									
+
+										echo full_div('<b>'.$this->session->userdata('sv_name').'</b>');
+										echo full_div('chris@emergestudio.net');
+										if($this->session->userdata('sv_acc_type') == 'show_host')
+										{
+											echo full_div('Seller');
+										}
+										else
+										{
+											echo full_div('Buyer');
+										}
+										echo div_height(10);
+
 										// Account type
 										echo full_div('Administrator');
 										
@@ -259,26 +271,27 @@ div.newOverlay {
 										echo div_height(1);
 										
 										// Landing page
-										echo div_height(10);
-										echo full_div('Landing Page');
-
-										// Landing page drop down
-										echo div_height(4);
-										$ar_landing_page	= array
-										(
-											'dashboard' 	=> 'Dashboard',
-											'fastsells'		=> 'FastSells',
-											'my_orders'		=> 'My Orders'
-										);
-										$landing_page	= 'dashboard';
-										echo form_dropdown('drpdwnLandingPage', $ar_landing_page, $landing_page);
+//										echo div_height(10);
+//										echo full_div('Landing Page');
+//
+//										// Landing page drop down
+//										echo div_height(4);
+//										$ar_landing_page	= array
+//										(
+//											'dashboard' 	=> 'Dashboard',
+//											'fastsells'		=> 'FastSells',
+//											'my_orders'		=> 'My Orders'
+//										);
+//										$landing_page	= 'dashboard';
+//										echo form_dropdown('drpdwnLandingPage', $ar_landing_page, $landing_page);
 									
 									echo close_div();
 								
 								echo close_div();
 								
 								echo open_div('profileImageBorder');
-									
+
+									// Get the image
 									$img_properties		= array
 									(
 										'src'			=> $this->scrap_web->get_profile_image(),

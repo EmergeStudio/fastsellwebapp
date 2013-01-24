@@ -13,18 +13,18 @@ echo open_div('middle');
 			// Table
 			echo '<table class="infoTable">';
 
-				echo '<tr>';
-
-					echo '<td class="icon">'.full_div('', 'icon-clipboard').'</td>';
-
-					echo '<td>';
-
-						echo div_height(5);
-						echo full_div($fastsell_info->description);
-
-					echo '</td>';
-
-				echo '</tr>';
+//				echo '<tr>';
+//
+//					echo '<td class="icon">'.full_div('', 'icon-clipboard').'</td>';
+//
+//					echo '<td>';
+//
+//						echo div_height(5);
+//						echo full_div($fastsell_info->description);
+//
+//					echo '</td>';
+//
+//				echo '</tr>';
 
 				echo '<tr>';
 
@@ -67,29 +67,79 @@ echo open_div('middle');
 
 			// Heading
 			echo div_height(6);
-			echo full_div('', 'icon-fire headingIcon yellow');
-			echo heading('What\'s Currently Hot', 2);
-			echo div_height(8);
 
-			// Order list - quick
-			$this->load->view('products/products_list_buy');
+			// Get the image
+			$src                    = 'scrap_assets/images/universal/default_event_image.png';
+			$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
+			$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+			if($call_fastsell_image['error'] == FALSE)
+			{
+				$json_fastsell_image        = $call_fastsell_image['result'];
+				if($json_fastsell_image->is_empty == FALSE)
+				{
+					$image_path             = $json_fastsell_image->server_local_files[0]->path;
+					$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+				}
+			}
+
+			$img_properties         = array
+			(
+				'src'               => $src,
+				'width'             => '200px',
+				'style'             => 'margin-bottom:20px;',
+				'class'             => 'eventBannerImage'
+			);
+
+			echo img($img_properties);
+
+			echo '<table class="tblFastSellInfo">';
+
+				echo '<tr>';
+
+					echo '<td>';
+
+						echo full_div('', 'icon-info headingIcon blue');
+
+					echo '</td>';
+					echo '<td>';
+
+						echo heading('FastSell Information', 2);
+
+					echo '</td>';
+
+				echo '</tr>';
+
+				echo '<tr>';
+
+					echo '<td class="title">Event Title</td>';
+					echo '<td class="content">'.$fastsell_info->name.'</td>';
+
+				echo '</tr>';
+
+				echo '<tr>';
+
+					echo '<td class="title">Organizer</td>';
+					echo '<td class="content">'.$fastsell_info->show_host_organization->name.'</td>';
+
+				echo '</tr>';
+
+				echo '<tr>';
+
+					echo '<td class="title">Description</td>';
+					echo '<td class="content">'.$fastsell_info->description.'</td>';
+
+				echo '</tr>';
+
+				echo '<tr>';
+
+					echo '<td class="title">Terms And Conditions</td>';
+					echo '<td class="content">'.$fastsell_info->terms_and_conditions.'</td>';
+
+				echo '</tr>';
+
+			echo '</table>';
 
 		echo close_div();
-
-		// Sales at a glance
-//		echo open_div('whiteBack');
-//
-//			// Heading
-//			echo div_height(6);
-//			echo full_div('', 'icon-stats headingIcon blue');
-//			echo heading('What Is Still Available', 2);
-//
-//			// Load the char
-//			$dt_settings['chart_width']		= 980;
-//			$dt_settings['chart_height']	= 350;
-//			$this->load->view('dashboard/js/spending_over_time', $dt_settings);
-//
-//		echo close_div();
 
 	// End of large left column
 	echo close_div();

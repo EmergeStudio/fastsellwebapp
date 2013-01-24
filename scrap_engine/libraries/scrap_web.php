@@ -20,7 +20,7 @@ class Scrap_web
 	| WEB SERVICE CALL
 	|--------------------------------------------------------------------------
 	*/
-	function webserv_call($url, $post_data = FALSE, $protocol = 'post', $marshaller = FALSE, $display_url = FALSE)
+	function webserv_call($url, $post_data = FALSE, $protocol = 'post', $marshaller = FALSE, $display_url = FALSE, $as_array = FALSE)
 	{
 		// Some variables
         if($marshaller == FALSE)
@@ -117,11 +117,28 @@ class Scrap_web
 					
 				// Return
 				$ar_return['curl_info']		= $curl_info;
-				$ar_return['result']		= json_decode($result);
+				if($as_array == FALSE)
+				{
+					$ar_return['result']    = json_decode($result);
+				}
+				else
+				{
+					$ar_return['result']    = json_decode($result, TRUE);
+				}
 
 				// Error check
 				$json						= $ar_return['result'];
-				if($json->error_code != null)
+
+//				foreach($curl_info as $key => $value)
+//				{
+//					echo $key.' -- '.$value.'<br>';
+//				}
+
+				if($curl_info['http_code'] == 400)
+				{
+					$ar_return['error']		= TRUE;
+				}
+				elseif(isset($json->error_code))
 				{
 					$ar_return['error']		= TRUE;
 				}
@@ -277,50 +294,39 @@ class Scrap_web
 	*/
 	function get_profile_image($user_id = FALSE)
 	{
-		// Some variables
-//		if($user_id == FALSE)
-//		{
-//			$user_id			= $this->CI->session->userdata('sv_user_id');
-//		}
-		
-		// Get user information
-//		$user_data				= $this->webserv_call('users/.json?id='.$user_id);
-//
-//		// Check for errors
-//		if($user_data['error'] == FALSE)
-//		{
-//			// Setup the path to check
-//			$user_json			= $user_data['result'];
-//			$user_date_created	= $user_json->create_date;
-//			$folder_date		= $this->CI->scrap_string->folder_date($user_date_created);
-//			$image_path			= $folder_date.'/'.$user_id.'/profile/image/';
-//
-//			// Get filenames
-//			$filenames			= get_filenames($this->CI->config->item('people_root').'/'.$image_path);
-//
-//			$filename			= FALSE;
-//			if($filenames != FALSE)
-//			{
-//				foreach($filenames as $filename_value)
-//				{
-//					$filename		= $filename_value;
-//				}
-//			}
-//
-//			// Return
-//			if($filename != FALSE)
-//			{
-//				return base_url().'scrap_people/'.$image_path.$filename;
-//			}
-//			else
-//			{
-				return base_url().'scrap_people/defaults/images/profile_pic.jpg';
-//			}
-//		}
-//		else
-//		{
-//			return base_url().'scrap_people/defaults/images/profile_pic.jpg';
-//		}
+		$src                    = base_url().'scrap_people/defaults/images/profile_pic.jpg';
+
+		if($user_id == FALSE)
+		{
+			$user_id			= $this->CI->session->userdata('sv_user_id');
+		}
+
+        //Get user information
+		$user_data				= $this->webserv_call('users/.json?id='.$user_id);
+
+		// Check for errors
+		if($user_data['error'] == FALSE)
+		{
+			// Setup the path to check
+			$user_json			= $user_data['result'];
+			$user_date_created	= $user_json->create_date;
+			$folder_date		= $this->CI->scrap_string->folder_date($user_date_created);
+			$image_path			= $folder_date.'/'.$user_id.'/profile/image/';
+
+			$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_people/'.$image_path;
+			$call_product_image     = $this->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+			if($call_product_image['error'] == FALSE)
+			{
+				$json_product_image         = $call_product_image['result'];
+				if($json_product_image->is_empty == FALSE)
+				{
+					$image_path             = $json_product_image->server_local_files[0]->path;
+					$src                    = $this->image_call('serverlocalfiles/file?path='.$image_path);
+				}
+			}
+		}
+
+		return $src;
 	}
 
 
@@ -381,7 +387,7 @@ class Scrap_web
 
         // Get show host id
         $url_show_host_id		= 'showhostusers/.json?userid='.$user_id;
-        $call_show_host_id		= $this->webserv_call($url_show_host_id);
+        $call_show_host_id		= $this->webserv_call($url_show_host_id, FALSE, 'get', FALSE, FALSE);
 
         // Return
 	    if($call_show_host_id['error'] == FALSE)

@@ -11,7 +11,7 @@
 		echo open_div('inset');
 
 			// Username input
-			echo form_label('Username:');
+			echo form_label('Username / Email Address:');
 			$ar_inp_username	= array
 			(
 				'name'			=> 'loginUsername'
@@ -38,7 +38,7 @@
 		echo make_button('I Want To Sign Up', 'signUp greenButton', 'signup');
 
 		// Sign up link
-		echo anchor('http://www.emergestudio.net', 'An Emerge Studio Project', 'class="emergeStudioLink"');
+		echo anchor('http://www.emergestudio.net', 'An Emerge Studio and Data Connect Project', 'class="emergeStudioLink"');
 		?>
 
 		<!--Bottom Strip-->

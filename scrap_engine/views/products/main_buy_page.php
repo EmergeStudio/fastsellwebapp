@@ -32,6 +32,7 @@ echo open_div('middle');
 					echo '<tr>';
 
 						echo '<th class="productHeading">Product</th>';
+						echo '<th class="txtCenter">Quantity</th>';
 						echo '<th class="itemHeading">Amount</th>';
 
 					echo '</tr>';
@@ -57,6 +58,12 @@ echo open_div('middle');
 
 								echo '</td>';
 
+								echo '<td class="txtCenter">';
+
+									echo $quantity;
+
+								echo '</td>';
+
 								echo '<td class="productTotal">';
 
 									echo '$'.number_format(($order_item->quantity * $order_item->fastsell_item->price), 2);
@@ -71,6 +78,7 @@ echo open_div('middle');
 					// Total row
 					echo '<tr>';
 
+						echo '<td></td>';
 						echo '<td class="totalText">Total: </td>';
 						echo '<td class="totalAmount">$'.$crt_total.'</td>';
 
