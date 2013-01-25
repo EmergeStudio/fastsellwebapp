@@ -464,7 +464,6 @@ $(document).ready(function(){
                         function($data)
                         {
                             $data	= jQuery.trim($data);
-                            console.log($data);
 
                             if($data == '9876')
                             {
@@ -482,7 +481,7 @@ $(document).ready(function(){
                                     if($('input[name="uploadedFileFastsellImage"]').val() != '')
                                     {
                                         $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
-                                        $('.blockFastSellImage .frmFastSellImage').attr({ 'action' : $base_path + 'ajax_handler_fastsells' });
+                                        $('.blockFastSellImage .frmFastSellImage').attr({ 'action' : $base_path + 'ajax_handler_fastsells/add_event_image' });
                                         $('.blockFastSellImage').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
                                         $('.blockFastSellImage .frmFastSellImage').attr('target', $iframe_name);
                                         $('.blockFastSellImage .frmFastSellImage').submit();
@@ -490,7 +489,6 @@ $(document).ready(function(){
                                         $('iframe[name="'+ $iframe_name +'"]').load(function()
                                         {
                                             $data		= jQuery.trim($('.blockFastSellImage iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
-                                            console.log($data);
                                         });
                                     }
                                 }

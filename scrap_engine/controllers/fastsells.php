@@ -936,7 +936,7 @@ class Fastsells extends CI_Controller
 						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
 						// Upload the file
-						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows/'.$fastsell_id.'/banner/'.$_FILES['uploadedFileFastsellImage']['name'];
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows/'.$fastsell_id.'/banner/'.$document_file['name'];
 						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
 					else
@@ -948,7 +948,7 @@ class Fastsells extends CI_Controller
 						}
 
 						// Upload the file
-						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$_FILES['uploadedFileFastsellImage']['name'];
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$document_file['name'];
 						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
 				}
