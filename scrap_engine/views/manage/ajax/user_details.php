@@ -60,7 +60,7 @@ echo open_div('profileInformation rightColumn');
 		(
 			'name'			=> 'inpEmail',
 			'class'			=> 'inpEmail',
-			'value'			=> $json_user->user_emails
+			'value'			=> $json_user->user_emails[0]->email
 		);
 		echo form_input($inp_data);
 	

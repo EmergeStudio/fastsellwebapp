@@ -80,7 +80,7 @@ $(document).ready(function(){
                 else if($data == 'noaddress')
                 {
                     $.scrap_note_hide();
-                    $.scrap_message('<h3>Please Edit Your Delivery Address</h3><p>An address is required so that you can place an order.  Click the button below to do it quickly.</p><div class="divHeight" style="height:10px"></div><div class="nothing"><a href="'+ $base_path +'dashboard" class="scrapButton2"><div class="btnIcon"></div>Click Here To Edit Address</a><div class="clearFloat"></div></div>');
+                    $.scrap_message('<h3>Please Edit Your Shipping Address</h3><p>An address is required so that you can place an order.  Click the button below to do it quickly.</p><div class="divHeight" style="height:10px"></div><div class="nothing"><a href="'+ $base_path +'dashboard" class="scrapButton2"><div class="btnIcon"></div>Click Here To Edit Address</a><div class="clearFloat"></div></div>');
                     $('.sunMessage .modalClose').live('click', function()
                     {
                         $('.sunMessage').remove();

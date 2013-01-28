@@ -28,13 +28,13 @@ $(document).ready(function(){
         {
             ajax_path		: $ajax_base_path + 'add_customer_popup',
             close_popup		: false,
-            width           : 1100,
             callback 		: function($return){}
         });
 
         // Show the popup
         $('.btnAddCustomer').live('click', function()
         {
+            $('body').sunBox.popup_change_width('popAddCustomer', 1100);
             $('body').sunBox.show_popup('popAddCustomer');
             $('body').sunBox.adjust_popup_height('popAddCustomer');
             $('.popAddCustomer .returnTrue').hide();

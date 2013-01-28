@@ -337,6 +337,22 @@ h2 {
     margin-bottom: 0px;
     margin-top: 1px;
 }
+.orderState {
+    padding: 9px 18px;
+    margin: 7px 5px 0px 5px;
+    color: #fff;
+    text-shadow: none;
+    text-align: center;
+    font-weight: 500;
+    font-size: 12px;
+    background-color: #fcb040;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.orderState.blueBlock {
+    background-color: #1ba2d0;
+}
 
 
 

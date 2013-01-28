@@ -201,11 +201,12 @@ class Ajax_handler_users extends CI_Controller
 			$first_name			= $this->input->post('first_name');
 			$surname			= $this->input->post('surname');
 			$username			= $this->input->post('username');
+			$email_address		= $this->input->post('email_address');
 			$password			= $this->input->post('password');
 			
 			// Scrappy web call
 			$url				= 'users/.json?id='.$user_id;
-			$call_user			= $this->scrap_web->webserv_call($url);
+			$call_user			= $this->scrap_web->webserv_call($url, FALSE, 'get', FALSE, FALSE, TRUE);
 			
 			// Validate
 			if($call_user['error'] == FALSE)
@@ -214,12 +215,13 @@ class Ajax_handler_users extends CI_Controller
 				$json_user					= $call_user['result'];
 				
 				// Change the data
-				$json_user->firstname		= $first_name;
-				$json_user->lastname		= $surname;
-				$json_user->username		= $username;
+				$json_user['firstname']		= $first_name;
+				$json_user['lastname']		= $surname;
+				$json_user['username']		= $username;
+				$json_user['user_emails'][0]['email']   = $email_address;
 				if(!empty($password))
 				{
-					$json_user->password	= sha1($password);
+					$json_user['password']	= sha1($password);
 				}
 				
 				// Recode

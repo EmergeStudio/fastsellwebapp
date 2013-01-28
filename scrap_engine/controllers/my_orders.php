@@ -81,7 +81,7 @@ class My_orders extends CI_Controller
 		$dt_header['title'] 	        = 'FastSells';
 		$dt_header['crt_page']	        = 'pageMyOrders';
 		$dt_header['extra_css']         = array('fastsells', 'fastsell_my_order');
-		$dt_header['extra_js']          = array('fastsells');
+		$dt_header['extra_js']          = array('fastsells', 'fastsell_my_order');
 
 		// Load header
 		$this->load->view('universal/header', $dt_header);

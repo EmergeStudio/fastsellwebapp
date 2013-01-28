@@ -31,7 +31,7 @@ if($order != FALSE)
 
 						echo '<tr>';
 
-							echo '<td class="deliveryAddress"><b>Delivery Address:</b></td>';
+							echo '<td class="deliveryAddress"><b>Shipping Address:</b></td>';
 
 							echo '<td>';
 
@@ -77,9 +77,12 @@ if($order != FALSE)
 				{
 					$this->load->view('orders/products_list_my_order');
 
-					echo div_height(20);
-					echo make_button('Complete Checkout', 'btnCheckout blueButton', 'fastsells/checkout/'.$crt_order->id, 'right');
-					echo clear_float();
+					if($crt_order->order_state->id == 1)
+					{
+						echo div_height(20);
+						echo make_button('Complete Checkout', 'btnCheckout blueButton', 'fastsells/checkout/'.$crt_order->id, 'right');
+						echo clear_float();
+					}
 				}
 
 			echo close_div();

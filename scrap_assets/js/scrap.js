@@ -146,10 +146,14 @@ $(document).ready(function(){
 	{
 		$('.scrapButton, .pagenation .control').live('mousedown', function()
 		{
-			if($(this).hasClass('blueButton'))
+			if($(this).hasClass('greyButton'))
 			{
-				$(this).css({ backgroundColor : '#0789b5' });
+				$(this).css({ backgroundColor : '#dedede' });
 			}
+            else if($(this).hasClass('blueButton'))
+            {
+                $(this).css({ backgroundColor : '#0789b5' });
+            }
 			else if($(this).hasClass('pinkButton'))
 			{
 				$(this).css({ backgroundImage : 'url()', backgroundColor : '#f41867' });
@@ -166,10 +170,14 @@ $(document).ready(function(){
 		
 		$('.scrapButton, .pagenation .control').live('mouseup', function()
 		{
-			if($(this).hasClass('blueButton'))
+			if($(this).hasClass('greyButton'))
 			{
-				$(this).css({ backgroundColor : '#1ba2d0' });
+				$(this).css({ backgroundColor : '#ebebeb' });
 			}
+            else if($(this).hasClass('blueButton'))
+            {
+                $(this).css({ backgroundColor : '#1ba2d0' });
+            }
 			else if($(this).hasClass('pinkButton'))
 			{
 				$(this).css({ backgroundImage : 'url('+ $base_path +'scrap_assets/images/universal/btn_pink.jpg)', backgroundPosition : 'bottom'});
@@ -541,6 +549,7 @@ $(document).ready(function(){
 					first_name		: $first_name,
 					surname			: $surname,
 					username		: $username,
+                    email_address   : $email_address,
 					password		: $password
 				},
 				function($data)
@@ -551,7 +560,8 @@ $(document).ready(function(){
 					{
 						$.scrap_logout();
 					}
-					else if($data == 'okitsdone')
+					//else if($data == 'okitsdone')
+                    else
 					{
 						// Close the popup
 						$('#topBar .userNavLink .mainNavLink .blueLink').text($first_name + ' ' + $surname);
@@ -562,10 +572,10 @@ $(document).ready(function(){
 						$.scrap_note_time('Your information has been updated', 4000, 'tick');
 						$('body').sunBox.close_popup('popMyDetails');
 					}
-					else
-					{
-						$.scrap_note_time($data, 4000, 'cross');
-					}
+//					else
+//					{
+//						$.scrap_note_time($data, 4000, 'cross');
+//					}
 				});
 			}
 		});

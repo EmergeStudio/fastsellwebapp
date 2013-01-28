@@ -7,7 +7,7 @@ if($orders['error'] == FALSE)
 	$json_orders                    = $orders['result'];
 
 	// Heading
-	$this->table->set_heading('Date Created', array('data' => 'Order Number', 'class' => 'fullCell'), 'FastSell Event', 'Total');
+	$this->table->set_heading('Date Created', array('data' => 'Order Number', 'class' => 'fullCell'), 'FastSell Event', 'Total', '');
 
 	// Rows
 	foreach($json_orders->fastsell_orders as $order)
@@ -38,8 +38,17 @@ if($orders['error'] == FALSE)
 		// Date
 		$date_created                   = $this->scrap_string->make_date($order->date_created);
 
+		if($json_crt_order->order_state->id == 1)
+		{
+			$state                      = full_div('Open', 'orderState blueBlock');
+		}
+		elseif($json_crt_order->order_state->id == 2)
+		{
+			$state                      = full_div('Checked Out', 'orderState yellowBlock');
+		}
+
 		// Add the row
-		$this->table->add_row($date_created, array('data' => div_height(5).anchor('my_orders/view/'.$order->id, $order->order_number).div_height(5), 'class' => 'fullCell'), $fastsell_name, array('data' => '$'.$grand_total, 'class' => 'greenTxt'));
+		$this->table->add_row($date_created, array('data' => div_height(5).anchor('my_orders/view/'.$order->id, $order->order_number).div_height(5), 'class' => 'fullCell'), $fastsell_name, array('data' => '$'.$grand_total, 'class' => 'greenTxt'), $state);
 	}
 
 	// Generate table
@@ -47,6 +56,6 @@ if($orders['error'] == FALSE)
 }
 else
 {
-	echo full_div('Nor Orders', 'messageNoOrders1');
+	echo full_div('No Orders', 'messageNoOrders1');
 }
 ?>

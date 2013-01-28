@@ -15,8 +15,12 @@ $(document).ready(function(){
 
     $fc_counter();
 
+    $fc_switch_address();
+
     $fc_save_address();
-	
+
+    $fc_save_address_2();
+
 	
 // ------------------------------------------------------------------------------FUNCTIONS
 
@@ -42,14 +46,34 @@ $(document).ready(function(){
         });
     }
 
+    // ---------- SWITCH ADDRESS
+    function $fc_switch_address()
+    {
+        $('.btnDeliveryAddress').live('click', function()
+        {
+            $(this).removeClass('greyButton').addClass('blueButton').css({ backgroundColor : '#1ba2d0' });
+            $('.btnBillingAddress').removeClass('blueButton').addClass('greyButton').css({ backgroundColor : '#ebebeb', borderColour : '#ebebeb' });
+            $('.deliveryAddress').fadeIn('fast');
+            $('.billingAddress').hide();
+        });
+
+        $('.btnBillingAddress').live('click', function()
+        {
+            $(this).removeClass('greyButton').addClass('blueButton').css({ backgroundColor : '#1ba2d0' });
+            $('.btnDeliveryAddress').removeClass('blueButton').addClass('greyButton').css({ backgroundColor : '#ebebeb', borderColour : '#ebebeb' });
+            $('.deliveryAddress').hide();
+            $('.billingAddress').fadeIn('fast');
+        });
+    }
+
     // ---------- SAVE ADDRESS
     function $fc_save_address()
     {
-        $('.btnSaveAddress').live('click', function()
+        $('.deliveryAddress .btnSaveAddress').live('click', function()
         {
             // Some variables
             $error              = false;
-            $address            = $('.addressForm textarea[name="address1"]').val();
+            $address            = $('.deliveryAddress .addressForm textarea[name="address1"]').val();
 
             // Validate
             if($error == false)
@@ -57,7 +81,7 @@ $(document).ready(function(){
                 if($address == '')
                 {
                     $error      = true;
-                    $('.addressForm textarea[name="address1"]').focus();
+                    $('.deliveryAddress .addressForm textarea[name="address1"]').focus();
                     $.scrap_note_time('Please provide an address', 6000, 'cross');
                 }
             }
@@ -65,7 +89,35 @@ $(document).ready(function(){
             // Submite new address
             if($error == false)
             {
-                $('.frmSaveAddress').submit();
+                $('.deliveryAddress .frmSaveAddress').submit();
+            }
+        });
+    }
+
+    // ---------- SAVE ADDRESS 2
+    function $fc_save_address_2()
+    {
+        $('.billingAddress .btnSaveAddress2').live('click', function()
+        {
+            // Some variables
+            $error              = false;
+            $address            = $('.billingAddress .addressForm textarea[name="address1"]').val();
+
+            // Validate
+            if($error == false)
+            {
+                if($address == '')
+                {
+                    $error      = true;
+                    $('.billingAddress .addressForm textarea[name="address1"]').focus();
+                    $.scrap_note_time('Please provide an address', 6000, 'cross');
+                }
+            }
+
+            // Submite new address
+            if($error == false)
+            {
+                $('.billingAddress .frmSaveAddress').submit();
             }
         });
     }

@@ -24,7 +24,7 @@ if($order != FALSE)
 
 			// Accept
 			echo div_height(30);
-			echo make_button('I Accept These Terms And Conditions', 'blueButton', 'fastsells/complete_checkout/'.$order_id, 'right');
+			echo make_button('I Accept These Terms And Conditions', 'blueButton', 'fastsells/complete_checkout/'.$crt_order->id, 'right');
 			echo clear_float();
 
 		// End of white back

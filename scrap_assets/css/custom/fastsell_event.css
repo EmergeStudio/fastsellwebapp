@@ -131,6 +131,12 @@ div.selector span {
     background-position: top;
     background-repeat: no-repeat;
 }
+.middle .blockFastSellImage .btnRemoveImage {
+    display: block;
+    float:left;
+    margin-top: 6px;
+    margin-left: 92px;
+}
 .middle .tblFastSellInfo .headingIcon {
     margin-top: 4px;
     width: 100%;

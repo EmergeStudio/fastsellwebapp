@@ -1,16 +1,22 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <?php
-// Table heading
 // Check box properties all
-$checkbox_remove_all        = array
-(
-	'name'                  => 'checkRemoveAll',
-	'class'                 => 'checkRemoveAll tooltip',
-	'checked'               => FALSE,
-	'value'                 => 'removeAll'
-);
-$this->table->set_heading(form_checkbox($checkbox_remove_all), '', array('data' => 'Product', 'class' => 'leftText'), array('class' => 'fullCell'), 'Quantity', 'Price', 'Total');
+$all_check_box                  = '';
+if($crt_order->order_state->id == 1)
+{
+	$checkbox_remove_all        = array
+	(
+		'name'                  => 'checkRemoveAll',
+		'class'                 => 'checkRemoveAll tooltip',
+		'checked'               => FALSE,
+		'value'                 => 'removeAll'
+	);
+	$all_check_box              = form_checkbox($checkbox_remove_all);
+}
+
+// Table heading
+$this->table->set_heading($all_check_box, '', array('data' => 'Product', 'class' => 'leftText'), array('class' => 'fullCell'), 'Quantity', 'Price', 'Total');
 
 // Loop through
 $grand_total                = 0;
@@ -22,14 +28,21 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 	$product_fields         = '';
 
 	// Check box properties
-	$checkbox_remove_product   = array
-	(
-		'name'                  => 'checkRemoveProduct',
-		'class'                 => 'checkRemoveProduct tooltip',
-		'checked'               => FALSE,
-		'value'                 => $order_item->id
-	);
-	array_push($ar_fields, form_checkbox($checkbox_remove_product));
+	if($crt_order->order_state->id == 1)
+	{
+		$checkbox_remove_product   = array
+		(
+			'name'                  => 'checkRemoveProduct',
+			'class'                 => 'checkRemoveProduct tooltip',
+			'checked'               => FALSE,
+			'value'                 => $order_item->id
+		);
+		array_push($ar_fields, form_checkbox($checkbox_remove_product));
+	}
+	else
+	{
+		array_push($ar_fields, '');
+	}
 
 	// Product image
 	$img_properties         = array
@@ -103,7 +116,12 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 }
 
 // Table row
-$this->table->add_row(array('data' => make_link('Remove Selected', 'linkRemove'), 'colspan' => '2'), array('data' => '<b>Grand Total:</b>', 'class' => 'rightText', 'colspan' => '3'), array('data' => '$'.number_format($grand_total, 2), 'class' => 'productPrice leftText', 'colspan' => '2'));
+$remove_selected            = '';
+if($crt_order->order_state->id == 1)
+{
+	$remove_selected        = make_link('Remove Selected', 'linkRemove');
+}
+$this->table->add_row(array('data' => $remove_selected, 'colspan' => '2'), array('data' => '<b>Grand Total:</b>', 'class' => 'rightText', 'colspan' => '3'), array('data' => '$'.number_format($grand_total, 2), 'class' => 'productPrice leftText', 'colspan' => '2'));
 
 // Generate table
 echo $this->table->generate();

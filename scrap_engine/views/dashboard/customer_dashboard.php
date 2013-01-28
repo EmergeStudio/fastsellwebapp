@@ -2,17 +2,36 @@
 
 <?php
 // Data
-$address_1                  = '';
-$city                       = '';
-$state                      = '';
-$postal_code                = '';
+$deliver_address_1               = '';
+$deliver_city                    = '';
+$deliver_state                   = '';
+$deliver_postal_code             = '';
+$bill_address_1                  = '';
+$bill_city                       = '';
+$bill_state                      = '';
+$bill_postal_code                = '';
+
 if($address['error'] == FALSE)
 {
 	$json_address           = $address['result'];
-	$address_1              = $json_address->addresses[0]->address_one;
-	$city                   = $json_address->addresses[0]->city;
-	$state                  = $json_address->addresses[0]->state_province;
-	$postal_code            = $json_address->addresses[0]->postal_code;
+
+	foreach($json_address->addresses as $address)
+	{
+		if($address->address_type->id == 1)
+		{
+			$bill_address_1             = $address->address_one;
+			$bill_city                  = $address->city;
+			$bill_state                 = $address->state_province;
+			$bill_postal_code           = $address->postal_code;
+		}
+		elseif($address->address_type->id == 2)
+		{
+			$deliver_address_1          = $address->address_one;
+			$deliver_city               = $address->city;
+			$deliver_state              = $address->state_province;
+			$deliver_postal_code        = $address->postal_code;
+		}
+	}
 }
 
 // Open middle div
@@ -24,65 +43,139 @@ echo open_div('middle');
 		// Delivery address
 		echo open_div('whiteBack addressForm');
 
-			// Form
-			echo form_open('customers/save_address', 'class="frmSaveAddress"');
+			// Heading
+			echo make_button('Shipping Address', 'btnDeliveryAddress blueButton', '', 'left');
+			echo make_button('Billing Address', 'btnBillingAddress greyButton', '', 'left');
+			echo clear_float();
+			echo div_height(20);
 
-				// Heading
-				echo div_height(6);
-				echo full_div('', 'icon-map-pin-fill headingIcon blue');
-				echo heading('Delivery Address', 2);
-				echo div_height(8);
+            echo open_div('billingAddress displayNone');
 
-				echo '<p>Please make sure that you have a delivery address as seen below.</p>';
+				// Form
+				echo form_open('customers/save_address_billing', 'class="frmSaveAddress"');
 
-				// Address 1
-				$ar_text            = array
-				(
-					'name'          => 'address1',
-					'value'         => $address_1
-				);
-				echo form_label('Address');
-				echo form_textarea($ar_text);
+					// Heading
+					echo div_height(10);
+					echo full_div('', 'icon-dollar headingIcon blue');
+					echo heading('Billing Address', 2);
+					echo div_height(4);
 
-				// City
-				$ar_inp             = array
-				(
-					'name'          => 'city',
-					'value'         => $city
-				);
-				echo div_height(15);
-				echo form_label('City');
-				echo form_input($ar_inp);
+					echo '<p>You can fill in alternative billing address below else your delivery address will be used for all orders.</p>';
 
-				// State
-				$ar_inp             = array
-				(
-					'name'          => 'state',
-					'value'         => $state
-				);
-				echo div_height(15);
-				echo form_label('State');
-				echo form_input($ar_inp);
+					// Address 1
+					$ar_text            = array
+					(
+						'name'          => 'address1',
+						'value'         => $bill_address_1
+					);
+					echo form_label('Address');
+					echo form_textarea($ar_text);
 
-				// Postal code
-				$ar_inp             = array
-				(
-					'name'          => 'postalCode',
-					'value'         => $postal_code
-				);
-				echo div_height(15);
-				echo form_label('Postal Code');
-				echo form_input($ar_inp);
+					// City
+					$ar_inp             = array
+					(
+						'name'          => 'city',
+						'value'         => $bill_city
+					);
+					echo div_height(15);
+					echo form_label('City');
+					echo form_input($ar_inp);
 
-				// Save
-				echo div_height(25);
-				echo make_button('Save Address', 'btnSaveAddress blueButton');
+					// State
+					$ar_inp             = array
+					(
+						'name'          => 'state',
+						'value'         => $bill_state
+					);
+					echo div_height(15);
+					echo form_label('State');
+					echo form_input($ar_inp);
 
-				// Hidden data
-				echo form_hidden('hdReturnUrl', current_url());
+					// Postal code
+					$ar_inp             = array
+					(
+						'name'          => 'postalCode',
+						'value'         => $bill_postal_code
+					);
+					echo div_height(15);
+					echo form_label('Postal Code');
+					echo form_input($ar_inp);
 
-			// Form close
-			echo form_close();
+					// Save
+					echo div_height(25);
+					echo make_button('Save Address', 'btnSaveAddress2 blueButton');
+
+					// Hidden data
+					echo form_hidden('hdReturnUrl', current_url());
+
+				// Form close
+				echo form_close();
+
+			echo close_div();
+
+            echo open_div('deliveryAddress');
+
+				// Form
+				echo form_open('customers/save_address_delivery', 'class="frmSaveAddress"');
+
+					// Heading
+					echo div_height(10);
+					echo full_div('', 'icon-map-pin-fill headingIcon blue');
+					echo heading('Shipping Address', 2);
+					echo div_height(4);
+
+					echo '<p>Please make sure that you have a shipping address as seen below.</p>';
+
+					// Address 1
+					$ar_text            = array
+					(
+						'name'          => 'address1',
+						'value'         => $deliver_address_1
+					);
+					echo form_label('Address');
+					echo form_textarea($ar_text);
+
+					// City
+					$ar_inp             = array
+					(
+						'name'          => 'city',
+						'value'         => $deliver_city
+					);
+					echo div_height(15);
+					echo form_label('City');
+					echo form_input($ar_inp);
+
+					// State
+					$ar_inp             = array
+					(
+						'name'          => 'state',
+						'value'         => $deliver_state
+					);
+					echo div_height(15);
+					echo form_label('State');
+					echo form_input($ar_inp);
+
+					// Postal code
+					$ar_inp             = array
+					(
+						'name'          => 'postalCode',
+						'value'         => $deliver_postal_code
+					);
+					echo div_height(15);
+					echo form_label('Postal Code');
+					echo form_input($ar_inp);
+
+					// Save
+					echo div_height(25);
+					echo make_button('Save Address', 'btnSaveAddress blueButton');
+
+					// Hidden data
+					echo form_hidden('hdReturnUrl', current_url());
+
+				// Form close
+				echo form_close();
+
+			echo close_div();
 
 		echo close_div();
 
@@ -115,11 +208,11 @@ echo open_div('middle');
 
 				// Link button
 				echo div_height(30);
-				echo make_button('View All Orders', '', 'orders');
+				echo make_button('View All Orders', '', 'my_orders');
 			}
 			else
 			{
-				echo full_div('Nor Orders', 'messageNoOrders1');
+				echo full_div('No Orders', 'messageNoOrders1');
 			}
 
 		echo close_div();

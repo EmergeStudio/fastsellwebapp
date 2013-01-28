@@ -251,7 +251,7 @@ div.newOverlay {
 									echo open_div('profileInner');
 
 										echo full_div('<b>'.$this->session->userdata('sv_name').'</b>');
-										echo full_div('chris@emergestudio.net');
+										//echo full_div('chris@emergestudio.net');
 										if($this->session->userdata('sv_acc_type') == 'show_host')
 										{
 											echo full_div('Seller');

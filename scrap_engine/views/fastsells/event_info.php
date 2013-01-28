@@ -60,27 +60,35 @@ echo open_div('middle');
 					echo open_div('blockFastSellImage');
 
 						echo open_div('fastSellImage');
-						// Get the image
-						$src                    = 'scrap_assets/images/universal/default_event_image.png';
-						$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
-						$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
-						if($call_fastsell_image['error'] == FALSE)
-						{
-							$json_fastsell_image        = $call_fastsell_image['result'];
-							if($json_fastsell_image->is_empty == FALSE)
+
+							// Get the image
+							$src                    = 'scrap_assets/images/universal/default_event_image.png';
+							$remove_image           = FALSE;
+							$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
+							$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+							if($call_fastsell_image['error'] == FALSE)
 							{
-								$image_path             = $json_fastsell_image->server_local_files[0]->path;
-								$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+								$json_fastsell_image        = $call_fastsell_image['result'];
+								if($json_fastsell_image->is_empty == FALSE)
+								{
+									$image_path             = $json_fastsell_image->server_local_files[0]->path;
+									$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+									$remove_image           = TRUE;
+								}
 							}
-						}
 
-						$img_properties         = array
-						(
-							'src'               => $src,
-							'width'             => '250px'
-						);
+							$img_properties         = array
+							(
+								'src'               => $src,
+								'width'             => '250px'
+							);
 
-						echo full_div(img($img_properties));
+							echo full_div(img($img_properties));
+
+							if($remove_image == TRUE)
+							{
+								echo anchor('fastsells/remove_event_image', 'Remove Image', 'class="btnRemoveImage"');
+							}
 
 						echo close_div();
 
