@@ -1003,7 +1003,7 @@ class Fastsells extends CI_Controller
 			$update_json                    = json_encode($json_fastsell);
 
 			// Submit the update
-			$update_fastsell                = $this->scrap_web->webserv_call('fastsellevents/.json', $update_json, 'post');
+			$update_fastsell                = $this->scrap_web->webserv_call('fastsellevents/.json', $update_json, 'post', FALSE, FALSE);
 
 			if(isset($_FILES['uploadedFileFastsellImage']) && ($_FILES['uploadedFileFastsellImage']['name'] != ''))
 			{

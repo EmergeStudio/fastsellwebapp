@@ -984,7 +984,7 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 	-moz-box-shadow:0 0px 8px #313131;
 	-moz-border-radius:4px;  
 	-webkit-border-radius:4px;
-	border:1px solid #fff;
+	/*border:1px solid #fff;*/
 }
 .sunBox div {
 	display:block;
@@ -993,20 +993,21 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 .sunBox .titleTopCenter {
 	height:60px;
 	float:left;
-	-moz-border-radius-topleft:4px; 
-	-moz-border-radius-topright:4px;  
-	-webkit-border-top-right-radius:4px; 
-	-webkit-border-top-left-radius:4px;
-	border-bottom:1px solid #cbcdce;
+	-moz-border-radius-topleft:3px;
+	-moz-border-radius-topright:3px;
+	-webkit-border-top-right-radius:3px;
+	-webkit-border-top-left-radius:3px;
+	border-bottom:1px solid #0279a1;
+    background-color: #1ba2d0;
 }
 .sunBox .titleTopCenter:hover {
 	/*cursor:move;*/
 }
 .sunBox .titleText {
-	color:#444444;
+	color:#fff;
 	font-size:20px;
 	margin:22px 0px 0px 25px;
-	text-shadow:#FFF 1px 1px 0px;
+	text-shadow: 0px 1px 3px rgba(0,0,0,0.3);
 	overflow:visible;
 }
 .sunBox .modalClose {
@@ -1014,15 +1015,18 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 	float:right;
 	width:30px;
 	height:30px;
+    font-size: 30px;
 	margin-top:16px;
 	margin-right:25px;
-	background-image:url(../../images/sun_modal/sun_close.png);
-	background-position:top;
 	overflow:hidden;
+    text-shadow: none;
+    color: #ffbe5e;
+    text-shadow: 0px 1px 3px rgba(0,0,0,0.3);
 }
 .sunBox .modalClose:hover {
 	cursor:pointer;
-	background-position:bottom;
+    color: #fff;
+}
 }
 .sunBox .contentContain {
 	clear:both;
@@ -1030,7 +1034,6 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 .sunBox .contentCenter {
 	float:left;
 	overflow:auto;
-	border-top:1px solid #ebedee;
 }
 .sunBox.sunMessage .contentCenter {
 	background-color:#FFF;
@@ -1057,13 +1060,12 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 }
 .sunBox .contentCenter .popup {
 	padding:25px 25px;
-	border-bottom:1px solid #cbcdce;
 }
 .sunBox .contentCenter .popup, .sunBox .contentCenter .popup div, .sunBox .contentCenter .popup span, .sunBox .contentCenter .popup a, .sunBox .contentCenter .popup td, .sunBox .contentCenter .popup th, .sunBox .contentCenter .popup label {
 	font-size:13px;
 	line-height:18px;
-	color:#585858;
-	text-shadow:#F1F1F1 1px 1px 0px;
+	color:#2c2c2c;
+	text-shadow: none;
 }
 .sunBox .contentCenter .popup .scrapButton, .sunBox .contentCenter .popup .scrapButton2 {
 	text-shadow:#FFFFFF 1px 1px 0px;
@@ -1094,6 +1096,10 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 /* POPUPS */
 .sunBox .popup {
 	overflow:auto;
+    background-color: #fff;
+}
+.sunBox .popup .inset {
+    background-color: #ececec;
 }
 .sunBox .popup .inpText {
 	width:99%;
@@ -1143,6 +1149,7 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 	-moz-border-radius-bottomright:4px;  
 	-webkit-border-bottom-right-radius:4px; 
 	-webkit-border-bottom-left-radius:4px;
+    background-color: #fff;
 }
 .sunBox .botBlock .btnBotBlock {
 	display:block;
@@ -1289,13 +1296,13 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 	width: 204px;
 }
 .sunBox .scrapButton.blueButton, .sunBox .scrapButton2.blueButton {
-    color:#fff;
-    text-shadow:none;
-    font-weight:500;
-    font-size:12px;
-    border:1px solid #3079ed;
-    border-bottom:1px solid #0b49ac;
-    background-image:url(../../images/universal/btn_blue_back.jpg);
+    color: #fff;
+    text-shadow: none;
+    font-weight: 500;
+    font-size: 12px;
+    border: 1px solid #1ba2d0;
+    background-color: #1ba2d0;
+    background-image: none;
 }
 .sunBox .contentCenter .popup div.scrapButton {
     text-shadow: none;
@@ -1305,6 +1312,9 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
     padding: 15px 0px;
     font-size: 50px;
     text-align: center;
+}
+.sunBox .botBlock .scrapButton, .sunBox .botBlock .scrapButton2 {
+    float: right;
 }
 
 

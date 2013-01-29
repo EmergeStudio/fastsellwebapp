@@ -303,7 +303,7 @@ jQuery.scrap_logout = function()
 {
 	$('body').sunBox.message(
 	{ 
-		content			: 'Umm...You are no longer logged in.<br> Your now gonna take a trip back to login heaven',
+		content			: 'Your session has expired, please logon again',
 		message_title	: 'Just To Let You Know',
 		btn_true		: 'Ahh Man...Ok',
 		callback		: function($return)

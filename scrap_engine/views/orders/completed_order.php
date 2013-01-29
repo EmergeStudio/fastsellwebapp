@@ -120,7 +120,7 @@ if($order != FALSE)
 						echo '<td>';
 
 							echo full_div($this->session->userdata('sv_name'), 'content');
-							echo full_div('chris@emergestudio.net', 'content');
+							echo full_div($user->user_emails[0]->email, 'content');
 
 							echo div_height(20);
 							echo full_div('<b>Billing Address</b>', 'content');

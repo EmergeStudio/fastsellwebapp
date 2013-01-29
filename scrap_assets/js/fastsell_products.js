@@ -128,7 +128,7 @@ $(document).ready(function(){
         // Show the popup
         $('.btnAddProductPopup').live('click', function()
         {
-            $('.popAddProducts .returnTrue').hide();
+            $('.popAddProducts .returnTrue').text('Add All');
             $('body').sunBox.popup_change_width('popAddProducts', 1050);
             $('body').sunBox.show_popup('popAddProducts');
             $('body').sunBox.adjust_popup_height('popAddProducts');
@@ -169,6 +169,47 @@ $(document).ready(function(){
                 $.scrap_note_time('Your product has been added', 4000, 'tick');
                 $fc_refresh_added_product_list();
             });
+        });
+
+        // Add all
+        $('.popAddProducts .returnTrue').live('click', function()
+        {
+            $.scrap_note_loader('Adding your products');
+
+            $('.popAddProducts .btnAddProduct').each(function()
+            {
+                // Some variables
+                $parent				    = '';
+                $error                  = false;
+                $this                   = $(this);
+                $parent				    = $this.parents('tr');
+                $product_id             = $parent.find('.hdProductId').text();
+                $stock                  = $parent.find('input[name="inpUnits"]').val();
+                $price                  = $parent.find('input[name="inpPrice"]').val();
+                $event_id               = $('.hdEventId').text();
+
+                //console.log($product_id + ' -- ' + $stock + ' -- ' + $price + ' -- ' + $event_id);
+
+                // Clear fields
+                $parent.find('input[name="inpUnits"]').val('');
+                $parent.find('input[name="inpPrice"]').val('');
+
+                // Add the product
+                $.post($base_path + 'ajax_handler_fastsells/fastsell_create_product',
+                {
+                    product_id		    : $product_id,
+                    stock		        : $stock,
+                    price		        : $price,
+                    event_id			: $event_id
+                },
+                function($data)
+                {
+                    $data	            = jQuery.trim($data);
+                });
+            });
+
+            $.scrap_note_time('Your products have been added', 4000, 'tick');
+            $fc_refresh_added_product_list();
         });
     }
 

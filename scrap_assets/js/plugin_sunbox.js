@@ -84,7 +84,7 @@ Created By: Chris Humboldt (www.chrismodem.com)
 			$class_name	= $settings.class_name;
 		}
 		
-		$('body').append('<div class="sunBox '+ $class_name +'"><div class="titleContain"><div class="titleTopCenter"><div class="modalClose returnFalse" onclick=""></div><div class="titleText">'+ $title +'</div></div></div><div class="contentContain"><div class="contentCenter"></div></div></div>');
+		$('body').append('<div class="sunBox '+ $class_name +'"><div class="titleContain"><div class="titleTopCenter"><div class="modalClose icon-cross returnFalse" onclick=""></div><div class="titleText">'+ $title +'</div></div></div><div class="contentContain"><div class="contentCenter"></div></div></div>');
 		
 		if($.browser.msie && parseInt($.browser.version) <= 6)
 		{
@@ -286,7 +286,7 @@ Created By: Chris Humboldt (www.chrismodem.com)
 				$.fn.sunBox.attach_html('', 'popupMain ' + $class);
 				$('.' + $class + ' .titleText').text($heading);
 				
-				$('.' + $class + ' .contentCenter').html('<div class="popup">' + $data + '</div><div class="botBlock" style="padding-left:'+ (($settings.width / 2) - 55) +'px;"><div class="scrapButton btnSave blueButton returnTrue" onclick="">Save</div><div class="scrapButton btnCancel returnFalse" onclick="">Close</div></div>').width($settings.width);
+				$('.' + $class + ' .contentCenter').html('<div class="popup">' + $data + '</div><div class="botBlock" style="padding-right: 20px;"><div class="scrapButton btnCancel returnFalse" onclick="">Close</div><div class="scrapButton btnSave blueButton returnTrue" onclick="">Save</div></div>').width($settings.width);
 				$('.' + $class + ' .titleTopCenter').width($settings.width);
 				
 				// Set the dimensions
