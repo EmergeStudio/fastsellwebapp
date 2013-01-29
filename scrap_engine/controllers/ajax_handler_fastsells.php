@@ -127,13 +127,6 @@ class Ajax_handler_fastsells extends CI_Controller
 						// Create directory
 						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
-//						if($new_directory['error'] == TRUE)
-//						{
-//							// Return the error message
-//							$json				= $new_directory['result'];
-//							echo $json->error_description;
-//						}
-
 						// Clone the definitions
 						$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
 						$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
@@ -174,8 +167,9 @@ class Ajax_handler_fastsells extends CI_Controller
 						}
 
 						// Return
-						$return                         = 'okitsbeencreated:';
-						$return                         .= $json_fastsell['id'];
+						$return = 'itsfucked';
+//						$return                         = 'okitsbeencreated:';
+//						$return                         .= $json_fastsell['id'];
 						echo $return;
 					}
 					else

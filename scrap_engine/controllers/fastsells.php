@@ -588,6 +588,13 @@ class Fastsells extends CI_Controller
 					$call_address               = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
 					$json_address               = $call_address['result'];
 					$address_id                 = $json_address->addresses[0]->id;
+					foreach($json_address->addresses as $address)
+					{
+						if($address->address_type->id == 2)
+						{
+							$address_id         = $address->id;
+						}
+					}
 
 					// Get sample
 					$url_sample             = 'fastsellorders/sample.json';
@@ -619,6 +626,13 @@ class Fastsells extends CI_Controller
 				$call_address               = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
 				$json_address               = $call_address['result'];
 				$address_id                 = $json_address->addresses[0]->id;
+				foreach($json_address->addresses as $address)
+				{
+					if($address->address_type == 2)
+					{
+						$address_id         = $address->id;
+					}
+				}
 
 				$call_error                 = $call_orders['result'];
 				if($call_error->error_code == 10005)
@@ -641,17 +655,6 @@ class Fastsells extends CI_Controller
 
 					// Create new order
 					$new_order              = $this->scrap_web->webserv_call('fastsellorders/.json', $new_json, 'put');
-
-//					if($new_order['error'] == FALSE)
-//					{
-//						echo 'ok';
-//					}
-//					else
-//					{
-//						// Return the error message
-//						$json				= $new_order['result'];
-//						echo $json->error_description;
-//					}
 
 					// Redirect
 					redirect($return_url);
