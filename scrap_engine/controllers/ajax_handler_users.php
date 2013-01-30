@@ -116,7 +116,7 @@ class Ajax_handler_users extends CI_Controller
 		// Set the variables
 		if(isset($_FILES['inpUploadImage']) && !empty($_FILES['inpUploadImage']))
 		{
-			$profile_image		= $_FILES['inpUploadImage'];
+			$profile_image		= str_replace(' ', '%20', $_FILES['inpUploadImage']);
 		}
 		else
 		{

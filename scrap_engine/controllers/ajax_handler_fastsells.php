@@ -167,9 +167,8 @@ class Ajax_handler_fastsells extends CI_Controller
 						}
 
 						// Return
-						$return = 'itsfucked';
-//						$return                         = 'okitsbeencreated:';
-//						$return                         .= $json_fastsell['id'];
+						$return                         = 'okitsbeencreated:';
+						$return                         .= $json_fastsell['id'];
 						echo $return;
 					}
 					else

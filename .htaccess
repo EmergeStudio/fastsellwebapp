@@ -27,3 +27,5 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 
 ErrorDocument 404 /index.php
 </IfModule>
+
+php_value upload_max_filesize 10M
