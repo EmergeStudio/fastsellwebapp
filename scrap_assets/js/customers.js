@@ -52,6 +52,7 @@ $(document).ready(function(){
             $first_name         = $('.popAddCustomer input[name="inpFirstName"]').val();
             $surname            = $('.popAddCustomer input[name="inpSurname"]').val();
             $email_address      = $('.popAddCustomer input[name="inpEmailAddress"]').val();
+//            $customer_group     = $('.popAddCustomer input[name="inpCustomerGroup"]').val();
             $html               = '';
 
             // Validate
@@ -101,6 +102,7 @@ $(document).ready(function(){
                     $html   += '<td>'+ $first_name +'</td>';
                     $html   += '<td>'+ $surname +'</td>';
                     $html   += '<td>'+ $email_address +'</td>';
+//                    $html   += '<td>'+ $customer_group +'</td>';
                     $html   += '<td><div class="loader"></div></td>';
 
                 $html   += '</tr>';
@@ -118,10 +120,12 @@ $(document).ready(function(){
                     inpName			        : $first_name,
                     inpSurname			    : $surname,
                     inpEmail			    : $email_address
+//                    inpCustomerGroup        : $customer_group
                 },
                 function($data)
                 {
                     $data	= jQuery.trim($data);
+                    console.log($data);
 
                     if($data == '9876')
                     {
@@ -160,6 +164,12 @@ $(document).ready(function(){
     // ----- REFRESH CUSTOMER LIST
     function $fc_refresh_customer_list($list_type)
     {
+        if($list_type != 'createShowList')
+        {
+            $('.singleColumn .listContain').prepend('<div class="ajaxMessage">Refreshing Customer List</div>');
+            $('.singleColumn .listContain table').fadeTo('fast', 0.3);
+        }
+
         // Get the customers
         $.post($ajax_base_path + 'get_customers',
         {

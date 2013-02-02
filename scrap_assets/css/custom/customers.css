@@ -17,7 +17,7 @@
 
 /* GENERAL
 --------------------------------------------------------------------------------------- */
-.middle .shifterPane_3 .listContain, .middle .shifterPane_4 .listContain {
+.middle .shifterPane_2 .listContain, .middle .shifterPane_3 .listContain {
     padding: 0px;
 }
 
@@ -25,17 +25,31 @@
 
 /* SHIFTER PANE
 --------------------------------------------------------------------------------------- */
-.shifterPane_2 div.uploader input {
+.shifterPane_1 div.uploader input {
     width:190px;
     margin-bottom:0px;
 }
-.shifterPane_2 div.uploader input:hover {
+.shifterPane_1 div.uploader input:hover {
     cursor: pointer;
 }
-.shifterPane_3 .checkDataContainer {
+.shifterPane_1 .field {
+    float: left;
+    padding: 6px 14px;
+    margin: 5px 5px 0px 0px;
+    color: #fff;
+    text-shadow: none;
+    font-weight: 500;
+    font-size: 13px;
+    font-weight: 200;
+    background-color: #fcb040;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.shifterPane_2 .checkDataContainer {
     display:none;
 }
-.shifterPane_3 .loader, .shifterPane_4 .loader {
+.shifterPane_2 .loader, .shifterPane_3 .loader {
     width: 100%;
     margin: 21px 0px;
     padding-top: 35px;
@@ -45,12 +59,12 @@
     background-position: top center;
     background-repeat: no-repeat;
 }
-.shifterPane_3 .coolTable.customers, .shifterPane_4 .coolTable.customers {
+.shifterPane_2 .coolTable.customers, .shifterPane_3 .coolTable.customers {
     display: block;
     width: 1120px;
     overflow: auto;
 }
-.shifterPane_3 .coolTable.customers td .cross, .shifterPane_3 .coolTable.customers td .tick, .shifterPane_4 .coolTable.customers td .cross, .shifterPane_4 .coolTable.customers td .tick {
+.shifterPane_2 .coolTable.customers td .cross, .shifterPane_2 .coolTable.customers td .tick, .shifterPane_3 .coolTable.customers td .cross, .shifterPane_3 .coolTable.customers td .tick {
     display:block;
     width:15px;
     height:15px;
@@ -66,19 +80,19 @@
     margin: 2px 5px 0px -4px;
     background-image: url(../../images/icons/small_cross_3.png);
 }
-.checkDataContainer .shifterPane_3 .coolTable.customers td:hover {
+.checkDataContainer .shifterPane_2 .coolTable.customers td:hover {
     cursor: pointer;
 }
-.shifterPane_3 .coolTable.customers td.editingField {
+.shifterPane_2 .coolTable.customers td.editingField {
     background-color: #fffdd9;
 }
-.shifterPane_3 .coolTable.customers td .cross, .shifterPane_4 .coolTable.customers td .cross {
+.shifterPane_2 .coolTable.customers td .cross, .shifterPane_3 .coolTable.customers td .cross {
     background-image: url(../../images/icons/small_cross_3.png);
 }
-.shifterPane_3 .coolTable.customers td .tick, .shifterPane_4 .coolTable.customers td .tick {
+.shifterPane_2 .coolTable.customers td .tick, .shifterPane_3 .coolTable.customers td .tick {
     background-image: url(../../images/icons/small_tick_2.png);
 }
-.shifterPane_3 .coolTable.customers td input, .shifterPane_4 .coolTable.customers td input {
+.shifterPane_2 .coolTable.customers td input, .shifterPane_3 .coolTable.customers td input {
     margin: 0px;
     padding: 0px;
     border: none;
@@ -88,15 +102,15 @@
     font-family: 'Helvetica Neue', Helvetica, Arial;
     color: #585858;
 }
-.shifterPane_3 .coolTable.customers td.errorWidth, .shifterPane_3 .coolTable.customers td.errorWidth div, .shifterPane_4 .coolTable.customers td.errorWidth, .shifterPane_4 .coolTable.customers td.errorWidth div {
+.shifterPane_2 .coolTable.customers td.errorWidth, .shifterPane_2 .coolTable.customers td.errorWidth div, .shifterPane_3 .coolTable.customers td.errorWidth, .shifterPane_3 .coolTable.customers td.errorWidth div {
     max-width: 170px;
 }
-.shifterPane_3 .coolTable.customers td.errorWidth div, .shifterPane_4 .coolTable.customers td.errorWidth div {
+.shifterPane_2 .coolTable.customers td.errorWidth div, .shifterPane_3 .coolTable.customers td.errorWidth div {
     display: block;
     width: 170px;
     white-space: normal;
 }
-.shifterPane_4 .loader {
+.shifterPane_3 .loader {
     margin: 46px 0px 21px 0px;
 }
 

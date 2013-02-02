@@ -52,20 +52,20 @@ echo open_div('middle');
 
 		echo close_div();
 
-		// Sales at a glance
-		echo open_div('whiteBack');
-
-			// Heading
-			echo div_height(6);
-			echo full_div('', 'icon-bars headingIcon blue');
-			echo heading('Sales At A Glance', 2);
-
-			// Load the char
-			$dt_settings['chart_width']		= 980;
-			$dt_settings['chart_height']	= 350;
-			$this->load->view('dashboard/js/spending_over_time', $dt_settings);
-
-		echo close_div();
+//		// Sales at a glance
+//		echo open_div('whiteBack');
+//
+//			// Heading
+//			echo div_height(6);
+//			echo full_div('', 'icon-bars headingIcon blue');
+//			echo heading('Sales At A Glance', 2);
+//
+//			// Load the char
+//			$dt_settings['chart_width']		= 980;
+//			$dt_settings['chart_height']	= 350;
+//			$this->load->view('dashboard/js/spending_over_time', $dt_settings);
+//
+//		echo close_div();
 
 	// End of large left column
 	echo close_div();

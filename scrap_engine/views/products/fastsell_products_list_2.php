@@ -101,10 +101,5 @@ if($products['error'] == FALSE)
 
 	// Generate table
 	echo $this->table->generate();
-
-	echo div_height(10);
-	$crt_page               = ($offset / $limit) + 1;
-	$max_page               = floor($json_products->no_limit_count / $limit) + 1;
-	echo page_nav($crt_page, $max_page);
 }
 ?>

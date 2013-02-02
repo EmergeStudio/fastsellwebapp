@@ -93,6 +93,7 @@ echo open_div('middle');
 						echo close_div();
 
 						echo form_label('FastSell Image:');
+						echo full_div('Allowed Formats: .jpg / .png / .gif<br>Max Filesize: 2MB', 'imageInfo');
 						$inp_data		= array
 						(
 							'name'		=> 'uploadedFileFastsellImage',

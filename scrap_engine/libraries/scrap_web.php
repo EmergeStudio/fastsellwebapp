@@ -134,17 +134,39 @@ class Scrap_web
 //					echo $key.' -- '.$value.'<br>';
 //				}
 
-				if($curl_info['http_code'] == 400)
+				if($curl_info['http_code'] != 200)
 				{
+					$url_time               = 'timezones/.json';
+					$call_time              = $this->webserv_call($url_time);
+					$json_time              = $call_time['result'];
+
 					$ar_return['error']		= TRUE;
-				}
-				elseif(isset($json->error_code))
-				{
-					$ar_return['error']		= TRUE;
+					$ar_return['result']    = 'Unable to process your request: '.$curl_info['http_code'].' (Time: '.$json_time->time.')';
 				}
 				else
 				{
-					$ar_return['error']		= FALSE;
+					if($as_array == FALSE)
+					{
+						if(isset($json->error_code))
+						{
+							$ar_return['error']		= TRUE;
+						}
+						else
+						{
+							$ar_return['error']		= FALSE;
+						}
+					}
+					else
+					{
+						if(isset($json['error_code']))
+						{
+							$ar_return['error']		= TRUE;
+						}
+						else
+						{
+							$ar_return['error']		= FALSE;
+						}
+					}
 				}
 				
 				break;

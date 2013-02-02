@@ -8,7 +8,7 @@ if($customers['error'] == FALSE)
 	$json_customers			    = $customers['result'];
 
 	// Table heading
-	$this->table->set_heading('', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number', '');
+	$this->table->set_heading('', array('data' => 'Company Name', 'class' => 'fullCell'), 'Customer Number', '');
 
 	// Loop through and display customer
 	foreach($json_customers->customer_organizations as $customer)

@@ -835,6 +835,55 @@ html {
     cursor: pointer;
     color: #d61818;
 }
+.middle .ajaxMessage {
+    position: absolute;
+    padding: 9px 18px;
+    width: 300px;
+    margin-top: 10px;
+    margin-left: 400px;
+    color: #fff;
+    text-shadow: none;
+    font-weight: 500;
+    font-size: 14px;
+    font-weight: 200;
+    text-align: center;
+    background-color: #fcb040;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    z-index: 2;
+    background-image: url(../../images/universal/ajax_loader12.gif);
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+}
+.middle .ajaxMessage.short {
+    margin-left: 110px;
+}
+.middle .ajaxMessage.short2 {
+    margin-left: 85px;
+}
+.middle .imageInfo {
+    padding: 2px;
+    margin-bottom: 8px;
+    color: #7e7e7e;
+}
+.middle .yellowBlock, .middle .blueBlock {
+    padding: 9px 18px;
+    margin: 7px 5px 0px 5px;
+    color: #fff;
+    text-shadow: none;
+    font-weight: 500;
+    font-size: 14px;
+    font-weight: 200;
+    background-color: #fcb040;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+.middle .blueBlock {
+    background-color: #1ba2d0;
+}
+
 
 
 /* AJAX LAYOUT
@@ -890,6 +939,83 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 /* These styles are important as it includes all the css for included jQuery plugins. If you want to alter the look you alter the style in this file.  
 
 -- IT IS ADVISED THAT YOU DO NOT EDIT THE BELOW STYLES -- */
+
+
+
+/* COUNTER
+--------------------------------------------------------------------------------------- */
+.countdownHolder{
+    position:relative;
+    float:left;
+    width: 265px;
+    height: 40px;
+    font: 40px/1.5 'Open Sans Condensed',sans-serif;
+    margin:0px auto;
+}
+
+.counterText {
+    display: none;
+}
+
+.position{
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    width: 25px;
+    height: 40px;
+    margin: 0px 1px;
+}
+
+.digit{
+    position:relative;
+    display:inline-block;
+    width: 25px;
+    padding: 8px 0px;
+    float:left;
+    background-color:#444;
+    text-align:center;
+    color:#fff;
+    letter-spacing:-1px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -khtml-border-radius: 6px;
+    border-radius: 6px;
+    text-shadow: none;
+}
+
+
+
+
+.digit.static{
+    display:block;
+    width: 25px;
+}
+
+.countDiv{
+    display:inline-block;
+    float:left;
+    width:15px;
+    padding: 8px 0px;
+    position:relative;
+    text-align: center;
+}
+
+.countDays{
+    float:left;
+}
+.countHours{
+    float:left;
+}
+.countMinutes{
+    float:left;
+}
+.countSeconds{
+    float:left;
+}
+.itemContainer h4.counterHeadings {
+    font-size: 12px;
+    width: 265px;
+}
 
 
 

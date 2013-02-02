@@ -14,35 +14,19 @@ if($row_check['error'] == FALSE)
 		echo '<table class="coolTable customers">';
 		
 			// Table headings
-			echo '<tr>';
+			echo '<tr class="headings">';
 
-                echo '<th></th>';
+				foreach($json_row_check->worksheets as $worksheet)
+				{
+					echo '<th class="ignore"></th>';
 
-                echo '<th></th>';
+					echo '<th class="ignore"></th>';
 
-				echo '<th>Email</th>';
-
-				echo '<th>First Name</th>';
-
-				echo '<th>Last Name</th>';
-
-				echo '<th>Phone No.</th>';
-
-				echo '<th>Address 1</th>';
-
-				echo '<th>Address 2</th>';
-
-				echo '<th>Address 3</th>';
-
-                echo '<th>City</th>';
-
-                echo '<th>State</th>';
-
-                echo '<th>Postal Code</th>';
-
-                echo '<th>Customer Name</th>';
-
-                echo '<th>Customer No.</th>';
+					foreach($worksheet->headers as $header)
+					{
+						echo '<th>'.$header.'</th>';
+					}
+				}
 				
 			echo '</tr>';
 		

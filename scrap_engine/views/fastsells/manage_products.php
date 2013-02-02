@@ -12,7 +12,8 @@ echo open_div('middle');
 
 			// Add product
 			echo make_button('Upload Master Data File', 'btnUploadDataFile btnAdd blueButton', '', 'right');
-			echo make_button('Add More Product', 'btnAddProductPopup btnAdd blueButton', '', 'right');
+			echo make_button('Add Existing Product', 'btnAddProductPopup btnAdd blueButton', '', 'right');
+			echo make_button('Add New Product', 'btnAddProductAndLink btnAdd blueButton', '', 'right');
 
 			echo open_div('floatLeft');
 
@@ -23,7 +24,8 @@ echo open_div('middle');
 
 						echo form_input('inpSearchText', str_replace('%20', ' ', $search_text), 'class="floatLeft"');
 						echo make_button('Search', 'btnSearch blueButton', '', 'left');
-						echo make_button('Reset', '', 'products', 'left');
+						echo make_button('Reset', '', 'fastsells/products', 'left');
+						echo form_hidden('hdOffset', $offset);
 						echo clear_float();
 
 					echo form_close();

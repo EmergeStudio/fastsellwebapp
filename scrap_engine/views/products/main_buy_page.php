@@ -108,10 +108,15 @@ echo open_div('middle');
 					// Basic search
 					echo open_div('basicSearch floatLeft');
 
-						echo form_input('inpProductsSearch', '', 'class="floatLeft"');
-						echo make_button('Search', 'btnProductsSearch blueButton', '', 'left');
-						echo make_button('Reset', '', 'fastsells/buy', 'left');
-						echo clear_float();
+						echo form_open('fastsells/buy', 'class="frmSearch"');
+
+							echo form_input('inpSearchText', str_replace('%20', ' ', $search_text), 'class="floatLeft"');
+							echo make_button('Search', 'btnSearch blueButton', '', 'left');
+							echo make_button('Reset', '', 'fastsells/buy', 'left');
+							echo form_hidden('hdOffset', $offset);
+							echo clear_float();
+
+						echo form_close();
 
 					// End of basic search
 					echo close_div();

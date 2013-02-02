@@ -99,6 +99,7 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 				echo full_div('', 'icon-camera fastSellImage');
 
 				echo form_label('FastSell Image:');
+				echo full_div('Allowed Formats: .jpg / .png / .gif<br>Max Filesize: 2MB', 'imageInfo');
 				$inp_data		= array
 				(
 					'name'		=> 'uploadedFileFastsellImage',
@@ -151,7 +152,8 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		// Upload master file
 		echo open_div('customerMasterFileUpload floatRight');
 
-			echo make_button('Upload Master Data File', 'btnAdd btnUploadCustomers blueButton');
+			echo make_button('Upload Master Data File', 'btnAdd btnUploadCustomers blueButton', '', 'left');
+			echo make_button('Add New Customer', 'btnAdd btnAddNewCustomerPopup blueButton', '', 'left');
 
 		echo close_div();
 
@@ -172,24 +174,24 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 			echo div_height(15);
 
 			// Chose users
-			echo open_div('chosenUsersList displayNone');
+			echo open_div('chosenUsersList');
 
-				echo div_height(20);
-
-				// Rows
-				$checkbox_remove_all_customers  = array
-				(
-					'name'                      => 'checkRemoveAllCustomers',
-					'class'                     => 'checkRemoveAllCustomers tooltip',
-					'checked'                   => TRUE,
-					'title'                     => 'Tick to remove all these customers from the FastSell'
-				);
-
-				// Heading
-				$this->table->set_heading(form_checkbox($checkbox_remove_all_customers), '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
-
-				// Generate table
-				echo $this->table->generate();
+//				echo div_height(20);
+//
+//				// Rows
+//				$checkbox_remove_all_customers  = array
+//				(
+//					'name'                      => 'checkRemoveAllCustomers',
+//					'class'                     => 'checkRemoveAllCustomers tooltip',
+//					'checked'                   => TRUE,
+//					'title'                     => 'Tick to remove all these customers from the FastSell'
+//				);
+//
+//				// Heading
+//				$this->table->set_heading(form_checkbox($checkbox_remove_all_customers), '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
+//
+//				// Generate table
+//				echo $this->table->generate();
 
 			echo close_div();
 
@@ -214,7 +216,11 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 			echo close_div();
 			echo div_height(10);
 
-			$this->load->view('customers/customers_list');
+			echo open_div('ajaxCustomerList');
+
+				$this->load->view('customers/customers_list');
+
+			echo close_div();
 
 		echo close_div();
 
@@ -241,7 +247,9 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo open_div('buttonOptions');
 
-				echo make_button('Manually Add Product', 'btnAdd btnAddProductPopup blueButton', '', 'left');
+				echo make_button('Add New Product', 'btnAdd btnAddProductAndLink blueButton', '', 'left');
+				echo full_div('OR', 'orText floatLeft');
+				echo make_button('Add Existing Product', 'btnAdd btnAddProductPopup blueButton', '', 'left');
 				echo full_div('OR', 'orText floatLeft');
 				echo make_button('Upload Master Data File', 'btnAdd btnUploadProducts blueButton', '', 'left');
 				echo clear_float();

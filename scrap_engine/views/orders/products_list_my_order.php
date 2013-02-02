@@ -106,7 +106,7 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 	$quantity               = $order_item->quantity;
 	$price                  = $order_item->fastsell_item->price;
 	$crt_total              = number_format($quantity * $price, 2);
-	$grand_total            = $grand_total + $crt_total;
+	$grand_total            = $grand_total + ($quantity * $price);
 
 	array_push($ar_fields, array('data' => '$'.$price, 'class' => 'productPrice'));
 	array_push($ar_fields, array('data' => '$'.$crt_total,'class' => 'productPrice'));

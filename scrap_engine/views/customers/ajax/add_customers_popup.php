@@ -8,7 +8,7 @@ if($customers['error'] == FALSE)
 
 	// Table data
 	// Heading
-	$this->table->set_heading('', '', array('data' => 'Customer Name', 'class' => 'fullCell'), full_div('Customer Number'));
+	$this->table->set_heading('', '', array('data' => 'Company Name', 'class' => 'fullCell'), full_div('Customer Number'));
 
 	// Rows
 	foreach($json_customers->customer_to_show_hosts as $customer_to_show_host)

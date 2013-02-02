@@ -165,6 +165,16 @@ echo open_div('middle');
 					echo form_label('Postal Code');
 					echo form_input($ar_inp);
 
+					// Make addresses the same
+					echo div_height(20);
+					$checkbox_make_same     = array
+					(
+						'name'              => 'checkMakeSame',
+						'class'             => 'checkMakeSame'
+					);
+					echo form_checkbox($checkbox_make_same);
+					echo full_div('Make the billing address the same as the shipping address', 'txtMakeSameAddress greyTxt');
+
 					// Save
 					echo div_height(25);
 					echo make_button('Save Address', 'btnSaveAddress blueButton');

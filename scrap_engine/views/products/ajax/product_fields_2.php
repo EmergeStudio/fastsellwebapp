@@ -56,6 +56,22 @@ if($crt_definition['error'] == FALSE)
 			);
 			echo form_input($inp_data);
 
+			echo form_label('Stock');
+			$inp_data			= array
+			(
+				'name'			=> 'inpProductStock',
+				'class'			=> 'inpProductStock inpText50'
+			);
+			echo form_input($inp_data);
+
+			echo form_label('Price');
+			$inp_data			= array
+			(
+				'name'			=> 'inpProductPrice',
+				'class'			=> 'inpProductPrice inpText50'
+			);
+			echo form_input($inp_data);
+
 		echo close_div();
 
 		// Some height
@@ -71,26 +87,26 @@ if($crt_definition['error'] == FALSE)
 		{
 			echo open_div('inset addedFields');
 
-			$loop_cnt_1           = 0;
-			foreach($crt_definition->catalog_item_definition_fields as $definition_field)
-			{
-				$loop_cnt_1++;
-				if($loop_cnt_1 > $cnt_defaultFields)
+				$loop_cnt_1           = 0;
+				foreach($crt_definition->catalog_item_definition_fields as $definition_field)
 				{
-					echo open_div('fieldContainerExtra');
+					$loop_cnt_1++;
+					if($loop_cnt_1 > $cnt_defaultFields)
+					{
+						echo open_div('fieldContainerExtra');
 
-					echo form_label($definition_field->field_name);
-					$inp_data			= array
-					(
-						'name'			=> 'inpProductFieldAdded',
-						'class'			=> 'inpProductFieldAdded'
-					);
-					echo form_input($inp_data);
-					echo hidden_div($definition_field->id);
+							echo form_label($definition_field->field_name);
+							$inp_data			= array
+							(
+								'name'			=> 'inpProductFieldAdded',
+								'class'			=> 'inpProductFieldAdded'
+							);
+							echo form_input($inp_data);
+							echo hidden_div($definition_field->id);
 
-					echo close_div();
+						echo close_div();
+					}
 				}
-			}
 
 			echo close_div();
 		}

@@ -9,6 +9,8 @@ $(document).ready(function(){
 	var $base_path				= $('#hdPath').val();
 	var $ajax_base_path 		= $base_path + 'ajax_handler_products/';
 	var $ajax_html_path 		= $ajax_base_path + 'html_view/';
+    var $crt_page_num           = $('input[name="scrap_pageNo"]').val();
+    var $page_max               = $('input[name="scrap_pageMax"]').val();
 
 
 // ------------------------------------------------------------------------------EXECUTE
@@ -17,14 +19,86 @@ $(document).ready(function(){
 
     $fc_add_products();
 
+    $fc_add_a_product_and_link();
+
     $fc_remove_product();
 
     $fc_upload_master_data_file();
 
     $fc_search();
+
+    $fc_pagenate();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- PAGENATE
+    function $fc_pagenate()
+    {
+        // Previous page
+        $('.btnPrevPage').live('click', function()
+        {
+            if($crt_page_num > 1)
+            {
+                $('input[name="hdOffset"]').val($crt_page_num - 1);
+                $('.frmSearch').submit();
+            }
+        });
+
+
+        // Next page
+        $('.btnNextPage').live('click', function()
+        {
+            if($crt_page_num < $page_max)
+            {
+                $('input[name="hdOffset"]').val(parseInt($crt_page_num) + 1);
+                $('.frmSearch').submit();
+            }
+        });
+
+
+        // Number list click
+        $('.btnCrtPage').live('click', function()
+        {
+            if($('.pagingState').hasClass('active'))
+            {
+                if($('.numList').is(":visible") == false)
+                {
+                    $('.numList').fadeIn(200);
+                }
+                else
+                {
+                    $('.numList').fadeOut(200);
+                }
+            }
+
+            $('.numList').hover(function()
+                {
+                    $mouse_is_inside_3	= true;
+                },
+                function()
+                {
+                    $mouse_is_inside_3	= false;
+                });
+
+            $('body').mouseup(function()
+            {
+                if(!$mouse_is_inside_3)
+                {
+                    $('.numList').fadeOut(200);
+                }
+            });
+        });
+
+
+        // Number list selection
+        $('.listPageNum').live('click', function()
+        {
+            $list_num			= parseInt($(this).text());
+            $('input[name="hdOffset"]').val($list_num);
+            $('.frmSearch').submit();
+        })
+    }
 
     // ----- SAVE PRODUCT CHANGES
     function $fc_search()
@@ -118,7 +192,7 @@ $(document).ready(function(){
     function $fc_add_products()
     {
         // Buy products popup
-        $('body').sunBox.popup('Add More Products', 'popAddProducts',
+        $('body').sunBox.popup('Add Existing Products', 'popAddProducts',
         {
             ajax_path		    : $ajax_base_path + 'add_products_popup',
             close_popup		    : false,
@@ -188,8 +262,6 @@ $(document).ready(function(){
                 $price                  = $parent.find('input[name="inpPrice"]').val();
                 $event_id               = $('.hdEventId').text();
 
-                //console.log($product_id + ' -- ' + $stock + ' -- ' + $price + ' -- ' + $event_id);
-
                 // Clear fields
                 $parent.find('input[name="inpUnits"]').val('');
                 $parent.find('input[name="inpPrice"]').val('');
@@ -205,11 +277,11 @@ $(document).ready(function(){
                 function($data)
                 {
                     $data	            = jQuery.trim($data);
+                    $fc_refresh_added_product_list();
                 });
             });
 
-            $.scrap_note_time('Your products have been added', 4000, 'tick');
-            $fc_refresh_added_product_list();
+            $.scrap_note_time('All your products have been added', 4000, 'tick');
         });
     }
 
@@ -247,11 +319,213 @@ $(document).ready(function(){
         });
     }
 
+    // ---------- ADD A PRODUCT
+    function $fc_add_a_product_and_link()
+    {
+        // Add a document type popup
+        $('body').sunBox.popup('Add A New Product', 'popAddProduct',
+        {
+            ajax_path		: $ajax_base_path + 'add_product_popup_2',
+            close_popup		: false,
+            callback 		: function($return){}
+        });
+
+        // Show the popup
+        $('.btnAddProductAndLink').live('click', function()
+        {
+            $('body').sunBox.popup_change_width('popAddProduct', 790);
+            $('body').sunBox.show_popup('popAddProduct');
+            $('body').sunBox.adjust_popup_height('popAddProduct');
+        });
+
+        // Hide the popup
+        $('.popAddProduct .returnFalse').live('click', function()
+        {
+            $('.popAddProduct input, .popAddProduct textarea').val('');
+        });
+
+        // Change item fields
+        $('.popAddProduct .definitionSelection').live('click', function()
+        {
+            // Some variables
+            $definition_id          = $(this).find('.hdDefinitionId').text();
+
+            // Edit the DOM
+            $('.popAddProduct .definitionSelection.active').removeClass('active');
+            $(this).addClass('active');
+            $('.popAddProduct .rightColumn').css({ opacity : 0.5 });
+
+            // Get new item fields
+            $.post($ajax_base_path + 'get_product_fields_2',
+            {
+                definition_id		: $definition_id
+            },
+            function($data)
+            {
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else
+                {
+                    // Edit DOM
+                    $('.popAddProduct .rightColumn').html($data).css({ opacity : 1 });
+                    $('body').sunBox.adjust_popup_height('popAddProduct');
+                }
+            });
+        });
+
+        // Submit the new item definition
+        $('.popAddProduct .returnTrue').live('click', function()
+        {
+            // Some variables
+            $error					    = false;
+            $product_number		        = $('.popAddProduct input[name="inpProductNumber"]').val();
+            $product_stock		        = $('.popAddProduct input[name="inpProductStock"]').val();
+            $product_price		        = $('.popAddProduct input[name="inpProductPrice"]').val();
+            $product_definition         = $('.popAddProduct .definitionSelection.active').find('.hdDefinitionId').text();
+            $product_fields_required    = '';
+            $product_fields_extra       = '';
+
+            // Validate
+            if($error == false)
+            {
+                if($product_number.length < 1)
+                {
+                    $error			= true;
+                    $.scrap_note_time('Please provide an product number', 4000, 'cross');
+                    $('.popAddProduct input[name="inpProductNumber"]').addClass('redBorder');
+                }
+            }
+
+            // Successful validation
+            if($error == false)
+            {
+                // Get the indexing fields
+                $loop_cnt                   = 0;
+
+                $('.popAddProduct .fieldContainerRequired').each(function()
+                {
+                    $loop_cnt++;
+                    // Some variables
+                    $this                   = $(this);
+                    if($loop_cnt == 2)
+                    {
+                        $field_value        = $this.find('textarea').val();
+                    }
+                    else
+                    {
+                        $field_value        = $this.find('input').val();
+                    }
+                    $field_id               = $this.find('.hiddenDiv').text();
+
+                    // Validate
+                    if($field_value != '')
+                    {
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += $field_value + ':';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
+                    }
+                    else
+                    {
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += 'NOT_SET:';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
+                    }
+                });
+
+                $('.popAddProduct .fieldContainerExtra').each(function()
+                {
+                    $loop_cnt++;
+                    // Some variables
+                    $this                   = $(this);
+                    $field_value            = $this.find('input').val();
+                    $field_id               = $this.find('.hiddenDiv').text();
+
+                    // Validate
+                    if($field_value != '')
+                    {
+                        $product_fields_extra	    += '[';
+                        $product_fields_extra	    += $field_value + ':';
+                        $product_fields_extra	    += $field_id;
+                        $product_fields_extra	    += ']';
+                    }
+                });
+
+                // Submit the new document type for adding
+                $.scrap_note_loader('Adding the new product and linking it to the FastSell');
+
+                // Post the data
+                $.post($ajax_base_path + 'add_product_and_link',
+                {
+                    product_number			    : $product_number,
+                    product_stock			    : $product_stock,
+                    product_price			    : $product_price,
+                    product_definition			: $product_definition,
+                    product_fields_required	    : $product_fields_required,
+                    product_fields_extra	    : $product_fields_extra
+                },
+                function($data)
+                {
+                    $data	= jQuery.trim($data);
+                    $data   = $data.split('::');
+
+                    if($data[0] == '9876')
+                    {
+                        $.scrap_logout();
+                    }
+                    else if($data[0] == 'wassuccessfullycreated')
+                    {
+                        if($('.popAddProduct input[name="uploadedFileProductImage"]').val() != '')
+                        {
+                            $('.popAddProduct input[name="hdProductId"]').val($data[1]);
+                            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                            $('.popAddProduct .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                            $('.popAddProduct .frmProductImage').attr('target', $iframe_name);
+                            $('.popAddProduct .frmProductImage').submit();
+
+                            $('iframe[name="'+ $iframe_name +'"]').load(function()
+                            {
+                                $data		= jQuery.trim($('.popAddProduct .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                                console.log($data);
+
+                                // Display error
+                                if($data == 'wassuccessfullyuploaded')
+                                {
+                                    $('.popAddProduct input').val('');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $('.popAddProduct input').val('');
+                        }
+
+                        $fc_refresh_added_product_list();
+
+                        // Close the popup
+                        $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
+                        $('body').sunBox.close_popup('popAddProduct');
+                    }
+                    else
+                    {
+                        $.scrap_note_time($data[0], 4000, 'cross');
+                    }
+                });
+            }
+        });
+    }
+
     // ----- REFRESH PRODUCT LIST
     function $fc_refresh_added_product_list()
     {
         // Some variables
         $event_id               = $('.hdEventId').text();
+
+        $('.ajaxProductsInFastSell').prepend('<div class="ajaxMessage">Refreshing FastSell Products</div>');
+        $('.ajaxProductsInFastSell table').fadeTo('fast', 0.3);
 
         // The AJAX call
         $.post($ajax_base_path + 'get_added_products',
@@ -261,7 +535,6 @@ $(document).ready(function(){
         function($data)
         {
             $data	            = jQuery.trim($data);
-            //console.log($data);
 
             $('.ajaxProductsInFastSell').html($data);
         });

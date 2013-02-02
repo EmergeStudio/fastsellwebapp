@@ -9,6 +9,8 @@ $(document).ready(function(){
 	var $base_path				= $('#hdPath').val();
 	var $ajax_base_path 		= $base_path + 'ajax_handler_products/';
 	var $ajax_html_path 		= $ajax_base_path + 'html_view/';
+    var $crt_page_num           = $('input[name="scrap_pageNo"]').val();
+    var $page_max               = $('input[name="scrap_pageMax"]').val();
 
 
 // ------------------------------------------------------------------------------EXECUTE
@@ -22,9 +24,78 @@ $(document).ready(function(){
     $fc_save_product_changes();
 
     $fc_search();
+
+    $fc_pagenate();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- PAGENATE
+    function $fc_pagenate()
+    {
+        // Previous page
+        $('.btnPrevPage').live('click', function()
+        {
+            if($crt_page_num > 1)
+            {
+                $('input[name="hdOffset"]').val(parseInt($crt_page_num) - 1);
+                $('.frmSearch').submit();
+            }
+        });
+
+
+        // Next page
+        $('.btnNextPage').live('click', function()
+        {
+            if($crt_page_num < $page_max)
+            {
+                $('input[name="hdOffset"]').val(parseInt($crt_page_num) + 1);
+                $('.frmSearch').submit();
+            }
+        });
+
+
+        // Number list click
+        $('.btnCrtPage').live('click', function()
+        {
+            if($('.pagingState').hasClass('active'))
+            {
+                if($('.numList').is(":visible") == false)
+                {
+                    $('.numList').fadeIn(200);
+                }
+                else
+                {
+                    $('.numList').fadeOut(200);
+                }
+            }
+
+            $('.numList').hover(function()
+                {
+                    $mouse_is_inside_3	= true;
+                },
+                function()
+                {
+                    $mouse_is_inside_3	= false;
+                });
+
+            $('body').mouseup(function()
+            {
+                if(!$mouse_is_inside_3)
+                {
+                    $('.numList').fadeOut(200);
+                }
+            });
+        });
+
+        // Number list selection
+        $('.listPageNum').live('click', function()
+        {
+            $list_num			= parseInt($(this).text());
+            $('input[name="hdOffset"]').val($list_num);
+            $('.frmSearch').submit();
+        })
+    }
 
     // ----- SAVE PRODUCT CHANGES
     function $fc_search()
@@ -46,13 +117,16 @@ $(document).ready(function(){
             $product_fields             = '';
             $product_id                 = $('.rightContent .itemInformation .hdProductId').text();
             $product_number             = $('.rightContent .itemInformation input[name="itemNumber"]').val();
+            $loop_cnt                   = 0;
 
             // Get fields
             $('.rightContent .itemInformation .fieldContainer').each(function()
             {
+                $loop_cnt++;
                 $field_id               = $(this).find('.hdDefinitionFieldId').text();
                 $field_value            = $(this).find('input[name="productField"]').val();
-                if($field_id == 2)
+
+                if($loop_cnt == 2)
                 {
                     $field_value        = $(this).find('textarea[name="productField"]').val();
                 }

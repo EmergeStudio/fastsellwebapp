@@ -187,7 +187,6 @@ class Customers extends CI_Controller
 
 			// Encode JSON
 			$update_json                        = json_encode($json_customer);
-			//echo $update_json;
 
 			// Update the address
 			$update_address                     = $this->scrap_web->webserv_call('customers/.json', $update_json, 'post');

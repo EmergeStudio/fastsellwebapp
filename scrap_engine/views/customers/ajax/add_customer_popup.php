@@ -1,10 +1,13 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <?php
+// Data
+
+// HTML
 echo open_div('inset');
 
 	// Table heading
-	$this->table->set_heading('Customer Name', 'Customer Number', 'User First Name', 'User Last Name', 'User Email Address', '');
+	$this->table->set_heading('Company Name', 'Customer Number', 'User First Name', 'User Last Name', 'User Email Address', '');
 
 	// Table data
 	$ar_fields              = array();
@@ -43,6 +46,13 @@ echo open_div('inset');
 		'name'			    => 'inpEmailAddress'
 	);
 	array_push($ar_fields, form_input($inp_email_address));
+
+//	// Customer group
+//	$inp_customer_group	    = array
+//	(
+//		'name'			    => 'inpCustomerGroup'
+//	);
+//	array_push($ar_fields, form_input($inp_customer_group));
 
 	// Buttons
 	array_push($ar_fields, make_button('Add', 'btnAddCustomerNow blueButton'));

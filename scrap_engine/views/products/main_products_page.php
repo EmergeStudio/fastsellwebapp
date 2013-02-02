@@ -64,6 +64,7 @@ echo open_div('middle');
 							echo form_input('inpSearchText', str_replace('%20', ' ', $search_text), 'class="floatLeft"');
 							echo make_button('Search', 'btnSearch blueButton', '', 'left');
 							echo make_button('Reset', '', 'products', 'left');
+							echo form_hidden('hdOffset', $offset);
 							echo clear_float();
 
 						echo form_close();

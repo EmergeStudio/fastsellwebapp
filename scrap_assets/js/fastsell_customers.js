@@ -32,11 +32,11 @@ $(document).ready(function(){
     {
         // Add a customer popup
         $('body').sunBox.popup('Add New Customer', 'popAddCustomer',
-            {
-                ajax_path		: $ajax_base_path + 'add_customer_popup',
-                close_popup		: false,
-                callback 		: function($return){}
-            });
+        {
+            ajax_path		: $ajax_base_path + 'add_customer_popup',
+            close_popup		: false,
+            callback 		: function($return){}
+        });
 
         // Show the popup
         $('.btnAddNewCustomerPopup').live('click', function()
@@ -46,8 +46,6 @@ $(document).ready(function(){
             $('body').sunBox.adjust_popup_height('popAddCustomer');
             $('.popAddCustomer .returnTrue').hide();
         });
-
-        //
 
         // Add the customer
         $('.popAddCustomer .btnAddCustomerNow').live('click', function()

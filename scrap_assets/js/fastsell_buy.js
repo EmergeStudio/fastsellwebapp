@@ -9,6 +9,8 @@ $(document).ready(function(){
 	var $base_path				= $('#hdPath').val();
 	var $ajax_base_path 		= $base_path + 'ajax_handler_buy/';
 	var $ajax_html_path 		= $ajax_base_path + 'html_view/';
+    var $crt_page_num           = $('input[name="scrap_pageNo"]').val();
+    var $page_max               = $('input[name="scrap_pageMax"]').val();
 
 
 // ------------------------------------------------------------------------------EXECUTE
@@ -16,9 +18,92 @@ $(document).ready(function(){
     $fc_counter();
 
     $fc_buy();
+
+    $fc_search();
+
+    $fc_pagenate();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- PAGENATE
+    function $fc_pagenate()
+    {
+        // Previous page
+        $('.btnPrevPage').live('click', function()
+        {
+            if($crt_page_num > 1)
+            {
+                $('input[name="hdOffset"]').val($crt_page_num - 1);
+                $('.frmSearch').submit();
+            }
+        });
+
+
+        // Next page
+        $('.btnNextPage').live('click', function()
+        {
+            if($crt_page_num < $page_max)
+            {
+                $('input[name="hdOffset"]').val(parseInt($crt_page_num) + 1);
+                $('.frmSearch').submit();
+            }
+        });
+
+
+        // Number list click
+        $('.btnCrtPage').live('click', function()
+        {
+            if($('.pagingState').hasClass('active'))
+            {
+                if($('.numList').is(":visible") == false)
+                {
+                    $('.numList').fadeIn(200);
+                }
+                else
+                {
+                    $('.numList').fadeOut(200);
+                }
+            }
+
+            $('.numList').hover(function()
+            {
+                $mouse_is_inside_3	= true;
+            },
+            function()
+            {
+                $mouse_is_inside_3	= false;
+            });
+
+            $('body').mouseup(function()
+            {
+                if(!$mouse_is_inside_3)
+                {
+                    $('.numList').fadeOut(200);
+                }
+            });
+        });
+
+
+        // Number list selection
+        $('.listPageNum').live('click', function()
+        {
+            $list_num			= parseInt($(this).text());
+            $('input[name="hdOffset"]').val($list_num);
+            $('.frmSearch').submit();
+        })
+    }
+
+    // ----- SAVE PRODUCT CHANGES
+    function $fc_search()
+    {
+        $('.frmSearch input').focus();
+
+        $('.btnSearch').live('click', function()
+        {
+            $('.frmSearch').submit();
+        });
+    }
 
     // ---------- COUNTER
     function $fc_counter()

@@ -289,6 +289,44 @@ class Ajax_handler_products extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| ADD PRODUCT POPUP 2
+	|--------------------------------------------------------------------------
+	*/
+	function add_product_popup_2()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+
+			// Get the definitions
+			$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+			$dt_body['definitions']         = $call_definitions;
+
+			if($call_definitions['error'] == FALSE)
+			{
+				// Definition id
+				$json_def_id                    = $call_definitions['result'];
+
+				// Get the definition
+				$url_crt_definition             = 'catalogitemdefinitions/.json?id='.$json_def_id->catalog_item_definitions[0]->id;
+				$call_crt_definition            = $this->scrap_web->webserv_call($url_crt_definition, FALSE, 'get', FALSE, FALSE);
+				$dt_body['crt_definition']      = $call_crt_definition;
+			}
+
+			// Get the view
+			$this->load->view('products/ajax/add_product_popup_2', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| UPLOAD PRODUCT IMAGE
 	|--------------------------------------------------------------------------
 	*/
@@ -325,7 +363,7 @@ class Ajax_handler_products extends CI_Controller
 			$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
 			// Upload the file
-			$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage']['name'];
+			$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
 			$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 		}
 		else
@@ -377,7 +415,7 @@ class Ajax_handler_products extends CI_Controller
 						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
 						// Upload the file
-						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage2']['name'];
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
 						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
 					else
@@ -389,11 +427,12 @@ class Ajax_handler_products extends CI_Controller
 						}
 
 						// Upload the file
-						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage2']['name'];
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
 						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
 
-					echo base_url().'scrap_products/'.$product_id.'/image/'.$_FILES['uploadedFileProductImage2']['name'];
+					echo $this->config->item('scrap_web_address').'serverlocalfiles/file?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage2']['name'];
+					//echo base_url().'scrap_products/'.$product_id.'/image/'.$_FILES['uploadedFileProductImage2']['name'];
 				}
 			}
 		}
@@ -422,6 +461,32 @@ class Ajax_handler_products extends CI_Controller
 
 			// Get the view
 			$this->load->view('products/ajax/product_fields', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| GET PRODUCT FIELDS
+	|--------------------------------------------------------------------------
+	*/
+	function get_product_fields_2()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$definition_id                  = $this->input->post('definition_id');
+
+			$url_crt_definition             = 'catalogitemdefinitions/.json?id='.$definition_id;
+			$call_crt_definition            = $this->scrap_web->webserv_call($url_crt_definition, FALSE, 'get', FALSE, FALSE);
+			$dt_body['crt_definition']      = $call_crt_definition;
+
+			// Get the view
+			$this->load->view('products/ajax/product_fields_2', $dt_body);
 		}
 		else
 		{
@@ -541,6 +606,157 @@ class Ajax_handler_products extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| ADD PRODUCT AND LINK
+	|--------------------------------------------------------------------------
+	*/
+	function add_product_and_link()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+			$user_id                    = $this->session->userdata('sv_user_id');
+			$product_number             = $this->input->post('product_number');
+			$product_stock              = $this->input->post('product_stock');
+			$product_price              = $this->input->post('product_price');
+			$product_definition         = $this->input->post('product_definition');
+			$product_fields_required    = $this->input->post('product_fields_required');
+			$product_fields_extra       = $this->input->post('product_fields_extra');
+
+			// JSON sample
+			$url_sample                 = 'catalogitems/sample.json';
+			$call_sample                = $this->scrap_web->webserv_call($url_sample);
+
+			if($call_sample['error'] == FALSE)
+			{
+				// Get the result
+				$json_sample            = $call_sample['result'];
+
+				// Edit the data
+				$json_sample->user->id                      = $user_id;
+				$json_sample->show_host_organization->id    = $show_host_id;
+				$json_sample->item_number                   = $product_number;
+				$json_sample->catalog_item_definition->id   = $product_definition;
+				$json_sample->is_fastsell_based             = TRUE;
+
+				$ex_item_fields_required                    = explode('][', $this->scrap_string->remove_flc($product_fields_required));
+				$ex_item_fields_extra                       = explode('][', $this->scrap_string->remove_flc($product_fields_extra));
+				$ar_field_values                            = array();
+				foreach($ex_item_fields_required as $item_field_values)
+				{
+					$ex_item_field_values   = explode(':', $item_field_values);
+					$field_id               = $ex_item_field_values[1];
+					$field_value            = $ex_item_field_values[0];
+
+					$url_item_sample        = 'catalogitemfieldvalues/sample.json';
+					$call_item_sample       = $this->scrap_web->webserv_call($url_item_sample);
+					$json_item_sample       = $call_item_sample['result'];
+
+					$json_item_sample->value                                = $field_value;
+					$json_item_sample->show_host_organization->id           = $show_host_id;
+					$json_item_sample->catalog_item_definition->id          = $product_definition;
+					$json_item_sample->catalog_item_definition_field->id    = $field_id;
+
+					array_push($ar_field_values, $json_item_sample);
+				}
+				if(!empty($product_fields_extra))
+				{
+					foreach($ex_item_fields_extra as $item_field_values)
+					{
+						$ex_item_field_values   = explode(':', $item_field_values);
+						$field_id               = $ex_item_field_values[1];
+						$field_value            = $ex_item_field_values[0];
+
+						$url_item_sample        = 'catalogitemfieldvalues/sample.json';
+						$call_item_sample       = $this->scrap_web->webserv_call($url_item_sample);
+						$json_item_sample       = $call_item_sample['result'];
+
+						$json_item_sample->value                                = $field_value;
+						$json_item_sample->show_host_organization->id           = $show_host_id;
+						$json_item_sample->catalog_item_definition->id          = $product_definition;
+						$json_item_sample->catalog_item_definition_field->id    = $field_id;
+
+						array_push($ar_field_values, $json_item_sample);
+					}
+				}
+				$json_sample->catalog_item_field_values     = $ar_field_values;
+
+				// Recode
+				$new_json				        = json_encode($json_sample);
+
+				// Submit the insert
+				$new_item                       = $this->scrap_web->webserv_call('catalogitems/.json', $new_json, 'put', FALSE, FALSE);
+
+				// Validate the result
+				if($new_item['error'] == FALSE)
+				{
+					// New item
+					$json_new_item                  = $new_item['result'];
+
+					// Link the product
+					$product_id                     = $json_new_item->id;
+					$event_id                       = $this->session->userdata('sv_show_set');
+
+					// Get fastsell definition
+					$url_fs_definition              = 'fastsellitemdefinitions/.jsons?catalogitemid='.$product_id.'&fastselleventid='.$event_id;
+					$call_fs_definition             = $this->scrap_web->webserv_call($url_fs_definition, FALSE, 'get', FALSE, FALSE);
+
+					if($call_fs_definition['error'] == FALSE)
+					{
+						// Get definition
+						$fs_definition                  = $call_fs_definition['result']->fastsell_item_definitions[0]->id;
+
+						// Sample
+						$url_sample                     = 'fastsellitems/sample.json';
+						$call_sample                    = $this->scrap_web->webserv_call($url_sample, FALSE, 'get', FALSE, FALSE, TRUE);
+
+						if($call_sample['error'] == FALSE)
+						{
+							$json_sample                                    = $call_sample['result'];
+
+							// Edit JSON
+							$json_sample['price']                           = $product_price;
+							$json_sample['user']['id']                      = $user_id;
+							$json_sample['stock_count']                     = $product_stock;
+							$json_sample['catalog_item']['id']              = $product_id;
+							$json_sample['fastsell_event']['id']            = $event_id;
+							$json_sample['fastsell_item_field_values']      = null;
+							$json_sample['fastsell_item_definition']['id']  = $fs_definition;
+							$json_sample['fastsell_item_category']['id']    = 1;
+
+							// Recode
+							$json_create_product		                    = json_encode($json_sample);
+
+							// Create product
+							$new_fastsell_product   = $this->scrap_web->webserv_call('fastsellitems/.json', $json_create_product, 'put', FALSE, FALSE);
+						}
+					}
+
+					echo 'wassuccessfullycreated::'.$json_new_item->id;
+				}
+				else
+				{
+					// Return the error message
+					$json				        = $new_item['result'];
+					echo $json->error_description;
+				}
+			}
+			else
+			{
+				// Return the error message
+				$json				        = $call_sample['result'];
+				echo $json->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| GET PRODUCTS
 	|--------------------------------------------------------------------------
 	*/
@@ -552,7 +768,16 @@ class Ajax_handler_products extends CI_Controller
 			$show_host_id                   = $this->scrap_web->get_show_host_id();
 
 			// Get the products
-			$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id;
+			$offset                         = 0;
+			$limit                          = 20;
+			$search_text                    = '';
+
+			$dt_body['search_text']         = $search_text;
+			$dt_body['offset']              = $offset;
+			$dt_body['limit']               = $limit;
+
+			// Make the call
+			$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 			$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
 			$dt_body['products']            = $call_products;
 
@@ -727,9 +952,13 @@ class Ajax_handler_products extends CI_Controller
 		{
 			// Some variables
 			$event_id                       = $this->input->post('event_id');
+			$limit                          = 20;
+			$offset                         = 0;
+			$dt_body['offset']              = $offset;
+			$dt_body['limit']               = $limit;
 
 			// Get fastsell products
-			$url_fs_products                = 'fastsellitems/.jsons?fastselleventid='.$event_id.'&includevalues=true&includecatalogvalues=true';
+			$url_fs_products                = 'fastsellitems/.jsons?fastselleventid='.$event_id.'&includevalues=true&includecatalogvalues=true&offset='.$offset.'&limit='.$limit;
 			$call_fs_products               = $this->scrap_web->webserv_call($url_fs_products, FALSE, 'get', FALSE, FALSE);
 			$dt_body['products']            = $call_fs_products;
 
@@ -754,11 +983,16 @@ class Ajax_handler_products extends CI_Controller
 		{
 			// Some variables
 			$event_id                       = $this->input->post('event_id');
+			$limit                          = 5;
+			$offset                         = 0;
 
 			// Get fastsell products
-			$url_fs_products                = 'fastsellitems/.jsons?fastselleventid='.$event_id.'&includevalues=true&includecatalogvalues=true';
+			$url_fs_products                = 'fastsellitems/.jsons?fastselleventid='.$event_id.'&includevalues=true&includecatalogvalues=true&offset='.$offset.'&limit='.$limit;
 			$call_fs_products               = $this->scrap_web->webserv_call($url_fs_products, FALSE, 'get', FALSE, FALSE);
 			$dt_body['products']            = $call_fs_products;
+
+			$dt_body['limit']               = $limit;
+			$dt_body['offset']              = $offset;
 
 			// Load the view
 			$this->load->view('products/fastsell_products_list_small', $dt_body);

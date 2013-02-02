@@ -64,6 +64,13 @@ class Ajax_handler_customers extends CI_Controller
 	{
 		if($this->scrap_wall->login_check_ajax() == TRUE)
 		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+
+			// Get the groups
+			$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+			$call_groups                    = $this->scrap_web->webserv_call($url_groups, FALSE, 'get', FALSE, FALSE);
+
 			// Load the view
 			$this->load->view('customers/ajax/add_customer_popup');
 		}
@@ -128,8 +135,35 @@ class Ajax_handler_customers extends CI_Controller
 			$first_name             = $this->input->post('inpName');
 			$surname                = $this->input->post('inpSurname');
 			$email                  = $this->input->post('inpEmail');
+			$customer_group         = $this->input->post('inpCustomerGroup');
 			$username               = $first_name.$surname.$this->scrap_string->random_string(5);
 			$password               = $this->scrap_string->random_string();
+			$show_host_id			= $this->scrap_web->get_show_host_id();
+
+//			// Sample group
+//			$url_sample_group       = 'fastsellcustomergroups/sample.json';
+//			$call_sample_group      = $this->scrap_web->webserv_call($url_sample_group, FALSE, 'get', FALSE, FALSE);
+//			$json_sample_group      = $call_sample_group['result'];
+//
+//			// Edit the DOM
+//			$json_sample_group->name                            = $customer_group;
+//			$json_sample_group->show_host_organization->id      = $show_host_id;
+//
+//			// Create the JSON
+//			$new_json_group             = json_encode($json_sample_group);
+//
+//			// Add the new group
+//			$new_group                  = $this->scrap_web->webserv_call('fastsellcustomergroups/.json', $new_json_group, 'put');
+//
+//			if($new_group['error'] != FALSE)
+//			{
+//				$json_error             = $new_group['result'];
+//				echo $json_error->description;
+//			}
+//			else
+//			{
+//				echo 'yay';
+//			}
 
 			// Scrappy web call
 			$url_sample				    = 'customers/sample.json';
@@ -365,7 +399,9 @@ class Ajax_handler_customers extends CI_Controller
 			// Some variables
 			$show_host_id                   = $this->scrap_web->get_show_host_id();
 			$rows                           = $this->scrap_string->remove_flc($this->input->post('rows'));
+			$headings                       = $this->scrap_string->remove_flc($this->input->post('headings'));
 			$ex_rows                        = explode('][', $rows);
+			$ex_headings                    = explode('][', $headings);
 
 			// Top level JSON
 			$ar_json                        = array('id' => null, 'message' => null, 'worksheets' => '', 'error_code' => null, 'error_description' => null, 'type_name' => 'workbook');
@@ -375,7 +411,18 @@ class Ajax_handler_customers extends CI_Controller
 			$ar_worksheet                   = array('id' => null, 'message' => null, 'headers' => '', 'rows' => '', 'error_code' => null, 'error_description' => null, 'type_name' => 'sheet', 'sheet_name' => 'Customer Create Master Data');
 
 			// Header JSON
-			$ar_header                      = array('email', 'firstname', 'lastname', 'phone number', 'address one', 'address two', 'address three', 'city', 'state / province', 'zip / postal code', 'customer name', 'customer number');
+//			$ar_header                      = array('email', 'firstname', 'lastname', 'phone number', 'address one', 'address two', 'address three', 'city', 'state / province', 'zip / postal code', 'customer name', 'customer number');
+			foreach($ex_headings as $row_item)
+			{
+				// Some variables
+				$columns                    = $this->scrap_string->remove_flc($row_item);
+				$ex_columns                 = explode('}{', $columns);
+				$ar_header                  = array();
+				foreach($ex_columns as $column_item)
+				{
+					array_push($ar_header, $column_item);
+				}
+			}
 
 			// Rows array
 			$ar_rows                        = array();

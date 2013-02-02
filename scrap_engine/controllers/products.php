@@ -51,8 +51,14 @@ class Products extends CI_Controller
 		{
 			$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
 		}
+		if($this->input->post('hdOffset'))
+		{
+			$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+		}
 
 		$dt_body['search_text']         = $search_text;
+		$dt_body['offset']              = $offset;
+		$dt_body['limit']               = $limit;
 
 		// Make the call
 		$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;

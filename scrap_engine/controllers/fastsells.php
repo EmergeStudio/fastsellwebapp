@@ -102,7 +102,7 @@ class Fastsells extends CI_Controller
 		// Some variables
 		$dt_header['title'] 	        = 'Create New FastSell';
 		$dt_header['crt_page']	        = 'pageFastSells';
-		$dt_header['extra_css']         = array('scrap_shifter', 'create_fastsell', 'fastsell_products');
+		$dt_header['extra_css']         = array('scrap_shifter', 'create_fastsell', 'fastsell_products', 'customers', 'products');
 		$dt_header['extra_js']          = array('shifter_create_fastsell_event');
 
 		// Load header
@@ -479,9 +479,28 @@ class Fastsells extends CI_Controller
 				$this->load->view('fastsells/customer_event_navigation', $dt_nav);
 
 				// Get the products
-				$url_products                       = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset=0&limit=20';
-				$call_products                      = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
-				$dt_body['products']                = $call_products;
+				$offset                         = 0;
+				$limit                          = 20;
+				$search_text                    = '';
+
+				// Search
+				if($this->input->post('inpSearchText'))
+				{
+					$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+				}
+				if($this->input->post('hdOffset'))
+				{
+					$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+				}
+
+				$dt_body['search_text']         = $search_text;
+				$dt_body['offset']              = $offset;
+				$dt_body['limit']               = $limit;
+
+				// Get the products
+				$url_products                   = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset='.$offset.'&limit='.$limit.'&searchtext='.$search_text;
+				$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+				$dt_body['products']            = $call_products;
 
 				// Load the view
 				$this->load->view('products/main_buy_page', $dt_body);
@@ -1165,7 +1184,7 @@ class Fastsells extends CI_Controller
 			// Some variables
 			$dt_header['title'] 	        = 'FastSell';
 			$dt_header['crt_page']	        = 'pageFastSellProducts';
-			$dt_header['extra_css']         = array('fastsells', 'fastsell_products');
+			$dt_header['extra_css']         = array('fastsells', 'fastsell_products', 'products');
 			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_products');
 
 			// Load header
@@ -1196,13 +1215,19 @@ class Fastsells extends CI_Controller
 				{
 					$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
 				}
+				if($this->input->post('hdOffset'))
+				{
+					$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+				}
 
 				$dt_body['search_text']         = $search_text;
+				$dt_body['offset']              = $offset;
+				$dt_body['limit']               = $limit;
 
 				// Get the products
-				$url_products               = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset='.$offset.'&limit='.$limit.'&searchtext='.$search_text;
-				$call_products              = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
-				$dt_body['products']        = $call_products;
+				$url_products                   = 'fastsellitems/.jsons?fastselleventid='.$fastsell_id.'&includevalues=true&includecatalogvalues=true&offset='.$offset.'&limit='.$limit.'&searchtext='.$search_text;
+				$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+				$dt_body['products']            = $call_products;
 
 				// Load the view
 				$this->load->view('fastsells/manage_products', $dt_body);

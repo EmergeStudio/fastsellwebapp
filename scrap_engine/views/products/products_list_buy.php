@@ -117,5 +117,13 @@ if($products['error'] == FALSE)
 
 		echo close_div();
 	}
+
+//	if($json_products->no_limit_count < 20)
+//	{
+		echo div_height(10);
+		$crt_page               = ($offset / $limit) + 1;
+		$max_page               = floor($json_products->no_limit_count / $limit) + 1;
+		echo page_nav($crt_page, $max_page);
+//	}
 }
 ?>

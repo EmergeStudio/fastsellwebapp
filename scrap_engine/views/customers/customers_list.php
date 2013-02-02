@@ -7,17 +7,18 @@ if($customers['error'] == FALSE)
 	$json_customers             = $customers['result'];
 
 	// Check box all properties
-	$checkbox_add_all_customers = array
-	(
-		'name'                  => 'checkAddAllCustomers',
-		'class'                 => 'checkAddAllCustomers tooltip',
-		'checked'               => FALSE,
-		'title'                 => 'Tick to add all these customers to the FastSell'
-	);
+//	$checkbox_add_all_customers = array
+//	(
+//		'name'                  => 'checkAddAllCustomers',
+//		'class'                 => 'checkAddAllCustomers tooltip',
+//		'checked'               => FALSE,
+//		'title'                 => 'Tick to add all these customers to the FastSell'
+//	);
 
 	// Table data
 	// Heading
-	$this->table->set_heading(form_checkbox($checkbox_add_all_customers), '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
+//	$this->table->set_heading(form_checkbox($checkbox_add_all_customers), '', array('data' => 'Company Name', 'class' => 'fullCell'), 'Customer Number');
+	$this->table->set_heading('', '', array('data' => 'Company Name', 'class' => 'fullCell'), 'Customer Number');
 
 	// Rows
 	foreach($json_customers->customer_to_show_hosts as $customer_to_show_host)

@@ -106,7 +106,6 @@ class Ajax_handler_fastsells extends CI_Controller
 					// Submit the new fastsell event
 					$new_fastsell		                = $this->scrap_web->webserv_call('fastsellevents/.json', $new_json, 'put', FALSE, FALSE, TRUE);
 
-					// Validate the result
 					if($new_fastsell['error'] == FALSE)
 					{
 						// Some variables
@@ -175,10 +174,37 @@ class Ajax_handler_fastsells extends CI_Controller
 					{
 						// Return the error message
 						$json				= $new_fastsell['result'];
-						echo $json->error_description;
+						echo $json['error_description'];
 					}
 				}
 			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| SEARCH FOR CUSTOMERS
+	|--------------------------------------------------------------------------
+	*/
+	function search_for_customers()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+
+			// Get all the customers
+			$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
+			$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+			$dt_body['customers']           = $call_customers;
+
+			// Load the view
+			$this->load->view('customers/customers_list', $dt_body);
 		}
 		else
 		{
@@ -417,14 +443,19 @@ class Ajax_handler_fastsells extends CI_Controller
 		{
 			// Some variables
 			$event_id                       = $this->input->post('event_id');
+			$limit                          = 50000;
+			$offset                         = 0;
 
 			// Get fastsell products
 			$url_fs_products                = 'fastsellitems/.jsons?fastselleventid='.$event_id.'&includevalues=true&includecatalogvalues=true';
 			$call_fs_products               = $this->scrap_web->webserv_call($url_fs_products, FALSE, 'get', FALSE, FALSE);
 			$dt_body['products']            = $call_fs_products;
 
+			$dt_body['limit']               = $limit;
+			$dt_body['offset']              = $offset;
+
 			// Load the view
-			$this->load->view('products/fastsell_products_list', $dt_body);
+			$this->load->view('products/fastsell_products_list_2', $dt_body);
 			//$this->load->view('products/added_products_fastsell_create', $dt_body);
 		}
 		else
@@ -474,6 +505,36 @@ class Ajax_handler_fastsells extends CI_Controller
 			// Link customer
 			$url_link                   = 'fastsellevents/customers/masterdata.json?fastselleventid='.$fastsell_id.'&validateinnercontentonly=false';
 			$call_link                  = $this->scrap_web->webserv_call($url_link, $encode_file_convert, 'put');
+
+			// Get all the customers
+			$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
+			$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+			$dt_body['customers']       = $call_customers;
+
+			// Load the view
+			$this->load->view('customers/fastsell_customers_list', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| LINK CUSTOMERS
+	|--------------------------------------------------------------------------
+	*/
+	function get_linked_customers()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$fastsell_id                = $this->input->post('event_id');
 
 			// Get all the customers
 			$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;

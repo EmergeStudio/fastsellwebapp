@@ -63,29 +63,9 @@ echo open_div('appNavigationContainer middle');
 
 					echo '</li>';
 
-//					echo '<li>';
-//
-//						echo anchor('products/upload_master_file', 'Upload Via Master File', 'class="sectionNavSubLink lastLink"');
-//
-//					echo '</li>';
-
 				echo '</ul>';
 
 			echo '</li>';
-
-			// Orders link
-//			if($app_page == 'pageOrders')
-//			{
-//				echo '<li class="active">';
-//			}
-//			else
-//			{
-//				echo '<li>';
-//			}
-//
-//				echo anchor('orders', '<span class="icon-shopping-cart blue"></span>Orders', 'class="sectionNavLink"');
-//
-//			echo '</li>';
 
 			// Contacts link
 			if($app_page == 'pageCustomers')
@@ -110,7 +90,7 @@ echo open_div('appNavigationContainer middle');
 
 					echo '<li>';
 
-						echo anchor('customers/upload_master_file', 'Upload Via Master File', 'class="sectionNavSubLink lastLink"');
+						echo anchor('customers/upload_master_file', 'Import Customers', 'class="sectionNavSubLink lastLink"');
 
 					echo '</li>';
 

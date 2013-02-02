@@ -10,6 +10,8 @@ $(document).ready(function(){
     // ---------- AJAX PATHS
     var $base_path				= $('#hdPath').val();
     var $ajax_base_path 		= $base_path + 'ajax_handler_fastsells/';
+    var $ajax_base_path_2 		= $base_path + 'ajax_handler_customers/';
+    var $ajax_base_path_3 		= $base_path + 'ajax_handler_products/';
 
 
 // ------------------------------------------------------------------------------EXECUTE
@@ -23,6 +25,10 @@ $(document).ready(function(){
     $fc_add_product();
 
     $fc_add_products();
+
+    $fc_add_a_product_and_link();
+
+    $fc_add_customers_2();
 	
 	$('.scrap_date').datepicker(
 	{
@@ -44,9 +50,161 @@ $(document).ready(function(){
     $fc_remove_product();
 
     $fc_upload_temp_image();
+
+    $fc_search_customers();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- ADD CUSTOMERS
+    function $fc_add_customers_2()
+    {
+        // Add a customer popup
+        $('body').sunBox.popup('Add New Customer', 'popAddCustomer',
+        {
+            ajax_path		: $ajax_base_path_2 + 'add_customer_popup',
+            close_popup		: false,
+            callback 		: function($return){}
+        });
+
+        // Show the popup
+        $('.btnAddNewCustomerPopup').live('click', function()
+        {
+            $('body').sunBox.popup_change_width('popAddCustomer', 1100);
+            $('body').sunBox.show_popup('popAddCustomer');
+            $('body').sunBox.adjust_popup_height('popAddCustomer');
+            $('.popAddCustomer .returnTrue').hide();
+        });
+
+        // Add the customer
+        $('.popAddCustomer .btnAddCustomerNow').live('click', function()
+        {
+            // Some variables
+            $error              = false;
+            $customer_name      = $('.popAddCustomer input[name="inpCustomerName"]').val();
+            $customer_number    = $('.popAddCustomer input[name="inpCustomerNumber"]').val();
+            $first_name         = $('.popAddCustomer input[name="inpFirstName"]').val();
+            $surname            = $('.popAddCustomer input[name="inpSurname"]').val();
+            $email_address      = $('.popAddCustomer input[name="inpEmailAddress"]').val();
+            $html               = '';
+
+            // Validate
+            if($error == false)
+            {
+                if($customer_name == '')
+                {
+                    $error		= true;
+                    $('.popAddCustomer input[name="inpCustomerName"]').addClass('redBorder');
+                    $.scrap_note_time('Please provide a customer name', 4000, 'cross');
+                }
+            }
+
+            // Customer number
+            if($error == false)
+            {
+                if($customer_number == '')
+                {
+                    $error		= true;
+                    $('.popAddCustomer input[name="inpCustomerNumber"]').addClass('redBorder');
+                    $.scrap_note_time('Please provide a customer number', 4000, 'cross');
+                }
+            }
+
+            // Email
+            if($error == false)
+            {
+                if($.scrap_is_email($email_address) == false)
+                {
+                    $error		= true;
+                    $('.popAddCustomer input[name="inpEmailAddress"]').addClass('redBorder');
+                    $.scrap_note_time('Your email address does not check out', 4000, 'cross');
+                }
+            }
+
+            if($error == false)
+            {
+                // Some variables
+                $this_row           = 'newLine_' + $.scrap_random_string();
+                $list_type          = 'normalList';
+
+                // Table row
+                $html   += '<tr class="topLine displayNone '+ $this_row +'">';
+
+                $html   += '<td>'+ $customer_name +'</td>';
+                $html   += '<td>'+ $customer_number +'</td>';
+                $html   += '<td>'+ $first_name +'</td>';
+                $html   += '<td>'+ $surname +'</td>';
+                $html   += '<td>'+ $email_address +'</td>';
+                $html   += '<td><div class="loader"></div></td>';
+
+                $html   += '</tr>';
+
+                // Edit DOM
+                $('.popAddCustomer table tr:last').after($html);
+                $('.popAddCustomer table tr.displayNone').fadeIn('fast');
+                $('body').sunBox.adjust_popup_height('popAddCustomer');
+
+                // Insert the customer
+                $.post($ajax_base_path_2 + 'add_customer_2',
+                {
+                    inpCustomerName			: $customer_name,
+                    inpCustomerNumber		: $customer_number,
+                    inpName			        : $first_name,
+                    inpSurname			    : $surname,
+                    inpEmail			    : $email_address
+                },
+                function($data)
+                {
+                    $data	= jQuery.trim($data);
+
+                    if($data == '9876')
+                    {
+                        $.scrap_logout();
+                    }
+                    else if($data != 'okitsdone')
+                    {
+                        $.scrap_note_time($data, 4000, 'cross');
+                        $('.'+ $this_row +' .loader').addClass('cross').removeClass('loader');
+                    }
+                    else
+                    {
+                        // Edit the DOM
+                        $('.'+ $this_row +' .loader').addClass('tick').removeClass('loader');
+
+                        // Refresh the data
+                        $.scrap_note_time('Customer has been added to this FastSell', 4000, 'tick');
+                        $fc_refresh_customer_list();
+                    }
+                });
+            }
+        });
+    }
+
+    // ---------- SEARCH CUSTOMERS
+    function $fc_search_customers()
+    {
+        $('.btnSearchCustomer').live('click', function()
+        {
+            // Some variables
+            $customer_name              = $('input[name="inpCustomerName"]').val();
+
+            $('.ajaxCustomerList').prepend('<div class="ajaxMessage short2">Running Searching</div>');
+            $('.ajaxCustomerList table').fadeTo('fast', 0.3);
+
+            // Get the customers
+            $.post($ajax_base_path + 'search_for_customers',
+            {
+                customer_name		    : $customer_name
+            },
+            function($data)
+            {
+                $data	                = jQuery.trim($data);
+
+                $('.ajaxCustomerList').html($data);
+                $.scrap_uniform_update('.ajaxCustomerList input[name="checkAddCustomer"], .ajaxCustomerList input[name="checkAddAllCustomers"]');
+            });
+        });
+    }
 
     // ---------- UPLOAD TEMP IMAGE
     function $fc_upload_temp_image()
@@ -179,6 +337,53 @@ $(document).ready(function(){
         });
     }
 
+    // ----- CUSTOMER LINKS
+    function $fc_customer_links()
+    {
+        $('.userList input[name="checkAddCustomer"]').live('change', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $customer_id            = $this.val();
+            $parent				    = $this.parents('tr');
+            $event_id               = $('.hdEventId').text();
+
+            // Add the customer
+            $.post($ajax_base_path + 'fastsell_customer_link',
+            {
+                event_id		    : $event_id,
+                customer_id			: $customer_id ,
+                type                : 'add'
+            },
+            function($data)
+            {
+                $fc_refresh_customer_list();
+            });
+        });
+    }
+
+    // ----- REFRESH CUSTOMERS LIST
+    function $fc_refresh_customer_list()
+    {
+        // Some variables
+        $event_id               = $('.hdEventId').text();
+
+        $('.chosenUsersList').prepend('<div class="ajaxMessage short2">Refreshing FastSell Customers</div>');
+        $('.chosenUsersList table').fadeTo('fast', 0.3);
+
+        // The AJAX call
+        $.post($ajax_base_path + 'get_linked_customers',
+        {
+            event_id		    : $event_id
+        },
+        function($data)
+        {
+            $data	            = jQuery.trim($data);
+
+            $('.chosenUsersList').html($data);
+        });
+    }
+
     // ----- ADD PRODUCT
     function $fc_add_product()
     {
@@ -231,7 +436,7 @@ $(document).ready(function(){
         // Show the popup
         $('.btnAddProductPopup').live('click', function()
         {
-            $('.popAddProducts .returnTrue').hide();
+            $('.popAddProducts .returnTrue').text('Add All');
             $('body').sunBox.popup_change_width('popAddProducts', 1050);
             $('body').sunBox.show_popup('popAddProducts');
             $('body').sunBox.adjust_popup_height('popAddProducts');
@@ -249,8 +454,6 @@ $(document).ready(function(){
             $stock                  = $parent.find('input[name="inpUnits"]').val();
             $price                  = $parent.find('input[name="inpPrice"]').val();
             $event_id               = $('.hdEventId').text();
-
-            console.log($product_id + ' -- ' + $stock + ' -- ' + $price + ' -- ' + $event_id);
 
             // Clear fields
             $parent.find('input[name="inpUnits"]').val('');
@@ -273,6 +476,245 @@ $(document).ready(function(){
                 $fc_refresh_added_product_list();
             });
         });
+
+        // Add all
+        $('.popAddProducts .returnTrue').live('click', function()
+        {
+            $.scrap_note_loader('Adding your products');
+
+            $('.popAddProducts .btnAddProduct').each(function()
+            {
+                // Some variables
+                $parent				    = '';
+                $error                  = false;
+                $this                   = $(this);
+                $parent				    = $this.parents('tr');
+                $product_id             = $parent.find('.hdProductId').text();
+                $stock                  = $parent.find('input[name="inpUnits"]').val();
+                $price                  = $parent.find('input[name="inpPrice"]').val();
+                $event_id               = $('.hdEventId').text();
+
+                // Clear fields
+                $parent.find('input[name="inpUnits"]').val('');
+                $parent.find('input[name="inpPrice"]').val('');
+
+                // Add the product
+                $.post($base_path + 'ajax_handler_fastsells/fastsell_create_product',
+                    {
+                        product_id		    : $product_id,
+                        stock		        : $stock,
+                        price		        : $price,
+                        event_id			: $event_id
+                    },
+                    function($data)
+                    {
+                        $data	            = jQuery.trim($data);
+                        $fc_refresh_added_product_list();
+                    });
+            });
+
+            $.scrap_note_time('All your products have been added', 4000, 'tick');
+        });
+    }
+
+    // ---------- ADD A PRODUCT
+    function $fc_add_a_product_and_link()
+    {
+        // Add a document type popup
+        $('body').sunBox.popup('Add A New Product', 'popAddProduct',
+            {
+                ajax_path		: $ajax_base_path_3 + 'add_product_popup_2',
+                close_popup		: false,
+                callback 		: function($return){}
+            });
+
+        // Show the popup
+        $('.btnAddProductAndLink').live('click', function()
+        {
+            $('body').sunBox.popup_change_width('popAddProduct', 790);
+            $('body').sunBox.show_popup('popAddProduct');
+            $('body').sunBox.adjust_popup_height('popAddProduct');
+        });
+
+        // Hide the popup
+        $('.popAddProduct .returnFalse').live('click', function()
+        {
+            $('.popAddProduct input, .popAddProduct textarea').val('');
+        });
+
+        // Change item fields
+        $('.popAddProduct .definitionSelection').live('click', function()
+        {
+            // Some variables
+            $definition_id          = $(this).find('.hdDefinitionId').text();
+
+            // Edit the DOM
+            $('.popAddProduct .definitionSelection.active').removeClass('active');
+            $(this).addClass('active');
+            $('.popAddProduct .rightColumn').css({ opacity : 0.5 });
+
+            // Get new item fields
+            $.post($ajax_base_path_3 + 'get_product_fields_2',
+            {
+                definition_id		: $definition_id
+            },
+            function($data)
+            {
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else
+                {
+                    // Edit DOM
+                    $('.popAddProduct .rightColumn').html($data).css({ opacity : 1 });
+                    $('body').sunBox.adjust_popup_height('popAddProduct');
+                }
+            });
+        });
+
+        // Submit the new item definition
+        $('.popAddProduct .returnTrue').live('click', function()
+        {
+            // Some variables
+            $error					    = false;
+            $product_number		        = $('.popAddProduct input[name="inpProductNumber"]').val();
+            $product_stock		        = $('.popAddProduct input[name="inpProductStock"]').val();
+            $product_price		        = $('.popAddProduct input[name="inpProductPrice"]').val();
+            $product_definition         = $('.popAddProduct .definitionSelection.active').find('.hdDefinitionId').text();
+            $product_fields_required    = '';
+            $product_fields_extra       = '';
+
+            // Validate
+            if($error == false)
+            {
+                if($product_number.length < 1)
+                {
+                    $error			= true;
+                    $.scrap_note_time('Please provide an product number', 4000, 'cross');
+                    $('.popAddProduct input[name="inpProductNumber"]').addClass('redBorder');
+                }
+            }
+
+            // Successful validation
+            if($error == false)
+            {
+                // Get the indexing fields
+                $loop_cnt                   = 0;
+
+                $('.popAddProduct .fieldContainerRequired').each(function()
+                {
+                    $loop_cnt++;
+                    // Some variables
+                    $this                   = $(this);
+                    if($loop_cnt == 2)
+                    {
+                        $field_value        = $this.find('textarea').val();
+                    }
+                    else
+                    {
+                        $field_value        = $this.find('input').val();
+                    }
+                    $field_id               = $this.find('.hiddenDiv').text();
+
+                    // Validate
+                    if($field_value != '')
+                    {
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += $field_value + ':';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
+                    }
+                    else
+                    {
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += 'NOT_SET:';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
+                    }
+                });
+
+                $('.popAddProduct .fieldContainerExtra').each(function()
+                {
+                    $loop_cnt++;
+                    // Some variables
+                    $this                   = $(this);
+                    $field_value            = $this.find('input').val();
+                    $field_id               = $this.find('.hiddenDiv').text();
+
+                    // Validate
+                    if($field_value != '')
+                    {
+                        $product_fields_extra	    += '[';
+                        $product_fields_extra	    += $field_value + ':';
+                        $product_fields_extra	    += $field_id;
+                        $product_fields_extra	    += ']';
+                    }
+                });
+
+                // Submit the new document type for adding
+                $.scrap_note_loader('Adding the new product and linking it to the FastSell');
+
+                // Post the data
+                $.post($ajax_base_path_3 + 'add_product_and_link',
+                {
+                    product_number			    : $product_number,
+                    product_stock			    : $product_stock,
+                    product_price			    : $product_price,
+                    product_definition			: $product_definition,
+                    product_fields_required	    : $product_fields_required,
+                    product_fields_extra	    : $product_fields_extra
+                },
+                function($data)
+                {
+                    $data	= jQuery.trim($data);
+                    $data   = $data.split('::');
+
+                    if($data[0] == '9876')
+                    {
+                        $.scrap_logout();
+                    }
+                    else if($data[0] == 'wassuccessfullycreated')
+                    {
+                        if($('.popAddProduct input[name="uploadedFileProductImage"]').val() != '')
+                        {
+                            $('.popAddProduct input[name="hdProductId"]').val($data[1]);
+                            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                            $('.popAddProduct .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                            $('.popAddProduct .frmProductImage').attr('target', $iframe_name);
+                            $('.popAddProduct .frmProductImage').submit();
+
+                            $('iframe[name="'+ $iframe_name +'"]').load(function()
+                            {
+                                $data		= jQuery.trim($('.popAddProduct .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                                console.log($data);
+
+                                // Display error
+                                if($data == 'wassuccessfullyuploaded')
+                                {
+                                    $('.popAddProduct input').val('');
+                                    $('.popAddProduct textarea').val('');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $('.popAddProduct input').val('');
+                        }
+
+                        $fc_refresh_added_product_list();
+
+                        // Close the popup
+                        $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
+                        $('body').sunBox.close_popup('popAddProduct');
+                    }
+                    else
+                    {
+                        $.scrap_note_time($data[0], 4000, 'cross');
+                    }
+                });
+            }
+        });
     }
 
     // ----- REFRESH PRODUCT LIST
@@ -280,6 +722,9 @@ $(document).ready(function(){
     {
         // Some variables
         $event_id               = $('.hdEventId').text();
+
+        $('.ajaxProductsInFastSell').prepend('<div class="ajaxMessage">Refreshing FastSell Products</div>');
+        $('.ajaxProductsInFastSell table').fadeTo('fast', 0.3);
 
         // The AJAX call
         $.post($ajax_base_path + 'get_added_products',
@@ -289,57 +734,8 @@ $(document).ready(function(){
         function($data)
         {
             $data	            = jQuery.trim($data);
-            //console.log($data);
 
             $('.ajaxProductsInFastSell').html($data);
-        });
-    }
-
-    // ----- CUSTOMER LINKS
-    function $fc_customer_links()
-    {
-        $('.userList input[name="checkAddCustomer"]').live('change', function()
-        {
-            // Some variables
-            $this                   = $(this);
-            $customer_id            = $this.val();
-            $parent				    = $this.parents('tr');
-            $event_id               = $('.hdEventId').text();
-
-            // Edit DOM
-            $('.chosenUsers p, .chosenUsers .divHeight:first').hide();
-            $('.chosenUsers .message').addClass('usersSelected');
-            $('.chosenUsers .message .divHeight').css({ height : 20 });
-            $('.chosenUsers .chosenUsersList').fadeIn();
-
-            // Link customers
-            $('.chosenUsersList .coolTable').prepend($parent);
-
-            // Add the customer
-            $.post($ajax_base_path + 'fastsell_customer_link',
-            {
-                event_id		    : $event_id,
-                customer_id			: $customer_id ,
-                type                : 'add'
-            }, function($data){ console.log($data); });
-        });
-
-        $('.chosenUsers input[name="checkAddCustomer"]').live('change', function()
-        {
-            // Some variables
-            $this                   = $(this);
-            $parent				    = $this.parents('tr');
-
-            // Unlink customers
-            $('.userList .coolTable').prepend($parent);
-
-            // Add the customer
-            $.post($ajax_base_path + 'fastsell_customer_link',
-            {
-                event_id		    : $event_id,
-                customer_id			: $customer_id,
-                type                : 'remove'
-            }, function($data){ console.log($data); });
         });
     }
 
@@ -464,6 +860,7 @@ $(document).ready(function(){
                         function($data)
                         {
                             $data	= jQuery.trim($data);
+                            console.log($data);
 
                             if($data == '9876')
                             {
@@ -504,6 +901,8 @@ $(document).ready(function(){
                                     $('.hdPanePosition').text(1);
                                     $pane_position          = 1;
                                     $('.shifterNav').show();
+                                    $('.shifterPane_1').show();
+                                    $('.shifterPane_2').hide();
                                 }
                             }
                         });

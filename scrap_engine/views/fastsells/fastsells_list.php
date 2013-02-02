@@ -47,7 +47,7 @@ if($fastsells['error'] == FALSE)
 				echo '</td>';
 
 				// FastSell details
-				echo '<td>';
+				echo '<td class="fastSellDetails">';
 
 					echo heading($fastsell->name, 4);
 					echo full_div($fastsell->description, 'greyTxt');
@@ -57,24 +57,39 @@ if($fastsells['error'] == FALSE)
 				// Counter
 				echo '<td>';
 
-					echo open_div('counterTime');
+					if($fastsell->event_start_date < $this->scrap_string->crt_db_date_time_2())
+					{
+						if($fastsell->event_end_date > $this->scrap_string->crt_db_date_time_2())
+						{
+							echo full_div('FastSell Currently Running', 'yellowBlock');
+						}
+						else
+						{
+							echo full_div('FastSell Finished', 'blueBlock');
+						}
+					}
+		            else
+		            {
+						echo open_div('counterTime');
 
-						echo open_div('counterText');
+							echo open_div('counterText');
 
-							echo full_div('DAYS', 'counterDays');
-							echo full_div('HOURS', 'counterHours');
-							echo full_div('MINUTES', 'counterMinutes');
-							echo full_div('SECONDS', 'counterSeconds');
+								echo full_div('DAYS', 'counterDays');
+								echo full_div('HOURS', 'counterHours');
+								echo full_div('MINUTES', 'counterMinutes');
+								echo full_div('SECONDS', 'counterSeconds');
+
+							echo close_div();
+
+							echo hidden_div($this->scrap_string->make_db_date($fastsell->event_start_date), 'hdStartDate');
+							echo hidden_div(substr($fastsell->event_start_date, 11), 'hdStartTime');
 
 						echo close_div();
 
-						echo hidden_div($this->scrap_string->make_db_date($fastsell->event_start_date), 'hdStartDate');
-						echo hidden_div(substr($fastsell->event_start_date, 11), 'hdStartTime');
+						echo heading(nbs(4).'Days'.nbs(13).'Hours'.nbs(11).'Minutes'.nbs(8).'Seconds', 4, 'class="counterHeadings"');
+		            }
 
-					echo close_div();
-
-					echo heading(nbs(6).'Days'.nbs(14).'Hours'.nbs(12).'Minutes'.nbs(10).'Seconds', 4, 'class="counterHeadings"');
-
+					// Clear float
 					echo clear_float();
 
 				echo '</td>';

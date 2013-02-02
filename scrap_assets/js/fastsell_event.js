@@ -16,7 +16,7 @@ $(document).ready(function(){
     $('.scrap_date').datepicker(
     {
         showOn				: 'both',
-        buttonImage			: '../../scrap_assets/images/icons/calendar.png',
+        buttonImage			: $base_path + 'scrap_assets/images/icons/calendar.png',
         buttonImageOnly		: true,
         dateFormat			: 'yy-mm-dd',
         changeYear			: true,
@@ -143,6 +143,8 @@ $(document).ready(function(){
     {
         // Some variables
         $event_id               = $('.hdEventId').text();
+        $('.ajaxProductsInFastSell').prepend('<div class="ajaxMessage short">Refreshing FastSell Products</div>');
+        $('.ajaxProductsInFastSell table').fadeTo('fast', 0.3);
 
         // The AJAX call
         $.post($base_path + 'ajax_handler_products/get_added_products_2',

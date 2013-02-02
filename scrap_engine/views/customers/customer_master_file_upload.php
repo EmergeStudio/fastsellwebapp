@@ -29,16 +29,13 @@ echo open_div('middle').open_div('whiteBack coolScreen');
             echo close_div();
 
             // Slide nav 1
-            echo full_div('Before You Start', 'shifterBlock shifterStart');
+            echo full_div('Choose Your File', 'shifterBlock shifterStart');
 
             // Slide nav 2
-            echo full_div('Choose Your File', 'shifterBlock');
-
-            // Slide nav 3
             echo full_div('Check Your Data', 'shifterBlock');
 
-            // Slide nav 4
-            echo full_div('Upload Vendors', 'shifterBlock shifterEnd');
+            // Slide nav 3
+            echo full_div('Upload Customers', 'shifterBlock shifterEnd');
 
             // Clear float
             echo clear_float();
@@ -48,25 +45,8 @@ echo open_div('middle').open_div('whiteBack coolScreen');
     // End of control bar
     echo close_div();
 
-
-    // Shifter pane 1
-    echo open_div('shifterPane shifterPane_1');
-
-        // Heading
-        echo heading('Uploading Customers Via A Master File', 2);
-
-        // Content
-        echo '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vel magna eget diam sodales vestibulum. Nullam dignissim neque in lorem faucibus pellentesque faucibus tellus vehicula. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc pretium hendrerit elit at condimentum. Aliquam non vestibulum metus. Aenean consectetur nisi ac libero faucibus vel pulvinar ligula viverra. Ut in nibh dui.</p>';
-
-        echo '<p>Mauris nec ante posuere magna accumsan suscipit in vitae sem. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec porttitor nulla sed tortor convallis imperdiet. Sed eu libero turpis, at dictum nibh. Cras eu neque libero. Mauris a est diam. Phasellus quis risus purus. Vestibulum ligula mauris, eleifend malesuada cursus lacinia, pulvinar eu neque. Maecenas vitae ultrices erat.</p>';
-
-        echo div_height(20).make_button('Download Example Excel File', 'btnDownload', 'scrap_assets/files/examples/customer_create_master_data.xlsx', 'left');
-        echo clear_float();
-
-    echo close_div();
-
     // Shifter pane 2
-    echo open_div('shifterPane shifterPane_2');
+    echo open_div('shifterPane shifterPane_1');
 
         // Upload form
         echo form_open_multipart('ajax_handler_customers/check_customer_upload', 'class="frmCheckCustomerUpload"');
@@ -75,9 +55,23 @@ echo open_div('middle').open_div('whiteBack coolScreen');
             echo heading('Choose Your File', 2);
 
             // Content
-            echo '<p>Upload your Excel file that will be used to import all your customers.</p>';
+            echo '<p>Upload your Excel file that will be used to import all your customers.  You can download an <a href="../scrap_assets/files/examples/customer_upload.xlsx">example file here</a> and please note that the following fields are <b>required:</b></p>';
 
-            echo div_height(20);
+			echo full_div('Customer Name', 'field');
+			echo full_div('Customer Number', 'field');
+			echo full_div('First Name', 'field');
+			echo full_div('Last Name', 'field');
+			echo full_div('Address One', 'field');
+			echo full_div('Address Two', 'field');
+			echo full_div('Address Three', 'field');
+			echo full_div('State / Province', 'field');
+			echo full_div('City', 'field');
+			echo full_div('Zip / Postal Code', 'field');
+			echo full_div('Email', 'field');
+			echo full_div('Phone Number', 'field');
+			echo clear_float();
+
+            echo div_height(40);
 
             $inp_data		= array
             (
@@ -87,13 +81,16 @@ echo open_div('middle').open_div('whiteBack coolScreen');
             echo form_upload($inp_data);
             echo clear_float();
 
+//			echo div_height(30).make_button('Download Example Excel File', 'btnDownload', 'scrap_assets/files/examples/customer_upload.xlsx', 'left');
+//			echo clear_float();
+
         // Close the form
         echo form_close();
 
     echo close_div();
 
     // Shifter pane 3
-    echo open_div('shifterPane shifterPane_3');
+    echo open_div('shifterPane shifterPane_2');
 
         // Check data loader
         echo full_div('Checking to see if the upload file is valid', 'loader');
@@ -107,7 +104,7 @@ echo open_div('middle').open_div('whiteBack coolScreen');
     echo close_div();
 
     // Shifter pane 3
-    echo open_div('shifterPane shifterPane_4');
+    echo open_div('shifterPane shifterPane_3');
 
         // Heading
         echo heading('Upload Your Customers', 2);
