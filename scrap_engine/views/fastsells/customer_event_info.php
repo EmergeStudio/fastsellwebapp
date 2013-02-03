@@ -13,19 +13,6 @@ echo open_div('middle');
 			// Table
 			echo '<table class="infoTable">';
 
-//				echo '<tr>';
-//
-//					echo '<td class="icon">'.full_div('', 'icon-clipboard').'</td>';
-//
-//					echo '<td>';
-//
-//						echo div_height(5);
-//						echo full_div($fastsell_info->description);
-//
-//					echo '</td>';
-//
-//				echo '</tr>';
-
 				echo '<tr>';
 
 					echo '<td class="icon">'.full_div('', 'icon-calendar').'</td>';
@@ -67,30 +54,30 @@ echo open_div('middle');
 
 			// Heading
 			echo div_height(6);
-
-			// Get the image
-			$src                    = 'scrap_assets/images/universal/default_event_image.png';
-			$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
-			$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
-			if($call_fastsell_image['error'] == FALSE)
-			{
-				$json_fastsell_image        = $call_fastsell_image['result'];
-				if($json_fastsell_image->is_empty == FALSE)
-				{
-					$image_path             = $json_fastsell_image->server_local_files[0]->path;
-					$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
-				}
-			}
-
-			$img_properties         = array
-			(
-				'src'               => $src,
-				'width'             => '200px',
-				'style'             => 'margin-bottom:20px;',
-				'class'             => 'eventBannerImage'
-			);
-
-			echo img($img_properties);
+//
+//			// Get the image
+//			$src                    = 'scrap_assets/images/universal/default_event_image.png';
+//			$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_info->id.'%2Fbanner';
+//			$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+//			if($call_fastsell_image['error'] == FALSE)
+//			{
+//				$json_fastsell_image        = $call_fastsell_image['result'];
+//				if($json_fastsell_image->is_empty == FALSE)
+//				{
+//					$image_path             = $json_fastsell_image->server_local_files[0]->path;
+//					$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+//				}
+//			}
+//
+//			$img_properties         = array
+//			(
+//				'src'               => $src,
+//				'width'             => '200px',
+//				'style'             => 'margin-bottom:20px;',
+//				'class'             => 'eventBannerImage'
+//			);
+//
+//			echo img($img_properties);
 
 			echo '<table class="tblFastSellInfo">';
 
@@ -103,6 +90,7 @@ echo open_div('middle');
 					echo '</td>';
 					echo '<td>';
 
+						echo anchor('fastsells/buy', '<span class="icon-dollar"></span>Buy Now', 'class="bigBuyButton yellowBlock"');
 						echo heading('FastSell Information', 2);
 
 					echo '</td>';

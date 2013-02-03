@@ -40,7 +40,7 @@ if($products['error'] == FALSE)
 		$img_properties		    = array
 		(
 			'src'			    => $src,
-			'height'		    => '50',
+			'width'		        => '50',
 			'class'			    => 'profileImage'
 		);
 

@@ -44,9 +44,20 @@ $(document).ready(function(){
     $fc_toggle();
 
     $fc_input_ghosting();
+
+    $fc_change_timezone();
 	
 	
 // ------------------------------------------------ FUNCTIONS
+
+    // ----- CHANGE TIMEZONE
+    function $fc_change_timezone()
+    {
+        $('select[name="drpdwnTimezone"]').live('change', function()
+        {
+            $('.frmChangeTimezone').submit();
+        });
+    }
 
     // ----- INPUT GHOSTING
     function $fc_input_ghosting()

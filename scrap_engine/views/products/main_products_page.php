@@ -81,11 +81,11 @@ echo open_div('middle');
 			echo close_div();
 
 			// Product definitions list
-			echo open_div('listContain');
+			echo open_div('listContain').open_div('ajaxProductsList');
 
 				$this->load->view('products/products_list');
 
-			echo close_div();
+			echo close_div().close_div();
 
 		echo close_div();
 

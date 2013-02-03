@@ -473,8 +473,7 @@ class Ajax_handler_products extends CI_Controller
 					{
 						foreach($json_fastsell_image->server_local_files as $file_info)
 						{
-							$filename                   = str_replace(' ', '%20', $file_info->name);
-							$url_delete                 = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$filename;
+							$url_delete                 = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$file_info->name;
 							$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
 						}
 
@@ -483,7 +482,7 @@ class Ajax_handler_products extends CI_Controller
 						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
 
-					echo $this->config->item('scrap_web_address').'serverlocalfiles/file?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
+					echo $this->config->item('scrap_web_address').'serverlocalfiles/file?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$_FILES['uploadedFileProductImage2']['name'];
 					//echo base_url().'scrap_products/'.$product_id.'/image/'.$_FILES['uploadedFileProductImage2']['name'];
 				}
 			}
@@ -1214,55 +1213,74 @@ class Ajax_handler_products extends CI_Controller
 			$product_fields             = $this->input->post('product_fields');
 			$ar_fields                  = array();
 
+			// Explode fields
+			$ex_fields                  = explode('][', $this->scrap_string->remove_flc($product_fields));
+			foreach($ex_fields as $field_info)
+			{
+				$ex_field_info          = explode('::', $field_info);
+				$ar_fields[$ex_field_info[0]]   = $ex_field_info[1];
+			}
+
 			// Get the product
 			$url_product                = 'catalogitems/.json?id='.$product_id;
 			$call_product               = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
 			$json_product               = $call_product['result'];
 			$definition_id              = $json_product->catalog_item_definition->id;
 
-			// Explode fields
-			$ex_fields                  = explode('][', $this->scrap_string->remove_flc($product_fields));
-			foreach($ex_fields as $field_info)
+			$ar_fields_2                = array();
+			foreach($json_product->catalog_item_field_values as $field)
 			{
-				$ex_field_info                      = explode('::', $field_info);
-				$def_field_id                       = $ex_field_info[0];
-				$def_value                          = $ex_field_info[1];
-
 				$ar_catalog_item_fv                 = array();
 
-				if($def_value != '')
-				{
-					$ar_catalog_item_fv['value']                            = $def_value;
-					$ar_catalog_item_fv['show_host_organization']           = array('id' => $show_host_id);
-					$ar_catalog_item_fv['catalog_item_definition']          = array('id' => $definition_id);
-					$ar_catalog_item_fv['catalog_item_definition_field']    = array('id' => $def_field_id);
+//				foreach($ar_fields as $key => $value)
+//				{
+					if($key == $field->catalog_item_definition_field->id)
+					{
+						if($value != '')
+						{
+							$ar_catalog_item_fv['id']                               = $field->id;
+							$ar_catalog_item_fv['value']                            = $value;
+							$ar_catalog_item_fv['show_host_organization']           = array('id' => $show_host_id);
+							$ar_catalog_item_fv['catalog_item_definition']          = array('id' => $definition_id);
+							$ar_catalog_item_fv['catalog_item_definition_field']    = array('id' => $key);
 
-					array_push($ar_fields, $ar_catalog_item_fv);
-				}
+							array_push($ar_fields_2, $ar_catalog_item_fv);
+						}
+					}
+					else
+					{
+						$ar_catalog_item_fv['value']                            = $value;
+						$ar_catalog_item_fv['show_host_organization']           = array('id' => $show_host_id);
+						$ar_catalog_item_fv['catalog_item_definition']          = array('id' => $definition_id);
+						$ar_catalog_item_fv['catalog_item_definition_field']    = array('id' => $key);
+
+						array_push($ar_fields_2, $ar_catalog_item_fv);
+					}
+//				}
 			}
-
-			$json_product->catalog_item_field_values    = $ar_fields;
+			$json_product->catalog_item_field_values    = $ar_fields_2;
 
 			$json_product->is_fastsell_based            = TRUE;
 			$json_product->item_number                  = $product_number;
 
 			// Encode again
 			$json_update                = json_encode($json_product);
+			echo $json_update;
 
-			// Update
-			$call_product               = $this->scrap_web->webserv_call('catalogitems/.json', $json_update, 'post');
-
-			// Validate the result
-			if($call_product['error'] == FALSE)
-			{
-				echo 'wassuccessfullyupdated';
-			}
-			else
-			{
-				// Return the error message
-				$json				        = $call_product['result'];
-				echo $json->error_description;
-			}
+//			// Update
+//			$call_product               = $this->scrap_web->webserv_call('catalogitems/.json', $json_update, 'post');
+//
+//			// Validate the result
+//			if($call_product['error'] == FALSE)
+//			{
+//				echo 'wassuccessfullyupdated';
+//			}
+//			else
+//			{
+//				// Return the error message
+//				$json				        = $call_product['result'];
+//				echo $json->error_description;
+//			}
 		}
 		else
 		{

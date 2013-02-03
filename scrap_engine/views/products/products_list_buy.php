@@ -61,15 +61,19 @@ if($products['error'] == FALSE)
 					// Basic details
 					echo div_height(8);
 					$loop_cnt_1             = 0;
+					$first_id               = 0;
 					$msrp                   = FALSE;
+
 					foreach($ar_information as $key => $value)
 					{
 						$loop_cnt_1++;
+
 						if($loop_cnt_1 == 1)
 						{
+							$first_id       = $key;
 							echo heading($value[1], 5);
 						}
-						elseif($loop_cnt_1 == 2)
+						elseif($key == ($first_id + 1))
 						{
 							echo full_div($value[1], 'greyTxt');
 							echo div_height(6);
@@ -87,6 +91,8 @@ if($products['error'] == FALSE)
 							}
 						}
 					}
+
+					echo clear_float();
 
 				echo '</td>';
 

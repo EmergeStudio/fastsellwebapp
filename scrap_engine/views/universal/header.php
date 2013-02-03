@@ -251,39 +251,57 @@ div.newOverlay {
 									echo open_div('profileInner');
 
 										echo full_div('<b>'.$this->session->userdata('sv_name').'</b>');
-										//echo full_div('chris@emergestudio.net');
-										if($this->session->userdata('sv_acc_type') == 'show_host')
-										{
-											echo full_div('Seller');
-										}
-										else
-										{
-											echo full_div('Buyer');
-										}
-										echo div_height(10);
-
-										// Account type
-										echo full_div('Administrator');
 										
 										// Edit profile
 										echo make_link('Change My Information', 'btnEditMyProfile');
 										
 										echo div_height(1);
-										
-										// Landing page
-//										echo div_height(10);
-//										echo full_div('Landing Page');
-//
-//										// Landing page drop down
-//										echo div_height(4);
-//										$ar_landing_page	= array
-//										(
-//											'dashboard' 	=> 'Dashboard',
-//											'fastsells'		=> 'FastSells',
-//											'my_orders'		=> 'My Orders'
-//										);
-//										$landing_page	= 'dashboard';
-//										echo form_dropdown('drpdwnLandingPage', $ar_landing_page, $landing_page);
+
+										// Timezone selection
+										echo div_height(10);
+										echo full_div('Timezone');
+
+										// Landing page drop down
+										echo form_open('timezone_change', 'class="frmChangeTimezone"');
+
+											$ar_timezone	= array
+											(
+												'1' 	=> '(GMT -12:00) Eniwetok, Kwajalein',
+												'2'		=> '(GMT -11:00) Midway Island, Samoa',
+												'3'		=> '(GMT -10:00) Hawaii',
+												'4'		=> '(GMT -9:00) Alaska',
+												'5'		=> '(GMT -8:00) Pacific Time (US &amp; Canada)',
+												'6'		=> '(GMT -7:00) Mountain Time (US &amp; Canada)',
+												'7'		=> '(GMT -6:00) Central Time (US &amp; Canada), Mexico City',
+												'8'		=> '(GMT -5:00) Eastern Time (US &amp; Canada), Bogota, Lima',
+												'9'		=> '(GMT -4:00) Atlantic Time (Canada), Caracas, La Paz',
+												'10'	=> '(GMT -3:00) Brazil, Buenos Aires, Georgetown',
+												'11'	=> '(GMT -2:00) Mid-Atlantic',
+												'12'	=> '(GMT -1:00) Azores, Cape Verde Islands',
+												'13'	=> '(GMT) Western Europe Time, London, Lisbon, Casablanca',
+												'14'	=> '(GMT +1:00 hour) Brussels, Copenhagen, Madrid, Paris',
+												'15'	=> '(GMT +2:00) Kaliningrad, South Africa',
+												'16'	=> '(GMT +3:00) Baghdad, Riyadh, Moscow, St. Petersburg',
+												'17'	=> '(GMT +4:00) Abu Dhabi, Muscat, Baku, Tbilisi',
+												'18'	=> '(GMT +5:00) Ekaterinburg, Islamabad, Karachi, Tashkent',
+												'19'	=> '(GMT +6:00) Almaty, Dhaka, Colombo',
+												'20'	=> '(GMT +7:00) Bangkok, Hanoi, Jakarta',
+												'21'	=> '(GMT +8:00) Beijing, Perth, Singapore, Hong Kong',
+												'22'	=> '(GMT +9:00) Tokyo, Seoul, Osaka, Sapporo, Yakutsk',
+												'23'	=> '(GMT +10:00) Eastern Australia, Guam, Vladivostok',
+												'24'	=> '(GMT +11:00) Magadan, Solomon Islands, New Caledonia',
+												'25'	=> '(GMT +12:00) Auckland, Wellington, Fiji, Kamchatka'
+											);
+
+											$url_time               = 'timezones/.json';
+											$call_time              = $this->scrap_web->webserv_call($url_time, FALSE, 'get', FALSE, FALSE);
+											$json_time              = $call_time['result'];
+											$timezone	            = $json_time->id;
+
+											echo form_dropdown('drpdwnTimezone', $ar_timezone, $timezone);
+											echo form_hidden('hdReturnTimeUrl', current_url());
+
+										echo form_close();
 									
 									echo close_div();
 								

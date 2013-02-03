@@ -2,14 +2,17 @@
 
 <?php
 // Data
-$deliver_address_1               = '';
-$deliver_city                    = '';
-$deliver_state                   = '';
-$deliver_postal_code             = '';
-$bill_address_1                  = '';
-$bill_city                       = '';
-$bill_state                      = '';
-$bill_postal_code                = '';
+$same_address                   = FALSE;
+
+$deliver_address_1              = '';
+$deliver_city                   = '';
+$deliver_state                  = '';
+$deliver_postal_code            = '';
+
+$bill_address_1                 = '';
+$bill_city                      = '';
+$bill_state                     = '';
+$bill_postal_code               = '';
 
 if($address['error'] == FALSE)
 {
@@ -34,6 +37,11 @@ if($address['error'] == FALSE)
 	}
 }
 
+if(($deliver_address_1 == $bill_address_1) && ($deliver_city == $bill_city) && ($deliver_postal_code == $bill_postal_code) && ($deliver_state == $bill_state))
+{
+	$same_address               = TRUE;
+}
+
 // Open middle div
 echo open_div('middle');
 
@@ -45,7 +53,14 @@ echo open_div('middle');
 
 			// Heading
 			echo make_button('Shipping Address', 'btnDeliveryAddress blueButton', '', 'left');
-			echo make_button('Billing Address', 'btnBillingAddress greyButton', '', 'left');
+			if($same_address == FALSE)
+			{
+				echo make_button('Billing Address', 'btnBillingAddress greyButton', '', 'left', '', TRUE);
+			}
+			else
+			{
+				echo make_button('Billing Address', 'btnBillingAddress greyButton', '', 'left', '', FALSE);
+			}
 			echo clear_float();
 			echo div_height(20);
 
@@ -170,7 +185,8 @@ echo open_div('middle');
 					$checkbox_make_same     = array
 					(
 						'name'              => 'checkMakeSame',
-						'class'             => 'checkMakeSame'
+						'class'             => 'checkMakeSame',
+						'checked'           => $same_address
 					);
 					echo form_checkbox($checkbox_make_same);
 					echo full_div('Make the billing address the same as the shipping address', 'txtMakeSameAddress greyTxt');

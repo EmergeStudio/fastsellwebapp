@@ -6,12 +6,13 @@ if($products['error'] == FALSE)
 {
 	// Data
 	$json_products                          = $products['result'];
+	$json_definitions                       = $definitions['result'];
 
 	// Product item
 	foreach($json_products->catalog_items as $product)
 	{
 		// Build the information array
-		$ar_information         = array();
+		$ar_information                             = array();
 		foreach($product->catalog_item_field_values as $product_field)
 		{
 			$defintion_field_id                     = $product_field->catalog_item_definition_field->id;
@@ -22,6 +23,18 @@ if($products['error'] == FALSE)
 			$ar_information[$defintion_field_id]    = array($defintion_field_name, $product_value, $product_id);
 		}
 		ksort($ar_information);
+
+		// Build the definition
+		$ar_definitions                             = array();
+		foreach($json_definitions->catalog_item_definitions as $definition)
+		{
+			$ar_fields                              = array();
+			foreach($definition->catalog_item_definition_fields as $field)
+			{
+				$ar_fields[$field->id]              = $field->field_name;
+			}
+			$ar_definitions[$definition->id]        = $ar_fields;
+		}
 
 		// An item container
 		echo open_div('itemContainer small');
@@ -62,14 +75,18 @@ if($products['error'] == FALSE)
 					// Basic details
 					echo div_height(8);
 					$loop_cnt_1             = 0;
+					$first_id               = 0;
+
 					foreach($ar_information as $key => $value)
 					{
 						$loop_cnt_1++;
+
 						if($loop_cnt_1 == 1)
 						{
+							$first_id       = $key;
 							echo heading($value[1].' ('.$product->item_number.')', 5);
 						}
-						elseif($loop_cnt_1 == 2)
+						elseif($key == ($first_id + 1))
 						{
 							echo full_div($value[1], 'greyTxt');
 							echo div_height(6);
@@ -105,7 +122,8 @@ if($products['error'] == FALSE)
 							$inp_data		= array
 							(
 								'name'		=> 'uploadedFileProductImage2',
-								'class'		=> 'uploadedFileProductImage2'
+								'class'		=> 'uploadedFileProductImage2',
+								'accept'    => 'image/*'
 							);
 							echo form_hidden('hdProductId2', $product->id);
 							echo form_upload($inp_data);
@@ -116,8 +134,14 @@ if($products['error'] == FALSE)
 				echo close_div();
 		        echo div_height(10);
 
-				$loop_cnt_2             = 0;
-				foreach($ar_information as $key => $value)
+				$url_catalog_item_info      = 'catalogitems/.json?id='.$product->id;
+				$call_catalog_item_info     = $this->scrap_web->webserv_call($url_catalog_item_info);
+		    	$json_catalog_item_info     = $call_catalog_item_info['result'];
+
+				$this_definition            = $ar_definitions[$json_catalog_item_info->catalog_item_definition->id];
+
+				$loop_cnt_2                 = 0;
+				foreach($this_definition as $key => $value)
 				{
 					$loop_cnt_2++;
 					if($loop_cnt_2 == 2)
@@ -125,12 +149,17 @@ if($products['error'] == FALSE)
 						// Description
 						echo open_div('fieldContainer');
 
-							$ar_input       = array
+							$field_value            = '';
+							if(isset($ar_information[$key][1]))
+							{
+								$field_value        = $ar_information[$key][1];
+							}
+							$ar_input               = array
 							(
-								'name'      => 'productField',
-								'value'     => $value[1]
+								'name'              => 'productField',
+								'value'             => $field_value
 							);
-							echo form_label($value[0]);
+							echo form_label($value);
 							echo form_textarea($ar_input);
 							echo hidden_div($key, 'hdDefinitionFieldId');
 
@@ -149,12 +178,17 @@ if($products['error'] == FALSE)
 					{
 						echo open_div('fieldContainer');
 
-							$ar_input       = array
+							$field_value            = '';
+							if(isset($ar_information[$key][1]))
+							{
+								$field_value        = $ar_information[$key][1];
+							}
+							$ar_input               = array
 							(
-								'name'      => 'productField',
-								'value'     => $value[1]
+								'name'              => 'productField',
+								'value'             => $field_value
 							);
-							echo form_label($value[0]);
+							echo form_label($value);
 							echo form_input($ar_input);
 							echo hidden_div($key, 'hdDefinitionFieldId');
 

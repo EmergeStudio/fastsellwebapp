@@ -344,16 +344,14 @@
     margin-left: 5px;
 }
 
-.sunBox .contentCenter .popup div.blockProductImage {
-    width: 200px;
-    margin: 0px auto;
-    margin-top: 30px;
-    padding: 19px 20px;
-    background-color: #fff;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -webkit-box-shadow: 1px 1px 2px #c1c1c1;
-    -moz-box-shadow: 1px 1px 2px #c1c1c1;
+.sunBox .contentCenter .popup div.blockProductImage .imagePreview .loader {
+    text-align: center;
+    margin-top: 29px;
+    padding-top: 25px;
+    margin-bottom: 28px;
+    background-image: url(../../images/universal/ajax_loader10.gif);
+    background-position: top;
+    background-repeat: no-repeat;
 }
 .sunBox .contentCenter .popup div.icon-camera {
     display: block;
@@ -362,8 +360,9 @@
     text-align: center;
 }
 .sunBox .contentCenter .popup div.blockProductImage input {
-    width: 190px;
+    width: 304px;
     margin-top: 15px;
+    background-color: #fff;;
 }
 
 .blockProductImage2 {

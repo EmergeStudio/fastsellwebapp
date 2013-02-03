@@ -139,14 +139,16 @@ if($definitions['error'] == FALSE)
 		echo close_div();
 
 		// Product image
-		echo open_div('blockProductImage').form_open_multipart('ajax_handler_products/add_product_image', 'class="frmProductImage"');
+		echo div_height(25);
+		echo open_div('blockProductImage inset').form_open_multipart('ajax_handler_products/add_product_image_temp', 'class="frmProductImage"');
 
-			echo full_div('', 'icon-camera');
+			echo full_div('', 'icon-camera imagePreview');
 
 			$inp_data		= array
 			(
 				'name'		=> 'uploadedFileProductImage',
-				'class'		=> 'uploadedFileProductImage'
+				'class'		=> 'uploadedFileProductImage',
+				'accept'    => 'image/*'
 			);
 			echo form_hidden('hdProductId');
 			echo form_upload($inp_data);

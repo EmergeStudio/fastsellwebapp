@@ -456,7 +456,6 @@ class Ajax_handler_fastsells extends CI_Controller
 
 			// Load the view
 			$this->load->view('products/fastsell_products_list_2', $dt_body);
-			//$this->load->view('products/added_products_fastsell_create', $dt_body);
 		}
 		else
 		{

@@ -231,17 +231,17 @@
 }
 #header #topBar .mainNav li .subNav .profileInner {
 	float:left;
-	margin-right:22px;
+	margin-right:42px;
 }
 #header #topBar .mainNav li .subNav .profileInner .selector {
-	width:110px;
+	width:210px;
 }
 #header #topBar .mainNav li .subNav .profileInner .selector span {
-	width:110px;
+	width:210px;
 	color:#525252;
 }
 #header #topBar .mainNav li .subNav .profileInner select {
-	width:148px;
+	width:248px;
 }
 #header #topBar .mainNav li .subNav.subNavManage {
 	width:160px;
@@ -257,7 +257,7 @@
 	border-bottom:1px solid #DFDFDF;
 }
 #header #topBar .mainNav li.userNavLink .subNav {
-	width:370px;
+	width: 480px;
 }
  
 /* APPLICATION NAVIGATION

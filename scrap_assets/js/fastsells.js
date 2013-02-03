@@ -21,8 +21,30 @@ $(document).ready(function(){
 
     $fc_save_address_2();
 
+    $fc_make_address_same();
+
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- MAKE THE ADDRESSES THE SAME
+    function $fc_make_address_same()
+    {
+        $('.checkMakeSame').live('change', function()
+        {
+            // Some variables
+            $this               = $(this);
+
+            // Checked status
+            if($this.attr('checked') == 'checked')
+            {
+                $('.btnBillingAddress').parent().hide();
+            }
+            else
+            {
+                $('.btnBillingAddress').parent().show();
+            }
+        });
+    }
 
     // ---------- COUNTER
     function $fc_counter()
@@ -39,10 +61,10 @@ $(document).ready(function(){
 
             // Set the counter
             $(this).countdown(
-                {
-                    // Time stamp
-                    timestamp	        : (new Date($ex_start_date[0], ($ex_start_date[1]-1), ($ex_start_date[2]-20), $hours, $minutes, $seconds)).getTime() + 20*24*60*60*1000
-                });
+            {
+                // Time stamp
+                timestamp	        : (new Date($ex_start_date[0], ($ex_start_date[1]-1), ($ex_start_date[2]-20), $hours, $minutes, $seconds)).getTime() + 20*24*60*60*1000
+            });
         });
     }
 

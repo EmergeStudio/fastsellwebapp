@@ -103,7 +103,8 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 				$inp_data		= array
 				(
 					'name'		=> 'uploadedFileFastsellImage',
-					'class'		=> 'uploadedFileFastsellImage'
+					'class'		=> 'uploadedFileFastsellImage',
+					'accept'    => 'image/*'
 				);
 				echo form_upload($inp_data);
 				echo clear_float();

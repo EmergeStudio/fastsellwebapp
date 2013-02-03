@@ -131,10 +131,10 @@ if($order != FALSE)
 
 							echo div_height(20);
 							echo full_div('<b>Shipping Address</b>', 'content');
-							echo full_div($crt_order->billing_address->address_one, 'content');
-							echo full_div($crt_order->billing_address->city, 'content');
-							echo full_div($crt_order->billing_address->state_province, 'content');
-							echo full_div($crt_order->billing_address->postal_code, 'content');
+							echo full_div($crt_order->location->address_one, 'content');
+							echo full_div($crt_order->location->city, 'content');
+							echo full_div($crt_order->location->state_province, 'content');
+							echo full_div($crt_order->location->postal_code, 'content');
 
 						echo '</td>';
 

@@ -607,12 +607,18 @@ class Fastsells extends CI_Controller
 					$call_address               = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
 					$json_address               = $call_address['result'];
 					$address_id                 = $json_address->addresses[0]->id;
+					$billing_address_id         = FALSE;
+
 					foreach($json_address->addresses as $address)
 					{
 						if($address->address_type->id == 2)
 						{
 							$address_id         = $address->id;
 						}
+//						elseif($address->address_type->id == 1)
+//						{
+//							$billing_address_id = $address->id;
+//						}
 					}
 
 					// Get sample
@@ -621,12 +627,20 @@ class Fastsells extends CI_Controller
 					$json_sample            = $call_sample['result'];
 
 					// Edit the sample
-					$json_sample->location->id              = $address_id;
-					$json_sample->customer_user->id         = $customer_user_id;
-					$json_sample->fastsell_event->id        = $fastsell_id;
+					$json_sample->location->id                                      = $address_id;
+					$json_sample->customer_user->id                                 = $customer_user_id;
+					$json_sample->fastsell_event->id                                = $fastsell_id;
 					$json_sample->fastsell_order_to_items[0]->quantity              = $quantity;
 					$json_sample->fastsell_order_to_items[0]->fastsell_item->id     = $product_id;
-					$json_sample->billing_address->id       = $address_id;
+
+					if($billing_address_id == FALSE)
+					{
+						$json_sample->billing_address->id                           = $address_id;
+					}
+					else
+					{
+						$json_sample->billing_address->id                           = $billing_address_id;
+					}
 
 					// Encode JSON
 					$new_json               = json_encode($json_sample);
@@ -642,14 +656,14 @@ class Fastsells extends CI_Controller
 			{
 				// New order
 				$url_address                = 'addresses/.jsons?customerid='.$customer_ord_id;
-				$call_address               = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
+				$call_address               = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE, TRUE);
 				$json_address               = $call_address['result'];
-				$address_id                 = $json_address->addresses[0]->id;
-				foreach($json_address->addresses as $address)
+				$address_id                 = $json_address['addresses'][0]['id'];
+				foreach($json_address['addresses'] as $address)
 				{
-					if($address->address_type == 2)
+					if($address['address_type'] == '2')
 					{
-						$address_id         = $address->id;
+						$address_id         = $address['id'];
 					}
 				}
 
