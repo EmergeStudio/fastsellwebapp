@@ -243,6 +243,9 @@
 #header #topBar .mainNav li .subNav .profileInner select {
 	width:248px;
 }
+#header #topBar .mainNav li .subNav .profileInner select option {
+    color: #525252;
+}
 #header #topBar .mainNav li .subNav.subNavManage {
 	width:160px;
 	margin-left:-89px;

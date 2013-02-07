@@ -62,32 +62,36 @@ if($fastsells['error'] == FALSE)
 						if($fastsell->event_end_date > $this->scrap_string->crt_db_date_time_2())
 						{
 							echo full_div('FastSell Currently Running', 'yellowBlock');
+
+							echo full_div('Event Ending In', 'counterHeading');
+
+							echo open_div('counterTime yellow');
+
+								echo hidden_div($this->scrap_string->make_db_date($fastsell->event_end_date), 'hdStartDate');
+								echo hidden_div(substr($fastsell->event_end_date, 11), 'hdStartTime');
+
+							echo close_div();
+
+							echo heading(nbs(4).'Days'.nbs(13).'Hours'.nbs(11).'Minutes'.nbs(8).'Seconds', 4, 'class="counterHeadings"');
 						}
 						else
 						{
 							echo full_div('FastSell Finished', 'blueBlock');
 						}
 					}
-		            else
-		            {
-						echo open_div('counterTime');
+					else
+					{
+						echo full_div('Going To Start In', 'counterHeading');
 
-							echo open_div('counterText');
-
-								echo full_div('DAYS', 'counterDays');
-								echo full_div('HOURS', 'counterHours');
-								echo full_div('MINUTES', 'counterMinutes');
-								echo full_div('SECONDS', 'counterSeconds');
-
-							echo close_div();
+						echo open_div('counterTime blue');
 
 							echo hidden_div($this->scrap_string->make_db_date($fastsell->event_start_date), 'hdStartDate');
 							echo hidden_div(substr($fastsell->event_start_date, 11), 'hdStartTime');
 
 						echo close_div();
 
-						echo heading(nbs(4).'Days'.nbs(13).'Hours'.nbs(11).'Minutes'.nbs(8).'Seconds', 4, 'class="counterHeadings"');
-		            }
+						echo heading(nbs(4).'Days'.nbs(13).'Hours'.nbs(11).'Minutes'.nbs(7).'Seconds', 4, 'class="counterHeadings"');
+					}
 
 					// Clear float
 					echo clear_float();

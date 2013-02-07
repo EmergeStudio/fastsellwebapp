@@ -28,6 +28,14 @@
 <!--Base URL-->
 <input type="hidden" id="hdPath" name="hdPath" value="<?php echo base_url(); ?>" />
 <input type="hidden" id="hdReturnUrl" name="hdPath" value="<?php echo current_url(); ?>" />
+<?php
+// Get the time
+$url_time               = 'timezones/.json';
+$call_time              = $this->scrap_web->webserv_call($url_time);
+$json_time              = $call_time['result'];
+?>
+<input type="hidden" id="hdCrtTime" name="hdCrtTime" value="<?php echo substr($json_time->time, 0, 10).' '.substr($json_time->time, 11, 2).':'.substr($json_time->time, 13, 2).':'.substr($json_time->time, 15, 2); ?>" />
+
 <form action="<?php echo base_url(); ?>login" method="post" id="frmLogout"></form>
 
 </body>

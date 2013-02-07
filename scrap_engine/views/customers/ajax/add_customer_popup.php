@@ -47,12 +47,12 @@ echo open_div('inset');
 	);
 	array_push($ar_fields, form_input($inp_email_address));
 
-//	// Customer group
-//	$inp_customer_group	    = array
-//	(
-//		'name'			    => 'inpCustomerGroup'
-//	);
-//	array_push($ar_fields, form_input($inp_customer_group));
+	// Customer group
+	$inp_customer_group	    = array
+	(
+		'name'			    => 'inpCustomerGroup'
+	);
+	array_push($ar_fields, form_input($inp_customer_group));
 
 	// Buttons
 	array_push($ar_fields, make_button('Add', 'btnAddCustomerNow blueButton'));

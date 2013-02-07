@@ -54,7 +54,7 @@ class Fastsells extends CI_Controller
 
 			// Get the fastsells
 			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id;
-			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells);
+			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, TRUE);
 			$dt_body['fastsells']           = $call_fastsells;
 
 			// Get the definitions

@@ -22,13 +22,13 @@
 .pageFastSellCustomers .middle.appNavigationContainer,
 .pageFastSellProducts .middle.appNavigationContainer
 {
-    margin-top: 40px;
+    margin-top: 10px;
 }
 .bannerBack .timLeft {
-    padding: 38px 5px 0px 0px;
+    padding: 20px 5px 0px 0px;
 }
 .bannerBack .fastsellInfo h2 {
-    padding: 48px 0px 0px 5px;
+    padding: 52px 0px 0px 5px;
     text-shadow: none;
     color: #222;
     font-size: 26px;
@@ -42,7 +42,7 @@
     padding: 47px 15px 0px 5px;
     text-shadow: none;
     color: #222;
-    font-size: 22px;
+    font-size: 18px;
 }
 .middle .blackStrip .scrapButton2.blueButton {
     padding: 19px 12px 16px 12px;
@@ -218,7 +218,9 @@
     text-align: center;
 }
 .middle .itemContainer .yellowBlock, .middle .itemContainer .blueBlock {
-    width: 180px;
+    margin: 0px;
+    margin-bottom: 10px;
+    width: 225px;
     text-align: center;
 }
 .middle .itemContainer .fastSellDetails {

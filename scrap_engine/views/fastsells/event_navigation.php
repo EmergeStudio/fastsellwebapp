@@ -10,43 +10,42 @@ echo open_div('bannerBack');
 		// Time left
 		echo open_div('timLeft floatRight');
 
-			echo open_div('counterTime');
-
-				echo open_div('counterText');
-
-					echo full_div('DAYS', 'counterDays');
-					echo full_div('HOURS', 'counterHours');
-					echo full_div('MINUTES', 'counterMinutes');
-					echo full_div('SECONDS', 'counterSeconds');
-
-				echo close_div();
-
 				if($started == TRUE)
 				{
-					echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_end_date), 'hdDate');
-					echo hidden_div(substr($fastsell_info->event_end_date, 11), 'hdTime');
+					echo open_div('counterTime yellow');
+
+						echo full_div('Event Ending In', 'counterHeading');
+
+						echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_end_date), 'hdDate');
+						echo hidden_div(substr($fastsell_info->event_end_date, 11), 'hdTime');
+
+					echo close_div();
 				}
 				else
 				{
-					echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_start_date), 'hdDate');
-					echo hidden_div(substr($fastsell_info->event_start_date, 11), 'hdTime');
+					echo open_div('counterTime blue');
+
+						echo full_div('Going To Start In', 'counterHeading');
+
+						echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_start_date), 'hdDate');
+						echo hidden_div(substr($fastsell_info->event_start_date, 11), 'hdTime');
+
+					echo close_div();
 				}
 
-			echo close_div();
-
-			//echo heading(nbs(6).'Days'.nbs(14).'Hours'.nbs(12).'Minutes'.nbs(10).'Seconds', 4, 'class="counterHeadings"');
+				echo heading(nbs(4).'Days'.nbs(13).'Hours'.nbs(11).'Minutes'.nbs(7).'Seconds', 4, 'class="counterHeadings"');
 
 		// End of time left
 		echo close_div();
 
-		if($started == TRUE)
-		{
-			echo full_div('Ends In:', 'timeHeading');
-		}
-		else
-		{
-			echo full_div('Starts In:', 'timeHeading');
-		}
+//		if($started == TRUE)
+//		{
+//			echo full_div('Event Ending In', 'timeHeading');
+//		}
+//		else
+//		{
+//			echo full_div('Going To Start In', 'timeHeading');
+//		}
 
 		// Heading
 		echo heading('FastSell: '.$fastsell_info->name, 2);

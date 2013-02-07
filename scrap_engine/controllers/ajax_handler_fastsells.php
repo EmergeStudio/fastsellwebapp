@@ -314,12 +314,13 @@ class Ajax_handler_fastsells extends CI_Controller
 			if($type == 'add')
 			{
 				$call_type                  = 'put';
+				$link_customer		        = $this->scrap_web->webserv_call('fastsellevents/customers/.jsons?sendnotification=true&fastselleventid='.$event_id, $link_json, $call_type, FALSE, FALSE);
 			}
 			elseif($type == 'remove')
 			{
 				$call_type                  = 'post';
+				$link_customer		        = $this->scrap_web->webserv_call('fastsellevents/customers/.jsons?fastselleventid='.$event_id, $link_json, $call_type, FALSE, FALSE);
 			}
-			$link_customer		            = $this->scrap_web->webserv_call('fastsellevents/customers/.jsons?fastselleventid='.$event_id, $link_json, $call_type, FALSE, FALSE);
 		}
 		else
 		{

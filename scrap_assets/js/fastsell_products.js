@@ -409,161 +409,166 @@ $(document).ready(function(){
         // Submit the new item definition
         $('.popAddProduct .returnTrue').live('click', function()
         {
-            if($.scrap_is_image($('.blockProductImage .uploadedFileProductImage').val()) == true)
+            // Some variables
+            $error					    = false;
+            $product_number		        = $('.popAddProduct input[name="inpProductNumber"]').val();
+            $product_stock		        = $('.popAddProduct input[name="inpProductStock"]').val();
+            $product_price		        = $('.popAddProduct input[name="inpProductPrice"]').val();
+            $product_definition         = $('.popAddProduct .definitionSelection.active').find('.hdDefinitionId').text();
+            $product_fields_required    = '';
+            $product_fields_extra       = '';
+
+            // Validate
+            if($error == false)
             {
-                // Some variables
-                $error					    = false;
-                $product_number		        = $('.popAddProduct input[name="inpProductNumber"]').val();
-                $product_stock		        = $('.popAddProduct input[name="inpProductStock"]').val();
-                $product_price		        = $('.popAddProduct input[name="inpProductPrice"]').val();
-                $product_definition         = $('.popAddProduct .definitionSelection.active').find('.hdDefinitionId').text();
-                $product_fields_required    = '';
-                $product_fields_extra       = '';
-
-                // Validate
-                if($error == false)
+                if($product_number.length < 1)
                 {
-                    if($product_number.length < 1)
-                    {
-                        $error			= true;
-                        $.scrap_note_time('Please provide an product number', 4000, 'cross');
-                        $('.popAddProduct input[name="inpProductNumber"]').addClass('redBorder');
-                    }
-                }
-
-                // Successful validation
-                if($error == false)
-                {
-                    // Get the indexing fields
-                    $loop_cnt                   = 0;
-
-                    $('.popAddProduct .fieldContainerRequired').each(function()
-                    {
-                        $loop_cnt++;
-                        // Some variables
-                        $this                   = $(this);
-                        if($loop_cnt == 2)
-                        {
-                            $field_value        = $this.find('textarea').val();
-                        }
-                        else
-                        {
-                            $field_value        = $this.find('input').val();
-                        }
-                        $field_id               = $this.find('.hiddenDiv').text();
-
-                        // Validate
-                        if($field_value != '')
-                        {
-                            $product_fields_required	    += '[';
-                            $product_fields_required	    += $field_value + ':';
-                            $product_fields_required	    += $field_id;
-                            $product_fields_required	    += ']';
-                        }
-                        else
-                        {
-                            $product_fields_required	    += '[';
-                            $product_fields_required	    += 'NOT_SET:';
-                            $product_fields_required	    += $field_id;
-                            $product_fields_required	    += ']';
-                        }
-                    });
-
-                    $('.popAddProduct .fieldContainerExtra').each(function()
-                    {
-                        $loop_cnt++;
-                        // Some variables
-                        $this                   = $(this);
-                        $field_value            = $this.find('input').val();
-                        $field_id               = $this.find('.hiddenDiv').text();
-
-                        // Validate
-                        if($field_value != '')
-                        {
-                            $product_fields_extra	    += '[';
-                            $product_fields_extra	    += $field_value + ':';
-                            $product_fields_extra	    += $field_id;
-                            $product_fields_extra	    += ']';
-                        }
-                    });
-
-                    // Submit the new document type for adding
-                    $.scrap_note_loader('Adding the new product and linking it to the FastSell');
-
-                    // Post the data
-                    $.post($ajax_base_path + 'add_product_and_link',
-                    {
-                        product_number			    : $product_number,
-                        product_stock			    : $product_stock,
-                        product_price			    : $product_price,
-                        product_definition			: $product_definition,
-                        product_fields_required	    : $product_fields_required,
-                        product_fields_extra	    : $product_fields_extra
-                    },
-                    function($data)
-                    {
-                        $data	= jQuery.trim($data);
-                        $data   = $data.split('::');
-
-                        if($data[0] == '9876')
-                        {
-                            $.scrap_logout();
-                        }
-                        else if($data[0] == 'wassuccessfullycreated')
-                        {
-                            if($('.popAddProduct input[name="uploadedFileProductImage"]').val() != '')
-                            {
-                                $.scrap_note_loader('Uploading the product image (This may take a few moments depending on the image size)');
-
-                                $('.popAddProduct input[name="hdProductId"]').val($data[1]);
-                                $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
-                                $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image' });
-                                $('.popAddProduct .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
-                                $('.popAddProduct .frmProductImage').attr('target', $iframe_name);
-                                $('.popAddProduct .frmProductImage').submit();
-
-                                $('iframe[name="'+ $iframe_name +'"]').load(function()
-                                {
-                                    $data		= jQuery.trim($('.popAddProduct .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
-
-                                    // Display error
-                                    if($data == 'wassuccessfullyuploaded')
-                                    {
-                                        $('.popAddProduct input, .popAddProduct textarea').val('');
-
-                                        $fc_refresh_added_product_list();
-
-                                        // Close the popup
-                                        $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
-                                        $('body').sunBox.close_popup('popAddProduct');
-                                    }
-                                });
-                            }
-                            else
-                            {
-                                $('.popAddProduct input, .popAddProduct textarea').val('');
-
-                                $fc_refresh_added_product_list();
-
-                                // Close the popup
-                                $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
-                                $('body').sunBox.close_popup('popAddProduct');
-                            }
-                        }
-                        else
-                        {
-                            $.scrap_note_time($data[0], 4000, 'cross');
-                        }
-                    });
+                    $error			= true;
+                    $.scrap_note_time('Please provide an product number', 4000, 'cross');
+                    $('.popAddProduct input[name="inpProductNumber"]').addClass('redBorder');
                 }
             }
-            else
+
+            if($error == false)
             {
-                $.scrap_message('Only image files are accepted for the product picture');
-                $('.sunMessage .returnFalse').click(function()
+                if($('.blockProductImage .uploadedFileProductImage').val() != '')
                 {
-                    $('.sunMessage').remove();
-                    $('.popAddProduct').css({ zIndex : 300 });
+                    if($.scrap_is_image($('.blockProductImage .uploadedFileProductImage').val()) == false)
+                    {
+                        $error			= true;
+                        $.scrap_message('Only image files are accepted for the product picture');
+                        $('.sunMessage .returnFalse').click(function()
+                        {
+                            $('.sunMessage').remove();
+                            $('.popAddProduct').css({ zIndex : 300 });
+                        });
+                    }
+                }
+            }
+
+            // Successful validation
+            if($error == false)
+            {
+                // Get the indexing fields
+                $loop_cnt                   = 0;
+
+                $('.popAddProduct .fieldContainerRequired').each(function()
+                {
+                    $loop_cnt++;
+                    // Some variables
+                    $this                   = $(this);
+                    if($loop_cnt == 2)
+                    {
+                        $field_value        = $this.find('textarea').val();
+                    }
+                    else
+                    {
+                        $field_value        = $this.find('input').val();
+                    }
+                    $field_id               = $this.find('.hiddenDiv').text();
+
+                    // Validate
+                    if($field_value != '')
+                    {
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += $field_value + ':';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
+                    }
+                    else
+                    {
+                        $product_fields_required	    += '[';
+                        $product_fields_required	    += 'NOT_SET:';
+                        $product_fields_required	    += $field_id;
+                        $product_fields_required	    += ']';
+                    }
+                });
+
+                $('.popAddProduct .fieldContainerExtra').each(function()
+                {
+                    $loop_cnt++;
+                    // Some variables
+                    $this                   = $(this);
+                    $field_value            = $this.find('input').val();
+                    $field_id               = $this.find('.hiddenDiv').text();
+
+                    // Validate
+                    if($field_value != '')
+                    {
+                        $product_fields_extra	    += '[';
+                        $product_fields_extra	    += $field_value + ':';
+                        $product_fields_extra	    += $field_id;
+                        $product_fields_extra	    += ']';
+                    }
+                });
+
+                // Submit the new document type for adding
+                $.scrap_note_loader('Adding the new product and linking it to the FastSell');
+
+                // Post the data
+                $.post($ajax_base_path + 'add_product_and_link',
+                {
+                    product_number			    : $product_number,
+                    product_stock			    : $product_stock,
+                    product_price			    : $product_price,
+                    product_definition			: $product_definition,
+                    product_fields_required	    : $product_fields_required,
+                    product_fields_extra	    : $product_fields_extra
+                },
+                function($data)
+                {
+                    $data	= jQuery.trim($data);
+                    $data   = $data.split('::');
+
+                    if($data[0] == '9876')
+                    {
+                        $.scrap_logout();
+                    }
+                    else if($data[0] == 'wassuccessfullycreated')
+                    {
+                        if($('.popAddProduct input[name="uploadedFileProductImage"]').val() != '')
+                        {
+                            $.scrap_note_loader('Uploading the product image (This may take a few moments depending on the image size)');
+
+                            $('.popAddProduct input[name="hdProductId"]').val($data[1]);
+                            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                            $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image' });
+                            $('.popAddProduct .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                            $('.popAddProduct .frmProductImage').attr('target', $iframe_name);
+                            $('.popAddProduct .frmProductImage').submit();
+
+                            $('iframe[name="'+ $iframe_name +'"]').load(function()
+                            {
+                                $data		= jQuery.trim($('.popAddProduct .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+
+                                // Display error
+                                if($data == 'wassuccessfullyuploaded')
+                                {
+                                    $('.popAddProduct input, .popAddProduct textarea').val('');
+
+                                    $fc_refresh_added_product_list();
+
+                                    // Close the popup
+                                    $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
+                                    $('body').sunBox.close_popup('popAddProduct');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $('.popAddProduct input, .popAddProduct textarea').val('');
+
+                            $fc_refresh_added_product_list();
+
+                            // Close the popup
+                            $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
+                            $('body').sunBox.close_popup('popAddProduct');
+                        }
+                    }
+                    else
+                    {
+                        $.scrap_note_time($data[0], 4000, 'cross');
+                    }
                 });
             }
         });

@@ -16,6 +16,9 @@
     // Creating the plugin
     $.fn.countdown = function(prop){
 
+//        console.log((new Date() / 1000));
+//        console.log(new Date($('#hdCrtTime').val().replace(/-/g,"/")) / 1000);
+
         var options = $.extend({
             callback	: function(){},
             timestamp	: 0

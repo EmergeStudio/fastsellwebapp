@@ -951,11 +951,16 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
     position:relative;
     float:left;
     width: 265px;
-    height: 40px;
+    /*height: 40px;*/
     font: 40px/1.5 'Open Sans Condensed',sans-serif;
     margin:0px auto;
 }
-
+.counterHeading {
+    width: 265px;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
 .counterText {
     display: none;
 }
@@ -968,7 +973,12 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
     height: 40px;
     margin: 0px 1px;
 }
-
+.yellow .digit {
+    background-color: #fcb040;
+}
+.blue .digit {
+    background-color: #1ba2d0;
+}
 .digit{
     position:relative;
     display:inline-block;
@@ -985,15 +995,10 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
     border-radius: 6px;
     text-shadow: none;
 }
-
-
-
-
 .digit.static{
     display:block;
     width: 25px;
 }
-
 .countDiv{
     display:inline-block;
     float:left;
@@ -1002,7 +1007,6 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
     position:relative;
     text-align: center;
 }
-
 .countDays{
     float:left;
 }
@@ -1015,7 +1019,11 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 .countSeconds{
     float:left;
 }
-.itemContainer h4.counterHeadings {
+/*.itemContainer h4.counterHeadings {*/
+    /*font-size: 12px;*/
+    /*width: 265px;*/
+/*}*/
+h4.counterHeadings {
     font-size: 12px;
     width: 265px;
 }
