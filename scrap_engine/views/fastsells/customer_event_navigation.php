@@ -27,31 +27,30 @@ echo open_div('bannerBack');
 		// Time left
 		echo open_div('timLeft floatRight');
 
-			echo open_div('counterTime');
+			if($started == TRUE)
+			{
+				echo open_div('counterTime yellow');
 
-				echo open_div('counterText');
+				echo full_div('Event Ending In', 'counterHeading');
 
-					echo full_div('DAYS', 'counterDays');
-					echo full_div('HOURS', 'counterHours');
-					echo full_div('MINUTES', 'counterMinutes');
-					echo full_div('SECONDS', 'counterSeconds');
+				echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_end_date), 'hdDate');
+				echo hidden_div(substr($fastsell_info->event_end_date, 11), 'hdTime');
 
 				echo close_div();
+			}
+			else
+			{
+				echo open_div('counterTime blue');
 
-				if($started == TRUE)
-				{
-					echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_end_date), 'hdDate');
-					echo hidden_div(substr($fastsell_info->event_end_date, 11), 'hdTime');
-				}
-				else
-				{
-					echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_start_date), 'hdDate');
-					echo hidden_div(substr($fastsell_info->event_start_date, 11), 'hdTime');
-				}
+				echo full_div('Going To Start In', 'counterHeading');
 
-			echo close_div();
+				echo hidden_div($this->scrap_string->make_db_date($fastsell_info->event_start_date), 'hdDate');
+				echo hidden_div(substr($fastsell_info->event_start_date, 11), 'hdTime');
 
-			//echo heading(nbs(6).'Days'.nbs(14).'Hours'.nbs(12).'Minutes'.nbs(10).'Seconds', 4, 'class="counterHeadings"');
+				echo close_div();
+			}
+
+			echo heading(nbs(4).'Days'.nbs(13).'Hours'.nbs(11).'Minutes'.nbs(7).'Seconds', 4, 'class="counterHeadings"');
 
 		// End of time left
 		echo close_div();

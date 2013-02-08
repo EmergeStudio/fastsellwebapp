@@ -153,14 +153,15 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		// Upload master file
 		echo open_div('customerMasterFileUpload floatRight');
 
-			echo make_button('Upload Master Data File', 'btnAdd btnUploadCustomers blueButton', '', 'left');
+			echo make_button('Add By Group', 'btnAdd btnAddByGroupPopup blueButton', '', 'left');
 			echo make_button('Add New Customer', 'btnAdd btnAddNewCustomerPopup blueButton', '', 'left');
+			echo make_button('Upload Master Data File', 'btnAdd btnUploadCustomers blueButton', '', 'left');
 
 		echo close_div();
 
 		// Heading
 		echo full_div('', 'icon-users headingIcon lightGrey');
-		echo heading('Who Do You Want To Notify Of This FastSell?', 2);
+		echo heading('Who Do You Want To Notify?', 2);
 
 		// Sub heading
 		echo '<p>If you make this FastSell public anyone with a Fast Sell account will be able to see the event. Alternatively you can select a list of customers or just notify a select few of your contacts who will have exclusive viewing rights to the event. You can decide by choosing from the drop down below.</p>';

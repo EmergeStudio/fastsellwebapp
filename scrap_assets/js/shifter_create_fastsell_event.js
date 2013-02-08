@@ -29,6 +29,8 @@ $(document).ready(function(){
     $fc_add_a_product_and_link();
 
     $fc_add_customers_2();
+
+    $fc_add_customers_by_group();
 	
 	$('.scrap_date').datepicker(
 	{
@@ -56,6 +58,125 @@ $(document).ready(function(){
 	
 // ------------------------------------------------------------------------------FUNCTIONS
 
+    // ----- AUTOCOMPLETE
+    function $fc_auto_complete($values)
+    {
+        var availableTags   = [];
+
+        $ex_values          = $values.split('][');
+
+        $.each($ex_values, function($index, $value)
+        {
+            $ex_value       = $value.split('::');
+
+            availableTags.push({ value: $ex_value[0], label: $ex_value[1] });
+        });
+
+        function split( val ) {
+            return val.split( /,\s*/ );
+        }
+        function extractLast( term ) {
+            return split( term ).pop();
+        }
+
+        $('input[name="inpCustomerGroup"]')
+            // don't navigate away from the field on tab when selecting an item
+            .bind( "keydown", function( event ) {
+                if ( event.keyCode === $.ui.keyCode.TAB &&
+                    $( this ).data( "autocomplete" ).menu.active ) {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                minLength: 0,
+                source: function( request, response ) {
+                    // delegate back to autocomplete, but extract the last term
+                    response( $.ui.autocomplete.filter(
+                        availableTags, extractLast( request.term ) ) );
+                },
+                focus: function() {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function( event, ui ) {
+                    var terms = split( this.value );
+
+                    // remove the current input
+                    terms.pop();
+
+                    // add the selected item
+                    terms.push( ui.item.label );
+
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push( "" );
+                    this.value = terms.join( ", " );
+                    $('.popAddCustomer .hdGroupIds').text($('.popAddCustomer .hdGroupIds').text() + ui.item.value + '-' + ui.item.label + ':');
+                    return false;
+                }
+            });
+    }
+
+    // ----- ADD CUSTOMERS BY GROUP
+    function $fc_add_customers_by_group()
+    {
+        // Edit group popup
+        $('body').sunBox.popup('Select The Customer Group', 'popAddCustomerByGroup',
+        {
+            ajax_path		: $ajax_base_path + 'add_customers_by_group_popup',
+            close_popup		: false,
+            callback 		: function($return){}
+        });
+
+        // Show the popup
+        $('.btnAddByGroupPopup').on('click', function()
+        {
+            $('.popAddCustomerByGroup .returnTrue').hide();
+            $('body').sunBox.show_popup('popAddCustomerByGroup');
+            $('body').sunBox.adjust_popup_height('popAddCustomerByGroup');
+        });
+
+        // Select group
+        $(document).on('click', '.popAddCustomerByGroup .groupSelection', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $group_id               = $this.find('.hdGroupId').text();
+            $group_name             = $this.text();
+            $event_id               = $('.hdEventId').text();
+
+            // Add the customers by group id
+            $.scrap_note_loader('Adding customers from the '+ $group_name +' group into this FastSell');
+
+            // Close the popup
+            $('body').sunBox.close_popup('popAddCustomerByGroup');
+
+            // Refresh the data
+            $.post($ajax_base_path + 'add_customers_to_fastsell_by_group',
+            {
+                group_id			: $group_id,
+                event_id            : $event_id
+            },
+            function($data)
+            {
+                $data	= jQuery.trim($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else if($data == 'okitsdone')
+                {
+                    $.scrap_note_time('The customers have been added to this FastSell', 4000, 'tick');
+                    $fc_refresh_customer_list();
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
+            });
+        });
+    }
+
     // ----- ADD CUSTOMERS
     function $fc_add_customers_2()
     {
@@ -74,6 +195,7 @@ $(document).ready(function(){
             $('body').sunBox.show_popup('popAddCustomer');
             $('body').sunBox.adjust_popup_height('popAddCustomer');
             $('.popAddCustomer .returnTrue').hide();
+            $fc_auto_complete($('.popAddCustomer .hdGroupsWithId').text());
         });
 
         // Add the customer
@@ -86,6 +208,8 @@ $(document).ready(function(){
             $first_name         = $('.popAddCustomer input[name="inpFirstName"]').val();
             $surname            = $('.popAddCustomer input[name="inpSurname"]').val();
             $email_address      = $('.popAddCustomer input[name="inpEmailAddress"]').val();
+            $customer_group     = $('.popAddCustomer input[name="inpCustomerGroup"]').val();
+            $group_ids          = $('.popAddCustomer .hdGroupIds').text();
             $html               = '';
 
             // Validate
@@ -135,6 +259,7 @@ $(document).ready(function(){
                 $html   += '<td>'+ $first_name +'</td>';
                 $html   += '<td>'+ $surname +'</td>';
                 $html   += '<td>'+ $email_address +'</td>';
+                $html   += '<td>'+ $customer_group +'</td>';
                 $html   += '<td><div class="loader"></div></td>';
 
                 $html   += '</tr>';
@@ -151,7 +276,9 @@ $(document).ready(function(){
                     inpCustomerNumber		: $customer_number,
                     inpName			        : $first_name,
                     inpSurname			    : $surname,
-                    inpEmail			    : $email_address
+                    inpEmail			    : $email_address,
+                    inpCustomerGroup        : $customer_group,
+                    inpGroupIds             : $group_ids
                 },
                 function($data)
                 {

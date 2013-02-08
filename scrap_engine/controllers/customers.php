@@ -46,11 +46,69 @@ class Customers extends CI_Controller
 		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
+		$dt_body['customer_view']       = 'all';
+
+		// Get all the groups
+		$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+		$call_groups                    = $this->scrap_web->webserv_call($url_groups, FALSE, 'get', FALSE, FALSE);
+		$dt_body['groups']              = $call_groups;
 
 		// Load the view
 		$this->load->view('customers/main_customers_page', $dt_body);
 		
 		
+		// ----- FOOTER ------------------------------------
+		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DISPLAY CUSTOMERS BY GROUP
+	|--------------------------------------------------------------------------
+	*/
+	function by_group()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+
+		// ----- SOME VARIABLES ---------------------------------
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
+		$group_id                       = $this->uri->segment(3);
+
+
+		// ----- HEADER ------------------------------------
+		// Some variables
+		$dt_header['title'] 	        = 'FastSell Customers';
+		$dt_header['crt_page']	        = 'pageCustomers';
+		$dt_header['extra_js']          = array('customers');
+		$dt_header['extra_css']         = array('customers');
+
+		// Load header
+		$this->load->view('universal/header', $dt_header);
+
+
+		// ----- CONTENT ------------------------------------
+		// Navigation view
+		$dt_nav['app_page']	            = 'pageCustomers';
+		$this->load->view('universal/navigation', $dt_nav);
+
+		// Get all the customers
+		$url_customers                  = 'fastsellcustomergroups/.json?id='.$group_id;
+		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+		$dt_body['customers']           = $call_customers;
+		$dt_body['customer_view']       = 'by_group';
+
+		// Get all the groups
+		$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+		$call_groups                    = $this->scrap_web->webserv_call($url_groups, FALSE, 'get', FALSE, FALSE);
+		$dt_body['groups']              = $call_groups;
+
+		// Load the view
+		$this->load->view('customers/main_customers_page', $dt_body);
+
+
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
 	}
@@ -589,6 +647,111 @@ class Customers extends CI_Controller
 
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD A CUSTOMER GROUP
+	|--------------------------------------------------------------------------
+	*/
+	function add_group()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		// Some variables
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
+		$group_name                     = $this->input->post('inpCustomerGroup');
+
+		// Sample group
+		$url_sample_group               = 'fastsellcustomergroups/sample.json';
+		$call_sample_group              = $this->scrap_web->webserv_call($url_sample_group);
+
+		if($call_sample_group['error'] == FALSE)
+		{
+			$json_sample_group          = $call_sample_group['result'];
+
+			$json_sample_group->name                            = $group_name;
+			$json_sample_group->show_host_organization->id      = $show_host_id;
+			$json_sample_group->customer_organizations          = null;
+
+			// Add the customer ids to the group
+			if($this->input->post('checkCustomer'))
+			{
+				// Some variables
+				$ar_pv_customer_ids             = $this->input->post('checkCustomer');
+				$ar_customer_ids                = array();
+
+				foreach($ar_pv_customer_ids as $customer_id)
+				{
+					array_push($ar_customer_ids, array('id' => $customer_id));
+				}
+				$json_sample_group->customer_organizations          = $ar_customer_ids;
+			}
+
+			// Encode
+			$json_sample_group                  = json_encode($json_sample_group);
+
+			// Create the group
+			$new_group                          = $this->scrap_web->webserv_call('fastsellcustomergroups/.json', $json_sample_group, 'put');
+
+			// Redirect
+			redirect('customers');
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| EDIT A CUSTOMER GROUP
+	|--------------------------------------------------------------------------
+	*/
+	function edit_group()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		// Some variables
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
+		$group_name                     = $this->input->post('inpCustomerGroup');
+		$group_id                       = $this->input->post('hdGroupId');
+
+		// Group info
+		$url_group                      = 'fastsellcustomergroups/.json?id='.$group_id;
+		$call_group                     = $this->scrap_web->webserv_call($url_group);
+
+		if($call_group['error'] == FALSE)
+		{
+			$json_group          = $call_group['result'];
+
+			$json_group->name                            = $group_name;
+			$json_group->show_host_organization->id      = $show_host_id;
+			$json_group->customer_organizations          = null;
+
+			// Add the customer ids to the group
+			if($this->input->post('checkCustomer'))
+			{
+				// Some variables
+				$ar_pv_customer_ids             = $this->input->post('checkCustomer');
+				$ar_customer_ids                = array();
+
+				foreach($ar_pv_customer_ids as $customer_id)
+				{
+					array_push($ar_customer_ids, array('id' => $customer_id));
+				}
+				$json_group->customer_organizations          = $ar_customer_ids;
+			}
+
+			// Encode
+			$json_group                         = json_encode($json_group);
+
+			// Create the group
+			$update_group                       = $this->scrap_web->webserv_call('fastsellcustomergroups/.json', $json_group, 'post');
+
+			// Redirect
+			redirect('customers');
+		}
 	}
 }
 

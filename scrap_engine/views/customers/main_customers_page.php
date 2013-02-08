@@ -5,48 +5,87 @@
 echo open_div('middle');
 
 	// Current orders
-	echo open_div('whiteBack coolScreen singleColumn');
+	echo open_div('whiteBack coolScreen');
 
-		// Control bar
-		echo open_div('controlBar');
+		// Right content
+		echo open_div('rightContent');
 
-			// Add customer
-			echo make_button('Add Customer', 'btnAddCustomer btnAdd blueButton', '', 'right');
+			// Control bar
+			echo open_div('controlBar');
 
-			echo open_div('floatLeft');
+				echo make_button('Add Group', 'btnAddGroup blueButton', '', 'right');
 
-				// Basic search
-				echo open_div('basicSearch floatLeft');
+				echo heading('Customer Groups', 3);
 
-					// Input field
-					echo form_input('inpCustomerSearch', '', 'class="floatLeft"');
+			// End of control bar
+			echo close_div();
 
-					// Search button
-					echo make_button('Search', 'btnCustomerSearch', '', 'left');
+			// Content
+			echo open_div('content');
 
-					// Reset button
-					echo make_button('Reset', '', 'customers', 'left');
+				$this->load->view('customers/groups_list');
 
-					// Clear float
-					echo clear_float();
+			// End of white content
+			echo close_div();
 
-				// End of basic search
+		// End of right content
+		echo close_div();
+
+		// Left content
+		echo open_div('leftContent');
+
+			// Control bar
+			echo open_div('controlBar');
+
+				// Add customer
+				echo make_button('Add Customer', 'btnAddCustomer btnAdd blueButton', '', 'right');
+
+				echo open_div('floatLeft');
+
+					// Basic search
+					echo open_div('basicSearch floatLeft');
+
+						// Input field
+						echo form_input('inpCustomerSearch', '', 'class="floatLeft"');
+
+						// Search button
+						echo make_button('Search', 'btnCustomerSearch', '', 'left');
+
+						// Reset button
+						echo make_button('Reset', '', 'customers', 'left');
+
+						// Clear float
+						echo clear_float();
+
+					// End of basic search
+					echo close_div();
+
 				echo close_div();
+
+				// Clear float
+				echo clear_float();
+
+			// End of control bar
+			echo close_div();
+
+			// Order list - quick
+			echo open_div('listContain');
+
+				if($customer_view == 'all')
+				{
+					$this->load->view('customers/customers_list_full');
+				}
+				else
+				{
+					$this->load->view('customers/customers_list_by_group');
+				}
 
 			echo close_div();
 
-			// Clear float
-			echo clear_float();
-
-		// End of control bar
 		echo close_div();
 
-		// Order list - quick
-		echo open_div('listContain');
-
-			$this->load->view('customers/customers_list_full');
-
-		echo close_div();
+		// Clear float
+		echo clear_float();
 
 	echo close_div();
 

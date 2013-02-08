@@ -438,3 +438,6 @@ a{text-decoration:none;}
 .icon-dollar:before {
     content: "\e046";
 }
+.icon-wrench:before {
+    content: "\e047";
+}

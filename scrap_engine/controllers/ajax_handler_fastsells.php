@@ -331,6 +331,67 @@ class Ajax_handler_fastsells extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| FASTSELL TO CUSTOMER LINK BY GROUP
+	|--------------------------------------------------------------------------
+	*/
+	function add_customers_to_fastsell_by_group()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$event_id                       = $this->input->post('event_id');
+			$group_id                       = $this->input->post('group_id');
+
+			// Get all the customers by group
+			$url_customers                  = 'fastsellcustomergroups/.json?id='.$group_id;
+			$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+
+			if($call_customers['error'] == FALSE)
+			{
+				$json_customers             = $call_customers['result'];
+				$ar_customer_ids            = array();
+
+				foreach($json_customers->customer_organizations as $customer_organization)
+				{
+					array_push($ar_customer_ids, array('id' => $customer_organization->id));
+				}
+
+				$json_link                      = array
+				(
+					'customer_organizations'    => $ar_customer_ids
+				);
+
+				// Recode
+				$link_json		                = json_encode($json_link);
+
+				// Link
+				$link_customers		            = $this->scrap_web->webserv_call('fastsellevents/customers/.jsons?sendnotification=true&fastselleventid='.$event_id, $link_json, 'put', FALSE, FALSE);
+
+				if($link_customers['error'] == FALSE)
+				{
+					echo 'okitsdone';
+				}
+				else
+				{
+					$json_error                 = $link_customers['result'];
+					echo $json_error->error_description;
+				}
+			}
+			else
+			{
+				$json_error                 = $call_customers['result'];
+				echo $json_error->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| CREATE FASTSELL PRODUCT
 	|--------------------------------------------------------------------------
 	*/
@@ -662,6 +723,36 @@ class Ajax_handler_fastsells extends CI_Controller
 			{
 				$document_file			= FALSE;
 			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD CUSTOMERS BY GROUP POPUP
+	|--------------------------------------------------------------------------
+	*/
+	function add_customers_by_group_popup()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Show host id
+			$show_host_id               = $this->scrap_web->get_show_host_id();
+
+			// Get all the groups
+			$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+			$call_groups                    = $this->scrap_web->webserv_call($url_groups, FALSE, 'get', FALSE, FALSE);
+			$dt_body['groups']              = $call_groups;
+
+			// Load the view
+			$this->load->view('customers/ajax/select_customer_group', $dt_body);
 		}
 		else
 		{

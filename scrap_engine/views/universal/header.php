@@ -36,7 +36,7 @@ echo link_tag('scrap_assets/css/library/accessible.css', 'alternate stylesheet',
 
 <!--Include Javascript-->
 <script type="text/javascript" src="<?php echo base_url(); ?>scrap_assets/js/<?php echo $this->config->item('js_framework'); ?>"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>scrap_assets/js/jquery_ui_v1.9.0.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>scrap_assets/js/jquery_ui_v1.10.0.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>scrap_assets/js/scrap_tools.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>scrap_assets/js/scrap.js"></script>
 <script type="text/javascript" src="<?php echo base_url(); ?>scrap_assets/js/plugin_uniform.js"></script>

@@ -20,6 +20,24 @@
 .middle .shifterPane_2 .listContain, .middle .shifterPane_3 .listContain {
     padding: 0px;
 }
+.middle .groupContainer {
+    padding: 5px 0px;
+}
+.middle .groupContainer a {
+    font-size: 13px;
+}
+.middle .groupContainer .btnDeleteGroup, .middle .groupContainer .btnEditGroup {
+    font-size: 18px;
+}
+.middle .groupContainer .btnEditGroup {
+    font-size: 14px;
+    margin-top: 2px;
+    margin-right: 6px;
+}
+.middle .groupContainer .btnDeleteGroup:hover , .middle .groupContainer .btnEditGroup:hover {
+    cursor: pointer;
+    color: #d61818;
+}
 
 
 
@@ -128,8 +146,8 @@
 .sunBox.popAddCustomer table td input {
     font-size: 13px;
 }
-.sunBox.popAddCustomer .contentCenter .popup .inset input {
-    margin-bottom: 15px;
+.sunBox.popAddCustomer .contentCenter .popup .inset input, .sunBox.popAddCustomer .contentCenter .popup .inset select {
+    margin-bottom: 0px;
 }
 .sunBox .scrapButton.blueButton.btnAddCustomerNow {
     padding: 5px 16px;
@@ -154,4 +172,41 @@
 }
 .sunBox.popAddCustomer table td .cross {
     background-image: url(../../images/icons/scrap_note_cross.png);
+}
+.sunBox.popAddGroup .customerCheckContain, .sunBox.popEditGroup .customerCheckContain {
+    float: left;
+    margin-top: 5px;
+    width: 250px;
+}
+.sunBox.popAddGroup .customerCheckContain .customerName, .sunBox.popEditGroup .customerCheckContain .customerName {
+    padding: 3px 10px;
+}
+
+
+.sunBox.popAddCustomerByGroup .groupSelection {
+    margin: 0px 3px 1px 3px;
+    padding: 13px 10px 10px 10px;
+    background-color: #fff;
+}
+.sunBox.popAddCustomerByGroup .contentCenter .popup .groupSelection .icon {
+    float: left;
+    margin-right: 8px;
+    margin-top: -3px;
+    font-size: 20px;
+}
+.sunBox.popAddCustomerByGroup .groupSelection .icon-users-2 {
+    color: #25aae1;
+}
+.sunBox.popAddCustomerByGroup .groupSelection:hover, .sunBox.popAddCustomerByGroup .groupSelection:hover div {
+    cursor: pointer;
+    background-color: #1ba2d0;
+    color: #fff;
+}
+.sunBox.popAddCustomerByGroup .groupSelection.active {
+    margin: 0px 0px 1px 0px;
+    padding: 16px 15px 13px 15px;
+    background-color: #fff;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
 }
