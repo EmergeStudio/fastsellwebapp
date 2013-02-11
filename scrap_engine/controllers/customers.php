@@ -716,6 +716,7 @@ class Customers extends CI_Controller
 		$show_host_id                   = $this->scrap_web->get_show_host_id();
 		$group_name                     = $this->input->post('inpCustomerGroup');
 		$group_id                       = $this->input->post('hdGroupId');
+		$return_url                     = $this->input->post('hdReturnUrl');
 
 		// Group info
 		$url_group                      = 'fastsellcustomergroups/.json?id='.$group_id;
@@ -750,7 +751,7 @@ class Customers extends CI_Controller
 			$update_group                       = $this->scrap_web->webserv_call('fastsellcustomergroups/.json', $json_group, 'post');
 
 			// Redirect
-			redirect('customers');
+			redirect($return_url);
 		}
 	}
 }

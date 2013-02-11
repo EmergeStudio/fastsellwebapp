@@ -53,3 +53,18 @@
 .pageSignup .middle .btnSignUp {
 	margin-left:120px;
 }
+
+
+.pageSignup div.selector {
+    width: 304px;
+}
+.pageSignup div.selector span {
+    width: 304px;
+    color: #525252;
+}
+.pageSignup div.selector select {
+    width: 338px;
+}
+.pageSignup div.selector select option {
+    color: #525252;
+}

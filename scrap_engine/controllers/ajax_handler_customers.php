@@ -117,6 +117,60 @@ class Ajax_handler_customers extends CI_Controller
 	}
 
 
+	/*
+	|--------------------------------------------------------------------------
+	| GET CUSTOMERS
+	|--------------------------------------------------------------------------
+	*/
+	function get_groups_list()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+
+			// Get the groups
+			$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+			$call_groups                    = $this->scrap_web->webserv_call($url_groups, FALSE, 'get', FALSE, FALSE);
+			$dt_body['groups']              = $call_groups;
+
+			// Load the view
+			$this->load->view('customers/groups_list', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| GET GROUPS FOR AUTOCOMPLETE
+	|--------------------------------------------------------------------------
+	*/
+	function get_groups_for_autocomplete()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
+
+			// Get the groups
+			$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+			$call_groups                    = $this->scrap_web->webserv_call($url_groups, FALSE, 'get', FALSE, FALSE);
+			$dt_body['groups']              = $call_groups;
+
+			// Load the view
+			$this->load->view('customers/ajax/groups_for_autocomplete', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
 
 	/*
 	|--------------------------------------------------------------------------
@@ -197,7 +251,10 @@ class Ajax_handler_customers extends CI_Controller
 						if(!empty($existing_group))
 						{
 							$ex_existing_group          = explode('-', $existing_group);
-							array_push($ar_existing_group_ids, $ex_existing_group[0]);
+							if(!in_array($ex_existing_group[0], $ar_existing_group_ids))
+							{
+								array_push($ar_existing_group_ids, $ex_existing_group[0]);
+							}
 							array_push($ar_existing_group_labels, trim($ex_existing_group[1]));
 
 							// Group info
@@ -357,7 +414,7 @@ class Ajax_handler_customers extends CI_Controller
 						{
 							$ex_existing_group          = explode('-', $existing_group);
 							array_push($ar_existing_group_ids, $ex_existing_group[0]);
-							array_push($ar_existing_group_labels, $ex_existing_group[1]);
+							array_push($ar_existing_group_labels, trim($ex_existing_group[1]));
 
 							// Group info
 							$url_group                      = 'fastsellcustomergroups/.json?id='.$ex_existing_group[0];

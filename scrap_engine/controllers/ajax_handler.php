@@ -138,6 +138,7 @@ class Ajax_handler extends CI_Controller
 		// Some variables
 		$acc_name					= $this->input->post('acc_name');
 		$address					= $this->input->post('address');
+		$timezone					= $this->input->post('timezone');
 		$first_name					= $this->input->post('first_name');
 		$surname					= $this->input->post('surname');
 		$username					= $this->input->post('username');
@@ -166,7 +167,7 @@ class Ajax_handler extends CI_Controller
 			$json_sample['show_host_owner']['user']['username']				= $username;
 			$json_sample['show_host_owner']['user']['password']				= sha1($password);
 			$json_sample['show_host_owner']['user']['clear_password']		= $password;
-			$json_sample['time_zone']['id']                                 = 6;
+			$json_sample['time_zone']['id']                                 = $timezone;
 				
  			// Recode
  			$new_json				= json_encode($json_sample);

@@ -43,7 +43,7 @@ echo form_open('customers/edit_group', 'class="frmEditGroup"');
 					$state                      = FALSE;
 					foreach($json_group->customer_organizations as $customer_organization)
 					{
-						if($customer_organization->id == $customer->id)
+						if($customer_organization->id == $customer->customer_organization->id)
 						{
 							$state              = TRUE;
 							break;
@@ -53,7 +53,7 @@ echo form_open('customers/edit_group', 'class="frmEditGroup"');
 					$chkbx_customer             = array
 					(
 						'name'                  => 'checkCustomer[]',
-						'value'                 => $customer->id,
+						'value'                 => $customer->customer_organization->id,
 						'class'                 => 'checkCustomer tooltip',
 						'checked'               => $state,
 						'title'                 => 'Tick to add this customer to the group'
@@ -76,6 +76,7 @@ echo form_open('customers/edit_group', 'class="frmEditGroup"');
 
 	// Some hidden information
 	echo form_hidden('hdGroupId', $json_group->id);
+	echo form_hidden('hdReturnUrl', 'customers');
 
 echo form_close();
 ?>

@@ -16,7 +16,7 @@ if($groups['error'] == FALSE)
 		echo open_div('groupContainer');
 
 			echo full_div('', 'btnDeleteGroup icon-cross floatRight', 'Delete this group');
-			echo full_div('', 'btnEditGroup icon-wrench floatRight', 'Edit this group');
+			echo full_div('', 'btnEditGroup icon-pencil floatRight', 'Edit this group');
 
 			echo anchor('customers/by_group/'.$group->id, $group->name);
 			echo hidden_div($group->id, 'hdGroupId');

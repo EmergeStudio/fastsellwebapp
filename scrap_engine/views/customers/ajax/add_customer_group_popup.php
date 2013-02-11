@@ -41,7 +41,7 @@ echo form_open('customers/add_group', 'class="frmAddGroup"');
 					$chkbx_customer             = array
 					(
 						'name'                  => 'checkCustomer[]',
-						'value'                 => $customer->id,
+						'value'                 => $customer->customer_organization->id,
 						'class'                 => 'checkCustomer tooltip',
 						'checked'               => FALSE,
 						'title'                 => 'Tick to add this customer to the group'

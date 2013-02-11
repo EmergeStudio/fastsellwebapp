@@ -63,6 +63,7 @@ $(document).ready(function(){
     {
         var availableTags   = [];
 
+        $('.popAddCustomer .hdGroupIds').text('');
         $ex_values          = $values.split('][');
 
         $.each($ex_values, function($index, $value)
@@ -295,14 +296,43 @@ $(document).ready(function(){
                     }
                     else
                     {
+                        $('.popAddCustomer .hdGroupIds').text('');
+                        $('.popAddCustomer input').val('');
+                        $('.popAddCustomer input:first').focus();
                         // Edit the DOM
                         $('.'+ $this_row +' .loader').addClass('tick').removeClass('loader');
 
                         // Refresh the data
-                        $.scrap_note_time('Customer has been added to this FastSell', 4000, 'tick');
+                        $.scrap_note_time('The customer has been added to this FastSell', 4000, 'tick');
                         $fc_refresh_customer_list();
+                        $fc_refresh_groups_autocomplete();
                     }
                 });
+            }
+        });
+    }
+
+    // ----- REFRESH GROUPS AVAILABLE
+    function $fc_refresh_groups_autocomplete($list_type)
+    {
+        // Get the customers
+        $.post($ajax_base_path_2 + 'get_groups_for_autocomplete',
+        {
+            request_check			: 'yupgetit'
+        },
+        function($data)
+        {
+            $data	= jQuery.trim($data);
+
+            if($data == '9876')
+            {
+                $.scrap_logout();
+            }
+            else
+            {
+                // Edit the DOM
+                $('.popAddCustomer .hdGroupsWithId').text($data);
+                $fc_auto_complete($('.popAddCustomer .hdGroupsWithId').text());
             }
         });
     }

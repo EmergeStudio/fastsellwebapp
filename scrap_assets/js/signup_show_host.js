@@ -27,6 +27,7 @@ $(document).ready(function(){
 			$error				= false;
 			$acc_name			= $('.signupContain input[name="inpAccName"]').val();
 			$address			= $('.signupContain textarea[name="txtAddress"]').val();
+			$timezone			= $('.signupContain select[name="drpdwnTimezone"]').val();
 			$first_name			= $('.signupContain input[name="inpFirstName"]').val();
 			$surname			= $('.signupContain input[name="inpSurname"]').val();
 			$username			= $('.signupContain input[name="inpUsername"]').val();
@@ -110,6 +111,7 @@ $(document).ready(function(){
 				{
 					acc_name		: $acc_name,
 					address			: $address,
+                    timezone        : $timezone,
 					first_name		: $first_name,
 					surname			: $surname,
 					username		: $username,
@@ -119,7 +121,6 @@ $(document).ready(function(){
 				function($data)
 				{	
 					$data	= jQuery.trim($data);
-					//console.log($data);
 					
 					if($data == 'userloginsuccess')
 					{

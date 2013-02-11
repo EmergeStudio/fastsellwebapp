@@ -441,3 +441,12 @@ a{text-decoration:none;}
 .icon-wrench:before {
     content: "\e047";
 }
+.icon-pencil:before {
+    content: "\e048";
+}
+.icon-pencil-2:before {
+    content: "\e049";
+}
+.icon-pencil-3:before {
+    content: "\e04a";
+}
