@@ -7,7 +7,7 @@ if($products['error'] == FALSE)
 	$json_products          = $products['result'];
 
 	// Table heading
-	$this->table->set_heading('', array('data' => 'Product', 'class' => 'fullCell'), 'Stock Units', 'Price', '');
+	$this->table->set_heading('', array('data' => 'Product', 'class' => 'fullCell'), 'Stock Count', 'Price', '');
 
 	// Rows
 	foreach($json_products->fastsell_items as $product)

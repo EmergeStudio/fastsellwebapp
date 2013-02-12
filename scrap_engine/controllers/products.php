@@ -70,6 +70,10 @@ class Products extends CI_Controller
 		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
 		$dt_body['definitions']         = $call_definitions;
 
+		// Product category test
+//		$url_product_cat                = 'fastsellitemcategories/.jsons?categorytext=Pet%20Supplies';
+//		$call_product_cat               = $this->scrap_web->webserv_call($url_product_cat, FALSE, 'get', FALSE, TRUE);
+
 		// Load the view
 		$this->load->view('products/main_products_page', $dt_body);
 		

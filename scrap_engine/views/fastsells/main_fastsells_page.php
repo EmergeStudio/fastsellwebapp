@@ -10,7 +10,7 @@ echo open_div('middle');
 			echo open_div('controlBar');
 
 				// Add definition
-				if($this->scrap_web->get_show_host_id() != FALSE)
+				if($acc_type == 'show_host')
 				{
 					if($definitions['error'] == FALSE)
 					{
@@ -21,17 +21,6 @@ echo open_div('middle');
 				echo open_div('floatLeft');
 
 				echo div_height(32);
-
-//				// Basic search
-//				echo open_div('basicSearch floatLeft');
-//
-//					echo form_input('inpFastSellSearch', '', 'class="floatLeft"');
-//					echo make_button('Search', 'btnFastSellSearch', '', 'left');
-//					echo make_button('Reset', '', 'fastsells', 'left');
-//					echo clear_float();
-//
-//				// End of basic search
-//				echo close_div();
 
 			echo close_div();
 

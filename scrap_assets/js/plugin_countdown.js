@@ -121,13 +121,11 @@
         digit
             .before(replacement)
             .removeClass('static')
-            .animate({top:'2.5em',opacity:0},'fast',function(){
-                digit.remove();
-            })
+            .remove();
 
         replacement
-            .delay(100)
-            .animate({top:0,opacity:1},'fast',function(){
+            .delay(100).css({top:0})
+            .css({top:0,opacity:1},'fast',function(){
                 replacement.addClass('static');
             });
     }

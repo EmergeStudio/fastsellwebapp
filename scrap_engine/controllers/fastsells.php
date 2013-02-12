@@ -74,6 +74,8 @@ class Fastsells extends CI_Controller
 			$dt_body['fastsells']           = $call_fastsells;
 		}
 
+		$dt_body['acc_type']                = $acc_type;
+
 		// Load the view
 		$this->load->view('fastsells/main_fastsells_page', $dt_body);
 		
@@ -1136,6 +1138,10 @@ class Fastsells extends CI_Controller
 		// Some variables
 		$fastsell_id                        = $this->session->userdata('sv_show_set');
 		$crt_time                           = $this->scrap_string->crt_db_date_time_2();
+		$url_time                           = 'timezones/.json';
+		$call_time                          = $this->scrap_web->webserv_call($url_time);
+		$json_time                          = $call_time['result'];
+		$crt_time                           = $json_time->time;
 
 		// Get fastsell information
 		$url_fastsell                       = 'fastsellevents/.json?id='.$fastsell_id;
@@ -1150,6 +1156,7 @@ class Fastsells extends CI_Controller
 
 			// Encode
 			$update_json                    = json_encode($json_fastsell);
+			//echo $update_json;
 
 			// Submit the update
 			$update_fastsell                = $this->scrap_web->webserv_call('fastsellevents/.json', $update_json, 'post');
