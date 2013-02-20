@@ -42,8 +42,27 @@ class Customers extends CI_Controller
 		$dt_nav['app_page']	            = 'pageCustomers';
 		$this->load->view('universal/navigation', $dt_nav);
 
+		// Get the customers
+		$offset                         = 0;
+		$limit                          = 20;
+		$search_text                    = '';
+
+		// Search
+		if($this->input->post('inpSearchText'))
+		{
+			$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+		}
+		if($this->input->post('hdOffset'))
+		{
+			$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+		}
+
+		$dt_body['search_text']         = $search_text;
+		$dt_body['offset']              = $offset;
+		$dt_body['limit']               = $limit;
+
 		// Get all the customers
-		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
+		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
 		$dt_body['customer_view']       = 'all';
@@ -94,8 +113,27 @@ class Customers extends CI_Controller
 		$dt_nav['app_page']	            = 'pageCustomers';
 		$this->load->view('universal/navigation', $dt_nav);
 
+		// Get the customers
+		$offset                         = 0;
+		$limit                          = 20;
+		$search_text                    = '';
+
+		// Search
+		if($this->input->post('inpSearchText'))
+		{
+			$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+		}
+		if($this->input->post('hdOffset'))
+		{
+			$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+		}
+
+		$dt_body['search_text']         = $search_text;
+		$dt_body['offset']              = $offset;
+		$dt_body['limit']               = $limit;
+
 		// Get all the customers
-		$url_customers                  = 'fastsellcustomergroups/.json?id='.$group_id;
+		$url_customers                  = 'fastsellcustomergroups/.json?id='.$group_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
 		$dt_body['customer_view']       = 'by_group';
@@ -753,6 +791,47 @@ class Customers extends CI_Controller
 			// Redirect
 			redirect($return_url);
 		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| EDIT A CUSTOMER
+	|--------------------------------------------------------------------------
+	*/
+	function edit_customer()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		// Some variables
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
+		$customer_name                  = $this->input->post('inpCustomerName');
+		$customer_number                = $this->input->post('inpCustomerNumber');
+		$customer_to_show_host_id       = $this->input->post('hdCustomerToShowHostId');
+		$return_url                     = $this->input->post('hdReturnUrl');
+
+		// Get info
+		$url_customer                   = 'customertoshowhosts/.json?id='.$customer_to_show_host_id;
+		$call_customer                  = $this->scrap_web->webserv_call($url_customer);
+
+		if($call_customer['error'] == FALSE)
+		{
+			$json_customer                      = $call_customer['result'];
+
+			// Edit the data
+			$json_customer->customer_name       = $customer_name;
+			$json_customer->customer_number     = $customer_number;
+
+			// Encode
+			$json_update                        = json_encode($json_customer);
+
+			// Do the update
+			$update                             = $this->scrap_web->webserv_call('customertoshowhosts/.json', $json_update, 'post');
+		}
+
+		// Redirect
+		redirect($return_url);
 	}
 }
 

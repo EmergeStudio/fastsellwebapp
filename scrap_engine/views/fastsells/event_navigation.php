@@ -38,15 +38,6 @@ echo open_div('bannerBack');
 		// End of time left
 		echo close_div();
 
-//		if($started == TRUE)
-//		{
-//			echo full_div('Event Ending In', 'timeHeading');
-//		}
-//		else
-//		{
-//			echo full_div('Going To Start In', 'timeHeading');
-//		}
-
 		// Heading
 		echo heading('FastSell: '.$fastsell_info->name, 2);
 

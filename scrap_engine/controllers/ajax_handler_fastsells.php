@@ -55,6 +55,7 @@ class Ajax_handler_fastsells extends CI_Controller
 			$end_minute                     = $this->input->post('end_minute');
 			$event_id                       = $this->input->post('event_id');
 			$event_banner                   = $this->input->post('event_banner');
+			$categories                     = $this->input->post('categories');
 
 			// Edit time
 			if(strlen($start_hour) == 1)
@@ -98,6 +99,15 @@ class Ajax_handler_fastsells extends CI_Controller
 					$json_sample->show_host_organization->id                = $show_host_id;
 					$json_sample->customer_organizations                    = null;
 					$json_sample->fastsell_event_to_fastsell_event_options  = null;
+
+					// Set the categories
+					$ex_categories                      = explode('][', $this->scrap_string->remove_flc($categories));
+					$ar_categories                      = array();
+					foreach($ex_categories as $category)
+					{
+						array_push($ar_categories, array('id' => $category));
+					}
+					$json_sample->fastsell_item_categories                  = $ar_categories;
 
 					// Recode
 					$new_json				            = json_encode($json_sample);
@@ -227,13 +237,34 @@ class Ajax_handler_fastsells extends CI_Controller
 			$show_host_id                   = $this->scrap_web->get_show_host_id();
 			$fastsell_name                  = $this->input->post('fastsell_name');
 			$fastsell_description           = $this->input->post('fastsell_description');
+			$fastsell_terms_and_conditions  = $this->input->post('terms_and_conditions');
 			$start_date                     = $this->input->post('start_date');
-			$start_time                     = $this->input->post('start_time');
+			$start_hour                     = $this->input->post('start_hour');
+			$start_minute                   = $this->input->post('start_minute');
 			$end_date                       = $this->input->post('end_date');
-			$end_time                       = $this->input->post('end_time');
+			$end_hour                       = $this->input->post('end_hour');
+			$end_minute                     = $this->input->post('end_minute');
 			$event_id                       = $this->input->post('event_id');
 			$event_banner                   = $this->input->post('event_banner');
-			$fastsell_name                  = $this->input->post('fastsell_name');
+			$categories                     = $this->input->post('categories');
+
+			// Edit time
+			if(strlen($start_hour) == 1)
+			{
+				$start_hour             = '0'.$start_hour;
+			}
+			if(strlen($start_minute) == 1)
+			{
+				$start_minute          = '0'.$start_minute;
+			}
+			if(strlen($end_hour) == 1)
+			{
+				$end_hour               = '0'.$end_hour;
+			}
+			if(strlen($end_minute) == 1)
+			{
+				$end_minute            = '0'.$end_minute;
+			}
 
 			// Check that its an event create
 			if(is_numeric($event_id))
@@ -249,13 +280,25 @@ class Ajax_handler_fastsells extends CI_Controller
 					// Edit the values
 					$json_fastsell->name                                        = $fastsell_name;
 					$json_fastsell->description                                 = $fastsell_description;
+					$json_fastsell->terms_and_conditions                        = $fastsell_terms_and_conditions;
 					$json_fastsell->user->id                                    = $user_id;
 					$json_fastsell->currency->id                                = 1;
 					$json_fastsell->location                                    = null;
-					$json_fastsell->event_end_date                              = $end_date.' '.$end_time;
-					$json_fastsell->event_start_date                            = $start_date.' '.$start_time;
+					$json_fastsell->event_end_date                              = $end_date.' '.$end_hour.$end_minute.'00';
+					$json_fastsell->event_start_date                            = $start_date.' '.$start_hour.$start_minute.'00';
 					$json_fastsell->fastsell_event_type->id                     = 1;
+					$json_fastsell->show_host_organization->id                  = $show_host_id;
+					$json_fastsell->customer_organizations                      = null;
 					$json_fastsell->fastsell_event_to_fastsell_event_options    = null;
+
+					// Set the categories
+					$ex_categories                      = explode('][', $this->scrap_string->remove_flc($categories));
+					$ar_categories                      = array();
+					foreach($ex_categories as $category)
+					{
+						array_push($ar_categories, array('id' => $category));
+					}
+					$json_fastsell->fastsell_item_categories                    = $ar_categories;
 
 					// Recode
 					$update_json		        = json_encode($json_fastsell);
@@ -431,7 +474,6 @@ class Ajax_handler_fastsells extends CI_Controller
 					$json_sample->fastsell_event->id            = $event_id;
 					$json_sample->fastsell_item_field_values    = null;
 					$json_sample->fastsell_item_definition->id  = $fs_definition;
-					$json_sample->fastsell_item_category->id    = 1;
 
 					// Recode
 					$json_create_product		                = json_encode($json_sample);
@@ -757,6 +799,63 @@ class Ajax_handler_fastsells extends CI_Controller
 		else
 		{
 			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| GET FASTSELL CATEGORY
+	|--------------------------------------------------------------------------
+	*/
+	function get_fastsell_category()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$category_text                  = $this->input->post('cat_text');
+
+			// Get the category
+			$url_category                   = 'fastsellitemcategories/.jsons?categorytext='.urlencode($category_text).'&includerelationships=true';
+			$call_category                  = $this->scrap_web->webserv_call($url_category, FALSE, 'get', FALSE, FALSE);
+			$dt_body['category']            = $call_category;
+
+			// Category breadcrumb
+			$this->load->view('fastsells/category_breadcrumbs', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| SEARCH FOR A FASTSELL CATEGORY
+	|--------------------------------------------------------------------------
+	*/
+	function search_for_category()
+	{
+		// Get the category
+		$url_category                   = 'fastsellitemcategories/.jsons?categorytext='.urlencode($_GET['term']).'&includerelationships=true';
+		$call_category                  = $this->scrap_web->webserv_call($url_category, FALSE, 'get', FALSE, FALSE);
+
+		if($call_category['error'] == FALSE)
+		{
+			// Data
+			$json_categories        = $call_category['result'];
+			$ar_categories          = array();
+
+			foreach($json_categories->fastsell_item_categories as $list_category)
+			{
+				array_push($ar_categories, $list_category->category);
+			}
+
+			echo json_encode($ar_categories);
 		}
 	}
 	

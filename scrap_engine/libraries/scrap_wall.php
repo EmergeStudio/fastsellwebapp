@@ -174,12 +174,12 @@ class Scrap_wall
 		
 		// Validate user is logged in
 		$sv_logged_in		= $this->CI->session->userdata('sv_logged_in');
-			
+
 		// Validate user is logged in
 		$url				= 'auth/sessionvalid.json';
-		$check_session		= $this->CI->scrap_web->webserv_call($url);
+		$check_session		= $this->CI->scrap_web->webserv_call($url, FALSE, 'get', FALSE, FALSE);
 		$json_check			= $check_session['result'];
-		
+
 		// Check that the user is in
 		if(($sv_logged_in == 'loggedInTrueTradeShow') && ($json_check->message == 'true'))
 		{

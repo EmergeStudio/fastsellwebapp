@@ -210,3 +210,10 @@
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
 }
+.sunBox.popAddGroup .inpSearchCustomerText, .sunBox.popEditGroup .inpSearchCustomerText {
+    padding-left: 34px;
+    width: 480px;
+    background-image: url(../../images/icons/search.png);
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+}

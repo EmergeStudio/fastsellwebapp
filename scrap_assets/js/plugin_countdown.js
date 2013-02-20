@@ -19,6 +19,12 @@
 //        console.log((new Date() / 1000));
 //        console.log(new Date($('#hdCrtTime').val().replace(/-/g,"/")) / 1000);
 
+//        var d1 = new Date (),
+//            d2 = new Date ( d1 );
+//        d2.setMinutes ( d1.getMinutes() + 30 );
+
+        var $time_difference      = parseInt($('.hdTimeDiff').text());
+
         var options = $.extend({
             callback	: function(){},
             timestamp	: 0
@@ -34,7 +40,11 @@
         (function tick(){
 
             // Time left
-            left = Math.floor((options.timestamp - (new Date())) / 1000);
+            $date                   = new Date();
+            $adjusted_date          = new Date($date);
+            $adjusted_date.setHours($date.getHours() + $time_difference);
+
+            left = Math.floor((options.timestamp - ($adjusted_date)) / 1000);
 
             if(left < 0){
                 left = 0;

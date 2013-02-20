@@ -148,6 +148,49 @@ echo open_div('middle');
 				// Clear float
 				echo clear_float();
 
+				// Fastsell categories
+				echo open_div('inset fastsellCategories');
+
+					// Heading
+					echo full_div('FastSell Categories', 'mainHeading');
+
+					// Text
+					echo '<p>Start typing in the textbox below and find your desired category.</p>';
+
+					$inp_data		= array
+					(
+						'name'		=> 'inpCategorySearch',
+						'class'		=> 'inpCategorySearch inpBigText'
+					);
+					echo form_input($inp_data);
+
+					// The categories to search for
+					echo hidden_div('Food, Beverages & Tobacco][Food Items][Dairy Products][Cheese', 'hdFastSellCategories');
+
+					// Ajax container
+					echo open_div('ajax_fastSellCategories');
+
+						foreach($fastsell_info->fastsell_item_categories as $item_category)
+						{
+							// Get the category
+							$url_fs_cat                 = 'fastsellitemcategories/.jsons?categorytext='.urlencode($item_category->category).'&includerelationships=true';
+							$call_fs_cat                = $this->scrap_web->webserv_call($url_fs_cat, FALSE, 'get', FALSE, FALSE);
+							$dt_inner_body['category']  = $call_fs_cat;
+
+							echo open_div('catBack blue');
+
+								$this->load->view('fastsells/category_breadcrumbs', $dt_inner_body);
+
+							echo close_div();
+						}
+
+						// Hidden data
+						echo form_hidden('hdFastSellCategories', '');
+
+					echo close_div();
+
+				echo close_div();
+
 				// Save details
 				echo div_height(30);
 				echo make_button('Save Changes', 'btnSaveChanges blueButton');
@@ -193,7 +236,9 @@ echo open_div('middle');
 
 		// Load the view
 		echo open_div('ajaxCustomersInFastSell');
+
 			$this->load->view('customers/fastsell_customers_list');
+
 		echo close_div();
 
 		echo div_height(30);

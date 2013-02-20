@@ -88,19 +88,19 @@ class Ajax_handler extends CI_Controller
 			if($login_user == 'userloginsuccess')
 			{
 				// Login success
-				redirect('http://www.fastsellfoods.com/app/dashboard');
+				redirect('http://fastsellqa.emergestudio.net/app/dashboard');
 			}
 			else
 			{
 				// Login failure
-				redirect('http://www.fastsellfoods.com/index.php?error=true');
+				redirect('http://fastsellqa.emergestudio.net/index.php?error=true');
 			}
 		}
 		else
 		{
 			//echo 'error 3';
 			// No direct access is allowed !
-			redirect('http://www.fastsellfoods.com/index.php?error=true');
+			redirect('http://fastsellqa.emergestudio.net/index.php?error=true');
 		}
 	}
 
@@ -114,17 +114,17 @@ class Ajax_handler extends CI_Controller
 	{
 		if($this->scrap_wall->login_check_ajax() == TRUE)
 		{
-			// URI segment
-			$application	= $this->uri->segment(3);
-			$view_file		= $this->uri->segment(4);
-			
-			// Load the view
-			$this->load->view($application.'/ajax/'.$view_file);
+//			// URI segment
+//			$application	= $this->uri->segment(3);
+//			$view_file		= $this->uri->segment(4);
+//
+//			// Load the view
+//			$this->load->view($application.'/ajax/'.$view_file);
 		}
-		else
-		{
-			echo 9876;
-		}
+//		else
+//		{
+//			echo 9876;
+//		}
 	}
 
 

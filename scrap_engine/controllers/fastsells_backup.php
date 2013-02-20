@@ -164,7 +164,7 @@ class Fastsells extends CI_Controller
 			// FastSell information
 			$fastsell_info                  = $call_fastsell['result'];
 			$started                        = FALSE;
-			if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
+			if(date('Y-m-d His') >= $fastsell_info->event_start_date)
 			{
 				$started                    = TRUE;
 			}
@@ -992,38 +992,37 @@ class Fastsells extends CI_Controller
 
 		// ----- SOME VARIABLES ------------------------------
 		$user_id                            = $this->session->userdata('sv_user_id');
-		$event_id                           = $this->session->userdata('sv_show_set');
 		$show_host_id                       = $this->scrap_web->get_show_host_id();
 		$acc_type                           = $this->session->userdata('sv_acc_type');
-		$fastsell_name                      = $this->input->post('inpShowName');
-		$fastsell_description               = $this->input->post('inpShowDescription');
-		$fastsell_terms_and_conditions      = $this->input->post('inpTermsAndConditions');
+		$show_name                          = $this->input->post('inpShowName');
+		$show_description                   = $this->input->post('inpShowDescription');
+		$term_and_conditions                = $this->input->post('inpTermsAndConditions');
 		$start_date                         = $this->input->post('inpStartDate');
 		$start_hour                         = $this->input->post('startHoursSelect');
-		$start_minute                       = $this->input->post('startMinutesSelect');
+		$start_minutes                      = $this->input->post('startMinutesSelect');
 		$end_date                           = $this->input->post('inpEndDate');
 		$end_hour                           = $this->input->post('endHoursSelect');
-		$end_minute                         = $this->input->post('endMinutesSelect');
+		$end_minutes                        = $this->input->post('endMinutesSelect');
 		$fastsell_id                        = $this->input->post('hdEventId');
 		$return_url                         = $this->input->post('hdReturnUrl');
-		$categories                         = $this->input->post('hdFastSellCategories');
+		$categories                         = $this->input->post('categories');
 
 		// Edit time
 		if(strlen($start_hour) == 1)
 		{
 			$start_hour             = '0'.$start_hour;
 		}
-		if(strlen($start_minute) == 1)
+		if(strlen($start_minutes) == 1)
 		{
-			$start_minute           = '0'.$start_minute;
+			$start_minutes          = '0'.$start_minutes;
 		}
 		if(strlen($end_hour) == 1)
 		{
 			$end_hour               = '0'.$end_hour;
 		}
-		if(strlen($end_minute) == 1)
+		if(strlen($end_minutes) == 1)
 		{
-			$end_minute             = '0'.$end_minute;
+			$end_minutes            = '0'.$end_minutes;
 		}
 
 	   	// Get fastsell information
@@ -1032,95 +1031,70 @@ class Fastsells extends CI_Controller
 
 		if($call_fastsell['error'] == FALSE)
 		{
-			// Get fastsell
-			$url_fastsell                   = 'fastsellevents/.json?id='.$event_id;
-			$call_fastsell                  = $this->scrap_web->webserv_call($url_fastsell, FALSE, 'get', FALSE, FALSE);
+			$json_fastsell                  = $call_fastsell['result'];
 
-			if($call_fastsell['error'] == FALSE)
+			// Edit the fastsell
+			$json_fastsell->name                    = $show_name;
+			$json_fastsell->description             = $show_description;
+			$json_fastsell->terms_and_conditions    = $term_and_conditions;
+			$json_fastsell->event_start_date        = $start_date.' '.$start_hour.$start_minutes.'00';
+			$json_fastsell->event_end_date          = $end_date.' '.$end_hour.$end_minutes.'00';
+
+			// Set the categories
+			$ex_categories                      = explode('][', $this->scrap_string->remove_flc($categories));
+			$ar_categories                      = array();
+			foreach($ex_categories as $category)
 			{
-				$json_fastsell              = $call_fastsell['result'];
+				array_push($ar_categories, array('id' => $category));
+			}
+			//$json_fastsell->fastsell_item_categories                    = $ar_categories;
 
-				// Edit the values
-				$json_fastsell->name                                        = $fastsell_name;
-				$json_fastsell->description                                 = $fastsell_description;
-				$json_fastsell->terms_and_conditions                        = $fastsell_terms_and_conditions;
-				$json_fastsell->user->id                                    = $user_id;
-				$json_fastsell->currency->id                                = 1;
-				$json_fastsell->location                                    = null;
-				$json_fastsell->event_end_date                              = $end_date.' '.$end_hour.$end_minute.'00';
-				$json_fastsell->event_start_date                            = $start_date.' '.$start_hour.$start_minute.'00';
-				$json_fastsell->fastsell_event_type->id                     = 1;
-				$json_fastsell->show_host_organization->id                  = $show_host_id;
-				$json_fastsell->customer_organizations                      = null;
-				$json_fastsell->fastsell_event_to_fastsell_event_options    = null;
+			// Encode
+			$update_json                    = json_encode($json_fastsell);
 
-				// Set the categories
-				$ex_categories                      = explode('][', $this->scrap_string->remove_flc($categories));
-				$ar_categories                      = array();
-				foreach($ex_categories as $category)
+			// Submit the update
+			$update_fastsell                = $this->scrap_web->webserv_call('fastsellevents/.json', $update_json, 'post', FALSE, FALSE);
+
+			if(isset($_FILES['uploadedFileFastsellImage']) && ($_FILES['uploadedFileFastsellImage']['name'] != ''))
+			{
+				$url_fastsell_image     = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner';
+				$call_fastsell_image    = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
+				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
+
+				if($call_fastsell_image['error'] == FALSE)
 				{
-					array_push($ar_categories, array('id' => $category));
-				}
-				$json_fastsell->fastsell_item_categories                    = $ar_categories;
+					$json_fastsell_image    = $call_fastsell_image['result'];
 
-				// Recode
-				$update_json		                = json_encode($json_fastsell);
-				//echo $update_json;
-
-				// Submit the fastsell event update
-				$update_fastsell		            = $this->scrap_web->webserv_call('fastsellevents/.json', $update_json, 'post', FALSE, FALSE);
-
-				// Validate the result
-				if($update_fastsell['error'] == FALSE)
-				{
-					if(isset($_FILES['uploadedFileFastsellImage']) && ($_FILES['uploadedFileFastsellImage']['name'] != ''))
+					if($json_fastsell_image->is_empty == TRUE)
 					{
-						$url_fastsell_image         = 'serverlocalfiles/.jsons?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner';
-						$call_fastsell_image        = $this->scrap_web->webserv_call($url_fastsell_image, FALSE, 'get', FALSE, FALSE);
-						$document_file			    = str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
+						// Create the banner folder
+						$url_sample_path                = 'serverlocalfiles/sample.json';
+						$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+						$json_sample_path               = $call_sample_path['result'];
 
-						if($call_fastsell_image['error'] == FALSE)
-						{
-							$json_fastsell_image    = $call_fastsell_image['result'];
+						// Edit DOM
+						$json_sample_path->path         = 'scrap_shows/'.$fastsell_id.'/banner';
+						$json_new_folder                = json_encode($json_sample_path);
 
-							if($json_fastsell_image->is_empty == TRUE)
-							{
-								// Create the banner folder
-								$url_sample_path                = 'serverlocalfiles/sample.json';
-								$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
-								$json_sample_path               = $call_sample_path['result'];
+						// Create directory
+						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
-								// Edit DOM
-								$json_sample_path->path         = 'scrap_shows/'.$fastsell_id.'/banner';
-								$json_new_folder                = json_encode($json_sample_path);
-
-								// Create directory
-								$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
-
-								// Upload the file
-								$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows/'.$fastsell_id.'/banner/'.$document_file['name'];
-								$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
-							}
-							else
-							{
-								foreach($json_fastsell_image->server_local_files as $file_info)
-								{
-									$url_delete                 = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.str_replace(' ', '%20', $file_info->name);
-									$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
-								}
-
-								// Upload the file
-								$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$document_file['name'];
-								$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
-							}
-						}
+						// Upload the file
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows/'.$fastsell_id.'/banner/'.$document_file['name'];
+						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
-				}
-				else
-				{
-					// Return the error message
-					$json				= $update_fastsell['result'];
-					echo $json;
+					else
+					{
+						foreach($json_fastsell_image->server_local_files as $file_info)
+						{
+							$url_delete                 = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.str_replace(' ', '%20', $file_info->name);
+							$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+						}
+
+						// Upload the file
+						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$document_file['name'];
+						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
+					}
 				}
 			}
 		}

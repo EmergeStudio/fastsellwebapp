@@ -21,10 +21,110 @@ $(document).ready(function(){
 
     $fc_add_customers();
 
+    $fc_edit_customer();
+
     $fc_delete_customer();
+
+    $fc_search_customers();
 
 
 // ------------------------------------------------------------------------------FUNCTIONS
+
+
+    // ---------- SEARCH CUSTOMERS
+    function $fc_search_customers()
+    {
+        var delay = (function()
+        {
+            var timer = 0;
+            return function(callback, ms)
+            {
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $('.popAddGroup input[name="inpSearchCustomerText"]').live('keyup', function()
+        {
+            delay(function()
+            {
+                $input		= $('.popAddGroup input[name="inpSearchCustomerText"]').val().toLowerCase();
+
+                if($input.length > 2)
+                {
+                    // Show all
+                    $('.popAddGroup .customerCheckContain').show();
+
+                    // Hide all that don't check out
+                    $('.popAddGroup .customerCheckContain').each(function()
+                    {
+                        $emp_name	= $(this).find('.customerName').text().toLowerCase();
+
+                        if($emp_name.match($input) == null)
+                        {
+                            $(this).hide();
+                        }
+                    });
+
+                    $('body').sunBox.adjust_popup_height('popAddGroup');
+                }
+                else
+                {
+                    // Show all
+                    $('.popAddGroup .customerCheckContain').show();
+                    $('body').sunBox.adjust_popup_height('popAddGroup');
+                }
+            },
+                500
+            );
+        });
+
+        $('.popEditGroup input[name="inpSearchCustomerText"]').live('keyup', function()
+        {
+            delay(function()
+            {
+                $input		= $('.popEditGroup input[name="inpSearchCustomerText"]').val().toLowerCase();
+
+                if($input.length > 2)
+                {
+                    // Show all
+                    $('.popEditGroup .customerCheckContain').show();
+
+                    // Hide all that don't check out
+                    $('.popEditGroup .customerCheckContain').each(function()
+                    {
+                        $emp_name	= $(this).find('.customerName').text().toLowerCase();
+
+                        if($emp_name.match($input) == null)
+                        {
+                            $(this).hide();
+                        }
+                    });
+
+                    $('body').sunBox.adjust_popup_height('popEditGroup');
+                }
+                else
+                {
+                    // Show all
+                    $('.popEditGroup .customerCheckContain').show();
+                    $('body').sunBox.adjust_popup_height('popEditGroup');
+                }
+            },
+                500
+            );
+        });
+    }
+
+    // ----- SAVE PRODUCT CHANGES
+    function $fc_search()
+    {
+        $('.frmSearch input').focus();
+
+        $('.btnSearch').live('click', function()
+        {
+            $('.frmSearch').submit();
+        });
+    }
 
     // ----- AUTOCOMPLETE
     function $fc_auto_complete($values)
@@ -83,6 +183,76 @@ $(document).ready(function(){
                     return false;
                 }
             });
+    }
+
+    // ----- EDIT A CUSTOMER
+    function $fc_edit_customer()
+    {
+        // Edit group popup
+        $('body').sunBox.popup('Edit A Customer', 'popEditCustomer',
+        {
+            ajax_path		: $ajax_base_path + 'edit_customer_popup',
+            close_popup		: false,
+            callback 		: function($return){}
+        });
+
+        // Open popup
+        $('.btnEditCustomer').on('click', function()
+        {
+            // Some variables
+            $parent                     = $(this).parents('tr');
+            $customer_id                = $parent.find('.hdCustomerId').text();
+            $customer_name              = $parent.find('.fullCell').text();
+            $customer_to_show_host_id   = $parent.find('.hdCustomerToShowHostId').text();
+
+            // Send the delete request
+            $.post($ajax_base_path + 'get_customer_popup_content',
+            {
+                customer_to_show_host_id	        : $customer_to_show_host_id
+            },
+            function($data)
+            {
+                $data	            = jQuery.trim($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else
+                {
+                    // Show the popup
+                    $('.popEditCustomer .popup').html($data);
+                    $.scrap_uniform_update('.popEditCustomer input');
+                    $('body').sunBox.show_popup('popEditCustomer');
+                    $('body').sunBox.adjust_popup_height('popEditCustomer');
+                }
+            });
+        });
+
+        // Edit the customer
+        $('.popEditCustomer .returnTrue').live('click', function()
+        {
+            // Some variables
+            $error              = false;
+
+            // Validate
+            if($error == false)
+            {
+                if($('.popEditCustomer input[name="inpCustomerName"]').val().length < 1)
+                {
+                    $error      = true;
+                    $('.popEditCustomer input[name="inpCustomerName"]').addClass('redBorder');
+                    $.scrap_note_time('Please provide a customer name', 4000, 'cross');
+                }
+            }
+
+            // Submit
+            if($error == false)
+            {
+                $('.popEditCustomer input[name="hdReturnUrl"]').val($('#hdReturnUrl').val());
+                $('.frmEditCustomer').submit();
+            }
+        });
     }
 
     // ----- EDIT A GROUP
@@ -367,7 +537,7 @@ $(document).ready(function(){
                     else if($data != 'okitsdone')
                     {
                         $.scrap_note_time($data, 4000, 'cross');
-                        $('.'+ $this_row +' .loader').addClass('cross').removeClass('loader');
+                        $('.'+ $this_row +' .loader').addClass('cross removeFromList').removeClass('loader');
                     }
                     else
                     {
@@ -394,6 +564,13 @@ $(document).ready(function(){
                     }
                 });
             }
+        });
+
+        // Remove customer from the list
+        $('.popAddCustomer .removeFromList').live('click', function()
+        {
+            $(this).parents('tr').remove();
+            $('body').sunBox.adjust_popup_height('popAddCustomer');
         });
     }
 

@@ -18,18 +18,18 @@ echo form_open('customers/add_group', 'class="frmAddGroup"');
 		);
 		echo form_input($inp_customer_group);
 
-	echo close_div();
-
-	// Some height
-	echo div_height(25);
-
-	// Customer list
-	echo open_div('inset');
+		echo div_height(8);
 
 		if($customers['error'] == FALSE)
 		{
 			// Label
-			echo form_label('Tick Off The Customers You Want In This Group?').div_height(5);
+			echo form_label('Search For A Customer:');
+
+			// Search input
+			echo form_input('inpSearchCustomerText', '', 'class="floatLeft inpSearchCustomerText"');
+			echo clear_float();
+
+			echo div_height(5);
 
 			// Tick boxes
 			$json_customers     = $customers['result'];

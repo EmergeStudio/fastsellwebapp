@@ -40,9 +40,11 @@ if($customers['error'] == FALSE)
 
 		// Buttons
 		$html   = '';
-		$html   .= open_div('extraOptions');
+		$html   .= '<div class="extraOptions" style="width:70px;">';
 
-			$html   .= full_div('', 'btnDeleteCustomer icon-cross', 'Delete this customer');
+			$html   .= full_div('', 'btnDeleteCustomer icon-cross floatRight', 'Delete this customer');
+			$html   .= full_div('', 'btnEditCustomer icon-pencil floatRight', 'Edit this customer');
+			$html   .= clear_float();
 
 			// Hidden data
 			$html   .= hidden_div($customer->id, 'hdCustomerId');

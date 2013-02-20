@@ -50,6 +50,20 @@ echo open_div('appNavigationContainer middle');
 
 			echo '</li>';
 
+			// Buying preferences link
+			if($app_page == 'pageBuyingPrefs')
+			{
+				echo '<li class="active">';
+			}
+			else
+			{
+				echo '<li>';
+			}
+
+				echo anchor('buying_preferences', '<span class="icon-basket blue"></span>Buying Preferences', 'class="sectionNavLink"');
+
+			echo '</li>';
+
 		echo '</ul>';
 
 		// Clear float

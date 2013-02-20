@@ -24,7 +24,7 @@ class Logout extends CI_Controller
 		$this->session->sess_destroy();
 		
 		// Redirect
-		redirect('http://www.fastsellfoods.com/');
+		redirect('http://fastsellqa.emergestudio.net/');
 	}
 }
 

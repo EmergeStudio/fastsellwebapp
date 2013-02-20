@@ -101,8 +101,12 @@ $(document).ready(function(){
                 }
             })
             .autocomplete({
-                source: $ajax_base_path + 'search_for_category',
-                minLength: 3,
+                minLength: 0,
+                source: function( request, response ) {
+                    // delegate back to autocomplete, but extract the last term
+                    response( $.ui.autocomplete.filter(
+                        availableTags, extractLast( request.term ) ) );
+                },
                 focus: function() {
                     // prevent value inserted on focus
                     return false;

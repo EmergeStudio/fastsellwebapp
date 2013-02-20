@@ -366,7 +366,16 @@ class Ajax_handler_products extends CI_Controller
 			$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
 			$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 
-			echo 'wassuccessfullyuploaded';
+			if($call_file_upload['error'] == FALSE)
+			{
+				echo 'wassuccessfullyuploaded';
+			}
+			else
+			{
+				// Return the error message
+				$json				        = $call_file_upload['result'];
+				echo $json->error_description;
+			}
 		}
 		else
 		{
@@ -774,7 +783,6 @@ class Ajax_handler_products extends CI_Controller
 							$json_sample['fastsell_event']['id']            = $event_id;
 							$json_sample['fastsell_item_field_values']      = null;
 							$json_sample['fastsell_item_definition']['id']  = $fs_definition;
-							$json_sample['fastsell_item_category']['id']    = 1;
 
 							// Recode
 							$json_create_product		                    = json_encode($json_sample);

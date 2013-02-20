@@ -145,6 +145,30 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		// Clear float
 		echo clear_float();
 
+		// Fastsell categories
+		echo open_div('inset fastsellCategories');
+
+			// Heading
+			echo full_div('FastSell Categories', 'mainHeading');
+
+			// Text
+			echo '<p>Start typing in the textbox below and find your desired category.</p>';
+
+			$inp_data		= array
+			(
+				'name'		=> 'inpCategorySearch',
+				'class'		=> 'inpCategorySearch inpBigText'
+			);
+			echo form_input($inp_data);
+
+			// The categories to search for
+			echo hidden_div('Food, Beverages & Tobacco][Food Items][Dairy Products][Cheese', 'hdFastSellCategories');
+
+			// Ajax container
+			echo open_div('ajax_fastSellCategories').close_div();
+
+		echo close_div();
+
 	echo close_div();
 
 	// Shifter pane 2

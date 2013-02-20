@@ -45,9 +45,29 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 	}
 
 	// Product image
+//	$img_properties         = array
+//	(
+//		'src'               => 'scrap_assets/images/universal/default_product_image.jpg',
+//		'width'             => 50
+//	);
+
+	// Get the image
+	$src                    = 'scrap_assets/images/universal/default_product_image.jpg';
+	$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$order_item->fastsell_item->id.'%2Fimage';
+	$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+	if($call_product_image['error'] == FALSE)
+	{
+		$json_product_image         = $call_product_image['result'];
+		if($json_product_image->is_empty == FALSE)
+		{
+			$image_path             = $json_product_image->server_local_files[0]->path;
+			$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+		}
+	}
+
 	$img_properties         = array
 	(
-		'src'               => 'scrap_assets/images/universal/default_product_image.jpg',
+		'src'               => $src,
 		'width'             => 50
 	);
 	array_push($ar_fields, img($img_properties));

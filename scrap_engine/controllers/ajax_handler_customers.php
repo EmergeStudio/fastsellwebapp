@@ -215,6 +215,7 @@ class Ajax_handler_customers extends CI_Controller
 				$ar_emails['email']							        = $email;
 
 				$json_sample->name                                  = $customer_name;
+				$json_sample->customer_to_show_host->customer_name  = $customer_name;
 
 				$customer_to_show_host                              = $json_sample->customer_to_show_host;
 				$customer_to_show_host->show_host_organization      = $show_host_id;
@@ -376,6 +377,7 @@ class Ajax_handler_customers extends CI_Controller
 				$ar_emails['email']							        = $email;
 
 				$json_sample->name                                  = $customer_name;
+				$json_sample->customer_to_show_host->customer_name  = $customer_name;
 
 				$customer_to_show_host                              = $json_sample->customer_to_show_host;
 				$customer_to_show_host->show_host_organization      = $show_host_id;
@@ -832,6 +834,25 @@ class Ajax_handler_customers extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| EDIT CUSTOMER POPUP
+	|--------------------------------------------------------------------------
+	*/
+	function edit_customer_popup()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Get the view
+			$this->load->view('customers/ajax/quick_view');
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| EDIT CUSTOMER GROUP POPUP CONTENT
 	|--------------------------------------------------------------------------
 	*/
@@ -855,6 +876,40 @@ class Ajax_handler_customers extends CI_Controller
 
 			// Get the view
 			$this->load->view('customers/ajax/edit_customer_group_popup_content', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| EDIT CUSTOMER POPUP CONTENT
+	|--------------------------------------------------------------------------
+	*/
+	function get_customer_popup_content()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$show_host_id                           = $this->scrap_web->get_show_host_id();
+			$customer_to_show_host_id               = $this->input->post('customer_to_show_host_id');
+			$dt_body['customer_to_show_host_id']    = $customer_to_show_host_id;
+
+			// Get the group information
+			$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+			$call_groups                    = $this->scrap_web->webserv_call($url_groups, FALSE, 'get', FALSE, FALSE);
+			$dt_body['groups']              = $call_groups;
+
+			// Get all the customers
+			$url_customer                   = 'customertoshowhosts/.json?id='.$customer_to_show_host_id;
+			$call_customer                  = $this->scrap_web->webserv_call($url_customer, FALSE, 'get', FALSE, FALSE);
+			$dt_body['customer']            = $call_customer;
+
+			// Get the view
+			$this->load->view('customers/ajax/edit_customer_popup_content', $dt_body);
 		}
 		else
 		{

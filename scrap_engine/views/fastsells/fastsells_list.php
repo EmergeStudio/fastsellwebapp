@@ -5,7 +5,7 @@
 if($fastsells['error'] == FALSE)
 {
 	// Heading
-	echo heading('<span class="icon-ticket yellow"></span>FastSells Coming Up', 3);
+//	echo heading('<span class="icon-ticket yellow"></span>FastSells Coming Up', 3);
 
 	// Get the result
 	$json_fastsells			    = $fastsells['result'];
@@ -57,9 +57,21 @@ if($fastsells['error'] == FALSE)
 				// Counter
 				echo '<td>';
 
-					if($fastsell->event_start_date < $this->scrap_string->crt_db_date_time_2())
+					$current_time           = $this->scrap_web->get_current_time();
+					$start_time             = $fastsell->event_start_date;
+					$end_time               = $fastsell->event_end_date;
+					//					$end_time               = str_replace('-', '',str_replace(' ', '', $fastsell->event_end_date));
+
+					//					echo 'Current Time: '.$current_time.'<br>';
+					//					echo 'Start Time: '.$start_time.'<br>';
+					//					echo 'End Time: '.$end_time.'<br>';
+
+					//					echo $this->scrap_string->make_db_date($fastsell->event_start_date).'<br>';
+					//					echo substr($fastsell->event_start_date, 11).'<br>';
+
+					if($current_time > $start_time)
 					{
-						if($fastsell->event_end_date > $this->scrap_string->crt_db_date_time_2())
+						if($fastsell->event_end_date > $this->scrap_web->get_current_time())
 						{
 							echo full_div('FastSell Currently Running', 'yellowBlock');
 

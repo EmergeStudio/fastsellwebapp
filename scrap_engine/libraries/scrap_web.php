@@ -547,4 +547,19 @@ class Scrap_web
 			}
 		}
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| GET THE CURRENT TIME
+	|--------------------------------------------------------------------------
+	*/
+	function get_current_time()
+	{
+		$url_time               = 'timezones/.json';
+		$call_time              = $this->webserv_call($url_time);
+		$json_time              = $call_time['result'];
+
+		return $json_time->time;
+	}
 }

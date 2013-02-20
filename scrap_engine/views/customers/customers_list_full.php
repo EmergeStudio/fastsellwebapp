@@ -29,7 +29,7 @@ if($customers['error'] == FALSE)
 		array_push($ar_fields, img($img_properties));
 
 		// Customer name
-		array_push($ar_fields, array('data' => $customer_details->name, 'class' => 'fullCell'));
+		array_push($ar_fields, array('data' => $customer_to_show_host->customer_name, 'class' => 'fullCell'));
 
 		// Customer number
 		array_push($ar_fields, $customer_to_show_host->customer_number);
@@ -39,9 +39,11 @@ if($customers['error'] == FALSE)
 
 		// Buttons
 		$html   = '';
-		$html   .= open_div('extraOptions');
+		$html   .= '<div class="extraOptions" style="width:70px;">';
 
-			$html   .= full_div('', 'btnDeleteCustomer icon-cross', 'Delete this customer');
+			$html   .= full_div('', 'btnDeleteCustomer icon-cross floatRight', 'Delete this customer');
+			$html   .= full_div('', 'btnEditCustomer icon-pencil floatRight', 'Edit this customer');
+			$html   .= clear_float();
 
 			// Hidden data
 			$html   .= hidden_div($customer_details->id, 'hdCustomerId');

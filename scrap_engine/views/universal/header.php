@@ -222,7 +222,7 @@ div.newOverlay {
 						}
 						else
 						{
-							echo full_div('<span class="icon icon-basket"></span>Buyer', 'accountType');
+							echo full_div('<span class="icon icon-basket"></span>Buyer', 'accountType green');
 						}
 
 						if($crt_page == 'pageUserDetails')
@@ -300,6 +300,7 @@ div.newOverlay {
 
 											echo form_dropdown('drpdwnTimezone', $ar_timezone, $timezone);
 											echo form_hidden('hdReturnTimeUrl', current_url());
+											echo hidden_div($json_time->hour, 'hdTimeDiff');
 
 										echo form_close();
 									

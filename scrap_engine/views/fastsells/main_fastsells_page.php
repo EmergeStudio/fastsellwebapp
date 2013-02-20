@@ -18,9 +18,9 @@ echo open_div('middle');
 					}
 				}
 
-				echo open_div('floatLeft');
+			echo open_div('floatLeft');
 
-				echo div_height(32);
+				echo heading('Your FastSells', 3);
 
 			echo close_div();
 

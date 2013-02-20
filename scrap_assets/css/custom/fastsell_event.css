@@ -147,6 +147,9 @@ div.selector span {
     position: absolute;
     margin-left: 620px;
 }
+.middle .tblFastSellInfo {
+    width: 100%;
+}
 .middle .tblFastSellInfo h2 {
     padding: 15px 10px 0px 10px;
 }
@@ -172,10 +175,11 @@ div.selector span {
     padding: 20px 30px 20px 74px;
     margin-top: -6px;
     font-size: 24px;
+    background-color: #399402;
 }
 .middle .bigBuyButton:hover {
     color: #fff;
-    background-color: #ffbf60;
+    background-color: #2d7700;
 }
 .middle .bigBuyButton span {
     position: absolute;
@@ -183,4 +187,73 @@ div.selector span {
     color: #fff;
     text-shadow: none;
     font-size: 34px;
+}
+.middle .fastsellCategories {
+    margin-top: 40px;
+    padding: 25px;
+}
+.middle .fastsellCategories .mainHeading {
+    display: block;
+    width: 251px;
+    height: 31px;
+    text-indent: -1000px;
+    background-image: url(../../images/messages/fastsell_categories.png);
+    overflow: hidden;
+}
+.middle .fastsellCategories p {
+    margin-top: 5px;
+    color: #000;
+    text-shadow: none;
+}
+.middle .fastsellCategories .inpCategorySearch {
+    padding-left: 34px;
+    width: 450px;
+    background-image: url(../../images/icons/search.png);
+    background-repeat: no-repeat;
+    background-position: 10px 10px;
+}
+.middle .catBack {
+    margin-top: 10px;
+    background-color:#FFF;
+}
+.middle .catBack.loader {
+    padding: 20px;
+    background-image: url(../../images/universal/ajax_loader5.gif);
+    background-repeat: no-repeat;
+    background-position: 12px 12px;
+}
+.middle .catBack.blue {
+    border: 1px solid #2390b5;
+    background-image: url(../../images/universal/category_back.png);
+}
+.middle .catBack .breadCrumb {
+    float: left;
+    padding: 12px 15px 10px 24px;
+    text-shadow: none;
+    color: #fff;
+    background-image: url(../../images/universal/category_divider.png);
+    background-repeat: no-repeat;
+}
+.middle .catBack .breadCrumb.first {
+    background: none;
+    padding-left: 15px;
+}
+.middle .catBack .breadCrumb.last {
+    background-image: url(../../images/universal/category_back_active.png);
+    border-right: 1px solid #82cfea;
+}
+.middle .catBack .breadCrumb.first.last {
+    background-position: -14px 0px;
+}
+.middle .catBack .btnDeleteCategory {
+    float: right;
+    text-shadow: none;
+    font-size: 28px;
+    margin: 6px 10px 0px 0px;
+    color: #ffbe5e;
+    text-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+}
+.middle .catBack .btnDeleteCategory:hover {
+    color: #fff;
+    cursor: pointer;
 }

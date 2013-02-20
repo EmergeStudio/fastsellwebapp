@@ -13,10 +13,34 @@ $(document).ready(function(){
 
 // ------------------------------------------------------------------------------EXECUTE
 
+    $fc_counter();
+
     $fc_print_confirmation();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- COUNTER
+    function $fc_counter()
+    {
+        $('.counterTime').each(function()
+        {
+            // Some variables
+            $date                 = $(this).find('.hdDate').text();
+            $ex_date              = $date.split('-');
+            $time                 = $(this).find('.hdTime').text();
+            $hours                = $time.substr(0,2);
+            $minutes              = $time.substr(2,2);
+            $seconds              = $time.substr(4,2);
+
+            // Set the counter
+            $(this).countdown(
+                {
+                    // Time stamp
+                    timestamp	        : (new Date($ex_date[0], ($ex_date[1]-1), ($ex_date[2]-20), $hours, $minutes, $seconds)).getTime() + 20*24*60*60*1000
+                });
+        });
+    }
 
     // ----- PRINT CONFIRMATION
     function $fc_print_confirmation()

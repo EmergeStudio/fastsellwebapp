@@ -831,7 +831,13 @@ html {
     font-size: 30px;
     text-shadow: none;
 }
-.middle .coolTable .extraOptions .icon-cross:hover {
+.middle .coolTable .extraOptions .icon-pencil {
+    font-size: 20px;
+    text-shadow: none;
+    margin-top: 6px;
+    margin-right: 6px;
+}
+.middle .coolTable .extraOptions .icon-cross:hover, .middle .coolTable .extraOptions .icon-pencil:hover {
     cursor: pointer;
     color: #d61818;
 }
@@ -885,6 +891,9 @@ html {
 }
 .middle .blueBlock {
     background-color: #1ba2d0;
+}
+.ui-autocomplete-loading {
+    background: #fff url('../../images/universal/ajax_loader5.gif') right center no-repeat !important;
 }
 
 
@@ -1888,9 +1897,9 @@ h4.counterHeadings {
 .ui-autocomplete li a:hover, .ui-autocomplete li a.ui-state-hover {
 	border:none;
 	color:#FFF;
-	background-image:url(../../images/universal/menu_link_back.jpg);
-	background-position:top;
-	background-repeat:repeat-x;
+	/*background-image:url(../../images/universal/menu_link_back.jpg);*/
+	/*background-position:top;*/
+	/*background-repeat:repeat-x;*/
 }
 
 /*--------------------- jQUERY COLORPICKER --------------------*/

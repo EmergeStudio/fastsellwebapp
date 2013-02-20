@@ -239,6 +239,7 @@ $(document).ready(function(){
             function($data)
             {
                 $data	            = jQuery.trim($data);
+                console.log($data);
 
                 $.scrap_note_time('Your product has been added', 4000, 'tick');
                 $fc_refresh_added_product_list();
@@ -551,6 +552,8 @@ $(document).ready(function(){
                                     // Close the popup
                                     $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
                                     $('body').sunBox.close_popup('popAddProduct');
+                                    $('.blockProductImage .imagePreview').addClass('icon-camera').html('');
+                                    $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image_temp' });
                                 }
                             });
                         }
@@ -563,6 +566,8 @@ $(document).ready(function(){
                             // Close the popup
                             $.scrap_note_time('The new product has been added and linked', 4000, 'tick');
                             $('body').sunBox.close_popup('popAddProduct');
+                            $('.blockProductImage .imagePreview').addClass('icon-camera').html('');
+                            $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image_temp' });
                         }
                     }
                     else
@@ -571,6 +576,13 @@ $(document).ready(function(){
                     }
                 });
             }
+        });
+
+        // Cancel the new product
+        $('.popAddProduct .returnFalse').live('click', function()
+        {
+            $('.blockProductImage .imagePreview').addClass('icon-camera').html('');
+            $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image_temp' });
         });
     }
 
