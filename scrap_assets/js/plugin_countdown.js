@@ -41,8 +41,9 @@
 
             // Time left
             $date                   = new Date();
+            $date_utc               = new Date($date.getUTCFullYear(), $date.getUTCMonth(), $date.getUTCDate(),  $date.getUTCHours(), $date.getUTCMinutes(), $date.getUTCSeconds());
             $adjusted_date          = new Date($date);
-            $adjusted_date.setHours($date.getHours() + $time_difference);
+            $adjusted_date.setHours($date_utc.getHours() + $time_difference);
 
             left = Math.floor((options.timestamp - ($adjusted_date)) / 1000);
 

@@ -1,0 +1,103 @@
+/**
+ * customers.css
+ * 
+ * Written by Chris Humboldt at Emerge Studio
+ */
+
+/*-------------------------------------------------------
+
+	Table of Contents:
+	General
+  
+---------------------------------------------------------*/
+
+
+
+/* GENERAL
+--------------------------------------------------------------------------------------- */
+.controlBar .dropDownContainer .selector {
+    float: left;
+    margin-left: 4px;
+}
+.controlBar .labelText {
+    font-weight: bold;
+    padding: 8px 8px 0px 10px;
+}
+.middle .coolScreen .controlBar h3 {
+    padding-left: 35px;
+}
+.middle .coolScreen .controlBar h3 span {
+    position: absolute;
+    text-shadow: none;
+    border: 0px;
+    font-size: 24px;
+    margin: -5px 0px 0px -35px;
+    color: #bbbbbb;
+}
+.middle .coolScreen .controlBar input {
+    width: 120px;
+    margin-right: 2px;
+}
+.middle .coolScreen .controlBar .btnDownloadReport {
+    padding: 6px 12px 6px 40px;
+}
+.middle .coolScreen .controlBar .btnDownloadReport span {
+    position: absolute;
+    margin: -3px 0px 0px -30px;
+    text-shadow: none;
+    color: #fff;
+    font-size: 22px;
+}
+.middle .coolScreen .ajaxReportContainer.messageSelectFastSell {
+    height: 190px;
+    background: url(../../images/messages/select_fastsell_over_there.png);
+    background-repeat: no-repeat;
+    background-position: 480px 0px;
+}
+.middle .coolScreen .ajaxReportContainer.messageSelectDateRange {
+    height: 210px;
+    background: url(../../images/messages/select_date_range.png);
+    background-repeat: no-repeat;
+    background-position: 620px 0px;
+}
+.middle .messageNoReport {
+    display: block;
+    width: 1143px;
+    height: 250px;
+    background-image: url(../../images/messages/no_report.png);
+    background-repeat: no-repeat;
+}
+.itemContainer {
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #f3f3f3;
+    -webkit-box-shadow: 0px 1px 1px #c8c8c8;
+    -moz-box-shadow: 0px 1px 1px #c8c8c8;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    background: -webkit-linear-gradient(#f8f8f8, #ebebeb);
+    background: -moz-linear-gradient(#f8f8f8, #ebebeb);
+}
+.itemContainer:hover {
+    cursor: pointer;
+    border: 1px solid #fafafa;
+    border-top: 1px solid #f3f3f3;
+    background: -webkit-linear-gradient(#fafafa, #fafafa);
+    background: -moz-linear-gradient(#fafafa, #fafafa);
+}
+.itemContainer table {
+    margin: 0px;
+}
+.itemContainer table td {
+    padding: 10px 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+.itemContainer table td .inset {
+    padding: 8px;
+}
+.itemContainer table td h4 {
+    padding: 0px;
+    margin: 0px;
+    font-size: 14px;
+}

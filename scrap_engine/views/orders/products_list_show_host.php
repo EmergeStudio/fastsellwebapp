@@ -13,18 +13,36 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 	$product_name           = '';
 	$product_fields         = '';
 
-	// Product image
-	$img_properties         = array
-	(
-		'src'               => 'scrap_assets/images/universal/default_product_image.jpg',
-		'width'             => 50
-	);
-	array_push($ar_fields, img($img_properties));
-
 	// Get the product
 	$url_product            = 'fastsellitems/.json?id='.$order_item->fastsell_item->id;
 	$call_product           = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
 	$json_product           = $call_product['result'];
+
+	// Product image
+//	$img_properties         = array
+//	(
+//		'src'               => 'scrap_assets/images/universal/default_product_image.jpg',
+//		'width'             => 50
+//	);
+	$src                    = 'scrap_assets/images/universal/default_product_image.jpg';
+	$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$json_product->catalog_item->id.'%2Fimage';
+	$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
+	if($call_product_image['error'] == FALSE)
+	{
+		$json_product_image         = $call_product_image['result'];
+		if($json_product_image->is_empty == FALSE)
+		{
+			$image_path             = $json_product_image->server_local_files[0]->path;
+			$src                    = $this->scrap_web->image_call('serverlocalfiles/file?path='.$image_path);
+		}
+	}
+
+	$img_properties         = array
+	(
+		'src'               => $src,
+		'width'             => 50
+	);
+	array_push($ar_fields, img($img_properties));
 
 	$loop_cnt               = 0;
 

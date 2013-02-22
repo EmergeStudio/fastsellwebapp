@@ -32,7 +32,6 @@ echo open_div('rightColumn');
 		echo full_div('<span class="icon-checkmark-2"></span>Item Number');
 		echo full_div('<span class="icon-checkmark-2"></span>Price');
 		echo full_div('<span class="icon-checkmark-2"></span>Stock Count');
-		echo full_div('<span class="icon-checkmark-2"></span>Category');
 
 		echo div_height(15);
 		echo form_label('Display Discount');

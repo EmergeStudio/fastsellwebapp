@@ -27,6 +27,11 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 	$product_name           = '';
 	$product_fields         = '';
 
+	// Get the product
+	$url_product            = 'fastsellitems/.json?id='.$order_item->fastsell_item->id;
+	$call_product           = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
+	$json_product           = $call_product['result'];
+
 	// Check box properties
 	if($crt_order->order_state->id == 1)
 	{
@@ -53,7 +58,7 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 
 	// Get the image
 	$src                    = 'scrap_assets/images/universal/default_product_image.jpg';
-	$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$order_item->fastsell_item->id.'%2Fimage';
+	$url_product_image      = 'serverlocalfiles/.jsons?path=scrap_products%2F'.$json_product->catalog_item->id.'%2Fimage';
 	$call_product_image     = $this->scrap_web->webserv_call($url_product_image, FALSE, 'get', FALSE, FALSE);
 	if($call_product_image['error'] == FALSE)
 	{
@@ -71,11 +76,6 @@ foreach($crt_order->fastsell_order_to_items as $order_item)
 		'width'             => 50
 	);
 	array_push($ar_fields, img($img_properties));
-
-	// Get the product
-	$url_product            = 'fastsellitems/.json?id='.$order_item->fastsell_item->id;
-	$call_product           = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
-	$json_product           = $call_product['result'];
 
 	$loop_cnt               = 0;
 

@@ -34,6 +34,13 @@ if($definitions['error'] == FALSE)
 			if($loop_count < 3)
 			{
 				$fields             .= make_button($definition_field->field_name, 'productField2', '', 'left');
+
+				if($loop_count == 2)
+				{
+					$fields         .= make_button('Item Number', 'productField2', '', 'left');
+					$fields         .= make_button('Price', 'productField2', '', 'left');
+					$fields         .= make_button('Stock Count', 'productField2', '', 'left');
+				}
 			}
 			else
 			{

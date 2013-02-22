@@ -33,6 +33,8 @@ echo open_div('middle');
 			// Product definitions list
 			echo open_div('listContain');
 
+				echo full_div('', 'countdownTest');
+
 				$this->load->view('fastsells/fastsells_list');
 
 			echo close_div();

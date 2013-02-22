@@ -34,10 +34,7 @@
     vertical-align: middle;
     border-top: 1px solid #b9b9b9;
 }
-.sunBox.popAddProducts td .inpUnits {
-    width: 80px;
-}
-.sunBox.popAddProducts td .inpPrice {
+.sunBox.popAddProducts td .inpUnits, .sunBox.popAddProducts td .inpDiscount, .sunBox.popAddProducts td .inpPrice {
     width: 80px;
 }
 .sunBox.popProductsMasterDataFile .contentCenter .popup .inset input {

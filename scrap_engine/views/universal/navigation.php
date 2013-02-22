@@ -67,7 +67,7 @@ echo open_div('appNavigationContainer middle');
 
 			echo '</li>';
 
-			// Contacts link
+			// Customers link
 			if($app_page == 'pageCustomers')
 			{
 				echo '<li class="active">';
@@ -91,6 +91,43 @@ echo open_div('appNavigationContainer middle');
 					echo '<li>';
 
 						echo anchor('customers/upload_master_file', 'Import Customers', 'class="sectionNavSubLink lastLink"');
+
+					echo '</li>';
+
+				echo '</ul>';
+
+			echo '</li>';
+
+			// Reports link
+			if($app_page == 'pageReports')
+			{
+				echo '<li class="active">';
+			}
+			else
+			{
+				echo '<li>';
+			}
+
+				echo full_div('<span class="icon-bars blue"></span>Reports', 'sectionNavLink');
+
+				// Sub navigation
+				echo '<ul class="subNav">';
+
+					echo '<li>';
+
+						echo anchor('reports/orders_summary', 'Orders Summary', 'class="sectionNavSubLink firstLink"');
+
+					echo '</li>';
+
+					echo '<li>';
+
+						echo anchor('reports/orders_by_event', 'Orders By FastSell', 'class="sectionNavSubLink"');
+
+					echo '</li>';
+
+					echo '<li>';
+
+						echo anchor('reports/orders_by_date', 'Orders By Date', 'class="sectionNavSubLink lastLink"');
 
 					echo '</li>';
 

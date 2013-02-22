@@ -379,7 +379,7 @@ class Fastsells extends CI_Controller
 			// FastSell information
 			$fastsell_info                  = $call_fastsell['result'];
 			$started                        = FALSE;
-			if(date('Y-m-d His') >= $fastsell_info->event_start_date)
+			if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
 			{
 				$started                    = TRUE;
 			}
@@ -886,7 +886,7 @@ class Fastsells extends CI_Controller
 			// FastSell information
 			$fastsell_info                  = $call_fastsell['result'];
 			$started                        = FALSE;
-			if(date('Y-m-d His') >= $fastsell_info->event_start_date)
+			if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
 			{
 				$started                    = TRUE;
 			}
@@ -1237,7 +1237,7 @@ class Fastsells extends CI_Controller
 			// FastSell information
 			$fastsell_info                  = $call_fastsell['result'];
 			$started                        = FALSE;
-			if(date('Y-m-d His') >= $fastsell_info->event_start_date)
+			if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
 			{
 				$started                    = TRUE;
 			}
@@ -1356,7 +1356,7 @@ class Fastsells extends CI_Controller
 			// FastSell information
 			$fastsell_info                  = $call_fastsell['result'];
 			$started                        = FALSE;
-			if(date('Y-m-d His') >= $fastsell_info->event_start_date)
+			if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
 			{
 				$started                    = TRUE;
 			}
@@ -1497,7 +1497,7 @@ class Fastsells extends CI_Controller
 				// FastSell information
 				$fastsell_info                  = $call_fastsell['result'];
 				$started                        = FALSE;
-				if(date('Y-m-d His') >= $fastsell_info->event_start_date)
+				if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
 				{
 					$started                    = TRUE;
 				}
@@ -1607,7 +1607,7 @@ class Fastsells extends CI_Controller
 		// FastSell information
 		$fastsell_info                      = $call_fastsell['result'];
 		$started                            = FALSE;
-		if(date('Y-m-d His') >= $fastsell_info->event_start_date)
+		if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
 		{
 			$started                        = TRUE;
 		}

@@ -450,3 +450,6 @@ a{text-decoration:none;}
 .icon-pencil-3:before {
     content: "\e04a";
 }
+.icon-plus-sign:before {
+    content: "\f0fe";
+}

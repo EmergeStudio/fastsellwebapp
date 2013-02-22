@@ -8,8 +8,7 @@
  * 
  * Main reason for creation is to speed up the layout creation process.
  * 
- * @author		Chris Humboldt (http://www.chrismodem.com)
- * @link		http://www.scrappyworx.com/
+ * @author		Chris Humboldt (http://www.chrismodem.com)s
  */
 	
 	
@@ -18,7 +17,7 @@
 | PAGE NAVIGATION
 |--------------------------------------------------------------------------
 |
-| Create page navigation html.  The controls are run through javascipt as
+| Create page navigation html.  The controls are run through javascript as
 | these buttons are purely static
 |
 | @param 1	= Current page

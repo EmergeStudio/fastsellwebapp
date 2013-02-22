@@ -11,7 +11,7 @@ if($customers['error'] == FALSE)
 	$this->table->set_heading('', array('data' => 'Company Name', 'class' => 'fullCell'), 'Customer Number', '', '');
 
 	// Loop through and display customer
-	foreach($json_customers->customer_organizations as $customer)
+	foreach($json_customers->customer_to_show_hosts as $customer)
 	{
 		// Some variables
 		$customer_details       =   $customer;
@@ -29,11 +29,10 @@ if($customers['error'] == FALSE)
 		array_push($ar_fields, img($img_properties));
 
 		// Customer name
-		array_push($ar_fields, array('data' => $customer->name, 'class' => 'fullCell'));
+		array_push($ar_fields, array('data' => $customer->customer_name, 'class' => 'fullCell'));
 
 		// Customer number
-		//array_push($ar_fields, $customer->customer_number);
-		array_push($ar_fields, 'Needs to be added');
+		array_push($ar_fields, $customer->customer_number);
 
 		// View orders
 		array_push($ar_fields, anchor('customers/orders/'.$customer->id, 'View Orders'));

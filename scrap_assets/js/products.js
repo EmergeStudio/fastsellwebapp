@@ -256,7 +256,6 @@ $(document).ready(function(){
                 $('iframe[name="'+ $iframe_name +'"]').load(function()
                 {
                     $data		= jQuery.trim($('.blockProductImage iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
-                    console.log($data);
 
                     $('.blockProductImage .imagePreview').html('<img src="'+ $data +'" width="312px" alt="">');
                 });

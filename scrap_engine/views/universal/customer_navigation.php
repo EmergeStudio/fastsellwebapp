@@ -64,6 +64,20 @@ echo open_div('appNavigationContainer middle');
 
 			echo '</li>';
 
+			// Reports link
+			if($app_page == 'pageReports')
+			{
+				echo '<li class="active">';
+			}
+			else
+			{
+				echo '<li>';
+			}
+
+				echo anchor('reports/customer_orders', '<span class="icon-bars blue"></span>Reports', 'class="sectionNavLink"');
+
+			echo '</li>';
+
 		echo '</ul>';
 
 		// Clear float

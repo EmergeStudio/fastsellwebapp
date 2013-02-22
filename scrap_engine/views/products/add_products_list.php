@@ -7,7 +7,7 @@ if($products['error'] == FALSE)
 	$json_products          = $products['result'];
 
 	// Table heading
-	$this->table->set_heading('', 'Product Name', array('data' => 'Product Fields', 'class' => 'fullCell'), 'Stock Count', 'Price', '');
+	$this->table->set_heading('', 'Product Name', array('data' => 'Product Fields', 'class' => 'fullCell'), 'Stock Count', '% Discount', 'Price', '');
 
 	// Rows
 	foreach($json_products->catalog_items as $product)
@@ -46,9 +46,17 @@ if($products['error'] == FALSE)
 			'class'         => 'inpPrice'
 		);
 
+		// Discount input
+		$inp_discount       = array
+		(
+			'name'			=> 'inpDiscount',
+			'class'         => 'inpDiscount'
+		);
+
 		// Product fields
 		$loop_cnt               = 0;
 		$product_fields         = '';
+		$ar_information         = array();
 
 		foreach($product->catalog_item_field_values as $product_field)
 		{
@@ -62,6 +70,7 @@ if($products['error'] == FALSE)
 		ksort($ar_information);
 
 		$loop_cnt_1             = 0;
+		$msrp                   = '';
 
 		foreach($ar_information as $key => $value)
 		{
@@ -76,12 +85,17 @@ if($products['error'] == FALSE)
 			{
 				$product_fields     .= $value[1].', ';
 			}
+
+			if(strtolower($value[0]) == 'msrp')
+			{
+				$msrp           = form_input($inp_discount, '', 'maxlength="2"').hidden_div($value[1], 'hdMSRP');
+			}
 		}
 		$product_fields         = $this->scrap_string->remove_lc(trim($product_fields));
 
 		// Table row
 //		$this->table->add_row(img($img_properties), anchor('products/view/'.$product->id, $product_name), array('data' => $product_fields, 'class' => 'fullCell greyTxt'), form_input($inp_units), form_input($inp_price), make_button('Add', 'btnAddProduct').hidden_div($product->id, 'hdProductId'));
-		$this->table->add_row(img($img_properties), $product_name, array('data' => $product_fields, 'class' => 'fullCell greyTxt'), form_input($inp_units), form_input($inp_price), make_button('Add', 'btnAddProduct').hidden_div($product->id, 'hdProductId'));
+		$this->table->add_row(img($img_properties), $product_name, array('data' => $product_fields, 'class' => 'fullCell greyTxt'), form_input($inp_units), $msrp, form_input($inp_price), make_button('Add', 'btnAddProduct').hidden_div($product->id, 'hdProductId'));
 	}
 
 	// Generate table

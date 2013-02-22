@@ -60,14 +60,14 @@ if($fastsells['error'] == FALSE)
 					$current_time           = $this->scrap_web->get_current_time();
 					$start_time             = $fastsell->event_start_date;
 					$end_time               = $fastsell->event_end_date;
-					//					$end_time               = str_replace('-', '',str_replace(' ', '', $fastsell->event_end_date));
+//					$end_time               = str_replace('-', '',str_replace(' ', '', $fastsell->event_end_date));
 
-					//					echo 'Current Time: '.$current_time.'<br>';
-					//					echo 'Start Time: '.$start_time.'<br>';
-					//					echo 'End Time: '.$end_time.'<br>';
+//					echo 'Current Time: '.$current_time.'<br>';
+//					echo 'Start Time: '.$start_time.'<br>';
+//					echo 'End Time: '.$end_time.'<br>';
 
-					//					echo $this->scrap_string->make_db_date($fastsell->event_start_date).'<br>';
-					//					echo substr($fastsell->event_start_date, 11).'<br>';
+//					echo $this->scrap_string->make_db_date($fastsell->event_start_date).'<br>';
+//					echo substr($fastsell->event_start_date, 11).'<br>';
 
 					if($current_time > $start_time)
 					{

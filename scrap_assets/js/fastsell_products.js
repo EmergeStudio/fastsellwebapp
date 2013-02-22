@@ -203,9 +203,33 @@ $(document).ready(function(){
         $('.btnAddProductPopup').live('click', function()
         {
             $('.popAddProducts .returnTrue').text('Add All');
-            $('body').sunBox.popup_change_width('popAddProducts', 1050);
+            $('body').sunBox.popup_change_width('popAddProducts', 1200);
             $('body').sunBox.show_popup('popAddProducts');
             $('body').sunBox.adjust_popup_height('popAddProducts');
+
+            // Calculate price on percentage
+            $('.popAddProducts .inpDiscount').keyup(function()
+            {
+                // Some variables
+                $parents            = $(this).parents('tr');
+                $percentage         = $(this).val();
+                $msrp               = $parents.find('.hdMSRP').text();
+
+                if($.scrap_is_integer($percentage) == true)
+                {
+                    // Calculate new value
+                    $new_price      = ($msrp * (1 - ($percentage / 100))).toFixed(2);
+                    $parents.find('.inpPrice').val($new_price);
+                }
+            });
+
+            // Clear percent
+            $('.popAddProducts .inpPrice').keyup(function()
+            {
+                // Some variables
+                $parents            = $(this).parents('tr');
+                $parents.find('.inpDiscount').val('');
+            });
         });
 
         // Add product
@@ -221,11 +245,10 @@ $(document).ready(function(){
             $price                  = $parent.find('input[name="inpPrice"]').val();
             $event_id               = $('.hdEventId').text();
 
-            //console.log($product_id + ' -- ' + $stock + ' -- ' + $price + ' -- ' + $event_id);
-
             // Clear fields
             $parent.find('input[name="inpUnits"]').val('');
             $parent.find('input[name="inpPrice"]').val('');
+            $parent.find('input[name="inpDiscount"]').val('');
 
             // Add the product
             $.scrap_note_loader('Adding your product');
@@ -266,6 +289,7 @@ $(document).ready(function(){
                 // Clear fields
                 $parent.find('input[name="inpUnits"]').val('');
                 $parent.find('input[name="inpPrice"]').val('');
+                $parent.find('input[name="inpDiscount"]').val('');
 
                 // Add the product
                 $.post($base_path + 'ajax_handler_fastsells/fastsell_create_product',
