@@ -173,7 +173,7 @@ class Ajax_handler extends CI_Controller
  			$new_json				= json_encode($json_sample);
 				
  			// Submit the changes
- 			$new_show_host			= $this->scrap_web->webserv_call('showhosts/.json', $new_json, 'put');
+ 			$new_show_host			= $this->scrap_web->webserv_call('showhosts/.json', $new_json, 'put', FALSE, FALSE, TRUE);
 			//echo 'userloginsuccess';
 
  			// Validate the result
@@ -189,14 +189,14 @@ class Ajax_handler extends CI_Controller
  			{
  				// Return the error message
  				$json					= $new_show_host['result'];
- 				echo $json->error_description;
+ 				echo $json['error_description'];
  			}
  		}
  		else
  		{
  			// Return the error message
  			$json_error				= $call_sample['result'];
- 			echo $json->error_description;
+ 			echo $json['error_description'];
  		}
 	}
 

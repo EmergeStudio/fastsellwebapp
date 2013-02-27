@@ -21,9 +21,20 @@ $(document).ready(function(){
     });
 
     $fc_report_by_date();
+
+    $fc_download_report();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- DOWNLOAD REPORT
+    function $fc_download_report()
+    {
+        $('.btnDownloadReport').live('click', function()
+        {
+            $('.frmDownloadReport').submit();
+        });
+    }
 
     // ---------- SELECT BY DATE REPORT
     function $fc_report_by_date()

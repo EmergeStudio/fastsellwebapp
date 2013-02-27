@@ -14,9 +14,20 @@ $(document).ready(function(){
 // ------------------------------------------------------------------------------EXECUTE
 
     $fc_select_fastsell_report();
+
+    $fc_download_report();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- DOWNLOAD REPORT
+    function $fc_download_report()
+    {
+        $('.btnDownloadReport').live('click', function()
+        {
+            $('.frmDownloadReport').submit();
+        });
+    }
 
     // ---------- SELECT A FASTSELL REPORT
     function $fc_select_fastsell_report()

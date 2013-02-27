@@ -241,6 +241,28 @@ class Reports extends CI_Controller
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DOWNLOAD REPORT
+	|--------------------------------------------------------------------------
+	*/
+	function download_report()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		// Load the helper
+		$this->load->helper('download');
+
+
+		$user_dir                   = $this->scrap_web->get_user_dir(FALSE, 'local');
+		$data                       = file_get_contents($user_dir.'/download/'.$this->input->post('hdFilename')); // Read the file's contents
+		$name                       = $this->input->post('hdFilename');
+
+		force_download($name, $data);
+	}
 }
 
 /* End of file template_name.php */

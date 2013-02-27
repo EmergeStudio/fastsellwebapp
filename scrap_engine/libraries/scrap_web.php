@@ -20,7 +20,7 @@ class Scrap_web
 	| WEB SERVICE CALL
 	|--------------------------------------------------------------------------
 	*/
-	function webserv_call($url, $post_data = FALSE, $protocol = 'post', $marshaller = FALSE, $display_url = FALSE, $as_array = FALSE)
+	function webserv_call($url, $post_data = FALSE, $protocol = 'post', $marshaller = FALSE, $display_url = FALSE, $as_array = FALSE, $stream = FALSE)
 	{
 		// Some variables
         if($marshaller == FALSE)
@@ -119,7 +119,14 @@ class Scrap_web
 				$ar_return['curl_info']		= $curl_info;
 				if($as_array == FALSE)
 				{
-					$ar_return['result']    = json_decode($result);
+					if($stream == FALSE)
+					{
+						$ar_return['result']    = json_decode($result);
+					}
+					else
+					{
+						$ar_return['result']    = $result;
+					}
 				}
 				else
 				{
@@ -366,17 +373,17 @@ class Scrap_web
 		}
 		
 		// Get user information
-		$user_data				= $this->webserv_call('users/xml?id='.$user_id);
+		$user_data				= $this->webserv_call('users/.json?id='.$user_id);
 		
 		// Check for errors
 		if($user_data['error'] == FALSE)
 		{
 			// Setup the path to check
-			$user_xml			= new SimpleXmlElement($user_data['result']);
-			$user_date_created	= $user_xml->create_date;
+			$user_json			= $user_data['result'];
+			$user_date_created	= $user_json->create_date;
 			$folder_date		= $this->CI->scrap_string->folder_date($user_date_created);
 			$user_path			= $folder_date.'/'.$user_id;
-			
+
 			// Return
 			if($path_type == 'url')
 			{

@@ -29,7 +29,7 @@ if($orders['error'] == FALSE)
 				$quantity               = $order_item->quantity;
 				$price                  = $order_item->fastsell_item->price;
 				$crt_total              = number_format($quantity * $price, 2);
-				$grand_total            = $grand_total + $crt_total;
+				$grand_total            = $grand_total + ($quantity * $price);
 			}
 			$grand_total                = number_format($grand_total, 2);
 			$fastsell_name              = $json_crt_order->fastsell_event->name;
