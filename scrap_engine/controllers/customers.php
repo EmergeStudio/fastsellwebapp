@@ -596,6 +596,121 @@ class Customers extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| SAVE ADDRESSES
+	|--------------------------------------------------------------------------
+	*/
+	function save_addresses()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		// Some variables
+		$customer_org_id                    = $this->scrap_web->get_customer_org_id();
+		$bill_address_1                     = $this->input->post('billAddress1');
+		$bill_address_2                     = $this->input->post('billAddress2');
+		$bill_address_3                     = $this->input->post('billAddress3');
+		$bill_city                          = $this->input->post('billCity');
+		$bill_state                         = $this->input->post('billState');
+		$bill_postal_code                   = $this->input->post('billPostalCode');
+		$ship_address_1                     = $this->input->post('shipAddress1');
+		$ship_address_2                     = $this->input->post('shipAddress2');
+		$ship_address_3                     = $this->input->post('shipAddress3');
+		$ship_city                          = $this->input->post('shipCity');
+		$ship_state                         = $this->input->post('shipState');
+		$ship_postal_code                   = $this->input->post('shipPostalCode');
+		$return_url                         = $this->input->post('hdReturnUrl');
+		$bill_address_set                   = FALSE;
+		$ship_address_set                   = FALSE;
+
+		// Get customer organization details
+		$url_customer                       = 'customers/.json?id='.$customer_org_id;
+		$call_customer                      = $this->scrap_web->webserv_call($url_customer, FALSE, 'get', FALSE, FALSE);
+
+		// Address sample
+		$url_sample                         = 'addresses/sample.json';
+		$call_sample_bill                   = $this->scrap_web->webserv_call($url_sample, FALSE, 'get', FALSE, FALSE);
+		$call_sample_ship                   = $this->scrap_web->webserv_call($url_sample, FALSE, 'get', FALSE, FALSE);
+		$json_sample_bill                   = $call_sample_bill['result'];
+		$json_sample_ship                   = $call_sample_ship['result'];
+
+		// Edit the JSON
+		$json_customer                      = $call_customer['result'];
+
+		// Check what there is
+		if($json_customer->addresses != null)
+		{
+			foreach($json_customer->addresses as $address_check)
+			{
+				if($address_check->address_type->id == 1)
+				{
+					$bill_address_set           = $address_check->id;
+				}
+				elseif($address_check->address_type->id == 2)
+				{
+					$ship_address_set           = $address_check->id;
+				}
+
+			}
+		}
+
+		// Set the addresses array
+		$ar_addresses                       = array();
+
+		$json_sample_bill->city                     = $bill_city;
+		$json_sample_bill->address_one              = $bill_address_1;
+		$json_sample_bill->address_two              = $bill_address_2;
+		$json_sample_bill->address_three            = $bill_address_3;
+		$json_sample_bill->postal_code              = $bill_postal_code;
+		$json_sample_bill->state_province           = $bill_state;
+		$json_sample_bill->address_type->id         = 1;
+
+		if($bill_address_set != FALSE)
+		{
+			$json_sample_bill->id           = $bill_address_set;
+		}
+		array_push($ar_addresses, $json_sample_bill);
+
+		if($this->input->post('checkMakeSame') == 'yesno')
+		{
+			$json_sample_ship->city                     = $bill_city;
+			$json_sample_ship->address_one              = $bill_address_1;
+			$json_sample_ship->address_two              = $bill_address_2;
+			$json_sample_ship->address_three            = $bill_address_3;
+			$json_sample_ship->postal_code              = $bill_postal_code;
+			$json_sample_ship->state_province           = $bill_state;
+			$json_sample_ship->address_type->id         = 2;
+		}
+		else
+		{
+			$json_sample_ship->city                     = $ship_city;
+			$json_sample_ship->address_one              = $ship_address_1;
+			$json_sample_ship->address_two              = $ship_address_2;
+			$json_sample_ship->address_three            = $ship_address_3;
+			$json_sample_ship->postal_code              = $ship_postal_code;
+			$json_sample_ship->state_province           = $ship_state;
+			$json_sample_ship->address_type->id         = 2;
+		}
+		if($ship_address_set != FALSE)
+		{
+			$json_sample_ship->id           = $ship_address_set;
+		}
+		array_push($ar_addresses, $json_sample_ship);
+
+		$json_customer->addresses           = $ar_addresses;
+
+		// Update JSON
+		$update_json                        = json_encode($json_customer);
+
+		// Update the customer
+		$update_customer                    = $this->scrap_web->webserv_call('customers/.json', $update_json, 'post');
+
+		// Redirect
+		redirect($return_url);
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| CUSTOMER ORDERS
 	|--------------------------------------------------------------------------
 	*/

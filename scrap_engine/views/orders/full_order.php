@@ -36,10 +36,27 @@ if($order != FALSE)
 							echo '<td>';
 
 								echo div_height(2);
-								echo $crt_order->billing_address->address_one.', ';
-								echo $crt_order->billing_address->city.', ';
-								echo $crt_order->billing_address->state_province.', ';
-								echo $crt_order->billing_address->postal_code;
+								foreach($addresses->addresses as $address)
+								{
+									if($address->address_type->id == 2)
+									{
+										if(!empty($address->address_one))
+										{
+											echo $address->address_one.', ';
+										}
+										if(!empty($address->address_two))
+										{
+											echo $address->address_two.', ';
+										}
+										if(!empty($address->address_three))
+										{
+											echo $address->address_three.', ';
+										}
+										echo $address->city.', ';
+										echo $address->state_province.', ';
+										echo $address->postal_code;
+									}
+								}
 
 							echo '</td>';
 

@@ -51,7 +51,8 @@ class Scrap_wall
 				$java_id			= trim($json->session_id);
 				$username			= trim($json->username);
 				$role				= trim($json->role_summary);
-				$exp_role			= explode('[', $this->CI->scrap_string->remove_lc($role));
+				$exp_role_1		    = explode(':', $role);
+				$exp_role			= explode('[', $this->CI->scrap_string->remove_lc($exp_role_1[0]));
 				$acc_type			= $exp_role[0];
 				$role_type			= $exp_role[1];
 				if($acc_type == 'ShowHost')

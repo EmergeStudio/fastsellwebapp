@@ -253,13 +253,27 @@ class Reports extends CI_Controller
 		// ----- APPLICATION PROFILER --------------------------------
 		$this->output->enable_profiler(TRUE);
 
-		// Load the helper
+		// Some loads
 		$this->load->helper('download');
 
+		// Some variabels
+		$user_id                    = $this->session->userdata('sv_user_id');
+		$url_file                   = 'serverlocalfiles/.jsons?path=scrap_downloads%2F'.$user_id;
+		$call_file                  = $this->scrap_web->webserv_call($url_file, FALSE, 'get', FALSE, FALSE);
 
-		$user_dir                   = $this->scrap_web->get_user_dir(FALSE, 'local');
-		$data                       = file_get_contents($user_dir.'/download/'.$this->input->post('hdFilename')); // Read the file's contents
+		if($call_file['error'] == FALSE)
+		{
+			$json_files             = $call_file['result'];
+
+			if($json_files->is_empty == FALSE)
+			{
+				$path               = $json_files->server_local_files[0]->path;
+				$data               = $this->scrap_web->byte_call('serverlocalfiles/file?path='.$path, FALSE, 'get', FALSE, FALSE);
+			}
+		}
+
 		$name                       = $this->input->post('hdFilename');
+		$data                       = $data['result'];
 
 		force_download($name, $data);
 	}

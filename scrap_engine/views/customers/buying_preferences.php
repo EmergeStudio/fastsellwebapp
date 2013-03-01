@@ -14,10 +14,15 @@ echo open_div('middle');
 		echo open_div('inset fastsellCategories');
 
 			// Message
-			echo full_div('', 'messageBuyingPreferences');
+			echo open_div('floatRight categoryMessage');
+
+				echo heading('Having FastSell Categories listed means that you will get notified of products you are interested in.', 3);
+				echo '<p>(please note that should you not have any categories that you will be notified of all FastSells)</p>';
+
+			echo close_div();
 
 			// Heading
-			echo full_div('FastSell Categories', 'mainHeading');
+			echo heading('FastSell Categories', 2);
 
 			// Text
 			echo '<p>Start typing in the textbox below and find your desired category.</p>';

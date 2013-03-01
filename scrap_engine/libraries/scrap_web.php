@@ -262,7 +262,7 @@ class Scrap_web
 		
 		// Return
 		$ar_return['content_type']	= $curl_info['content_type'];
-		//$ar_return['result']		= $result;
+		$ar_return['result']		= $result;
 		
 		return $ar_return;
 	}

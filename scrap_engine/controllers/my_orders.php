@@ -96,9 +96,14 @@ class My_orders extends CI_Controller
 		$url_crt_order                  = 'fastsellorders/.json?id='.$order_id;
 		$call_crt_order                 = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
 
+		// Get current addresses
+		$url_addresses                  = 'addresses/.jsons?customerid='.$customer_org_id;
+		$call_addresses                 = $this->scrap_web->webserv_call($url_addresses, FALSE, 'get', FALSE, FALSE);
+
 		// Parse variables
 		$dt_body['order']               = TRUE;
 		$dt_body['crt_order']           = $call_crt_order['result'];
+		$dt_body['addresses']           = $call_addresses['result'];
 
 		// Load the view
 		$this->load->view('orders/full_order', $dt_body);

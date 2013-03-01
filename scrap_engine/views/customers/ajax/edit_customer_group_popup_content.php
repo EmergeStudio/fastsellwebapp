@@ -36,9 +36,16 @@ echo form_open('customers/edit_group', 'class="frmEditGroup"');
 			// Tick boxes
 			$json_customers     = $customers['result'];
 
+			$loop_cnt                           = 0;
 			foreach($json_customers->customer_to_show_hosts as $customer)
 			{
-				echo open_div('customerCheckContain');
+				$loop_cnt++;
+				$display                        = '';
+				if($loop_cnt > 50)
+				{
+					$display                    = ' displayNone';
+				}
+				echo open_div('customerCheckContain'.$display);
 
 					$state                      = FALSE;
 					foreach($json_group->customer_organizations as $customer_organization)

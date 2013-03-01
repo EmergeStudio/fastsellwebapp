@@ -167,7 +167,7 @@ div.newOverlay {
 						'class'				=> 'floatLeft'
 					);
 					
-					echo anchor('', 'Compass Home Page', $ar_logo);
+					echo anchor('dashboard', 'FastSell Dashboard', $ar_logo);
 					
 				echo close_div();
 				

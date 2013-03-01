@@ -265,7 +265,7 @@ class Fastsells extends CI_Controller
 				$dt_body['products']            = $call_products;
 
 				// Get all the customers
-				$url_customers                  = 'customers/.jsons?fastselleventid='.$fastsell_id;
+				$url_customers                  = 'customers/.jsons?fastselleventid='.$fastsell_id.'&offset=0&limit=5';
 				$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 				$dt_body['customers']           = $call_customers;
 
@@ -1579,6 +1579,7 @@ class Fastsells extends CI_Controller
 		$user_id                            = $this->session->userdata('sv_user_id');
 		$acc_type                           = $this->session->userdata('sv_acc_type');
 		$fastsell_id                        = $this->session->userdata('sv_show_set');
+		$customer_org_id                    = $this->scrap_web->get_customer_org_id();
 		$order_id                           = $this->uri->segment(3);
 
 		// Complete order
@@ -1603,6 +1604,10 @@ class Fastsells extends CI_Controller
 		$url_crt_order                      = 'fastsellorders/.json?id='.$order_id;
 		$call_crt_order                     = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
 		$json_crt_order                     = $call_crt_order['result'];
+
+		// Get current addresses
+		$url_addresses                      = 'addresses/.jsons?customerid='.$customer_org_id;
+		$call_addresses                     = $this->scrap_web->webserv_call($url_addresses, FALSE, 'get', FALSE, FALSE);
 
 		// FastSell information
 		$fastsell_info                      = $call_fastsell['result'];
@@ -1631,6 +1636,7 @@ class Fastsells extends CI_Controller
 		// Load the content view
 		$dt_body['fastsell_info']           = $fastsell_info;
 		$dt_body['started']                 = $started;
+		$dt_body['addresses']               = $call_addresses['result'];
 		$this->load->view('orders/completed_order', $dt_body);
 
 		// ----- FOOTER ------------------------------------

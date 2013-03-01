@@ -44,7 +44,9 @@ class Ajax_handler_reports extends CI_Controller
 			// Some variables
 			$fastsell_id                = $this->input->post('fastsell_id');
 			$show_host_id               = $this->scrap_web->get_show_host_id();
+			$user_id                    = $this->session->userdata('sv_user_id');
 			$download_file              = FALSE;
+			$name                       = 'report_orders_summary_'.date('Ymd_His').'.csv';
 
 			// Get the report
 			$url_report                 = 'reports/fastsellorders/ordersummariesbyevent/.json?fastselleventid='.$fastsell_id;
@@ -60,23 +62,43 @@ class Ajax_handler_reports extends CI_Controller
 
 				if($call_create_report['error'] == FALSE)
 				{
-					// Load the zipping library
-					$this->load->library('zip');
+					$url_download               = 'serverlocalfiles/.jsons?path=scrap_downloads%2F'.$user_id;
+					$call_download              = $this->scrap_web->webserv_call($url_download, FALSE, 'get', FALSE, FALSE);
 
-					// Some variables
-					$user_dir                   = $this->scrap_web->get_user_dir(FALSE, 'local');
-					$name                       = 'report_orders_summary_'.date('Ymd_His');
+					if($call_download['error'] == FALSE)
+					{
+						$json_download          = $call_download['result'];
 
-					// Delete old zips
-					delete_files($user_dir.'/download/');
+						if($json_download->is_empty == TRUE)
+						{
+							// Create the folder
+							$url_sample_path                = 'serverlocalfiles/sample.json';
+							$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+							$json_sample_path               = $call_sample_path['result'];
 
-					// Write file
-					$file_name                  = $name.'.csv';
-					$this->zip->add_data($file_name, $call_create_report['result']);
-					$this->zip->archive($user_dir.'/download/'.$name.'.zip');
+							// Edit DOM
+							$json_sample_path->path         = 'scrap_downloads/'.$user_id;
+							$json_new_folder                = json_encode($json_sample_path);
+
+							// Create directory
+							$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+						}
+						else
+						{
+							foreach($json_download->server_local_files as $file_info)
+							{
+								$url_delete                 = 'serverlocalfiles/.json?path=scrap_downloads%2F'.$user_id.'%2F'.str_replace(' ', '%20', $file_info->name);
+								$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+							}
+						}
+					}
+
+					// Store the file
+					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
 
 					// Change download
-					$download_file              = $name.'.zip';
+					$download_file                  = $name;
 				}
 			}
 
@@ -104,7 +126,9 @@ class Ajax_handler_reports extends CI_Controller
 			// Some variables
 			$fastsell_id                = $this->input->post('fastsell_id');
 			$show_host_id               = $this->scrap_web->get_show_host_id();
+			$user_id                    = $this->session->userdata('sv_user_id');
 			$download_file              = FALSE;
+			$name                       = 'report_orders_by_fastsell_'.date('Ymd_His').'.csv';
 
 			// Get the report
 			$url_report                 = 'reports/fastsellorders/ordersbyshowhostandevent/.json?showhostid='.$show_host_id.'&fastselleventid='.$fastsell_id;
@@ -120,23 +144,43 @@ class Ajax_handler_reports extends CI_Controller
 
 				if($call_create_report['error'] == FALSE)
 				{
-					// Load the zipping library
-					$this->load->library('zip');
+					$url_download               = 'serverlocalfiles/.jsons?path=scrap_downloads%2F'.$user_id;
+					$call_download              = $this->scrap_web->webserv_call($url_download, FALSE, 'get', FALSE, FALSE);
 
-					// Some variables
-					$user_dir                   = $this->scrap_web->get_user_dir(FALSE, 'local');
-					$name                       = 'report_orders_by_fastsell_'.date('Ymd_His');
+					if($call_download['error'] == FALSE)
+					{
+						$json_download          = $call_download['result'];
 
-					// Delete old zips
-					delete_files($user_dir.'/download/');
+						if($json_download->is_empty == TRUE)
+						{
+							// Create the folder
+							$url_sample_path                = 'serverlocalfiles/sample.json';
+							$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+							$json_sample_path               = $call_sample_path['result'];
 
-					// Write file
-					$file_name                  = $name.'.csv';
-					$this->zip->add_data($file_name, $call_create_report['result']);
-					$this->zip->archive($user_dir.'/download/'.$name.'.zip');
+							// Edit DOM
+							$json_sample_path->path         = 'scrap_downloads/'.$user_id;
+							$json_new_folder                = json_encode($json_sample_path);
+
+							// Create directory
+							$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+						}
+						else
+						{
+							foreach($json_download->server_local_files as $file_info)
+							{
+								$url_delete                 = 'serverlocalfiles/.json?path=scrap_downloads%2F'.$user_id.'%2F'.str_replace(' ', '%20', $file_info->name);
+								$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+							}
+						}
+					}
+
+					// Store the file
+					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
 
 					// Change download
-					$download_file              = $name.'.zip';
+					$download_file                  = $name;
 				}
 			}
 
@@ -165,7 +209,9 @@ class Ajax_handler_reports extends CI_Controller
 			$show_host_id               = $this->scrap_web->get_show_host_id();
 			$from_date                  = $this->input->post('from_date');
 			$to_date                    = $this->input->post('to_date');
+			$user_id                    = $this->session->userdata('sv_user_id');
 			$download_file              = FALSE;
+			$name                       = 'report_orders_by_date_'.date('Ymd_His').'.csv';
 
 			// Get the report
 			$url_report                 = 'reports/fastsellorders/ordersbyshowhostanddate/.json?showhostid='.$show_host_id.'&fromdate='.$from_date.'%20000001&todate='.$to_date.'%20235959';
@@ -181,23 +227,43 @@ class Ajax_handler_reports extends CI_Controller
 
 				if($call_create_report['error'] == FALSE)
 				{
-					// Load the zipping library
-					$this->load->library('zip');
+					$url_download               = 'serverlocalfiles/.jsons?path=scrap_downloads%2F'.$user_id;
+					$call_download              = $this->scrap_web->webserv_call($url_download, FALSE, 'get', FALSE, FALSE);
 
-					// Some variables
-					$user_dir                   = $this->scrap_web->get_user_dir(FALSE, 'local');
-					$name                       = 'report_orders_by_date_'.date('Ymd_His');
+					if($call_download['error'] == FALSE)
+					{
+						$json_download          = $call_download['result'];
 
-					// Delete old zips
-					delete_files($user_dir.'/download/');
+						if($json_download->is_empty == TRUE)
+						{
+							// Create the folder
+							$url_sample_path                = 'serverlocalfiles/sample.json';
+							$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+							$json_sample_path               = $call_sample_path['result'];
 
-					// Write file
-					$file_name                  = $name.'.csv';
-					$this->zip->add_data($file_name, $call_create_report['result']);
-					$this->zip->archive($user_dir.'/download/'.$name.'.zip');
+							// Edit DOM
+							$json_sample_path->path         = 'scrap_downloads/'.$user_id;
+							$json_new_folder                = json_encode($json_sample_path);
+
+							// Create directory
+							$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+						}
+						else
+						{
+							foreach($json_download->server_local_files as $file_info)
+							{
+								$url_delete                 = 'serverlocalfiles/.json?path=scrap_downloads%2F'.$user_id.'%2F'.str_replace(' ', '%20', $file_info->name);
+								$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+							}
+						}
+					}
+
+					// Store the file
+					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
 
 					// Change download
-					$download_file              = $name.'.zip';
+					$download_file                  = $name;
 				}
 			}
 
@@ -224,8 +290,10 @@ class Ajax_handler_reports extends CI_Controller
 		{
 			// Some variables
 			$customer_user_id           = $this->scrap_web->get_customer_user_id();
+			$user_id                    = $this->session->userdata('sv_user_id');
 			$fastsell_id                = $this->input->post('fastsell_id');
 			$download_file              = FALSE;
+			$name                       = 'report_customer_orders_by_fastsell_'.date('Ymd_His').'.csv';
 
 			// Get the report
 			$url_report                 = 'reports/fastsellorders/ordersbycustomerandevent/.json?customeruserid='.$customer_user_id.'&fastselleventid='.$fastsell_id;
@@ -241,27 +309,47 @@ class Ajax_handler_reports extends CI_Controller
 
 				if($call_create_report['error'] == FALSE)
 				{
-					// Load the zipping library
-					$this->load->library('zip');
+					$url_download               = 'serverlocalfiles/.jsons?path=scrap_downloads%2F'.$user_id;
+					$call_download              = $this->scrap_web->webserv_call($url_download, FALSE, 'get', FALSE, FALSE);
 
-					// Some variables
-					$user_dir                   = $this->scrap_web->get_user_dir(FALSE, 'local');
-					$name                       = 'report_customer_orders_by_fastsell_'.date('Ymd_His');
+					if($call_download['error'] == FALSE)
+					{
+						$json_download          = $call_download['result'];
 
-					// Delete old zips
-					delete_files($user_dir.'/download/');
+						if($json_download->is_empty == TRUE)
+						{
+							// Create the folder
+							$url_sample_path                = 'serverlocalfiles/sample.json';
+							$call_sample_path               = $this->scrap_web->webserv_call($url_sample_path);
+							$json_sample_path               = $call_sample_path['result'];
 
-					// Write file
-					$file_name                  = $name.'.csv';
-					$this->zip->add_data($file_name, $call_create_report['result']);
-					$this->zip->archive($user_dir.'/download/'.$name.'.zip');
+							// Edit DOM
+							$json_sample_path->path         = 'scrap_downloads/'.$user_id;
+							$json_new_folder                = json_encode($json_sample_path);
+
+							// Create directory
+							$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+						}
+						else
+						{
+							foreach($json_download->server_local_files as $file_info)
+							{
+								$url_delete                 = 'serverlocalfiles/.json?path=scrap_downloads%2F'.$user_id.'%2F'.str_replace(' ', '%20', $file_info->name);
+								$call_delete                = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+							}
+						}
+					}
+
+					// Store the file
+					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
 
 					// Change download
-					$download_file              = $name.'.zip';
+					$download_file                  = $name;
 				}
 			}
 
-			$dt_body['download_file']           = $download_file;
+			$dt_body['download_file']               = $download_file;
 
 			// Load the view
 			$this->load->view('reports/basic_table', $dt_body);

@@ -1003,6 +1003,7 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
     -khtml-border-radius: 6px;
     border-radius: 6px;
     text-shadow: none;
+    font-size: 16px;
 }
 .digit.static{
     display:block;

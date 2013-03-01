@@ -17,34 +17,14 @@ $(document).ready(function(){
 
     $fc_switch_address();
 
-    $fc_save_address();
+//    $fc_save_address();
+//
+//    $fc_save_address_2();
 
-    $fc_save_address_2();
-
-    $fc_make_address_same();
+    $fc_save_addresses();
 
 	
 // ------------------------------------------------------------------------------FUNCTIONS
-
-    // ---------- MAKE THE ADDRESSES THE SAME
-    function $fc_make_address_same()
-    {
-        $('.checkMakeSame').live('change', function()
-        {
-            // Some variables
-            $this               = $(this);
-
-            // Checked status
-            if($this.attr('checked') == 'checked')
-            {
-                $('.btnBillingAddress').parent().hide();
-            }
-            else
-            {
-                $('.btnBillingAddress').parent().show();
-            }
-        });
-    }
 
     // ---------- COUNTER
     function $fc_counter()
@@ -88,38 +68,38 @@ $(document).ready(function(){
         });
     }
 
-    // ---------- SAVE ADDRESS
-    function $fc_save_address()
+//    // ---------- SAVE ADDRESS
+//    function $fc_save_address()
+//    {
+//        $('.deliveryAddress .btnSaveAddress').live('click', function()
+//        {
+//            // Some variables
+//            $error              = false;
+//            $address            = $('.deliveryAddress .addressForm textarea[name="address1"]').val();
+//
+//            // Validate
+//            if($error == false)
+//            {
+//                if($address == '')
+//                {
+//                    $error      = true;
+//                    $('.deliveryAddress .addressForm textarea[name="address1"]').focus();
+//                    $.scrap_note_time('Please provide an address', 6000, 'cross');
+//                }
+//            }
+//
+//            // Submite new address
+//            if($error == false)
+//            {
+//                $('.deliveryAddress .frmSaveAddress').submit();
+//            }
+//        });
+//    }
+
+    // ---------- SAVE ADDRESSES
+    function $fc_save_addresses()
     {
-        $('.deliveryAddress .btnSaveAddress').live('click', function()
-        {
-            // Some variables
-            $error              = false;
-            $address            = $('.deliveryAddress .addressForm textarea[name="address1"]').val();
-
-            // Validate
-            if($error == false)
-            {
-                if($address == '')
-                {
-                    $error      = true;
-                    $('.deliveryAddress .addressForm textarea[name="address1"]').focus();
-                    $.scrap_note_time('Please provide an address', 6000, 'cross');
-                }
-            }
-
-            // Submite new address
-            if($error == false)
-            {
-                $('.deliveryAddress .frmSaveAddress').submit();
-            }
-        });
-    }
-
-    // ---------- SAVE ADDRESS 2
-    function $fc_save_address_2()
-    {
-        $('.billingAddress .btnSaveAddress2').live('click', function()
+        $('.btnSaveAddresses').live('click', function()
         {
             // Some variables
             $error              = false;
@@ -139,10 +119,38 @@ $(document).ready(function(){
             // Submite new address
             if($error == false)
             {
-                $('.billingAddress .frmSaveAddress').submit();
+                $('.frmSaveAddresses').submit();
             }
         });
     }
+
+//    // ---------- SAVE ADDRESS 2
+//    function $fc_save_address_2()
+//    {
+//        $('.billingAddress .btnSaveAddress2').live('click', function()
+//        {
+//            // Some variables
+//            $error              = false;
+//            $address            = $('.billingAddress .addressForm textarea[name="address1"]').val();
+//
+//            // Validate
+//            if($error == false)
+//            {
+//                if($address == '')
+//                {
+//                    $error      = true;
+//                    $('.billingAddress .addressForm textarea[name="address1"]').focus();
+//                    $.scrap_note_time('Please provide an address', 6000, 'cross');
+//                }
+//            }
+//
+//            // Submite new address
+//            if($error == false)
+//            {
+//                $('.billingAddress .frmSaveAddress').submit();
+//            }
+//        });
+//    }
 
 
 });

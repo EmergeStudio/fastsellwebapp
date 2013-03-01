@@ -122,19 +122,69 @@ if($order != FALSE)
 							echo full_div($this->session->userdata('sv_name'), 'content');
 							echo full_div($user->user_emails[0]->email, 'content');
 
-							echo div_height(20);
-							echo full_div('<b>Billing Address</b>', 'content');
-							echo full_div($crt_order->billing_address->address_one, 'content');
-							echo full_div($crt_order->billing_address->city, 'content');
-							echo full_div($crt_order->billing_address->state_province, 'content');
-							echo full_div($crt_order->billing_address->postal_code, 'content');
+							foreach($addresses->addresses as $address)
+							{
+								if($address->address_type->id == 1)
+								{
+									echo div_height(20);
+									echo full_div('<b>Billing Address</b>', 'content');
 
-							echo div_height(20);
-							echo full_div('<b>Shipping Address</b>', 'content');
-							echo full_div($crt_order->location->address_one, 'content');
-							echo full_div($crt_order->location->city, 'content');
-							echo full_div($crt_order->location->state_province, 'content');
-							echo full_div($crt_order->location->postal_code, 'content');
+									if(!empty($address->address_one))
+									{
+										echo full_div($address->address_one, 'content');
+									}
+									if(!empty($address->address_two))
+									{
+										echo full_div($address->address_two, 'content');
+									}
+									if(!empty($address->address_three))
+									{
+										echo full_div($address->address_three, 'content');
+									}
+									if(!empty($address->city))
+									{
+										echo full_div($address->city, 'content');
+									}
+									if(!empty($address->state_province))
+									{
+										echo full_div($address->state_province, 'content');
+									}
+									if(!empty($address->postal_code))
+									{
+										echo full_div($address->postal_code, 'content');
+									}
+								}
+								elseif($address->address_type->id == 2)
+								{
+									echo div_height(20);
+									echo full_div('<b>Shipping Address</b>', 'content');
+
+									if(!empty($address->address_one))
+									{
+										echo full_div($address->address_one, 'content');
+									}
+									if(!empty($address->address_two))
+									{
+										echo full_div($address->address_two, 'content');
+									}
+									if(!empty($address->address_three))
+									{
+										echo full_div($address->address_three, 'content');
+									}
+									if(!empty($address->city))
+									{
+										echo full_div($address->city, 'content');
+									}
+									if(!empty($address->state_province))
+									{
+										echo full_div($address->state_province, 'content');
+									}
+									if(!empty($address->postal_code))
+									{
+										echo full_div($address->postal_code, 'content');
+									}
+								}
+							}
 
 						echo '</td>';
 

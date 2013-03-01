@@ -119,3 +119,13 @@
     text-indent: -1000px;
     overflow: hidden;
 }
+.middle .categoryMessage {
+    width: 560px;
+}
+.middle .categoryMessage h3 {
+    line-height: 22px;
+    text-align: center;
+}
+.middle .categoryMessage p {
+    text-align: center;
+}

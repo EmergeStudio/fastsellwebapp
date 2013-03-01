@@ -141,8 +141,21 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    // Show all
-                    $('.popAddGroup .customerCheckContain').show();
+                    // Hide all that don't check out
+                    $loop_cnt_customer              = 0;
+                    $('.popAddGroup .customerCheckContain').hide();
+                    $('.popAddGroup .customerCheckContain').each(function()
+                    {
+                        $loop_cnt_customer++;
+                        if($loop_cnt_customer <= 50)
+                        {
+                            $(this).show();
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    });
                     $('body').sunBox.adjust_popup_height('popAddGroup');
                 }
             },
@@ -177,7 +190,21 @@ $(document).ready(function(){
                 else
                 {
                     // Show all
-                    $('.popEditGroup .customerCheckContain').show();
+                    // Hide all that don't check out
+                    $loop_cnt_customer              = 0;
+                    $('.popEditGroup .customerCheckContain').hide();
+                    $('.popEditGroup .customerCheckContain').each(function()
+                    {
+                        $loop_cnt_customer++;
+                        if($loop_cnt_customer <= 50)
+                        {
+                            $(this).show();
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    });
                     $('body').sunBox.adjust_popup_height('popEditGroup');
                 }
             },
@@ -345,6 +372,8 @@ $(document).ready(function(){
             $group_name                 = $parent.find('a').text();
             $group_id                   = $parent.find('.hdGroupId').text();
 
+            $.scrap_note_loader('Getting Group Information');
+
             // Send the delete request
             $.post($ajax_base_path + 'get_group_popup_content',
             {
@@ -366,6 +395,8 @@ $(document).ready(function(){
                     $('body').sunBox.show_popup('popEditGroup');
                     $('body').sunBox.adjust_popup_height('popEditGroup');
                 }
+
+                $.scrap_note_hide();
             });
         });
 
