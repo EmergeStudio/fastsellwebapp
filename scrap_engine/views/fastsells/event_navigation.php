@@ -110,7 +110,4 @@ echo open_div('bannerBack');
 
 // Close banner back
 echo close_div();
-
-// Some height
-echo div_height(20);
 ?>

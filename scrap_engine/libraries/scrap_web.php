@@ -31,15 +31,17 @@ class Scrap_web
 		// Setup
 		$ch					= curl_init();
 		$exp_url			= explode('?', $url, 2);
+		$ar_header          = array();
 		
 		$new_url			= $this->CI->config->item('scrap_web_address').$exp_url[0];
-		if($this->CI->session->userdata('sv_java_id'))
-		{
-			$new_url		.= ';jsessionid='.$this->CI->session->userdata('sv_java_id');
-		}
 		if(!empty($exp_url[1]))
 		{
 			$new_url		.= '?'.$exp_url[1];
+		}
+
+		if($this->CI->session->userdata('sv_es_token'))
+		{
+			array_push($ar_header, 'ES_TOKEN: '.$this->CI->session->userdata('sv_es_token'));
 		}
 		
 		// Display the url as a string
@@ -80,8 +82,9 @@ class Scrap_web
 		{
 			// XML option
 			case 'xml'	:
-				
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/xml'));
+
+				array_push($ar_header, 'Content-type: application/xml');
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $ar_header);
 					
 				// Result
 				$result 			= curl_exec($ch);
@@ -107,8 +110,9 @@ class Scrap_web
 			
 			// JSON option
 			case 'json'	:
-				
-				curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+
+				array_push($ar_header, 'Content-type: application/json');
+				curl_setopt($ch, CURLOPT_HTTPHEADER, $ar_header);
 					
 				// Result
 				$result 			= curl_exec($ch);
@@ -181,8 +185,6 @@ class Scrap_web
 			// JSON option
 			case 'straight'	:
 
-				//curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-
 				// Result
 				$result 			= curl_exec($ch);
 				$curl_info	 		= curl_getinfo($ch);
@@ -198,7 +200,8 @@ class Scrap_web
             // JSON option
             case 'multipart_form'	:
 
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: multipart/form-data'));
+                array_push($ar_header, 'Content-type: multipart/form-data');
+	            curl_setopt($ch, CURLOPT_HTTPHEADER, $ar_header);
 
                 // Result
                 $result 			= curl_exec($ch);
@@ -237,15 +240,17 @@ class Scrap_web
 		// Setup
 		$ch							= curl_init();
 		$exp_url					= explode('?', $url, 2);
-		
-		$new_url					= $this->CI->config->item('scrap_web_address').$exp_url[0];
-		if($this->CI->session->userdata('sv_java_id'))
-		{
-			$new_url				.= ';jsessionid='.$this->CI->session->userdata('sv_java_id');
-		}
+		$ar_header                  = array();
+
+		$new_url			        = $this->CI->config->item('scrap_web_address').$exp_url[0];
 		if(!empty($exp_url[1]))
 		{
-			$new_url				.= '?'.$exp_url[1];
+			$new_url		        .= '?'.$exp_url[1];
+		}
+
+		if($this->CI->session->userdata('sv_es_token'))
+		{
+			array_push($ar_header, 'ES_TOKEN: '.$this->CI->session->userdata('sv_es_token'));
 		}
 		
 		// Run cURL
@@ -254,6 +259,7 @@ class Scrap_web
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.2) Gecko/20100115 Firefox/3.6 (.NET CLR 3.5.30729)');
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $ar_header);
 		
 		// Result
 		$result 					= curl_exec($ch);

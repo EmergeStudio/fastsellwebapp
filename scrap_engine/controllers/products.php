@@ -29,27 +29,27 @@ class Products extends CI_Controller
 		// Some variables
 		$dt_header['title'] 	        = 'My Products';
 		$dt_header['crt_page']	        = 'pageProducts';
-		$dt_header['extra_css']         = array('products');
-		$dt_header['extra_js']          = array('products');
+		$dt_header['extra_css']         = array('products', 'flexigrid');
+		$dt_header['extra_js']          = array('plugin_flexigrid_pack', 'plugin_ehighlight', 'products_flexigrid');
 		
 		// Load header
 		$this->load->view('universal/header', $dt_header);
 		
 		
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']		        = 'pageProducts';
-		$this->load->view('universal/navigation', $dt_nav);
-
 		// Get the products
 		$offset                         = 0;
-		$limit                          = 20;
+		$limit                          = 100;
 		$search_text                    = '';
 
 		// Search
 		if($this->input->post('inpSearchText'))
 		{
 			$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+		}
+		if($this->input->post('hdLimit'))
+		{
+			$limit                      = $this->input->post('hdLimit');
 		}
 		if($this->input->post('hdOffset'))
 		{
@@ -70,14 +70,79 @@ class Products extends CI_Controller
 		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
 		$dt_body['definitions']         = $call_definitions;
 
-		// Product category test
-//		$url_product_cat                = 'fastsellitemcategories/.jsons?categorytext=Pet%20Supplies';
-//		$call_product_cat               = $this->scrap_web->webserv_call($url_product_cat, FALSE, 'get', FALSE, TRUE);
+		// Load the view
+		$this->load->view('products/products_flexgrid_all', $dt_body);
+
+		
+		// ----- FOOTER ------------------------------------
+		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| MAIN PRODUCTS PAGE
+	|--------------------------------------------------------------------------
+	*/
+	function by_definition()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		// ----- SOME VARIABLES -----------------------------
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
+		$definition_id                  = $this->uri->segment(3);
+
+
+		// ----- HEADER ------------------------------------
+		// Some variables
+		$dt_header['title'] 	        = 'My Products';
+		$dt_header['crt_page']	        = 'pageProducts';
+		$dt_header['extra_css']         = array('products', 'flexigrid');
+		$dt_header['extra_js']          = array('plugin_flexigrid_pack', 'plugin_ehighlight', 'products_flexigrid');
+
+		// Load header
+		$this->load->view('universal/header', $dt_header);
+
+
+		// ----- CONTENT ------------------------------------
+		// Get the products
+		$offset                         = 0;
+		$limit                          = 100;
+		$search_text                    = '';
+
+		// Search
+		if($this->input->post('inpSearchText'))
+		{
+			$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+		}
+		if($this->input->post('hdLimit'))
+		{
+			$limit                      = $this->input->post('hdLimit');
+		}
+		if($this->input->post('hdOffset'))
+		{
+			$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+		}
+
+		$dt_body['search_text']         = $search_text;
+		$dt_body['offset']              = $offset;
+		$dt_body['limit']               = $limit;
+
+		// Make the call
+		$url_products                   = 'catalogitems/.jsons?catalogitemdefinitionid='.$definition_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
+		$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+		$dt_body['products']            = $call_products;
+
+		// Get the definitions
+		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+		$dt_body['definitions']         = $call_definitions;
 
 		// Load the view
-		$this->load->view('products/main_products_page', $dt_body);
-		
-		
+		$this->load->view('products/products_flexgrid', $dt_body);
+
+
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
 	}
@@ -101,7 +166,7 @@ class Products extends CI_Controller
 		// ----- HEADER ------------------------------------
 		// Some variables
 		$dt_header['title'] 	        = 'Product Definitions';
-		$dt_header['crt_page']	        = 'pageProductDefinitions';
+		$dt_header['crt_page']	        = 'pageProducts';
 		$dt_header['extra_js']          = array('product_definitions');
 		$dt_header['extra_css']         = array('products');
 
@@ -110,9 +175,6 @@ class Products extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']		        = 'pageProducts';
-		$this->load->view('universal/navigation', $dt_nav);
 
 		// Get the definitions
 		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
@@ -125,6 +187,38 @@ class Products extends CI_Controller
 
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DOWNLOAD DEFINITION
+	|--------------------------------------------------------------------------
+	*/
+	function download_definition()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FAlSE);
+
+		// Some loads
+		$this->load->helper('download');
+
+		// Some variables
+		$definition_id              = $this->uri->segment(3);
+
+		// Get the definition information
+		$url_definition             = 'catalogitemdefinitions/.json?id='.$definition_id;
+		$call_definition            = $this->scrap_web->webserv_call($url_definition, FALSE, 'get', FALSE, FALSE);
+		$json_definition            = $call_definition['result'];
+
+		// Get the excel file
+		$url_def_download           = 'fastsellitemdefinitions/sample.xls?id='.$definition_id;
+		$call_def_download          = $this->scrap_web->byte_call($url_def_download, FALSE, 'get', FALSE, FALSE);
+
+		$name                       = str_replace(' ', '_', $json_definition->name).'.xls';
+		$data                       = $call_def_download['result'];
+
+		force_download($name, $data);
 	}
 
 
@@ -155,10 +249,6 @@ class Products extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']		= 'pageProducts';
-		$this->load->view('universal/navigation', $dt_nav);
-
 		// Get the definitions
 		$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
 		$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);

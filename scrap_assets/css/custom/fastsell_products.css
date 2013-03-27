@@ -42,3 +42,18 @@
     background-color: #fff;
     margin: 0px;
 }
+.sunBox.popProductsMasterDataFile .downloadTemplate {
+    padding: 6px 12px 6px 40px;
+}
+.sunBox.popProductsMasterDataFile .contentCenter .popup a {
+    color: #fff;
+    text-shadow: none;
+    font-size: 12px;
+}
+.sunBox.popProductsMasterDataFile .downloadTemplate span {
+    position: absolute;
+    margin: -3px 0px 0px -30px;
+    text-shadow: none;
+    color: #fff;
+    font-size: 22px;
+}

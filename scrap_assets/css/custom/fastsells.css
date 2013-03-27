@@ -25,10 +25,10 @@
     margin-top: 10px;
 }
 .bannerBack .timLeft {
-    padding: 20px 5px 0px 0px;
+    padding: 0px 5px 0px 0px;
 }
 .bannerBack .fastsellInfo h2 {
-    padding: 52px 0px 0px 5px;
+    padding: 34px 0px 0px 5px;
     text-shadow: none;
     color: #222;
     font-size: 26px;
@@ -162,7 +162,6 @@
     display: block;
     margin-bottom: 5px;
     margin-top: 8px;
-    width: 480px;
 }
 /* Small item container */
 .itemContainer.small h4 {
@@ -224,7 +223,7 @@
     text-align: center;
 }
 .middle .itemContainer .fastSellDetails {
-    width: 530px;
+    /*width: 530px;*/
 }
 .middle .itemContainer.small .fastSellDetails {
     width: 335px;
@@ -253,9 +252,6 @@
 .middle .infoTable .icon div {
     font-size: 22px;
     padding-top: 4px;
-}
-h2 {
-    line-height: 26px;
 }
 .pageFastSellInfo .rightColSmall .headingIcon {
     height: 40px;
@@ -364,4 +360,7 @@ h2 {
 }
 .middle .txtMakeSameAddress {
     margin: 3px 0px 0px 30px;
+}
+.pageFastSells .dropSelectFastSellTypeContainer {
+    margin: -3px 0px 0px 25px;
 }

@@ -15,17 +15,28 @@
 
 /* GENERAL
 --------------------------------------------------------------------------------------- */
-.pageFastSellInfo .showDescription.floatLeft input, .pageFastSellInfo .showDescription.floatLeft textarea {
+.pageFastSellInfo input, .pageFastSellInfo textarea {
     width: 500px;
+    width: 99%;
 }
-.pageFastSellInfo .showDescription.floatLeft textarea {
+.pageFastSellInfo textarea {
     height: 120px;
-}
-label {
-    margin-top: 25px;
+    width: 99%;
+    padding: 9px 0px 8px 6px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(194, 194, 194) rgb(194, 194, 194) rgb(170, 170, 170);
+    -moz-border-top-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    border-image: none;
+    color: rgb(126, 126, 126);
+    font-size: 14px;
+    font-weight: 300;
 }
 input.scrap_date {
-    width: 215px;
+    width: 205px;
     margin-right: 10px;
 }
 input {
@@ -54,7 +65,7 @@ div.selector span {
     padding-bottom: 30px;
 }
 .inset.showDescription {
-    width: 510px;
+    width: 45%;
 }
 .time {
     margin-top: -10px;
@@ -87,26 +98,16 @@ div.selector span {
 .ui-datepicker-trigger:hover {
     cursor: pointer;
 }
-.middle .inset.showDescription.floatRight .scrapButton2.blueButton {
-    font-size: 20px;
+.middle .scrapButton2.blueButton.btnNotifyCustomers, .middle .scrapButton2.blueButton.btnStartNow {
+    font-size: 16px;
     font-weight: 200;
-    padding: 12px 20px;
+    padding: 10px 20px;
 }
-.middle .inset.showDescription.floatRight .scrapButton2.blueButton span {
+.middle .scrapButton2.blueButton.btnNotifyCustomers span, .middle .scrapButton2.blueButton.btnStartNow span {
     margin-right: 10px;
     font-size: 18px;
     color: #fff;
     text-shadow: none;
-}
-
-.middle .blockFastSellImage {
-    margin-top: 30px;
-    padding: 19px 20px;
-    background-color: #fff;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -webkit-box-shadow: 1px 1px 2px #c1c1c1;
-    -moz-box-shadow: 1px 1px 2px #c1c1c1;
 }
 .middle .blockFastSellImage .icon-camera {
     float: right;
@@ -117,7 +118,6 @@ div.selector span {
     margin-top: 0px;
 }
 .middle .blockFastSellImage .fastSellImage {
-    float: right;
     font-size: 50px;
     color: #fcb040;
     width: 250px;
@@ -140,7 +140,7 @@ div.selector span {
 .middle .tblFastSellInfo .headingIcon {
     margin-top: 4px;
     width: 100%;
-    text-align: center;
+    text-align: right;
     font-size: 45px;
 }
 .middle img.eventBannerImage {
@@ -154,11 +154,12 @@ div.selector span {
     padding: 15px 10px 0px 10px;
 }
 .middle .tblFastSellInfo .title {
-    padding: 10px;
+    padding: 18px 10px 10px 10px;
     font-size: 15px;
     font-weight: 200;
     text-align: right;
     color: #888888;
+    width: 200px;
 }
 .middle .tblFastSellInfo .content {
     padding: 8px 10px 7px 10px;
@@ -187,10 +188,6 @@ div.selector span {
     color: #fff;
     text-shadow: none;
     font-size: 34px;
-}
-.middle .fastsellCategories {
-    margin-top: 40px;
-    padding: 25px;
 }
 .middle .fastsellCategories .mainHeading {
     display: block;
@@ -256,4 +253,7 @@ div.selector span {
 .middle .catBack .btnDeleteCategory:hover {
     color: #fff;
     cursor: pointer;
+}
+.middle .coolTable td {
+    white-space: normal;
 }

@@ -501,11 +501,13 @@ jQuery.scrap_uniform_all = function($time)
 	
 	if(($is_iPad == true) || ($is_iPhone == true))
 	{
-		$('select, input:checkbox, input:radio').uniform();
+//		$('select, input:checkbox, input:radio').uniform();
+		$('select, input:radio').uniform();
 	}
 	else
 	{
-		$('select, input:checkbox, input:radio, input:file').uniform();
+//		$('select, input:checkbox, input:radio, input:file').uniform();
+		$('select, input:radio, input:file').uniform();
 	}
 }
 

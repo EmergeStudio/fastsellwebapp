@@ -3,37 +3,17 @@
 <?php
 echo open_div('middle');
 
+	// Main heading
+	echo heading('Product Templates', 2, 'class="headingTitle"');
+
+	// Add definition
+	echo make_button('Add Template', 'btnAddDefinition btnAdd blueButton btnHeading', '', 'left');
+
+	// Clear float
+	echo clear_float();
+
 	// White back
 	echo open_div('whiteBack coolScreen singleColumn');
-
-		// Control bar
-		echo open_div('controlBar');
-
-			// Add definition
-			echo make_button('Add Group', 'btnAddDefinition btnAdd blueButton', '', 'right');
-
-			echo open_div('floatLeft');
-
-				echo heading('Your Product Groups', 3);
-
-//				// Basic search
-//				echo open_div('basicSearch floatLeft');
-//
-//					echo form_input('inpDefinitionSearch', '', 'class="floatLeft"');
-//					echo make_button('Search', 'btnDefinitionSearch', '', 'left');
-//					echo make_button('Reset', '', 'products/definitions', 'left');
-//					echo clear_float();
-//
-//				// End of basic search
-//				echo close_div();
-
-			echo close_div();
-
-			// Clear float
-			echo clear_float();
-
-		// End of control bar
-		echo close_div();
 
 		// Product definitions list
 		echo open_div('listContain');

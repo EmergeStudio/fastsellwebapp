@@ -28,10 +28,10 @@ if($row_check['error'] == FALSE)
         echo div_height(30);
 
         echo heading('Upload Complete', 3, 'class="greenTxt"');
-        echo '<p>If there are any errors that prevented items from being uploaded, the you will see the failed ones listed below.</p>';
+        echo '<p>If there are any errors that prevented products from being uploaded, the you will see the failed ones listed below.</p>';
 
         echo div_height(5);
-        echo make_button('View Items Now', '', 'item_catalogue');
+        echo make_button('View Products Now', '', 'products');
         echo div_height(30);
 
 		if($error == TRUE)

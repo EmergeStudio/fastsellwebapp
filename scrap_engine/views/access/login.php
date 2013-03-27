@@ -8,7 +8,7 @@
 		echo div_height(25);
 
 		// Inset
-		echo open_div('inset');
+		echo open_div('whiteBack');
 
 			// Username input
 			echo form_label('Username / Email Address:');

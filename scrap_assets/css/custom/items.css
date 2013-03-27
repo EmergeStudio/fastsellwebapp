@@ -176,20 +176,20 @@
 
 /* SHIFTER PANE
 --------------------------------------------------------------------------------------- */
-.middle .shifterPane_3 .listContain, .middle .shifterPane_4 .listContain {
+.middle .shifterPane_2 .listContain, .middle .shifterPane_3 .listContain {
     padding: 0px;
 }
-.shifterPane_2 .inset {
+.shifterPane_1 .inset {
     padding: 30px;
 }
-.shifterPane_2 div.uploader input {
+.shifterPane_1 div.uploader input {
     width:190px;
     margin-bottom:0px;
 }
-.shifterPane_2 div.uploader input:hover {
+.shifterPane_1 div.uploader input:hover {
     cursor: pointer;
 }
-.shifterPane_2 .messageCheckItemDefinition {
+.shifterPane_1 .messageCheckItemDefinition {
     display: block;
     position: absolute;
     width: 675px;
@@ -200,16 +200,16 @@
     text-indent: -1000px;
     overflow: hidden;
 }
-.shifterPane.shifterPane_2 .selector, .shifterPane.shifterPane_2 .selector select {
+.shifterPane.shifterPane_1 .selector, .shifterPane.shifterPane_1 .selector select {
     width:240px;
 }
-.shifterPane.shifterPane_2 .selector span {
+.shifterPane.shifterPane_1 .selector span {
     width:200px;
 }
-.shifterPane_3 .checkDataContainer {
+.shifterPane_2 .checkDataContainer {
     display:none;
 }
-.shifterPane_3 .loader, .shifterPane_4 .loader {
+.shifterPane_2 .loader, .shifterPane_3 .loader {
     width: 100%;
     margin: 21px 0px;
     padding-top: 35px;
@@ -219,12 +219,12 @@
     background-position: top center;
     background-repeat: no-repeat;
 }
-.shifterPane_3 .coolTable.items, .shifterPane_4 .coolTable.items {
+.shifterPane_2 .coolTable.items, .shifterPane_3 .coolTable.items {
     display: block;
     width: 1120px;
     overflow: auto;
 }
-.shifterPane_3 .coolTable.items td .cross, .shifterPane_3 .coolTable.items td .tick, .shifterPane_4 .coolTable.items td .cross, .shifterPane_4 .coolTable.items td .tick {
+.shifterPane_2 .coolTable.items td .cross, .shifterPane_2 .coolTable.items td .tick, .shifterPane_3 .coolTable.items td .cross, .shifterPane_3 .coolTable.items td .tick {
     display:block;
     width:15px;
     height:15px;
@@ -232,19 +232,19 @@
     text-indent: -1000px;
     overflow: hidden;
 }
-.checkDataContainer .shifterPane_3 .coolTable.items td:hover {
+.checkDataContainer .shifterPane_2 .coolTable.items td:hover {
     cursor: pointer;
 }
-.shifterPane_3 .coolTable.items td.editingField {
+.shifterPane_2 .coolTable.items td.editingField {
     background-color: #fffdd9;
 }
-.shifterPane_3 .coolTable.items td .cross, .shifterPane_4 .coolTable.items td .cross {
+.shifterPane_2 .coolTable.items td .cross, .shifterPane_3 .coolTable.items td .cross {
     background-image: url(../../images/icons/small_cross_3.png);
 }
-.shifterPane_3 .coolTable.items td .tick, .shifterPane_4 .coolTable.items td .tick {
+.shifterPane_2 .coolTable.items td .tick, .shifterPane_3 .coolTable.items td .tick {
     background-image: url(../../images/icons/small_tick_2.png);
 }
-.shifterPane_3 .coolTable.items td input, .shifterPane_4 .coolTable.items td input {
+.shifterPane_2 .coolTable.items td input, .shifterPane_3 .coolTable.items td input {
     margin: 0px;
     padding: 0px;
     border: none;
@@ -254,14 +254,14 @@
     font-family: 'Helvetica Neue', Helvetica, Arial;
     color: #585858;
 }
-.shifterPane_3 .coolTable.items td.errorWidth, .shifterPane_3 .coolTable.items td.errorWidth div, .shifterPane_4 .coolTable.items td.errorWidth, .shifterPane_4 .coolTable.items td.errorWidth div {
+.shifterPane_2 .coolTable.items td.errorWidth, .shifterPane_2 .coolTable.items td.errorWidth div, .shifterPane_3 .coolTable.items td.errorWidth, .shifterPane_3 .coolTable.items td.errorWidth div {
     max-width: 170px;
 }
-.shifterPane_3 .coolTable.items td.errorWidth div, .shifterPane_4 .coolTable.items td.errorWidth div {
+.shifterPane_2 .coolTable.items td.errorWidth div, .shifterPane_3 .coolTable.items td.errorWidth div {
     display: block;
     width: 170px;
     white-space: normal;
 }
-.shifterPane_4 .loader {
+.shifterPane_3 .loader {
     margin: 46px 0px 21px 0px;
 }

@@ -22,9 +22,26 @@ $(document).ready(function(){
     $fc_search();
 
     $fc_pagenate();
+
+    $fc_change_width();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- CHANGE WIDTH
+    function $fc_change_width()
+    {
+        // Some variables
+        $window_w               = $(window).width();
+        $('.coolScreen .leftContent').width($window_w - 340);
+
+        $(window).resize(function()
+        {
+            // Some variables
+            $window_w               = $(window).width();
+            $('.coolScreen .leftContent').width($window_w - 340);
+        });
+    }
 
     // ----- PAGENATE
     function $fc_pagenate()

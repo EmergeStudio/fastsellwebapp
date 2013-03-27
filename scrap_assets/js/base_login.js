@@ -51,12 +51,12 @@ $(document).ready(function(){
 			function($data)
 			{	
 				$data		= jQuery.trim($data);
-				//console.log($data);
+				console.log($data);
 				
 				if($data == 'userloginsuccess')
 				{
 					// Reset the loader
-					$.scrap_note_loader('Yup you check out.  Going into TradeShow.');
+					$.scrap_note_loader('Yup you check out.  Going into FastSell.');
 					$('#frmLogin').submit();
 				}
 				else

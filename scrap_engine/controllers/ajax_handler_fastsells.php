@@ -207,9 +207,12 @@ class Ajax_handler_fastsells extends CI_Controller
 		{
 			// Some variables
 			$show_host_id                   = $this->scrap_web->get_show_host_id();
+			$offset                         = 0;
+			$limit                          = 20;
+			$search_text                    = urlencode($this->input->post('customer_name'));
 
 			// Get all the customers
-			$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
+			$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 			$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 			$dt_body['customers']           = $call_customers;
 

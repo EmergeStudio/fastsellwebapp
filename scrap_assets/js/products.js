@@ -252,12 +252,20 @@ $(document).ready(function(){
                 $('.blockProductImage').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
                 $('.blockProductImage .frmProductImage').attr('target', $iframe_name);
                 $('.blockProductImage .frmProductImage').submit();
+                $('body').sunBox.adjust_popup_height('popAddProduct');
 
                 $('iframe[name="'+ $iframe_name +'"]').load(function()
                 {
                     $data		= jQuery.trim($('.blockProductImage iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
 
                     $('.blockProductImage .imagePreview').html('<img src="'+ $data +'" width="312px" alt="">');
+                    $('body').sunBox.adjust_popup_height('popAddProduct');
+
+                    // Adjust the height
+                    $('.blockProductImage .imagePreview img').load(function()
+                    {
+                        $('body').sunBox.adjust_popup_height('popAddProduct');
+                    });
                 });
             }
             else

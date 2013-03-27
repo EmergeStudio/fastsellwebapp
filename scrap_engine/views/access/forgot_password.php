@@ -19,19 +19,19 @@ echo open_div('middle');
 
 		// Heading
 		echo heading('Forgot Your Password?', 2);
-		echo heading('Enter in your username and we will send you your new password via email', 4);
+		echo heading('Enter in your username or email address and we will send you your new password via email', 4);
 	
 		// Forgot password container
 		echo open_div('fpContainer');
 	
 			// Inset
-			echo open_div('inset');
+			echo open_div('whiteBack');
 			
 				// Email input
+				echo form_label('Username / Email Address:');
 				$ar_inp_email		= array
 				(
-					'name'			=> 'username',
-					'placeholder'	=> 'Username'
+					'name'			=> 'username'
 				);
 				echo form_input($ar_inp_email);
 					
@@ -39,12 +39,12 @@ echo open_div('middle');
 				echo make_button('Reset My Password', 'btnResetPassword');
 				
 			echo close_div();
-				
+
 			// Login link
-			echo anchor('login', 'I Want To Login', 'class="loginLink"');
-				
-			// Sign up link
-			echo anchor('http://www.emergestudio.net', 'An Emerge Studio Project', 'class="emergeStudioLink"');
+			echo make_button('I Want To Login', 'loginLink greenButton', 'login');
+
+			// Creators link
+			echo anchor('http://www.emergestudio.net', 'An Emerge Studio and Data Connect Project', 'class="emergeStudioLink"');
 			
 		// Close forgot password container
 		echo close_div();

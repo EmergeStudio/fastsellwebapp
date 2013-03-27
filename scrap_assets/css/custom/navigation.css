@@ -20,8 +20,8 @@
 	color:#FFF;
 }
 #header #topBar .innerTop {
-	margin:0px auto; 
-	width:1215px;
+	margin:0px auto;
+    width:98%;
 }
 #header #topBar .logoContain {
 	display:block;
@@ -36,12 +36,6 @@
 	clear:both;
 	margin:0px auto;
 }
-/*#header #topBar .mainNav {
-	float:right;
-}
-#header #topBar .mainNav.userNav {
-	float:right;
-}*/
 #header #topBar .mainNav li {
 	display:block;
 	list-style:none;
@@ -197,10 +191,6 @@
 	background-color:#ffffff;
 	border:solid 1px #dfdfdf;
 	border-top:none;
-	/*background-image:url(../../images/universal/speckle_back.jpg);
-	-webkit-box-shadow:4px 0px 7px -3px #bababa;
-	border-left:solid 1px #dfdfdf;
-	border-bottom:solid 1px #dfdfdf;*/
 	z-index:3;
 }
 #header #topBar .mainNav li .subNav .makeLink, #header #topBar .mainNav li .subNav a {
@@ -268,42 +258,136 @@
  
 /* APPLICATION NAVIGATION
 --------------------------------------------------------------------------------------- */
-.middle.appNavigationContainer {
-    margin-top: 60px;
-}
-.middle .appNav {
+#header #topBar .appNav {
 	margin-left:10px;
 }
-.middle .appNav li {
+#header #topBar .appNav li {
 	float:left;
 	margin-right:1px;
 }
-.middle .appNav li.rightLink {
+#header #topBar .appNav li.rightLink {
 	float:right;
 	margin-right:10px;
 }
-.middle .appNav li:hover, .middle .appNav li.active {
+#header #topBar .appNav li:hover, #header #topBar .appNav li.active {
 	cursor:pointer;
 	background-image:url(../../images/navigation/texture_active_back_2.jpg);
 	-webkit-box-shadow:inset 0 3px 6px #000000;
 }
-.middle .appNav li .sectionNavLink {
+#header #topBar .appNav li .sectionNavLink {
 	display:block;
 	font-size:14px;
-	padding: 20px 20px 16px 50px;
+	padding: 18px 20px 14px 55px;
 	color:#efefef;
+    text-shadow: none;
 }
-.middle .appNav li.homeLinkLi {
+#header #topBar .appNav li.homeLinkLi {
 	margin-left:10px;
 }
-.middle .appNav li .sectionNavLink.homeLink {
+#header #topBar .appNav li .sectionNavLink.homeLink {
 	display:block;
-    padding: 20px 30px 16px 30px;
+    padding: 18px 30px 14px 30px;
 	text-indent:-1000px;
 	background-image:url(../../images/icons/app_home.png);
 	background-repeat:no-repeat;
 	background-position:center;
 	overflow:hidden;
+}
+#header #topBar .appNav li .sectionNavLink span {
+    position: absolute;
+    text-shadow: none;
+    font-size: 24px;
+    margin-left: -35px;
+    margin-top: -5px;
+}
+#header #topBar .appNav li .sectionNavLink.fastsells span {
+    margin-top: -3px;
+}
+#header #topBar .appNav li .sectionNavLink span.pink {
+    color: #dd1263;
+}
+#header #topBar .appNav li .sectionNavLink span.yellow {
+    color: #fcb040;
+}
+#header #topBar .appNav li .sectionNavLink span.blue {
+    color: #25aae1;
+}
+#header #topBar .appNav li .subNav {
+    display:none;
+    padding: 10px 0px;
+    position:absolute;
+    margin-top:-1px;
+    background-color:#ffffff;
+    border:solid 1px #dfdfdf;
+    border-top:none;
+    z-index:3;
+}
+#header #topBar .appNav li .subNav li {
+    float:none;
+    margin: 0px;
+}
+#header #topBar .appNav li .subNav li a {
+    display:block;
+    padding: 8px 20px;
+    color: #525252;
+    text-shadow:none;
+    font-size:13px;
+    background-color:#fff;
+}
+#header #topBar .appNav li .subNav li a:hover {
+    cursor:pointer;
+    background-color: #f3f3f3;
+}
+#header #topBar .appNav li .subNav span {
+    position: relative;
+    text-shadow: none;
+    color: #525252;
+    font-size: 16px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 8px;
+}
+
+
+
+/* APPLICATION NAVIGATION
+--------------------------------------------------------------------------------------- */
+.middle.appNavigationContainer {
+    margin-top: 60px;
+}
+.middle .appNav {
+    margin-left:10px;
+}
+.middle .appNav li {
+    float:left;
+    margin-right:1px;
+}
+.middle .appNav li.rightLink {
+    float:right;
+    margin-right:10px;
+}
+.middle .appNav li:hover, .middle .appNav li.active {
+    cursor:pointer;
+    background-image:url(../../images/navigation/texture_active_back_2.jpg);
+    -webkit-box-shadow:inset 0 3px 6px #000000;
+}
+.middle .appNav li .sectionNavLink {
+    display:block;
+    font-size:14px;
+    padding: 20px 20px 16px 50px;
+    color:#efefef;
+}
+.middle .appNav li.homeLinkLi {
+    margin-left:10px;
+}
+.middle .appNav li .sectionNavLink.homeLink {
+    display:block;
+    padding: 20px 30px 16px 30px;
+    text-indent:-1000px;
+    background-image:url(../../images/icons/app_home.png);
+    background-repeat:no-repeat;
+    background-position:center;
+    overflow:hidden;
 }
 .middle .appNav li .sectionNavLink span {
     position: absolute;

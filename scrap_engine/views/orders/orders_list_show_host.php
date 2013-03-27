@@ -39,7 +39,7 @@ if($orders['error'] == FALSE)
 		$date_created                   = $this->scrap_string->make_date($order->date_created);
 
 		// Add the row
-		$this->table->add_row($date_created, array('data' => div_height(5).anchor('customers/order/'.$order->id, $order->order_number).div_height(5), 'class' => 'fullCell'), $fastsell_name, array('data' => '$'.$grand_total, 'class' => 'greenTxt'));
+		$this->table->add_row($date_created, array('data' => div_height(5).anchor('customers/order/'.$order->id.'/'.$this->uri->segment(3), $order->order_number).div_height(5), 'class' => 'fullCell'), $fastsell_name, array('data' => '$'.$grand_total, 'class' => 'greenTxt'));
 	}
 
 	// Generate table

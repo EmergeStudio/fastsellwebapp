@@ -32,7 +32,13 @@ class Fastsells extends CI_Controller
 		{
 			$customer_id                = $this->scrap_web->get_customer_org_id();
 		}
-		
+		$crt_fastsell_view              = 'all';
+		$url_append                     = '';
+		if($this->input->post('dropFastSellType'))
+		{
+			$crt_fastsell_view          = $this->input->post('dropFastSellType');
+			$url_append                 = '&fastselleventstate='.$crt_fastsell_view;
+		}
 		
 		// ----- HEADER ------------------------------------		
 		// Some variables
@@ -48,12 +54,8 @@ class Fastsells extends CI_Controller
 		// ----- CONTENT ------------------------------------
 		if($acc_type == 'show_host')
 		{
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageFastSells';
-			$this->load->view('universal/navigation', $dt_nav);
-
 			// Get the fastsells
-			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id;
+			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id.$url_append;
 			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
 			$dt_body['fastsells']           = $call_fastsells;
 
@@ -64,17 +66,14 @@ class Fastsells extends CI_Controller
 		}
 		else
 		{
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageFastSells';
-			$this->load->view('universal/customer_navigation', $dt_nav);
-
 			// Get the fastsells
-			$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
+			$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id.$url_append;
 			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
 			$dt_body['fastsells']           = $call_fastsells;
 		}
 
 		$dt_body['acc_type']                = $acc_type;
+		$dt_body['crt_fastsell_view']       = $crt_fastsell_view;
 
 		// Load the view
 		$this->load->view('fastsells/main_fastsells_page', $dt_body);
@@ -116,8 +115,11 @@ class Fastsells extends CI_Controller
 		$dt_nav['app_page']	            = 'pageFastSells';
 		//$this->load->view('universal/navigation', $dt_nav);
 
-		// Get all the customers
-		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id;
+		// Get the customers
+		$offset                         = 0;
+		$limit                          = 20;
+		$search_text                    = '';
+		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
 
@@ -909,6 +911,11 @@ class Fastsells extends CI_Controller
 				$customer_user_id                   = $this->scrap_web->get_customer_user_id();
 				$customer_org_id                    = $this->scrap_web->get_customer_org_id();
 
+				// Get current address
+				$url_address                    = 'addresses/.jsons?customerid='.$customer_org_id;
+				$call_address                   = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
+				$dt_body['addresses']               = $call_address['result'];
+
 				// See if any orders exists
 				$url_orders                         = 'fastsellorders/.jsons?fastselleventid='.$fastsell_id.'&customeruserid='.$customer_user_id;
 				$call_orders                        = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
@@ -940,10 +947,6 @@ class Fastsells extends CI_Controller
 						// Current order
 						$url_crt_order                  = 'fastsellorders/.json?id='.$order_id;
 						$call_crt_order                 = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
-
-						// Get current address
-						$url_address                    = 'addresses/.jsons?customerid='.$customer_org_id;
-						$call_address                   = $this->scrap_web->webserv_call($url_address, FALSE, 'get', FALSE, FALSE);
 
 						$dt_body['address']             = $call_address['result'];
 						$dt_body['order']               = TRUE;
@@ -1204,7 +1207,26 @@ class Fastsells extends CI_Controller
 		}
 
 		// Redirect
-		redirect('fastsells/event/'.$fastsell_id);
+		redirect('fastsells/event/'.$fastsell_id.'/fastsellstarted');
+
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| NOTIFY CUSTOMERS
+	|--------------------------------------------------------------------------
+	*/
+	function notify_customers()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FALSE);
+
+		// Some variables
+		$fastsell_id                        = $this->session->userdata('sv_show_set');
+
+		// Redirect
+		redirect('fastsells/event/'.$fastsell_id.'/notificationsuccess');
 
 	}
 
@@ -1641,6 +1663,38 @@ class Fastsells extends CI_Controller
 
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DOWNLOAD DEFINITION
+	|--------------------------------------------------------------------------
+	*/
+	function download_definition()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(FAlSE);
+
+		// Some loads
+		$this->load->helper('download');
+
+		// Some variables
+		$definition_id              = $this->uri->segment(3);
+
+		// Get the definition information
+		$url_definition             = 'fastsellitemdefinitions/.json?id='.$definition_id;
+		$call_definition            = $this->scrap_web->webserv_call($url_definition, FALSE, 'get', FALSE, FALSE);
+		$json_definition            = $call_definition['result'];
+
+		// Get the excel file
+		$url_def_download           = 'fastsellitemdefinitions/sample.xls?id='.$definition_id;
+		$call_def_download          = $this->scrap_web->byte_call($url_def_download, FALSE, 'get', FALSE, FALSE);
+
+		$name                       = str_replace(' ', '_', $json_definition->name).'.xls';
+		$data                       = $call_def_download['result'];
+
+		force_download($name, $data);
 	}
 }
 

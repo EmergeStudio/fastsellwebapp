@@ -251,6 +251,118 @@ class Ajax_handler_products extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| ADD DEFINITION FIELD
+	|--------------------------------------------------------------------------
+	*/
+	function add_definition_field()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$definition_id                      = $this->input->post('def_id');
+			$definition_field                   = $this->input->post('def_field');
+
+			// Get the definition
+			$url_definition                     = 'catalogitemdefinitions/.json?id='.$definition_id;
+			$call_definition                    = $this->scrap_web->webserv_call($url_definition, FALSE, 'get', FALSE, FALSE);
+			$json_definition                    = $call_definition['result'];
+
+			// Rebuild the fields
+			$ar_defintion_fields                = array();
+			foreach($json_definition->catalog_item_definition_fields as $field)
+			{
+				array_push($ar_defintion_fields, $field);
+			}
+
+			// New field
+			$ar_new_field                       = array
+			(
+				'type_name'                     => 'catalog_item_definition_field',
+				'field_name'                    => $definition_field,
+				'field_type'                    => array
+				(
+					'id'                        => 2,
+					'name'                      => 'Text Field',
+					'type_name'                 => 'field_type'
+				)
+			);
+			array_push($ar_defintion_fields, $ar_new_field);
+
+			$json_definition->catalog_item_definition_fields    = $ar_defintion_fields;
+
+			$update_json                        = json_encode($json_definition);
+
+			// Call to update
+			$url_update                         = 'catalogitemdefinitions/.json';
+			$call_update                        = $this->scrap_web->webserv_call($url_update, $update_json, 'post');
+
+			// Validate
+			if($call_update['error'] == FALSE)
+			{
+				echo 'wassuccessfullyupdated';
+			}
+			else
+			{
+				// Return the error message
+				$json				        = $call_update['result'];
+				echo $json->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| EDIT DEFINITION NAME
+	|--------------------------------------------------------------------------
+	*/
+	function edit_definition_name()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$definition_id                      = $this->input->post('def_id');
+			$definition_name                    = $this->input->post('def_name');
+
+			// Get the definition
+			$url_definition                     = 'catalogitemdefinitions/.json?id='.$definition_id;
+			$call_definition                    = $this->scrap_web->webserv_call($url_definition, FALSE, 'get', FALSE, FALSE);
+			$json_definition                    = $call_definition['result'];
+
+			// Edit the name
+			$json_definition->name              = $definition_name;
+
+			$update_json                        = json_encode($json_definition);
+
+			// Call to update
+			$url_update                         = 'catalogitemdefinitions/.json';
+			$call_update                        = $this->scrap_web->webserv_call($url_update, $update_json, 'post');
+
+			// Validate
+			if($call_update['error'] == FALSE)
+			{
+				echo 'wassuccessfullyupdated';
+			}
+			else
+			{
+				// Return the error message
+				$json				        = $call_update['result'];
+				echo $json->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| ADD PRODUCT POPUP
 	|--------------------------------------------------------------------------
 	*/
@@ -447,7 +559,7 @@ class Ajax_handler_products extends CI_Controller
 		{
 			// Some variables
 			$product_id                = $this->input->post('hdProductId2');
-			//echo $product_id;
+//			echo $product_id;
 
 			if(isset($_FILES['uploadedFileProductImage2']) && !empty($_FILES['uploadedFileProductImage2']))
 			{
@@ -858,6 +970,79 @@ class Ajax_handler_products extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
+	| GET FLEXI PRODUCTS
+	|--------------------------------------------------------------------------
+	*/
+	function get_flexi_products()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+//			// Some variables
+//			$show_host_id                   = $this->scrap_web->get_show_host_id();
+//
+//			// Get the products
+//			$offset                         = 0;
+//			$limit                          = 20;
+//			$search_text                    = '';
+//
+//			$dt_body['search_text']         = $search_text;
+//			$dt_body['offset']              = $offset;
+//			$dt_body['limit']               = $limit;
+//
+//			// Make the call
+//			$url_products                   = 'catalogitems/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
+//			$call_products                  = $this->scrap_web->webserv_call($url_products, FALSE, 'get', FALSE, FALSE);
+//			$dt_body['products']            = $call_products;
+//
+//			// Get the definitions
+//			$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+//			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+//			$dt_body['definitions']         = $call_definitions;
+
+//			if($call_products['error'] == FALSE)
+//			{
+//				echo json_encode($call_products['result']);
+//			}
+
+			header("Expires: Mon, 26 Jul 1997 05:00:00 GMT" );
+			header("Last-Modified: " . gmdate( "D, d M Y H:i:s" ) . "GMT" );
+			header("Cache-Control: no-cache, must-revalidate" );
+			header("Pragma: no-cache" );
+			header("Content-type: text/x-json");
+
+			$json = "";
+			$json .= "{\n";
+			$json .= "page: 1,\n";
+			$json .= "total: 10,\n";
+			$json .= "rows: [";
+			$rc = false;
+			$loop_cnt = 1;
+			while ($loop_cnt < 10) {
+				$loop_cnt++;
+				if ($rc) $json .= ",";
+				$json .= "\n{";
+				$json .= "id:'".$loop_cnt."',";
+				$json .= "cell:['".$loop_cnt."','dsafasdfasdf'";
+				$json .= ",'".addslashes('asfdasdf')."'";
+				$json .= ",'".addslashes('asdfasdf')."'";
+				$json .= ",'".addslashes('asdfasdf')."'";
+				$json .= ",'".addslashes('asfdasfasdf')."']";
+				$json .= "}";
+				$rc = true;
+			}
+			$json .= "]\n";
+			$json .= "}";
+			echo $json;
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| CHECK PRODUCTS UPLOAD
 	|--------------------------------------------------------------------------
 	*/
@@ -881,13 +1066,13 @@ class Ajax_handler_products extends CI_Controller
 
 			// Submit the file
 			$url_file_convert           = 'masterdata/multipartmasterdata.xls';
-			$call_file_convert          = $this->scrap_web->webserv_call($url_file_convert, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form');
+			$call_file_convert          = $this->scrap_web->webserv_call($url_file_convert, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 			$json_file_convert          = $call_file_convert['result'];
 			$encode_file_convert        = json_encode($json_file_convert);
 			//echo $encode_file_convert;
 
 			// Submit the JSON
-			$url_file_check             = 'catalogitems/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=true&catalogitemdefid='.$def_id;
+			$url_file_check             = 'catalogitems/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=true&catalogitemdefid='.$def_id.'&isfastsellitem=true';
 			$call_file_check            = $this->scrap_web->webserv_call($url_file_check, $encode_file_convert, 'put', FALSE, FALSE);
 			$dt_body['row_check']       = $call_file_check;
 			//echo json_encode($call_file_check['result']);
@@ -964,13 +1149,13 @@ class Ajax_handler_products extends CI_Controller
 			//echo $json_items;
 
 			// Submit the JSON
-			$url_insert_items               = 'catalogitems/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=false&catalogitemdefid='.$definition_id;
+			$url_insert_items               = 'catalogitems/masterdata.json?showhostid='.$show_host_id.'&validateinnercontentonly=false&catalogitemdefid='.$definition_id.'&isfastsellitem=true';
 			$call_insert_items              = $this->scrap_web->webserv_call($url_insert_items, $json_items, 'put', FALSE, FALSE);
 			$dt_body['row_check']           = $call_insert_items;
 
 
 			// Load the view
-			$this->load->view('show_host/error_rows_products', $dt_body);
+			$this->load->view('products/error_rows_products', $dt_body);
 		}
 		else
 		{
@@ -1270,6 +1455,87 @@ class Ajax_handler_products extends CI_Controller
 				// Return the error message
 				$json				        = $call_product['result'];
 				echo $json->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| SAVE PRODUCT CHANGES
+	|--------------------------------------------------------------------------
+	*/
+	function save_product_changes()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$new_value                      = $this->input->post('new_value');
+			$edits                          = $this->input->post('edits');
+			$ex_edits                       = explode('][', $this->scrap_string->remove_flc($edits));
+			$ar_prod_ids                    = array();
+			$ar_data                        = array();
+
+			// Update the customers to show host id array
+			foreach($ex_edits as $edit_value)
+			{
+				$ex_edit_value              = explode('_', $edit_value);
+				$ctsh_id_value              = $ex_edit_value[0];
+				array_push($ar_prod_ids, $ctsh_id_value);
+			}
+			$ar_prod_ids                    = array_unique($ar_prod_ids);
+
+			// Get each product
+			foreach($ar_prod_ids as $product_id)
+			{
+				// Get product information
+				$url_product                = 'catalogitems/.json?id='.$product_id;
+				$call_product               = $this->scrap_web->webserv_call($url_product, FALSE, 'get', FALSE, FALSE);
+
+				if($call_product['error'] == FALSE)
+				{
+					$json_product           = $call_product['result'];
+
+					foreach($ex_edits as $edit_value)
+					{
+						$ex_edit_value                          = explode('_', $edit_value);
+
+						// Edit the data
+						if($ex_edit_value[0] == $product_id)
+						{
+							$value_name                         = $ex_edit_value[1];
+							if($value_name == 'productNumber')
+							{
+								$json_product->item_number      = $new_value;
+							}
+							else
+							{
+								if($ex_edit_value[2] == 'edit')
+								{
+									foreach($json_product->catalog_item_field_values as $field_value)
+									{
+										if($field_value->id == $value_name)
+										{
+											$field_value->value = $new_value;
+										}
+									}
+								}
+							}
+						}
+					}
+
+					$json_product->is_fastsell_based            = TRUE;
+
+					// Encode
+					$json_update                                = json_encode($json_product);
+
+					// Update
+					$call_product                               = $this->scrap_web->webserv_call('catalogitems/.json', $json_update, 'post');
+				}
 			}
 		}
 		else

@@ -9,6 +9,7 @@ $(document).ready(function(){
 	var $base_path				= $('#hdPath').val();
 	var $ajax_base_path 		= $base_path + 'ajax_handler_products/';
 	var $ajax_html_path 		= $ajax_base_path + 'html_view/';
+    var $crt_cell               = false;
 
 
 // ------------------------------------------------------------------------------EXECUTE
@@ -17,16 +18,136 @@ $(document).ready(function(){
 
     $fc_delete_definition();
 
+    $fc_add_field();
+
     $fc_remove_field();
+
+    $(document).mousemove(function($e)
+    {
+        $mouse_x                = $e.pageX;
+        $mouse_y                = $e.pageY;
+    });
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- ADD DEFINITION FIELD
+    function $fc_add_field()
+    {
+        $('.scrapEdit input').before('<label>Add Field:</label>');
+        $('.scrapEdit2 input').before('<label>Edit Template Name:</label>');
+
+        $('.editDefinitionName').live('mouseup', function()
+        {
+            $('.scrapEdit').hide();
+
+            // Show the DOM
+            $('.scrapEdit2').fadeIn('fast').css({ left : ($mouse_x - 50), top : $mouse_y + 10 });
+            $('.scrapEdit2 input').val($(this).text()).focus();
+            $crt_cell           = $(this);
+        });
+
+        $('.productFieldAdd').live('mouseup', function()
+        {
+            $('.scrapEdit2').hide();
+
+            // Show the DOM
+            $('.scrapEdit').fadeIn('fast').css({ left : ($mouse_x - 138), top : $mouse_y });
+            $('.scrapEdit input').val('').focus();
+            $crt_cell           = $(this);
+        });
+
+        // Close edit
+        $('.scrapEdit .btnCancel, .scrapEdit2 .btnCancel').live('click', function()
+        {
+            $('.scrapEdit').fadeOut('fast');
+            $('.scrapEdit2').fadeOut('fast');
+        });
+
+        // Save edit
+        $('.scrapEdit .btnSave').live('click', function()
+        {
+            // Some variables
+            $def_field              = $('.scrapEdit input').val();
+            $def_id                 = $crt_cell.find('.hdDefinitionIdAdd').text();
+
+            // Edit the DOM
+            $('.scrapEdit').fadeOut('fast');
+
+            // Submit the new document type for adding
+            $.scrap_note_loader('Adding the new template field');
+
+            // Post the data
+            $.post($ajax_base_path + 'add_definition_field',
+            {
+                def_id			    : $def_id,
+                def_field		    : $def_field
+            },
+            function($data)
+            {
+                $data	= jQuery.trim($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else if($data == 'wassuccessfullyupdated')
+                {
+                    $fc_refresh_definitions();
+                    $.scrap_note_time('Template field has been successfully added', 4000, 'tick');
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
+            });
+        });
+
+        // Save edit
+        $('.scrapEdit2 .btnSave').live('click', function()
+        {
+            // Some variables
+            $def_name               = $('.scrapEdit2 input').val();
+            $def_id                 = $crt_cell.parent().find('.hdDefinitionIdName').text();
+
+            // Edit the DOM
+            $('.scrapEdit2').fadeOut('fast');
+
+            // Submit the new document type for adding
+            $.scrap_note_loader('Editing the template name');
+
+            // Post the data
+            $.post($ajax_base_path + 'edit_definition_name',
+            {
+                def_id			    : $def_id,
+                def_name		    : $def_name
+            },
+            function($data)
+            {
+                $data	= jQuery.trim($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else if($data == 'wassuccessfullyupdated')
+                {
+                    $fc_refresh_definitions();
+                    $.scrap_note_time('Template name has been successfully updated', 4000, 'tick');
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
+            });
+        });
+    }
 
     // ----- ADD DEFINITION
     function $fc_add_definition()
     {
         // Add a document type popup
-        $('body').sunBox.popup('Add Product Group', 'popAddDefinition',
+        $('body').sunBox.popup('Add Product Template', 'popAddDefinition',
         {
             ajax_path		: $ajax_base_path + 'add_definition_popup',
             close_popup		: false,
@@ -228,7 +349,7 @@ $(document).ready(function(){
             $field_name                 = $(this).text();
 
             // Display message
-            $.scrap_note_time('<b>' + $field_name + '</b> is a required field and cannot be delete', 4000, 'cross');
+            $.scrap_note_time('<b>' + $field_name + '</b> is a required field and cannot be deleted', 4000, 'cross');
         });
 
         // Delete field

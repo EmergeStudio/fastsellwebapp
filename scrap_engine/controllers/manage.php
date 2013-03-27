@@ -35,16 +35,16 @@ class Manage extends CI_Controller
 		
 		
 		// Some variables
-		$acc_view				= $this->session->userdata('sv_acc_view');
-		$user_id				= $this->session->userdata('sv_user_id');
+		$acc_type                       = $this->session->userdata('sv_acc_type');
+		$user_id				        = $this->session->userdata('sv_user_id');
 		
 		
 		// ----- HEADER ------------------------------------		
 		// Some variables
 		$dt_header['title'] 	= 'Manage Users';
-		$dt_header['crt_page']	= 'pageManageUsers';
-		$dt_header['extra_css']	= array('users');
-		$dt_header['extra_js']	= array('base_users');
+		$dt_header['crt_page']	= 'pageUserDetails';
+		$dt_header['extra_css']	= array('flexigrid', 'users');
+		$dt_header['extra_js']	= array('plugin_flexigrid_pack', 'plugin_ehighlight', 'users');
 		
 		// Load header
 		$this->load->view('universal/header', $dt_header);
@@ -52,46 +52,120 @@ class Manage extends CI_Controller
 		
 		// ----- CONTENT ------------------------------------
 		// Validate the account type
-		if($acc_view == 'show_host')
+		if($acc_type == 'show_host')
 		{	
 	 		// Get show host id
 	 		$url_show_host_id		= 'showhostusers/.json?userid='.$user_id; 
 	 		$call_show_host_id		= $this->scrap_web->webserv_call($url_show_host_id);
 	 		$json_show_host_id		= $call_show_host_id['result'];
 	 		$show_host_id			= $json_show_host_id->show_host_organization->id;
-	 				
-			// Navigation view
-			$dt_nav['app_page']	= 'pageManageUsers';
-			$this->load->view($acc_view.'/navigation', $dt_nav);
-			
-			// Get the user view
-			$url					= 'users/view/xml?page=manage_users';
-			//$view_setting			= $this->scrap_web->webserv_call($url);
-			$view_setting			= FALSE;
-			
-			// Check the setting
-			if($view_setting['error'] == FALSE)
-			{
-				$dt_body['view_setting']	= 'no_view';
-			}
-			else
-			{
-				$dt_body['view_setting']	= 'no_view';
-			}
 		
 			// Get the users
 			$url_users				= 'showhostusers/.jsons?showhostid='.$show_host_id;
-			$json_users				= $this->scrap_web->webserv_call($url_users);
+			$json_users				= $this->scrap_web->webserv_call($url_users, FALSE, 'get', FALSE, FALSE);
 			$dt_body['users']		= $json_users;
-		}	
-		
-		// Content view
-		$this->load->view('manage/all_users', $dt_body);
-		
-		
+
+			// Content view
+			$this->load->view('manage/show_host_users', $dt_body);
+		}
 		
 		// ----- FOOTER ------------------------------------
 		$this->load->view('universal/footer');
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DELETE A USER
+	|--------------------------------------------------------------------------
+	*/
+	function user_delete()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		// Some variables
+		$user_id                        = $this->uri->segment(3);
+
+		// Call delete
+		$url_delete                     = 'showhostusers/.json?id='.$user_id;
+		$call_delete                    = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete', FALSE, FALSE);
+
+		// Validate the result
+//		if($call_delete['error'] == FALSE)
+//		{
+//			echo 'okitsdone';
+//		}
+//		else
+//		{
+//			// Return the error message
+//			$json				        = $call_delete['result'];
+//			echo $json->error_description;
+//		}
+
+		// Redirect
+		redirect('manage/users');
+	}
+
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ADD A USER
+	|--------------------------------------------------------------------------
+	*/
+	function add_a_user()
+	{
+		// ----- APPLICATION PROFILER --------------------------------
+		$this->output->enable_profiler(TRUE);
+
+		// Some variables
+		$show_host_id                   = $this->scrap_web->get_show_host_id();
+		$user_type                      = $this->input->post('drpdwnUserType');
+		$first_name                     = $this->input->post('inpName');
+		$surname                        = $this->input->post('inpSurname');
+		$email                          = $this->input->post('inpEmail');
+		$username                       = $this->input->post('inpUsername');
+		$password                       = $this->input->post('inpPassword');
+
+		// Get sample user
+		$url_sample                     = 'showhostusers/sample.json';
+		$call_sample                    = $this->scrap_web->webserv_call($url_sample, FALSE, 'get', FALSE, FALSE, TRUE);
+
+		// Edit the user
+		$json_sample                            = $call_sample['result'];
+		$ar_emails							    = array();
+		$ar_emails['is_primary']                = TRUE;
+		$ar_emails['email']					    = $email;
+
+		$json_sample['user']['firstname']               = $first_name;
+		$json_sample['user']['lastname']                = $surname;
+		$json_sample['user']['user_emails']             = array($ar_emails);
+		$json_sample['user']['username']                = $username;
+		$json_sample['user']['password']                = sha1($password);
+		$json_sample['user']['clear_password']          = $password;
+		$json_sample['show_host_role']['id']            = $user_type;
+		$json_sample['show_host_organization']['id']    = $show_host_id;
+
+		// Recode
+		$new_json				        = json_encode($json_sample);
+		//echo $new_json;
+
+		// Create new user
+		$new_user				        = $this->scrap_web->webserv_call('showhostusers/.json', $new_json, 'put');
+
+		redirect('manage/users');
+//		// Validate the result
+//		if($new_user['error'] == FALSE)
+//		{
+//			echo 'okitsdone';
+//		}
+//		else
+//		{
+//			// Return the error message
+//			$json				        = $new_user['result'];
+//			echo $json->error_description;
+//		}
 	}
 
 

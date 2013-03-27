@@ -23,8 +23,40 @@ $(document).ready(function(){
 
     $fc_save_addresses();
 
+    $fc_adjust_fastsell_width();
+
+    $fc_change_view_type();
+
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- CHANGE VIEW TYPE
+    function $fc_change_view_type()
+    {
+        $('select[name="dropFastSellType"]').live('change', function()
+        {
+            $('.frmFastSellsType').submit();
+        });
+    }
+
+    // ---------- ADJUST FASTSELL WIDTH
+    function $fc_adjust_fastsell_width()
+    {
+        // Some variables
+        $window_w               = $(window).width();
+
+        // Edit the DOM
+        $('.middle .itemContainer .fastSellDetails').width($window_w - 100);
+
+        $(window).resize(function()
+        {
+            // Some variables
+            $window_w               = $(window).width();
+
+            // Edit the DOM
+            $('.middle .itemContainer .fastSellDetails').width($window_w - 100);
+        });
+    }
 
     // ---------- COUNTER
     function $fc_counter()

@@ -20,7 +20,7 @@ $(document).ready(function(){
 	
 	$fc_shifter_navigation();
 
-    $fc_customer_links();
+//    $fc_customer_links();
 
     $fc_add_product();
 
@@ -58,9 +58,57 @@ $(document).ready(function(){
     $fc_auto_complete_category($('.hdFastSellCategories').text());
 
     $fc_manage_category();
+
+    $fc_add_customers_single();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- ADD CUSTOMERS
+    function $fc_add_customers_single()
+    {
+        // Buy products popup
+        $('body').sunBox.popup('Add Single Customer', 'popAddCustomers',
+        {
+            ajax_path		    : $ajax_base_path_2 + 'add_customers_popup',
+            close_popup		    : false,
+            callback 		    : function($return){}
+        });
+
+        // Show the popup
+        $('.btnAddCustomersPopup').live('click', function()
+        {
+            $('body').sunBox.popup_change_width('popAddCustomers', 800);
+            $('.popAddCustomers .returnTrue').hide();
+            $('body').sunBox.show_popup('popAddCustomers');
+            $('body').sunBox.adjust_popup_height('popAddCustomers');
+        });
+
+        $('.popAddCustomers input[name="checkAddCustomer"]').live('change', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $customer_id            = $this.val();
+            $parent				    = $this.parents('tr');
+            $event_id               = $('.hdEventId').text();
+
+            $.scrap_note_loader('Adding the customer to this FastSell');
+
+            // Add the customer
+            $.post($base_path + 'ajax_handler_fastsells/fastsell_customer_link',
+            {
+                event_id		    : $event_id,
+                customer_id			: $customer_id ,
+                type                : 'add'
+            },
+            function($data)
+            {
+                //console.log($data);
+                $.scrap_note_time('Customer has been added to this FastSell', 4000, 'tick');
+                $fc_refresh_customer_list();
+            });
+        });
+    }
 
     // ----- MANAGE CATEGORY
     function $fc_manage_category()
@@ -506,6 +554,16 @@ $(document).ready(function(){
             });
         });
 
+        // Change chosen definition
+        $('select[name="dropItemDefinitions"]').live('change', function()
+        {
+            // Some variables
+            $fastsell_def_id    = $(this).val();
+
+            // Edit the download link
+            $('.popProductsMasterDataFile .downloadTemplate').attr({ href : $base_path + 'fastsells/download_definition/' + $fastsell_def_id });
+        });
+
         // Submit
         $('.popProductsMasterDataFile .returnTrue').live('click', function()
         {
@@ -587,29 +645,59 @@ $(document).ready(function(){
     }
 
     // ----- CUSTOMER LINKS
-    function $fc_customer_links()
-    {
-        $('.userList input[name="checkAddCustomer"]').live('change', function()
-        {
-            // Some variables
-            $this                   = $(this);
-            $customer_id            = $this.val();
-            $parent				    = $this.parents('tr');
-            $event_id               = $('.hdEventId').text();
-
-            // Add the customer
-            $.post($ajax_base_path + 'fastsell_customer_link',
-            {
-                event_id		    : $event_id,
-                customer_id			: $customer_id ,
-                type                : 'add'
-            },
-            function($data)
-            {
-                $fc_refresh_customer_list();
-            });
-        });
-    }
+//    function $fc_customer_links()
+//    {
+//        $('.userList .btnAddCustomerOne').live('click', function()
+//        {
+//            // Some variables
+//            $this                   = $(this);
+//            $parent				    = $this.parents('tr');
+//            $customer_id            = $parent.find('.hdCustomerIdOne').text();
+//            $event_id               = $('.hdEventId').text();
+//            $.scrap_note_loader('Adding customer');
+//
+//            // Add the customer
+//            $.post($ajax_base_path + 'fastsell_customer_link',
+//            {
+//                event_id		    : $event_id,
+//                customer_id			: $customer_id ,
+//                type                : 'add'
+//            },
+//            function($data)
+//            {
+//                $.scrap_note_hide();
+//                $fc_refresh_customer_list();
+//            });
+//        });
+//
+//        $('.userList .btnAddAllCustomers').live('click', function()
+//        {
+//            $.scrap_note_loader('Adding customers');
+//            $event_id                   = $('.hdEventId').text();
+//
+//            $('.userList tbody tr').each(function()
+//            {
+//                // Some variables
+//                $this                   = $(this);
+//                $customer_id            = $this.find('.hdCustomerIdOne').text();
+////                console.log($customer_id);
+//
+//                // Add the customer
+//                $.post($ajax_base_path + 'fastsell_customer_link',
+//                {
+//                    event_id		    : $event_id,
+//                    customer_id			: $customer_id ,
+//                    type                : 'add'
+//                },
+//                function($data)
+//                {
+//                });
+//            });
+//
+//            $.scrap_note_hide();
+//            $fc_refresh_customer_list();
+//        });
+//    }
 
     // ----- REFRESH CUSTOMERS LIST
     function $fc_refresh_customer_list()
@@ -621,7 +709,7 @@ $(document).ready(function(){
         $('.chosenUsersList table').fadeTo('fast', 0.3);
 
         // The AJAX call
-        $.post($ajax_base_path + 'get_linked_customers',
+        $.post($base_path + 'ajax_handler_customers/get_added_customers',
         {
             event_id		    : $event_id
         },
@@ -1381,24 +1469,24 @@ $(document).ready(function(){
     }
 
     // ---------- REFRESH CUSTOMER LIST
-    function $fc_refresh_customer_list()
-    {
-        // Some variables
-        $event_id               = $('.hdEventId').text();
-
-        // The AJAX call
-        $.post($base_path + 'ajax_handler_customers/get_added_customers',
-        {
-            event_id		    : $event_id
-        },
-        function($data)
-        {
-            $data	            = jQuery.trim($data);
-            //console.log($data);
-
-            $('.chosenUsersList').html($data);
-        });
-    }
+//    function $fc_refresh_customer_list()
+//    {
+//        // Some variables
+//        $event_id               = $('.hdEventId').text();
+//
+//        // The AJAX call
+//        $.post($base_path + 'ajax_handler_customers/get_added_customers',
+//        {
+//            event_id		    : $event_id
+//        },
+//        function($data)
+//        {
+//            $data	            = jQuery.trim($data);
+//            //console.log($data);
+//
+//            $('.chosenUsersList').html($data);
+//        });
+//    }
 
     // ---------- REMOVE A PRODUCT
     function $fc_remove_product()

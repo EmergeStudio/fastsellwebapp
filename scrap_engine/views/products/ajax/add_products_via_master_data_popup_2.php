@@ -29,12 +29,25 @@ if($item_defs['error'] == FALSE)
 
 			$json_item_defs             = $item_defs['result'];
 			$ar_item_definitions        = array();
+			$first_definition           = FALSE;
+			$loop_cnt                   = 0;
 			foreach($json_item_defs->fastsell_item_definitions as $item_definition)
 			{
+				$loop_cnt++;
+				if($loop_cnt == 1)
+				{
+					$first_definition   = $item_definition->id;
+				}
+
 				$ex_item_definition     = explode('_', $item_definition->name);
 				$ar_item_definitions[$item_definition->id]      = $ex_item_definition[2];
 			}
-			echo form_dropdown('dropItemDefinitions', $ar_item_definitions);
+
+			echo form_dropdown('dropItemDefinitions', $ar_item_definitions, $first_definition);
+
+			// Download temlate
+			echo div_height(10);
+			echo make_button('<span class="icon-download"></span>Download Template', 'blueButton downloadTemplate', 'fastsells/download_definition/'.$first_definition);
 
 		echo close_div();
 

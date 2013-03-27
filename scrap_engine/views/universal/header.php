@@ -139,6 +139,33 @@ div.newOverlay {
 		echo full_div('', 'mainNote');
 	
 	echo close_div();
+
+	// Edit popup
+	echo open_div('scrapEdit');
+
+		// Edit arrow
+		echo open_div('arrowContainer');
+
+			echo full_div('', 'arrow');
+
+		echo close_div();
+
+		echo open_div('editContainer');
+
+			$inp_edit           = array
+			(
+				'name'	        => 'inpScrapEdit'
+			);
+			echo form_input($inp_edit);
+
+			echo make_button('Save', 'btnSave blueButton', '', 'left');
+			echo make_button('Cancel', 'btnCancel', '', 'left');
+
+			echo clear_float();
+
+		echo close_div();
+
+	echo close_div();
 	?>
 
 	<!--Header-->
@@ -151,7 +178,7 @@ div.newOverlay {
 			echo open_div('innerTop');
 			
 				// Logo
-				if(($crt_page == 'pageLogin') || ($crt_page == 'pageSignup'))
+				if(($crt_page == 'pageLogin') || ($crt_page == 'pageSignup') || ($crt_page == 'pageForgotPassword'))
 				{
 					echo open_div('logoContain centerLogo');
 				}
@@ -172,48 +199,214 @@ div.newOverlay {
 				echo close_div();
 				
 				// Navigation links
-				if(($crt_page != 'pageLogin') && ($crt_page != 'pageSignup'))
+				if(($crt_page != 'pageLogin') && ($crt_page != 'pageSignup') && ($crt_page != 'pageForgotPassword'))
 				{
+					// Application navigation
+					if($this->session->userdata('sv_acc_type') == 'show_host')
+					{
+						echo '<ul class="appNav">';
+
+							// Shows link
+							if($crt_page == 'pageFastSells')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+							echo anchor('fastsells', '<span class="icon-ticket yellow"></span>FastSells', 'class="sectionNavLink"');
+
+							echo '</li>';
+
+							// Products link
+							if($crt_page == 'pageProducts')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+							echo full_div('<span class="icon-box"></span>Products', 'sectionNavLink');
+
+							// Sub navigation
+							echo '<ul class="subNav">';
+
+								echo '<li>';
+
+									echo anchor('products', 'My Products', 'class="sectionNavSubLink"');
+
+								echo '</li>';
+
+								echo '<li>';
+
+									echo anchor('products/definitions', 'Product Templates', 'class="sectionNavSubLink"');
+
+								echo '</li>';
+
+								echo '<li>';
+
+									echo anchor('products/upload_master_file', 'Import Products', 'class="sectionNavSubLink"');
+
+								echo '</li>';
+
+							echo '</ul>';
+
+							echo '</li>';
+
+							// Customers link
+							if($crt_page == 'pageCustomers')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+							echo full_div('<span class="icon-users"></span>Address Book', 'sectionNavLink');
+
+								// Sub navigation
+								echo '<ul class="subNav">';
+
+									echo '<li>';
+
+										echo anchor('customers', 'My Customers', 'class="sectionNavSubLink"');
+
+									echo '</li>';
+
+									echo '<li>';
+
+										echo anchor('customers/upload_master_file', 'Import Customers', 'class="sectionNavSubLink lastLink"');
+
+									echo '</li>';
+
+								echo '</ul>';
+
+							echo '</li>';
+
+							// Reports link
+							if($crt_page == 'pageReports')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+							echo full_div('<span class="icon-bars"></span>Reports', 'sectionNavLink');
+
+								// Sub navigation
+								echo '<ul class="subNav">';
+
+									echo '<li>';
+
+										echo anchor('reports/orders_summary', 'Orders Summary', 'class="sectionNavSubLink firstLink"');
+
+									echo '</li>';
+
+									echo '<li>';
+
+										echo anchor('reports/orders_by_event', 'Orders By FastSell', 'class="sectionNavSubLink"');
+
+									echo '</li>';
+
+									echo '<li>';
+
+										echo anchor('reports/orders_by_date', 'Orders By Date', 'class="sectionNavSubLink lastLink"');
+
+									echo '</li>';
+
+								echo '</ul>';
+
+							echo '</li>';
+
+						echo '</ul>';
+					}
+					elseif($this->session->userdata('sv_acc_type') == 'customer')
+					{
+						echo '<ul class="appNav">';
+
+							// Dashboard link
+							if($crt_page == 'pageDashboard')
+							{
+								echo '<li class="homeLinkLi active">';
+							}
+							else
+							{
+								echo '<li class="homeLinkLi">';
+							}
+
+								echo anchor('dashboard', 'Dashboard', 'class="sectionNavLink homeLink"');
+
+							echo '</li>';
+
+							// Shows link
+							if($crt_page == 'pageFastSells')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+								echo anchor('fastsells', '<span class="icon-ticket yellow"></span>FastSells', 'class="sectionNavLink fastsells"');
+
+							echo '</li>';
+
+							// Orders link
+							if($crt_page == 'pageMyOrders')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+								echo anchor('my_orders', '<span class="icon-shopping-cart blue"></span>My Orders', 'class="sectionNavLink"');
+
+							echo '</li>';
+
+							// Buying preferences link
+							if($crt_page == 'pageBuyingPrefs')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+								echo anchor('buying_preferences', '<span class="icon-basket blue"></span>Buying Preferences', 'class="sectionNavLink"');
+
+							echo '</li>';
+
+							// Reports link
+							if($crt_page == 'pageReports')
+							{
+								echo '<li class="active">';
+							}
+							else
+							{
+								echo '<li>';
+							}
+
+								echo anchor('reports/customer_orders', '<span class="icon-bars blue"></span>Reports', 'class="sectionNavLink"');
+
+							echo '</li>';
+
+						echo '</ul>';
+					}
+
 					
 					// Main navigation
 					echo '<ul class="mainNav floatRight">';
-				
-//						// Notifications link
-//						if($crt_page == 'pageNotifications')
-//						{
-//							echo '<li class="superActive">';
-//						}
-//						else
-//						{
-//							echo '<li>';
-//						}
-//							// Counter
-//							echo open_div('counter blue');
-//
-//								echo full_div('6', 'count');
-//
-//							echo close_div();
-//
-//							echo full_div('<span class="icon-signal"></span>Notifications', 'mainNavLink mainNavNotifications');
-//
-//							// Sub navigation
-//							echo open_div('subNav subNavNotifications');
-//
-//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 1</a>', 'notificationLine');
-//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 2</a>', 'notificationLine');
-//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 3</a>', 'notificationLine');
-//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 4</a>', 'notificationLine');
-//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 5</a>', 'notificationLine');
-//								echo full_div('<b>Chris</b> added a new product <a href="'.base_url().'notification/redirect/1487">Product Name 6</a>', 'notificationLine');
-//
-//								// Veiw all notifications
-//								echo div_height(15);
-//								echo make_button('View All Notifications', '', 'notifications');
-//
-//							// End of sub navigation
-//							echo close_div();
-//
-//						echo '</li>';
 				
 						// User link
 						if($this->session->userdata('sv_acc_type') == 'show_host')
@@ -253,8 +446,11 @@ div.newOverlay {
 										echo full_div('<b>'.$this->session->userdata('sv_name').'</b>');
 										
 										// Edit profile
-										echo make_link('Change My Information', 'btnEditMyProfile');
-										
+										echo make_link('Change My Information', 'btnEditMyProfile').'<br>';
+
+										// Manage accounts
+										echo anchor('manage/users', 'Manage User Accounts');
+
 										echo div_height(1);
 
 										// Timezone selection

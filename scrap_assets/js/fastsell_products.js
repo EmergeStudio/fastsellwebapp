@@ -115,11 +115,11 @@ $(document).ready(function(){
     {
         // Buy products popup
         $('body').sunBox.popup('Upload Master Data File', 'popProductsMasterDataFile',
-            {
-                ajax_path		    : $base_path + 'ajax_handler_products/add_master_data_file_popup_2',
-                close_popup		    : false,
-                callback 		    : function($return){}
-            });
+        {
+            ajax_path		    : $base_path + 'ajax_handler_products/add_master_data_file_popup_2',
+            close_popup		    : false,
+            callback 		    : function($return){}
+        });
 
         // Show the popup
         $('.btnUploadDataFile').live('click', function()
@@ -127,6 +127,16 @@ $(document).ready(function(){
             $('.popProductsMasterDataFile .returnTrue').text('Upload');
             $('body').sunBox.show_popup('popProductsMasterDataFile');
             $('body').sunBox.adjust_popup_height('popProductsMasterDataFile');
+        });
+
+        // Change chosen definition
+        $('select[name="dropItemDefinitions"]').live('change', function()
+        {
+            // Some variables
+            $fastsell_def_id    = $(this).val();
+
+            // Edit the download link
+            $('.popProductsMasterDataFile .downloadTemplate').attr({ href : $base_path + 'fastsells/download_definition/' + $fastsell_def_id });
         });
 
         // Submit

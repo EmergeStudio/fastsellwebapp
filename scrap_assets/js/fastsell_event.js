@@ -35,6 +35,8 @@ $(document).ready(function(){
     $fc_manage_category();
 
     $fc_auto_complete_category($('.hdFastSellCategories').text());
+
+//    $fc_adjust_input();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
@@ -103,6 +105,29 @@ $(document).ready(function(){
         $('input[name="uploadedFileFastsellImage"]').live('change', function()
         {
             $('.shifterPane_1 .fastSellImage').removeClass('icon-camera').html('<div class="loader">Uploading Your Selected Image</div>');
+
+            // Some variables
+            $error                      = false;
+            $categories                 = '';
+
+            if($error == false)
+            {
+                $('.catBack .breadCrumb.last').each(function()
+                {
+                    $categories         += '[' + $(this).find('.hdCategoryId').text() + ']';
+                });
+
+                if($categories == '')
+                {
+                    $error			= true;
+                    $.scrap_note_time('At least 1 FastSell category is required', 4000, 'cross');
+                    $('input[name="inpCategorySearch"]').addClass('redBorder');
+                }
+                else
+                {
+                    $('input[name="hdFastSellCategories"]').val($categories);
+                }
+            }
 
             $('.frmSaveEventChanges').submit();
         });

@@ -35,7 +35,7 @@ echo open_div('profileInformation rightColumn');
 	echo open_div('inset profileContainer');
 
 		// First names
-		echo form_label('Name');
+		echo form_label('First Name');
 		$inp_data			= array
 		(
 			'name'			=> 'inpName',

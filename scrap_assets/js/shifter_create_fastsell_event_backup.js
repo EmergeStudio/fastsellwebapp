@@ -510,6 +510,18 @@ $(document).ready(function(){
             });
         });
 
+//        alert('yay1');
+//        // Change chosen definition
+//        $('select[name="dropItemDefinitions"]').live('change', function()
+//        {
+//            alert('yay2');
+//            // Some variables
+//            $fastsell_def_id    = $(this).val();
+//
+//            // Edit the download link
+//            $('.popProductsMasterDataFile .downloadTemplate').attr({ href : $base_path + 'fastsells/download_definition/' + $fastsell_def_id });
+//        });
+
         // Submit
         $('.popProductsMasterDataFile .returnTrue').live('click', function()
         {

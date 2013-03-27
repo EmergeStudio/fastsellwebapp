@@ -66,7 +66,7 @@
     padding-bottom: 30px;
 }
 .shifterPane_1 .inset.showDescription {
-    width: 490px;
+    width: 45%;
 }
 .shifterPane_1 .time {
     margin-top: -10px;
@@ -98,7 +98,6 @@
 }
 .shifterPane_2 .chosenUsers, .shifterPane_2 .userList {
     padding: 25px;
-    width: 490px;
 }
 .shifterPane_2 table .evenRow, .shifterPane_2 table .evenRow, .shifterPane_2 table tr {
     background-color: #fff;
@@ -132,7 +131,7 @@
     padding: 8px 14px;
 }
 .middle .shifterPane_3 .scrapButton.blueButton {
-    background-color: #71a5fb;
+    /*background-color: #71a5fb;*/
 }
 .middle .shifterPane_3 .inpUnits {
     width: 50px;
@@ -338,4 +337,33 @@
 }
 div.uploader input {
     height: 30px;
+}
+.sunBox.popAddCustomers img {
+    display: none;
+}
+.sunBox.popAddCustomers td, .sunBox.popAddCustomers th {
+    padding: 10px 5px;
+}
+.sunBox.popAddCustomers table {
+    width: 100%;
+}
+.sunBox.popAddCustomers td {
+    vertical-align: middle;
+    border-top: 1px solid #b9b9b9;
+}
+.sunBox.popAddCustomers td.fullCell, .sunBox.popAddCustomers th.fullCell {
+    width:100%;
+    white-space:normal;
+    text-align:left;
+}
+.sunBox.popAddCustomers th div {
+    display: block;
+    width: 200px;
+}
+.sunBox.popCustomerMasterDataFile .contentCenter .popup .inset input {
+    display: block;
+    background-color: #fff;
+    margin: 0px;
+    margin: 0px auto;
+    width: 400px;
 }

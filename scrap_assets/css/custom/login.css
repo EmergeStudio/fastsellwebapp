@@ -19,7 +19,7 @@
     padding:25px;
 }
 .pageLogin .middle .loginContainer {
-    width:300px;
+    width:320px;
     margin:0px auto;
     margin-top:50px;
 }
@@ -27,6 +27,7 @@
     margin-bottom:20px;
     font-size:16px;
     font-weight:300;
+    width: 98%;
 }
 .pageLogin .middle .loginContainer .btnLogin {
     margin-left:94px;
@@ -40,17 +41,17 @@
 .pageLogin .middle .loginContainer .forgotPassword {
     width:138px;
     margin-top:60px;
-    margin-left: 68px;
+    margin-left: 78px;
     color: #555;
 }
 .pageLogin .middle .loginContainer .signUp {
     width:110px;
     margin-top: 10px;
-    margin-left: 82px;
+    margin-left: 92px;
     color: #fff;
 }
 .pageLogin .middle .loginContainer .emergeStudioLink {
-    width:170px;
+    width: 260px;
     margin-top:50px;
 }
 .pageLogin .middle .loginContainer .emergeStudioLink:hover {

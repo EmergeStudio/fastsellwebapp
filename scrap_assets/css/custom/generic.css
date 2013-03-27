@@ -32,8 +32,8 @@
 /* UNIVERSAL
 --------------------------------------------------------------------------------------- */
 .btnRight {background:url(../../images/universal/btn_right.png) no-repeat right; float:left; margin-right:4px; margin-left:-2px;}
-.scrapButton, .scrapButton2, .pagenation .control{display:block; background-color:#fff; background-image:url(../../images/universal/btn_white_grey_back.jpg); margin-right:5px; background-position:bottom; background-repeat:repeat-x; border:1px solid #cccccc; border-bottom:1px solid #aaaaaa; float:left; position:relative; padding:6px 12px; -moz-border-radius:3px; -webkit-border-radius:3px; text-align:center; color:#525252; font-size:11px; font-weight:bold;}
-.middle .scrapButton.blueButton, .middle .scrapButton2.blueButton {
+.scrapButton, .scrapButton2, .pagenation .control{display:block; background-color:#fff; background-image:url(../../images/universal/btn_white_grey_back.jpg); margin-right:5px; background-position:bottom; background-repeat:repeat-x; border:1px solid #cccccc; border-bottom:1px solid #aaaaaa; float:left; position:relative; padding:5px 12px; -moz-border-radius:3px; -webkit-border-radius:3px; text-align:center; color:#525252; font-size:11px; font-weight:bold;}
+.scrapButton.blueButton, .scrapButton2.blueButton {
 	color:#fff;
 	text-shadow:none;
 	font-weight:500;
@@ -42,7 +42,7 @@
     background-color: #1ba2d0;
     background-image: none;
 }
-.middle .scrapButton.greyButton, .middle .scrapButton2.greyButton {
+.scrapButton.greyButton, .scrapButton2.greyButton {
      color:#8a8a8a;
      text-shadow:none;
      font-weight:500;
@@ -128,7 +128,7 @@
 .coolTable .scrapButton, .coolTable .scrapButton2 {
 	padding:3px 12px;
 }
-.coolTable .scrapButton.iconOnly, .coolTable .scrapButton2.iconOnly {
+.scrapButton.iconOnly, .scrapButton2.iconOnly {
 	padding:3px 6px;
 }
 .scrapButton.btnEdit .btnIcon, .scrapButton2.btnEdit .btnIcon {
@@ -346,11 +346,31 @@ html {
 /* Setup */ 
 .middle {
 	margin:0px auto;
-	width:1200px;
+    margin-top: 30px;
+	width:98%;
+}
+.middle h2.headingTitle, .middle h3.headingTitle {
+    float: left;
+    padding-left: 15px;
+    font-size: 22px;
+    line-height: 26px;
+}
+.middle h3.headingTitle {
+    font-size: 18px;
+}
+.middle .editToggle {
+    padding-right: 20px;
+}
+.middle .editToggle .switch {
+    margin-left: 15px;
+    margin-top: -2px;
+}
+.middle .btnHeading {
+    margin-left: 20px;
+    margin-top: -3px;
 }
 .middle .leftColBig {
 	float:left;
-	width:880px;
 }
 .middle .rightColSmall {
 	float:right;
@@ -393,11 +413,14 @@ html {
 	-webkit-box-shadow:1px 1px 2px #c1c1c1;
 	-moz-box-shadow:1px 1px 2px #c1c1c1;
 }
+.middle .whiteBack.noPadding {
+    padding: 0px;
+}
 .middle .whiteBack p {
 	color:#888888;
 }
 .middle .whiteBack.rightColEven, .middle .whiteBack.leftColEven {
-	width:535px;
+	width:45%;
 }
 .middle .whiteBack.rightColEven {
 	float:right;
@@ -846,7 +869,6 @@ html {
     padding: 9px 18px;
     width: 300px;
     margin-top: 10px;
-    margin-left: 400px;
     color: #fff;
     text-shadow: none;
     font-weight: 500;
@@ -895,7 +917,76 @@ html {
 .ui-autocomplete-loading {
     background: #fff url('../../images/universal/ajax_loader5.gif') right center no-repeat !important;
 }
+.middle .leftContentSmall {
+    float: left;
+    width: 250px;
+}
+.middle .leftContentSmall .whiteBack {
+    padding: 15px 0px;
+}
+.middle .leftContentSmall .whiteBack a {
+    display: block;
+    padding: 8px 22px;
+    border-top: 1px solid #ebebeb;
+    border-left: 1px solid #fff;
+}
+.middle .leftContentSmall .whiteBack a.firstLink {
+    border-top: none;
+}
+.middle .leftContentSmall .whiteBack a:hover, .middle .leftContentSmall .whiteBack a.active {
+    background-color: #f7f7f7;
+    -webkit-box-shadow: inset 0px 10px 10px -10px rgba(0,0,0,.2);
+    box-shadow: inset 0px 10px 10px -10px rgba(0,0,0,.2);
+}
+.middle .rightContentLarge {
+    float: right;
+}
 
+
+/* SCRAP EDIT LAYOUT
+--------------------------------------------------------------------------------------- */
+.scrapEdit, .scrapEdit2 {
+    display: none;
+    position: absolute;
+    z-index: 10;
+}
+.scrapEdit .arrowContainer, .scrapEdit2 .arrowContainer {
+    width: 250px;
+    padding: 0px 15px;
+}
+.scrapEdit .arrowContainer .arrow, .scrapEdit2 .arrowContainer .arrow {
+    display: block;
+    width: 44px;
+    height: 14px;
+    margin-left: 100px;
+    background-image: url(../../images/universal/edit_arrow.png);
+}
+.scrapEdit .editContainer, .scrapEdit2 .editContainer {
+    width: 250px;
+    padding: 10px;
+    background-color:#FFF;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    -webkit-box-shadow:1px 1px 5px #878787;
+    -moz-box-shadow:1px 1px 5px #878787;
+}
+.scrapEdit2 .editContainer {
+    width: 190px;
+}
+.scrapEdit2 .arrowContainer {
+    width: 190px;
+}
+.scrapEdit2 .arrowContainer .arrow {
+    margin-left: 70px;
+}
+.scrapEdit .editContainer input, .scrapEdit2 .editContainer input {
+    width: 240px;
+    font-size: 12px;
+}
+.scrapEdit .scrapButton, .scrapEdit2 .scrapButton {
+    padding: 4px 12px;
+    margin-top: 10px;
+}
 
 
 /* AJAX LAYOUT
@@ -905,7 +996,6 @@ html {
 /* FOOTER LAYOUT
 --------------------------------------------------------------------------------------- */
 #footerContain {
-	width:1200px;
 	margin:0px auto;
 	bottom:0px;
 }
@@ -933,14 +1023,14 @@ html {
 a, .makeLink, .middle a, .middle .makeLink {
 	color:#217fb3;
 }
-.middle a.scrapButton2 {
+a.scrapButton2 {
 	color:#575757;
 }
 a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 	color:#39a5e1; 
 	cursor:pointer;
 }
-.middle a.scrapButton2:hover {
+a.scrapButton2:hover {
 	color:#464646;
 }
 
@@ -951,6 +1041,50 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 /* These styles are important as it includes all the css for included jQuery plugins. If you want to alter the look you alter the style in this file.  
 
 -- IT IS ADVISED THAT YOU DO NOT EDIT THE BELOW STYLES -- */
+
+/* TOGGLE */
+/* Container */
+.switch {
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    width: 105px;
+    height: 30px;
+    vertical-align: middle;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+}
+/* Background image */
+.switch .background {
+    background: url('../../images/universal/switch-background.png');
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 161px;
+    height: 30px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+}
+/* Mask */
+.switch .mask {
+    background: url('../../images/universal/switch-mask.png');
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 105px;
+    height: 30px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+}
 
 
 
@@ -1036,6 +1170,27 @@ a:hover, .makeLink:hover, .middle a:hover, .middle .makeLink:hover {
 h4.counterHeadings {
     font-size: 12px;
     width: 265px;
+}
+
+/* A css style for styling the dragger element
+ * for e highlight
+ */
+
+/* The style of the dragger when mouse is down and move */
+.eDragHighLighter {
+    width: 0px;
+    height: 0px;
+    /*background: rgba(0,153,101,.5);*/
+    /*border:1px dotted #333333;*/
+    /*border: 1px solid rgba(0,153,101,.3);*/
+    position: absolute;
+}
+
+/* eHighLight is a class name that will added to an element if selected and highlighted*/
+.flexigrid.editOn .eHighLight {
+    background: #d9ebf5;
+    border-left: 1px solid #eef8ff;
+    border-bottom: 1px dotted #a8d8eb;
 }
 
 

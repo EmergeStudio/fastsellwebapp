@@ -39,8 +39,8 @@ class Scrap_wall
 			$pv_username            = str_replace(' ', '%20', $pv_username);
 
 			// Authenticate user
-			$url				= 'auth/.json?username='.$pv_username.'&password='.$password;
-			$auth_user			= $this->CI->scrap_web->webserv_call($url);
+			$url				    = 'auth/.json?username='.$pv_username.'&password='.$password;
+			$auth_user			    = $this->CI->scrap_web->webserv_call($url);
 			if($auth_user['error'] == FALSE)
 			{
  				$json				= $auth_user['result'];
@@ -48,7 +48,7 @@ class Scrap_wall
 				$user_id			= trim($json->id);
 				$full_name			= trim($json->firstname).' '.trim($json->lastname);
 				$user_date			= trim($json->create_date);
-				$java_id			= trim($json->session_id);
+				$es_token			= trim($json->es_token);
 				$username			= trim($json->username);
 				$role				= trim($json->role_summary);
 				$exp_role_1		    = explode(':', $role);
@@ -88,7 +88,7 @@ class Scrap_wall
 				$this->CI->session->set_userdata('sv_user_id', $user_id);
 				$this->CI->session->set_userdata('sv_name', $full_name);
 				$this->CI->session->set_userdata('sv_user_date', $user_date);
-				$this->CI->session->set_userdata('sv_java_id', $java_id);
+				$this->CI->session->set_userdata('sv_es_token', $es_token);
 				$this->CI->session->set_userdata('sv_logged_in', 'loggedInTrueTradeShow');
 				$this->CI->session->set_userdata('sv_username', $username);
 				$this->CI->session->set_userdata('sv_acc_type', $acc_type);

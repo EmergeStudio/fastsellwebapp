@@ -50,32 +50,25 @@ class Dashboard extends CI_Controller
 		// ----- CONTENT ------------------------------------
 		if($acc_type == 'show_host')
 		{
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageDashboard';
-			$this->load->view('universal/navigation', $dt_nav);
-
-			// Get the fastsells
-			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id;
-			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
-			$dt_body['fastsells']           = $call_fastsells;
-
-			// Get the definitions
-			$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
-			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
-			$dt_body['definitions']         = $call_definitions;
-
-			// Orders
-			$dt_body['orders']['error']     = TRUE;
-
-			// Load the view
-			$this->load->view('dashboard/main_dashboard', $dt_body);
+			redirect('fastsells');
+//			// Get the fastsells
+//			$url_fastsells                  = 'fastsellevents/.jsons?showhostid='.$show_host_id;
+//			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
+//			$dt_body['fastsells']           = $call_fastsells;
+//
+//			// Get the definitions
+//			$url_definitions                = 'catalogitemdefinitions/.jsons?showhostid='.$show_host_id;
+//			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+//			$dt_body['definitions']         = $call_definitions;
+//
+//			// Orders
+//			$dt_body['orders']['error']     = TRUE;
+//
+//			// Load the view
+//			$this->load->view('dashboard/main_dashboard', $dt_body);
 		}
 		elseif($acc_type == 'customer')
 		{
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageDashboard';
-			$this->load->view('universal/customer_navigation', $dt_nav);
-
 			// Get the fastsells
 			$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
 			$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);

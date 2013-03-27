@@ -9,7 +9,7 @@ $(document).ready(function(){
 
     // ---------- AJAX PATHS
     var $base_path				= $('#hdPath').val();
-    var $ajax_base_path 		= $base_path + 'ajax_handler_items/';
+    var $ajax_base_path 		= $base_path + 'ajax_handler_products/';
     var $ajax_html_path 		= $ajax_base_path + 'html_view/';
 
 
@@ -46,15 +46,15 @@ $(document).ready(function(){
         {
             // Hide the navigation
             $('.shifterNav').hide();
-            $('.shifterPane_4 .loader').show();
+            $('.shifterPane_3 .loader').show();
 
             // Some variables
             $rows               = '';
             $headers            = '';
-            $definition_id      = $('.shifterPane_2 select[name="dropItemDefinitions"]').val();
+            $definition_id      = $('.shifterPane_1 select[name="dropItemDefinitions"]').val();
 
             // Loop through and gather info
-            $('.shifterPane_3 .coolTable.items tr th').each(function()
+            $('.shifterPane_2 .coolTable.items tr th').each(function()
             {
                 // Some variables
                 $this           = $(this);
@@ -68,7 +68,7 @@ $(document).ready(function(){
             });
 
             // Loop through and gather info
-            $('.shifterPane_3 .coolTable.items tr.contain_item').each(function()
+            $('.shifterPane_2 .coolTable.items tr.contain_item').each(function()
             {
                 // Some variables
                 $this           = $(this);
@@ -109,8 +109,8 @@ $(document).ready(function(){
                     else
                     {
                         //console.log($data);
-                        $('.shifterPane_4 .loader').hide();
-                        $('.shifterPane_4 .errorContainer').html($data).show();
+                        $('.shifterPane_3 .loader').hide();
+                        $('.shifterPane_3 .errorContainer').html($data).show();
                         $('.shifterNav').show();
                     }
                 });
@@ -119,7 +119,7 @@ $(document).ready(function(){
             {
                 // Hide the navigation
                 $('.shifterNav').show();
-                $('.shifterPane_4 .loader').hide();
+                $('.shifterPane_3 .loader').hide();
                 $.scrap_note_time('There is no item data to upload', 4000, 'cross');
             }
         });
@@ -175,7 +175,7 @@ $(document).ready(function(){
 
             // Reset table
             $odd_row			= false;
-            $('.shifterPane_3 .coolTable tr:visible').each(function()
+            $('.shifterPane_2 .coolTable tr:visible').each(function()
             {
                 // Remove all row styles
                 $(this).removeClass('evenRow').removeClass('oddRow');
@@ -249,34 +249,34 @@ $(document).ready(function(){
                 $scroll_pos			= $('body').scrollTop();
 
                 // Validate file
-                if($pane_position == 3)
+                if($pane_position == 2)
                 {
                     // Hide the navigation
                     $('.shifterNav').hide();
-                    $('.shifterPane_3 .loader').show();
-                    $('.shifterPane_3 .checkDataContainer').hide();
+                    $('.shifterPane_2 .loader').show();
+                    $('.shifterPane_2 .checkDataContainer').hide();
 
                     // Some variables
-                    $extension      = $.scrap_get_extension($('.shifterPane_2 input[name="uploadedFile"]').val());
+                    $extension      = $.scrap_get_extension($('.shifterPane_1 input[name="uploadedFile"]').val());
 
                     // Check
                     if(($extension == 'xls') || ($extension == 'xlsx'))
                     {
                         // Submit the upload file
                         $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
-                        $('.shifterPane_2').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
-                        $('.shifterPane_2 .frmCheckItemUpload').attr('target', $iframe_name);
-                        $('.shifterPane_2 .frmCheckItemUpload').submit();
+                        $('.shifterPane_1').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                        $('.shifterPane_1 .frmCheckItemUpload').attr('target', $iframe_name);
+                        $('.shifterPane_1 .frmCheckItemUpload').submit();
 
                         $('iframe[name="'+ $iframe_name +'"]').load(function()
                         {
-                            $data		= $('.shifterPane_2 iframe[name="'+ $iframe_name +'"]').contents().find('body').html();
+                            $data		= $('.shifterPane_1 iframe[name="'+ $iframe_name +'"]').contents().find('body').html();
 
                             // Check result
                             if($data != '5678')
                             {
-                                $('.shifterPane_3 .loader').hide();
-                                $('.shifterPane_3 .checkDataContainer').html($data).show();
+                                $('.shifterPane_2 .loader').hide();
+                                $('.shifterPane_2 .checkDataContainer').html($data).show();
                             }
 
                             // Show the navigation
@@ -286,17 +286,17 @@ $(document).ready(function(){
                     else
                     {
                         // Edit the DOM
-                        $('.hdPanePosition').text(2);
-                        $pane_position          = 2;
+                        $('.hdPanePosition').text(1);
+                        $pane_position          = 1;
                         $('.shifterNav').show();
 
                         // Error message
                         $.scrap_note_time('The file you supplied is not in the correct format. Please upload a correct Excel file (.xls or .xlsx)', 6000, 'cross');
                     }
                 }
-                if($pane_position == 4)
+                if($pane_position == 3)
                 {
-                    $('.shifterPane_4 .errorContainer').html('').hide();
+                    $('.shifterPane_3 .errorContainer').html('').hide();
                 }
 
                 // Edit the variables

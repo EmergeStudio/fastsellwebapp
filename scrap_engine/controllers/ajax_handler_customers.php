@@ -950,6 +950,76 @@ class Ajax_handler_customers extends CI_Controller
 			echo 9876;
 		}
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| SAVE CUSTOMER CHANGES
+	|--------------------------------------------------------------------------
+	*/
+	function save_customer_changes()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$new_value                      = $this->input->post('new_value');
+			$edits                          = $this->input->post('edits');
+			$ex_edits                       = explode('][', $this->scrap_string->remove_flc($edits));
+			$ar_ctsh_ids                    = array();
+			$ar_data                        = array();
+
+			// Update the customers to show host id array
+			foreach($ex_edits as $edit_value)
+			{
+				$ex_edit_value              = explode('_', $edit_value);
+				$ctsh_id_value              = $ex_edit_value[0];
+				array_push($ar_ctsh_ids, $ctsh_id_value);
+			}
+			$ar_ctsh_ids                    = array_unique($ar_ctsh_ids);
+
+			// Get and edit each customer
+			foreach($ar_ctsh_ids as $ctsh_id)
+			{
+				// Get info
+				$url_customer                   = 'customertoshowhosts/.json?id='.$ctsh_id;
+				$call_customer                  = $this->scrap_web->webserv_call($url_customer);
+
+				if($call_customer['error'] == FALSE)
+				{
+					$json_customer                      = $call_customer['result'];
+
+					foreach($ex_edits as $edit_value)
+					{
+						$ex_edit_value              = explode('_', $edit_value);
+
+						// Edit the data
+						if($ex_edit_value[0] == $ctsh_id)
+						{
+							$value_name                 = $ex_edit_value[1];
+							if($value_name == 'customerNumber')
+							{
+								$json_customer->customer_number     = $new_value;
+							}
+							elseif($value_name == 'customerName')
+							{
+								$json_customer->customer_name     = $new_value;
+							}
+						}
+					}
+
+					// Encode
+					$json_update                        = json_encode($json_customer);
+
+					// Do the update
+					$update                             = $this->scrap_web->webserv_call('customertoshowhosts/.json', $json_update, 'post');
+				}
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
 	
 }
 /* End of file ajax_handler_customers.php */

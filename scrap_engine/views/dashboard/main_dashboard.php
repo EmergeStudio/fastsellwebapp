@@ -14,6 +14,7 @@ echo open_div('middle');
 			echo div_height(6);
 			echo full_div('', 'icon-ticket headingIcon yellow');
 			echo heading('Move Product', 2);
+			echo clear_float();
 			echo div_height(8);
 
 			if($definitions['error'] == FALSE)

@@ -56,10 +56,6 @@ class Reports extends CI_Controller
 			// Some variables
 			$show_host_id                   = $this->scrap_web->get_show_host_id();
 
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageReports';
-			$this->load->view('universal/navigation', $dt_nav);
-
 			// Check to see if the event id is set
 			$url_fastsells              = 'fastsellevents/.jsons?showhostid='.$show_host_id;
 			$call_fastsells             = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
@@ -107,10 +103,6 @@ class Reports extends CI_Controller
 		{
 			// Some variables
 			$customer_id                    = $this->scrap_web->get_customer_org_id();
-
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageReports';
-			$this->load->view('universal/customer_navigation', $dt_nav);
 
 			// Get the fastsells
 			$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
@@ -160,10 +152,6 @@ class Reports extends CI_Controller
 		{
 			// Some variables
 			$show_host_id                   = $this->scrap_web->get_show_host_id();
-
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageReports';
-			$this->load->view('universal/navigation', $dt_nav);
 
 			// Check to see if the event id is set
 			if(!empty($event_id))
@@ -226,10 +214,6 @@ class Reports extends CI_Controller
 		// ----- CONTENT ------------------------------------
 		if($acc_type == 'show_host')
 		{
-			// Navigation view
-			$dt_nav['app_page']	            = 'pageReports';
-			$this->load->view('universal/navigation', $dt_nav);
-
 			// Some variables
 			$dt_body['header_text']         = 'Orders By Date Selection';
 

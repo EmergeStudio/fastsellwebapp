@@ -30,27 +30,27 @@ class Customers extends CI_Controller
 		// Some variables
 		$dt_header['title'] 	        = 'FastSell Customers';
 		$dt_header['crt_page']	        = 'pageCustomers';
-		$dt_header['extra_js']          = array('customers');
-		$dt_header['extra_css']         = array('customers');
+		$dt_header['extra_css']         = array('customers', 'flexigrid');
+		$dt_header['extra_js']          = array('plugin_flexigrid_pack', 'plugin_ehighlight', 'customers_flexigrid');
 		
 		// Load header
 		$this->load->view('universal/header', $dt_header);
 		
 		
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageCustomers';
-		$this->load->view('universal/navigation', $dt_nav);
-
 		// Get the customers
 		$offset                         = 0;
-		$limit                          = 20;
+		$limit                          = 100;
 		$search_text                    = '';
 
 		// Search
 		if($this->input->post('inpSearchText'))
 		{
 			$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+		}
+		if($this->input->post('hdLimit'))
+		{
+			$limit                      = $this->input->post('hdLimit');
 		}
 		if($this->input->post('hdOffset'))
 		{
@@ -73,7 +73,7 @@ class Customers extends CI_Controller
 		$dt_body['groups']              = $call_groups;
 
 		// Load the view
-		$this->load->view('customers/main_customers_page', $dt_body);
+		$this->load->view('customers/main_customers_flexigrid', $dt_body);
 		
 		
 		// ----- FOOTER ------------------------------------
@@ -101,21 +101,17 @@ class Customers extends CI_Controller
 		// Some variables
 		$dt_header['title'] 	        = 'FastSell Customers';
 		$dt_header['crt_page']	        = 'pageCustomers';
-		$dt_header['extra_js']          = array('customers');
-		$dt_header['extra_css']         = array('customers');
+		$dt_header['extra_css']         = array('customers', 'flexigrid');
+		$dt_header['extra_js']          = array('plugin_flexigrid_pack', 'plugin_ehighlight', 'customers_flexigrid');
 
 		// Load header
 		$this->load->view('universal/header', $dt_header);
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageCustomers';
-		$this->load->view('universal/navigation', $dt_nav);
-
 		// Get the customers
 		$offset                         = 0;
-		$limit                          = 20;
+		$limit                          = 100;
 		$search_text                    = '';
 
 		// Search
@@ -144,7 +140,7 @@ class Customers extends CI_Controller
 		$dt_body['groups']              = $call_groups;
 
 		// Load the view
-		$this->load->view('customers/main_customers_page', $dt_body);
+		$this->load->view('customers/main_customers_flexigrid', $dt_body);
 
 
 		// ----- FOOTER ------------------------------------
@@ -179,10 +175,6 @@ class Customers extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']		    = 'pageCustomers';
-		$this->load->view('universal/navigation', $dt_nav);
-
 		// Content view
 		$this->load->view('customers/customer_master_file_upload');
 
@@ -736,10 +728,6 @@ class Customers extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageCustomers';
-		$this->load->view('universal/navigation', $dt_nav);
-
 		// Orders
 		$url_orders                     = 'fastsellorders/.jsons?customeruserid='.$customer_user_id;
 		$call_orders                    = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
@@ -767,6 +755,8 @@ class Customers extends CI_Controller
 
 		// ----- SOME VARIABLES ---------------------------------
 		$order_id                       = $this->uri->segment(3);
+		$customer_user_id               = $this->uri->segment(4);
+//		$customer_org_id                = $this->scrap_web->get_customer_org_id($customer_user_id);
 
 
 		// ----- HEADER ------------------------------------
@@ -781,18 +771,19 @@ class Customers extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageCustomers';
-		$this->load->view('universal/navigation', $dt_nav);
-
 		// Current order
 		$url_crt_order                  = 'fastsellorders/.json?id='.$order_id;
 		$call_crt_order                 = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);
 		$json_order                     = $call_crt_order['result'];
 
+		// Get current addresses
+		$url_addresses                  = 'addresses/.jsons?customerid='.$customer_user_id;
+		$call_addresses                 = $this->scrap_web->webserv_call($url_addresses, FALSE, 'get', FALSE, FALSE);
+
 		// Parse variables
 		$dt_body['order']               = TRUE;
 		$dt_body['crt_order']           = $call_crt_order['result'];
+		$dt_body['addresses']           = $call_addresses['result'];
 
 		// Load the view
 		$this->load->view('orders/full_order', $dt_body);

@@ -280,7 +280,7 @@ class Ajax_handler_users extends CI_Controller
 		$username				= $this->input->post('username');
 			
 		// Scrappy web call
-		$url					= 'auth/forgotpassword.json?username='.$username;
+		$url					= 'auth/forgotpassword.json?usernameemail='.$username;
 		$username_reset			= $this->scrap_web->webserv_call($url);
 			
 		// Validate

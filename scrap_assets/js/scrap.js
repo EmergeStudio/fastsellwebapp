@@ -46,9 +46,80 @@ $(document).ready(function(){
     $fc_input_ghosting();
 
     $fc_change_timezone();
+
+    $('.hdNotification').each(function()
+    {
+        $.scrap_note_time($(this).text(), 4000, 'tick');
+    });
+
+    $fc_resize_columns_execute();
+
+    $fc_activate_switch();
 	
 	
 // ------------------------------------------------ FUNCTIONS
+
+    // ---------- ACTIVATE SWITCH
+    function $fc_activate_switch()
+    {
+        // Iterate over checkboxes
+        $("input[type=checkbox].switch").each(function()
+        {
+            // Insert mark-up for switch
+            $(this).before(
+                '<span class="switch">' +
+                    '<span class="mask" /><span class="background" />' +
+                    '</span>'
+            );
+
+            // Hide checkbox
+            $(this).hide();
+
+            // Set inital state
+            if (!$(this)[0].checked)
+            {
+                $(this).prev().find(".background").css({left: "-56px"});
+            }
+        });
+
+        $("span.switch").click(function()
+        {
+            // If on, slide switch off
+            if ($(this).next()[0].checked)
+            {
+                $(this).find(".background").animate({left: "-56px"}, 200);
+                $('.flexigrid').removeClass('editOn').addClass('editOff');
+                $('.scrapEdit').hide();
+            }
+            else
+            {
+                $(this).find(".background").animate({left: "0px"}, 200);
+                $('.flexigrid').removeClass('editOff').addClass('editOn');
+                $('.flexigrid .eHighLight').removeClass('eHighLight');
+            }
+
+            // Toggle state of checkbox
+            $(this).next()[0].checked = !$(this).next()[0].checked;
+        });
+    }
+
+    // ----- RESIZE COLUMNS EXECUTE
+    function $fc_resize_columns_execute()
+    {
+        $fc_resize_columns();
+        $(window).resize(function(){ $fc_resize_columns(); });
+    }
+
+    // ----- RESIZE COLUMNS
+    function $fc_resize_columns()
+    {
+        // Some variables
+        $window_w               = $(window).width();
+
+        // Columns
+        $('.middle .leftColBig, .middle .rightColBig').width($window_w - 350);
+        $('.middle .rightContentLarge').width($window_w - 310);
+    }
 
     // ----- CHANGE TIMEZONE
     function $fc_change_timezone()
@@ -243,7 +314,7 @@ $(document).ready(function(){
 		
 		
 		// App - On click event
-		$('.middle .appNav li .sectionNavLink').live('click', function()
+		$('#header #topBar .appNav li .sectionNavLink').live('click', function()
 		{
 			// Some variables
 			$this				= $(this);
@@ -257,7 +328,7 @@ $(document).ready(function(){
 		});
 		
 		// App - Close sub navigation
-		$('.middle .appNav li .subNav').hover(function()
+		$('#header #topBar .appNav li .subNav').hover(function()
 		{ 
 			$mouse_is_inside_3		= true; 
 		}, 
@@ -270,7 +341,7 @@ $(document).ready(function(){
 		{ 
 			if(!$mouse_is_inside_3)
 			{
-				$('.middle .appNav li .subNav').fadeOut('fast');
+				$('#header #topBar .appNav li .subNav').fadeOut('fast');
 			}
 		});
 	}

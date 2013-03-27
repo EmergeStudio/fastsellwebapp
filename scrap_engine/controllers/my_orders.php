@@ -40,10 +40,6 @@ class My_orders extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageMyOrders';
-		$this->load->view('universal/customer_navigation', $dt_nav);
-
 		// Orders
 		$url_orders                     = 'fastsellorders/.jsons?customeruserid='.$customer_user_id;
 		$call_orders                    = $this->scrap_web->webserv_call($url_orders, FALSE, 'get', FALSE, FALSE);
@@ -88,10 +84,6 @@ class My_orders extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageMyOrders';
-		$this->load->view('universal/customer_navigation', $dt_nav);
-
 		// Current order
 		$url_crt_order                  = 'fastsellorders/.json?id='.$order_id;
 		$call_crt_order                 = $this->scrap_web->webserv_call($url_crt_order, FALSE, 'get', FALSE, FALSE);

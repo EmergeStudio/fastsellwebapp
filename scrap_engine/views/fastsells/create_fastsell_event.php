@@ -1,9 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <?php
-// Some height
-echo div_height(50);
-
 // Open middle div
 echo open_div('middle').open_div('whiteBack coolScreen');
 
@@ -177,6 +174,7 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		// Upload master file
 		echo open_div('customerMasterFileUpload floatRight');
 
+			echo make_button('Add Single Customers', 'btnAddCustomersPopup btnAdd blueButton', '', 'left');
 			echo make_button('Add By Group', 'btnAdd btnAddByGroupPopup blueButton', '', 'left');
 			echo make_button('Add New Customer', 'btnAdd btnAddNewCustomerPopup blueButton', '', 'left');
 			echo make_button('Upload Master Data File', 'btnAdd btnUploadCustomers blueButton', '', 'left');
@@ -197,14 +195,13 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 			// Heading
 			echo heading('Customers Who Will Be Notified', 3);
 			echo '<p>These selected customers will be notified of this FastSell and be able to purchase any one of your selected products.</p>';
-			echo div_height(15);
 
 			// Chose users
 			echo open_div('chosenUsersList');
 
-//				echo div_height(20);
-//
-//				// Rows
+				echo div_height(15);
+
+				// Rows
 //				$checkbox_remove_all_customers  = array
 //				(
 //					'name'                      => 'checkRemoveAllCustomers',
@@ -215,40 +212,41 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 //
 //				// Heading
 //				$this->table->set_heading(form_checkbox($checkbox_remove_all_customers), '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
-//
-//				// Generate table
-//				echo $this->table->generate();
+				$this->table->set_heading('', '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
+
+				// Generate table
+				echo $this->table->generate();
 
 			echo close_div();
 
 		echo close_div();
 
 		// User list
-		echo open_div('inset floatLeft userList');
-
-			// Heading
-            echo heading('Search For Customer', 3);
-
-			// Search
-			echo open_div('search');
-
-				echo make_button('Search', 'btnSearchCustomer blueButton', '', 'right');
-				$inp_data			= array
-				(
-					'name'			=> 'inpCustomerName'
-				);
-				echo form_input($inp_data);
-
-			echo close_div();
-			echo div_height(10);
-
-			echo open_div('ajaxCustomerList');
-
-				$this->load->view('customers/customers_list');
-
-			echo close_div();
-
-		echo close_div();
+//		echo open_div('inset floatLeft userList');
+//
+//			// Heading
+//            echo heading('Add Single Customers', 3);
+//
+//			// Search
+//			echo open_div('search');
+//
+//				echo make_button('Search', 'btnSearchCustomer blueButton', '', 'right');
+//				$inp_data			= array
+//				(
+//					'name'			=> 'inpCustomerName'
+//				);
+//				echo form_input($inp_data);
+//
+//			echo close_div();
+//			echo div_height(10);
+//
+//			echo open_div('ajaxCustomerList');
+//
+//				$this->load->view('customers/customers_list');
+//
+//			echo close_div();
+//
+//		echo close_div();
 
 		// Clear float
 		echo clear_float();

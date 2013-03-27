@@ -20,9 +20,6 @@
 .middle .shifterPane_2 .listContain, .middle .shifterPane_3 .listContain {
     padding: 0px;
 }
-.middle .groupContainer {
-    padding: 5px 0px;
-}
 .middle .groupContainer a {
     font-size: 13px;
 }
@@ -131,6 +128,14 @@
 .shifterPane_3 .loader {
     margin: 46px 0px 21px 0px;
 }
+.pageCustomers .basicSearch input {
+    width: 200px;
+    padding: 8px 0px 8px 4px;
+    font-size: 12px;
+}
+.pageCustomers .basicSearch {
+    padding-right: 6px;
+}
 
 
 
@@ -152,7 +157,7 @@
 .sunBox .scrapButton.blueButton.btnAddCustomerNow {
     padding: 5px 16px;
     margin: 0px;
-    margin-bottom: 15px;
+    color: #fff;
 }
 .sunBox.popAddCustomer table .topLine td {
     padding: 13px 5px 12px 5px;

@@ -40,10 +40,6 @@ class Buying_preferences extends CI_Controller
 
 
 		// ----- CONTENT ------------------------------------
-		// Navigation view
-		$dt_nav['app_page']	            = 'pageBuyingPrefs';
-		$this->load->view('universal/customer_navigation', $dt_nav);
-
 		// Orders
 		$url_buying_prefs               = 'customerusers/.json?id='.$customer_user_id;
 		$call_buying_prefs              = $this->scrap_web->webserv_call($url_buying_prefs, FALSE, 'get', FALSE, FALSE);
