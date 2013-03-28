@@ -41,8 +41,65 @@ $(document).ready(function(){
 
     $fc_pagenate();
 
+    $fc_resend_invitation();
+
 
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- RESEND INVITATION
+    function $fc_resend_invitation()
+    {
+        $('.btnResend').live('click', function()
+        {
+            // Some variables
+            $this               = $(this);
+            $parent             = $this.parents('tr');
+            $customer_id        = $parent.find('td:first div').text();
+
+            // Validate
+            $('body').sunBox.message(
+            {
+                content			: 'Are you sure you would like to resend this invitation?',
+                btn_true		: 'I\'m Sure',
+                btn_false		: 'No Don\'t Send',
+                message_title	: 'Just Checking',
+                callback		: function($return)
+                {
+                    if($return == true)
+                    {
+                        // Loader
+                        $.scrap_note_loader('Resending invitation');
+
+                        // Send the delete request
+                        $.post($ajax_base_path + 'resend_invitation',
+                        {
+                            customer_id	        : $customer_id
+                        },
+                        function($data)
+                        {
+                            $data	            = jQuery.trim($data);
+
+                            if($data == '9876')
+                            {
+                                $.scrap_logout();
+                            }
+                            else if($data == 'okitsdone')
+                            {
+                                // Refresh the data
+                                $.scrap_note_hide_time('The invitation has been sent', 4000, 'tick');
+                            }
+                            else
+                            {
+                                // Edit the DOM
+                                $.scrap_note_hide_time($data, 4000, 'cross');
+                            }
+                        });
+                    }
+                    $.scrap_remove_overlay();
+                }
+            });
+        });
+    }
 
     // ----- PAGENATE
     function $fc_pagenate()

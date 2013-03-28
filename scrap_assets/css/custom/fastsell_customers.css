@@ -16,6 +16,12 @@
 
 /* GENERAL
 --------------------------------------------------------------------------------------- */
+.ajaxCustomersInFastSell {
+    margin-top: -1px;
+}
+#flex1 td {
+    vertical-align: middle;
+}
 
 
 /* SUNBOX

@@ -267,7 +267,7 @@
 }
 .pageProducts .downloadTemplate span {
     position: absolute;
-    margin: -3px 0px 0px -30px;
+    margin: -3px 0px 0px -75px;
     text-shadow: none;
     color: #fff;
     font-size: 22px;
@@ -282,6 +282,22 @@
 }
 .scrapEdit2 .arrowContainer .arrow {
     margin-left: 17px;
+}
+.pageProducts .extraOptions {
+    width: 70px;
+}
+.pageProducts .extraOptions .icon-cross {
+    float: left;
+}
+.pageProducts .extraOptions .icon-copy {
+    float: left;
+    font-size: 23px;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+.pageProducts .extraOptions .icon-copy:hover {
+    cursor: pointer;
+    color: #d61818;
 }
 
 

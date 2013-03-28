@@ -22,6 +22,14 @@ if($customers['error'] == FALSE)
 
 			$url_cust_users		    = 'customerusers/.jsons?customerid='.$id;
 			$call_cust_users	    = $this->scrap_web->webserv_call($url_cust_users, FALSE, 'get', FALSE, FALSE);
+			if($customer_details->customer_logged_in_after_link == FALSE)
+			{
+				$active_class           = 'editIt';
+			}
+			else
+			{
+				$active_class           = '';
+			}
 			$cust_user_id           = 0;
 			$cust_user_fn           = 'First Name';
 			$cust_user_ln           = 'Last Name';
@@ -50,7 +58,7 @@ if($customers['error'] == FALSE)
 				echo '<td id="'.$ctsh_id.'_customerNumber" class="editIt">'.$customer_to_show_host->customer_number.'</td>';
 
 				// Customer state
-				if($loop_cnt != 2)
+				if($active_class == '')
 				{
 					echo '<td id="'.$ctsh_id.'_customerState">'.full_span('Accepted and Active', 'greenTxt').'</td>';
 				}
@@ -60,13 +68,13 @@ if($customers['error'] == FALSE)
 				}
 
 				// Customer first name
-				echo '<td id="'.$cust_user_id.'_customerFirstName" class="editIt">'.$cust_user_fn.'</td>';
+				echo '<td id="'.$cust_user_id.'_customerFirstName" class="'.$active_class.'">'.$cust_user_fn.'</td>';
 
 				// Customer lastname
-				echo '<td id="'.$cust_user_id.'_customerLastName" class="editIt">'.$cust_user_ln.'</td>';
+				echo '<td id="'.$cust_user_id.'_customerLastName" class="'.$active_class.'">'.$cust_user_ln.'</td>';
 
 				// Customer email address
-				echo '<td id="'.$cust_user_id.'_customerEmail" class="editIt">'.$cust_user_email.'</td>';
+				echo '<td id="'.$cust_user_id.'_customerEmail" class="'.$active_class.'">'.$cust_user_email.'</td>';
 
 				// Customer group
 				echo '<td id="'.$ctsh_id.'_customerGroup" class="editIt"></td>';

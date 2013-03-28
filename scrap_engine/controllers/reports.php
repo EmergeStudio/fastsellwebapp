@@ -235,7 +235,7 @@ class Reports extends CI_Controller
 	function download_report()
 	{
 		// ----- APPLICATION PROFILER --------------------------------
-		$this->output->enable_profiler(TRUE);
+		$this->output->enable_profiler(FALSE);
 
 		// Some loads
 		$this->load->helper('download');

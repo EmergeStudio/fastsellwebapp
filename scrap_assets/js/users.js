@@ -319,13 +319,29 @@ $(document).ready(function(){
         {
             // Some variables
             $new_value              = $('.scrapEdit input[name="inpScrapEdit"]').val();
-            $edits                  = '';
+            $cell                   = $('.flexigrid .eHighLight');
+            $user_id                = $cell.parents('tr').find('td:first div').text();
 
-            // Get all the edit details
-            $('.editIt.eHighLight').each(function()
+            if($cell.hasClass('firstname'))
             {
-                $edits              += '['+ $(this).attr('id') +']';
-            });
+                $field_name         = 'firstname';
+            }
+            else if($cell.hasClass('lastname'))
+            {
+                $field_name         = 'lastname';
+            }
+            else if($cell.hasClass('username'))
+            {
+                $field_name         = 'username';
+            }
+            else if($cell.hasClass('email'))
+            {
+                $field_name         = 'email';
+            }
+            else if($cell.hasClass('password'))
+            {
+                $field_name         = 'password';
+            }
 
             // Edit the DOM
             $('.scrapEdit').fadeOut('fast');
@@ -341,24 +357,30 @@ $(document).ready(function(){
             $.scrap_note_time('The user information has been updated', 4000, 'tick') ;
 
             // Submit the changes
-//            $.post($ajax_base_path + 'save_product_changes',
-//            {
-//                new_value	        : $new_value,
-//                edits               : $edits
-//            },
-//            function($data)
-//            {
-//                $data	            = jQuery.trim($data);
-//
-//                if($data == '9876')
-//                {
-//                    $.scrap_logout();
-//                }
-//                else
-//                {
-//                    $.scrap_note_time('The product information has been updated', 4000, 'tick');
-//                }
-//            });
+            $.post($ajax_base_path + 'save_user_changes',
+            {
+                new_value	        : $new_value,
+                field_name          : $field_name,
+                user_id             : $user_id
+            },
+            function($data)
+            {
+                $data	            = jQuery.trim($data);
+                console.log($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else if($data == 'userhasbeenupdated')
+                {
+                    $.scrap_note_time('The user information has been updated', 4000, 'tick');
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
+            });
         });
 
 //        $("#flex1").eHighLight(

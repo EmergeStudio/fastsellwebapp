@@ -64,6 +64,54 @@ $(document).ready(function(){
 	
 // ------------------------------------------------------------------------------FUNCTIONS
 
+    // ---------- EXECUTE FLEXIGRID
+    function $fc_execute_flexigrid()
+    {
+        // Get field headings
+        $field_headings             = $('.hdFieldHeadings').text();
+        var $ar_fields              = new Array();
+
+        // Predefined headings
+        $ar_fields.push({ display: 'Image', name : 'customerImage', width : 50, sortable : false, align: 'center' });
+        $ar_fields.push({ display: 'Company Name', name : 'companyName', width : 800, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Customer Number', name : 'customerNumber', width : 200, sortable : false, align: 'left' });
+        $ar_fields.push({ display: '', name : 'remove', width : 50, sortable : false, align: 'left' });
+
+        $('#flex1').flexigrid
+        ({
+            colModel                : $ar_fields,
+            onChangeSort            : false,
+            showToggleBtn           : false,
+            height                  : 600,
+            nowrap                  : false,
+            resizable               : false
+        });
+    }
+
+    // ---------- EXECUTE FLEXIGRID
+    function $fc_execute_flexigrid_2()
+    {
+        // Get field headings
+        $field_headings             = $('.hdFieldHeadings').text();
+        var $ar_fields              = new Array();
+
+        // Predefined headings
+        $ar_fields.push({ display: 'Image', name : 'customerImage', width : 50, sortable : false, align: 'center' });
+        $ar_fields.push({ display: 'Company Name', name : 'companyName', width : 800, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Customer Number', name : 'customerNumber', width : 200, sortable : false, align: 'left' });
+        $ar_fields.push({ display: '', name : 'remove', width : 50, sortable : false, align: 'left' });
+
+        $('#flex2').flexigrid
+        ({
+            colModel                : $ar_fields,
+            onChangeSort            : false,
+            showToggleBtn           : false,
+            height                  : 600,
+            nowrap                  : false,
+            resizable               : false
+        });
+    }
+
     // ---------- ADD CUSTOMERS
     function $fc_add_customers_single()
     {
@@ -718,6 +766,7 @@ $(document).ready(function(){
             $data	            = jQuery.trim($data);
 
             $('.chosenUsersList').html($data);
+            $fc_execute_flexigrid();
         });
     }
 

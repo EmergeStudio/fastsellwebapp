@@ -1020,6 +1020,40 @@ class Ajax_handler_customers extends CI_Controller
 			echo 9876;
 		}
 	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| RESEND INVITATION
+	|--------------------------------------------------------------------------
+	*/
+	function resend_invitation()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$customer_id                = $this->input->post('customer_id');
+
+			// Resend it
+			$url_resend                 = 'customers/resendinvitation.json?customerid='.$customer_id;
+			$call_resend                = $this->scrap_web->webserv_call($url_resend);
+
+			if($call_resend['error'] == FALSE)
+			{
+				echo 'okitsdone';
+			}
+			else
+			{
+				// Return the error message
+				$json				= $call_resend['result'];
+				echo $json->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
 	
 }
 /* End of file ajax_handler_customers.php */

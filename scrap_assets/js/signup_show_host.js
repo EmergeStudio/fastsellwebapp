@@ -45,7 +45,7 @@ $(document).ready(function(){
 					$.scrap_note_time('Please provide an account name', 4000, 'cross');
 				}
 			}
-			
+
 			// First name
 			if($error == false)
 			{
@@ -56,7 +56,7 @@ $(document).ready(function(){
 					$.scrap_note_time('Please provide a first name', 4000, 'cross');
 				}
 			}
-			
+
 			// Surname
 			if($error == false)
 			{
@@ -67,7 +67,7 @@ $(document).ready(function(){
 					$.scrap_note_time('Please provide a surname', 4000, 'cross');
 				}
 			}
-			
+
 			// Username
 			if($error == false)
 			{
@@ -76,7 +76,7 @@ $(document).ready(function(){
 					if($.scrap_has_white_space($username) == false)
 					{
 					}
-					else	
+					else
 					{
 						$error	= true;
 						$('.signupContain input[name="inpUsername"]').addClass('redBorder');
@@ -90,7 +90,7 @@ $(document).ready(function(){
 					$.scrap_note_time('Your username needs to be longer then 5 characters', 4000, 'cross');
 				}
 			}
-			
+
 			// Email
 			if($error == false)
 			{
@@ -99,6 +99,16 @@ $(document).ready(function(){
 					$error		= true;
 					$('.signupContain input[name="inpEmailAddress"]').addClass('redBorder');
 					$.scrap_note_time('Your email address does not check out', 4000, 'cross');
+				}
+			}
+
+			// Terms
+			if($error == false)
+			{
+				if($('input[name="termsandconditions"]').is(':checked') == false)
+				{
+					$error		= true;
+					$.scrap_note_time('You need to accept the terms and conditions in order to sign up', 4000, 'cross');
 				}
 			}
 			
@@ -119,9 +129,9 @@ $(document).ready(function(){
 					email_address	: $email_address
 				},
 				function($data)
-				{	
+				{
 					$data	= jQuery.trim($data);
-					
+
 					if($data == 'userloginsuccess')
 					{
 						// Reset the loader
@@ -129,7 +139,7 @@ $(document).ready(function(){
 						$('#frmLogin').submit();
 					}
 					else
-					{	
+					{
 						$.scrap_note_time($data, 4000, 'cross');
 					}
 				});

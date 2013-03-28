@@ -259,48 +259,6 @@ echo form_open_multipart('fastsells/save_event_changes', 'class="frmSaveEventCha
 
 			echo close_div();
 
-			// Right column
-			echo open_div('whiteBack');
-
-				// Heading
-				echo div_height(6);
-				echo full_div('', 'icon-box headingIcon blue');
-				echo heading('Recent Products', 2);
-				echo div_height(8);
-
-				// Load the view
-				echo open_div('ajaxProductsInFastSell');
-
-					$this->load->view('products/fastsell_products_list_small');
-
-				echo close_div();
-
-				echo div_height(30);
-				echo make_button('View More', '', 'fastsells/products');
-
-			echo close_div();
-
-			// Left column
-			echo open_div('whiteBack');
-
-				// Heading
-				echo div_height(6);
-				echo full_div('', 'icon-users headingIcon blue');
-				echo heading('Recent Customers', 2);
-				echo div_height(8);
-
-				// Load the view
-				echo open_div('ajaxCustomersInFastSell');
-
-					$this->load->view('customers/fastsell_customers_list');
-
-				echo close_div();
-
-				echo div_height(30);
-				echo make_button('View More', '', 'fastsells/customers');
-
-			echo close_div();
-
 			// Clear float
 			echo clear_float();
 

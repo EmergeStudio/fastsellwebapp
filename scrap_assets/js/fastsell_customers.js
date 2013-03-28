@@ -8,6 +8,7 @@ $(document).ready(function(){
 	// ---------- AJAX PATHS
 	var $base_path				= $('#hdPath').val();
 	var $ajax_base_path 		= $base_path + 'ajax_handler_customers/';
+    var $ajax_base_path_fs 		= $base_path + 'ajax_handler_fastsells/';
 	var $ajax_html_path 		= $ajax_base_path + 'html_view/';
     var uploader                = document.getElementById('uploader');
 
@@ -20,12 +21,109 @@ $(document).ready(function(){
 
     $fc_add_customers_2();
 
+    $fc_add_customers_by_group();
+
     $fc_upload_master_data_file();
 
     $fc_remove_customer();
+
+    $fc_execute_flexigrid();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- ADD CUSTOMERS BY GROUP
+    function $fc_add_customers_by_group()
+    {
+        // Edit group popup
+        $('body').sunBox.popup('Select The Customer Group', 'popAddCustomerByGroup',
+            {
+                ajax_path		: $ajax_base_path_fs + 'add_customers_by_group_popup',
+                close_popup		: false,
+                callback 		: function($return){}
+            });
+
+        // Show the popup
+        $('.btnAddByGroupPopup').on('click', function()
+        {
+            $('.popAddCustomerByGroup .returnTrue').hide();
+            $('body').sunBox.show_popup('popAddCustomerByGroup');
+            $('body').sunBox.adjust_popup_height('popAddCustomerByGroup');
+        });
+
+        // Select group
+        $(document).on('click', '.popAddCustomerByGroup .groupSelection', function()
+        {
+            // Some variables
+            $this                   = $(this);
+            $group_id               = $this.find('.hdGroupId').text();
+            $group_name             = $this.text();
+            $event_id               = $('.hdEventId').text();
+
+            // Add the customers by group id
+            $.scrap_note_loader('Adding customers from the '+ $group_name +' group into this FastSell');
+
+            // Close the popup
+            $('body').sunBox.close_popup('popAddCustomerByGroup');
+
+            // Refresh the data
+            $.post($ajax_base_path_fs + 'add_customers_to_fastsell_by_group',
+            {
+                group_id			: $group_id,
+                event_id            : $event_id
+            },
+            function($data)
+            {
+                $data	= jQuery.trim($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else if($data == 'okitsdone')
+                {
+                    $.scrap_note_time('The customers have been added to this FastSell', 4000, 'tick');
+                    $fc_refresh_customer_list();
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
+            });
+        });
+    }
+
+    // ---------- EXECUTE FLEXIGRID
+    function $fc_execute_flexigrid()
+    {
+        // Get field headings
+        $field_headings             = $('.hdFieldHeadings').text();
+        $limit                      = $('input[name="hdLimit"]').val();
+        $page                       = $('input[name="scrap_pageNo"]').val();
+        $total                      = $('input[name="scrap_pageMax"]').val();
+        var $ar_fields              = new Array();
+
+        // Predefined headings
+        $ar_fields.push({ display: 'ID', name : 'id', width : 50, sortable : false, align: 'center' });
+        $ar_fields.push({ display: 'Company Name', name : 'companyName', width : ($(window).width() - 380), sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Customer Number', name : 'customerNumber', width : 200, sortable : false, align: 'left' });
+        $ar_fields.push({ display: '', name : 'remove', width : 50, sortable : false, align: 'left' });
+
+        $('#flex1').flexigrid
+        ({
+            colModel                : $ar_fields,
+            onChangeSort            : false,
+            showToggleBtn           : false,
+            height                  : 600,
+            nowrap                  : false,
+            usepager                : true,
+            resizable               : false,
+            rp                      : $limit
+        });
+
+        $('.pcontrol input').val($page);
+        $('.pcontrol span').text($total);
+    }
 
     // ----- ADD CUSTOMERS
     function $fc_add_customers_2()
@@ -290,6 +388,7 @@ $(document).ready(function(){
             //console.log($data);
 
             $('.ajaxCustomersInFastSell').html($data);
+            $fc_execute_flexigrid();
         });
     }
 

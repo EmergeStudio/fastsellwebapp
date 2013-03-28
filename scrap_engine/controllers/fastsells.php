@@ -103,8 +103,8 @@ class Fastsells extends CI_Controller
 		// Some variables
 		$dt_header['title'] 	        = 'Create New FastSell';
 		$dt_header['crt_page']	        = 'pageFastSells';
-		$dt_header['extra_css']         = array('scrap_shifter', 'create_fastsell', 'fastsell_products', 'customers', 'products');
-		$dt_header['extra_js']          = array('shifter_create_fastsell_event');
+		$dt_header['extra_css']         = array('scrap_shifter', 'create_fastsell', 'fastsell_products', 'customers', 'products', 'flexigrid');
+		$dt_header['extra_js']          = array('plugin_flexigrid_pack', 'shifter_create_fastsell_event');
 
 		// Load header
 		$this->load->view('universal/header', $dt_header);
@@ -1268,8 +1268,8 @@ class Fastsells extends CI_Controller
 			// Some variables
 			$dt_header['title'] 	        = 'FastSell';
 			$dt_header['crt_page']	        = 'pageFastSellProducts';
-			$dt_header['extra_css']         = array('fastsells', 'fastsell_products', 'products');
-			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_products');
+			$dt_header['extra_css']         = array('fastsells', 'fastsell_products', 'products', 'flexigrid');
+			$dt_header['extra_js']          = array('plugin_flexigrid_pack', 'plugin_countdown', 'fastsell_products');
 
 			// Load header
 			$this->load->view('universal/header', $dt_header);
@@ -1387,8 +1387,8 @@ class Fastsells extends CI_Controller
 			// Some variables
 			$dt_header['title'] 	        = 'FastSell';
 			$dt_header['crt_page']	        = 'pageFastSellCustomers';
-			$dt_header['extra_css']         = array('fastsells', 'fastsell_customers', 'customers');
-			$dt_header['extra_js']          = array('plugin_countdown', 'fastsell_customers');
+			$dt_header['extra_css']         = array('fastsells', 'fastsell_customers', 'customers', 'flexigrid');
+			$dt_header['extra_js']          = array('plugin_flexigrid_pack', 'plugin_countdown', 'fastsell_customers');
 
 			// Load header
 			$this->load->view('universal/header', $dt_header);

@@ -188,89 +188,6 @@ class Ajax_handler_users extends CI_Controller
 
 	/*
 	|--------------------------------------------------------------------------
-	| UPDATE USER DETAILS
-	|--------------------------------------------------------------------------
-	*/
-	function update_user_details()
-	{
-		if($this->scrap_wall->login_check_ajax() == TRUE)
-		{
-			// Some variables
-			$user_id			= $this->input->post('user_id');
-			$acc_type			= $this->input->post('acc_type');
-			$first_name			= $this->input->post('first_name');
-			$surname			= $this->input->post('surname');
-			$username			= $this->input->post('username');
-			$email_address		= $this->input->post('email_address');
-			$password			= $this->input->post('password');
-			
-			// Scrappy web call
-			$url				= 'users/.json?id='.$user_id;
-			$call_user			= $this->scrap_web->webserv_call($url, FALSE, 'get', FALSE, FALSE, TRUE);
-			
-			// Validate
-			if($call_user['error'] == FALSE)
-			{
-				// Data
-				$json_user					= $call_user['result'];
-				
-				// Change the data
-				$json_user['firstname']		= $first_name;
-				$json_user['lastname']		= $surname;
-				$json_user['username']		= $username;
-				$json_user['user_emails'][0]['email']   = $email_address;
-				if(!empty($password))
-				{
-					$json_user['password']	= sha1($password);
-				}
-				
-				// Recode
-				$new_json					= json_encode($json_user);
-				
-				// Submit the changes
-				$update_user				= $this->scrap_web->webserv_call('users/.json', $new_json);
-				
-				// Validate the result
-				if($update_user['error'] == FALSE)
-				{
-					// Set the session variables
-					$this->session->set_userdata('sv_name', $first_name.' '.$surname);
-					
-					// Change his account type
-					$url_acc_type			= 'showhostusers/.json?userid='.$user_id;
-					$call_user_acc_type		= $this->scrap_web->webserv_call($url_acc_type);
-					$json_user_acc_type		= $call_user_acc_type['result'];
-					
-					// Change the data
-					$json_user_acc_type->show_host_role->id		= $acc_type;
-				
-					// Recode
-					$new_json_acc_type		= json_encode($json_user_acc_type);
-					//echo $new_json_acc_type;
-					
-					// Submit the changes
-					$update_user			= $this->scrap_web->webserv_call('showhostusers/.json', $new_json_acc_type);
-					
-					// Return
-					echo 'okitsdone';
-				}
-				else
-				{
-					// Return the error message
-					$json					= $update_user['result'];
-					echo $json->errorDescription;
-				}
-			}
-		}
-		else
-		{
-			echo 9876;
-		}
-	}
-
-
-	/*
-	|--------------------------------------------------------------------------
 	| RESET PASSWORD BY USERNAME
 	|--------------------------------------------------------------------------
 	*/
@@ -482,6 +399,164 @@ class Ajax_handler_users extends CI_Controller
 			
 			// Content view
 			$this->load->view('manage/users_list', $dt_body);
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| SAVE USER CHANGES
+	|--------------------------------------------------------------------------
+	*/
+	function save_user_changes()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$new_value	            = $this->input->post('new_value');
+			$field_name	            = $this->input->post('field_name');
+			$user_id	            = $this->input->post('user_id');
+
+			// Get user details
+			$url_user               = 'users/.json?id='.$user_id;
+			$call_user              = $this->scrap_web->webserv_call($url_user);
+
+			if($call_user['error'] == FALSE)
+			{
+				// Get the JSON
+				$json_user          = $call_user['result'];
+
+				// Edit the DOM
+				if($field_name == 'firstname')
+				{
+					$json_user->firstname                   = $new_value;
+				}
+				elseif($field_name == 'lastname')
+				{
+					$json_user->lastname                    = $new_value;
+				}
+				elseif($field_name == 'username')
+				{
+					$json_user->username                    = $new_value;
+				}
+				elseif($field_name == 'password')
+				{
+					$json_user->password                    = sha1($new_value);
+					$json_user->clear_password              = $new_value;
+				}
+				elseif($field_name == 'email')
+				{
+					$json_user->user_emails[0]->email       = $new_value;
+				}
+
+				// Encode
+				$json_update        = json_encode($json_user);
+//				echo $json_update;
+
+				// Update
+				$call_update        = $this->scrap_web->webserv_call('users/.json', $json_update);
+
+				if($call_update['error'] == TRUE)
+				{
+					$json_error     = $call_update['result'];
+					echo $json_error->error_description;
+				}
+				else
+				{
+					echo 'userhasbeenupdated';
+				}
+			}
+			else
+			{
+				$json_error         = $call_user['result'];
+				echo $json_error->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| UPDATE USER DETAILS
+	|--------------------------------------------------------------------------
+	*/
+	function update_user_details()
+	{
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$user_id			= $this->input->post('user_id');
+			$acc_type			= $this->input->post('acc_type');
+			$first_name			= $this->input->post('first_name');
+			$surname			= $this->input->post('surname');
+			$username			= $this->input->post('username');
+			$email_address		= $this->input->post('email_address');
+			$password			= $this->input->post('password');
+
+			// Scrappy web call
+			$url				= 'users/.json?id='.$user_id;
+			$call_user			= $this->scrap_web->webserv_call($url, FALSE, 'get', FALSE, FALSE, TRUE);
+
+			// Validate
+			if($call_user['error'] == FALSE)
+			{
+				// Data
+				$json_user					= $call_user['result'];
+
+				// Change the data
+				$json_user['firstname']		= $first_name;
+				$json_user['lastname']		= $surname;
+				$json_user['username']		= $username;
+				$json_user['user_emails'][0]['email']   = $email_address;
+				if(!empty($password))
+				{
+					$json_user['password']	= sha1($password);
+				}
+
+				// Recode
+				$new_json					= json_encode($json_user);
+
+				// Submit the changes
+				$update_user				= $this->scrap_web->webserv_call('users/.json', $new_json);
+
+				// Validate the result
+				if($update_user['error'] == FALSE)
+				{
+					// Set the session variables
+					$this->session->set_userdata('sv_name', $first_name.' '.$surname);
+
+					// Change his account type
+					$url_acc_type			= 'showhostusers/.json?userid='.$user_id;
+					$call_user_acc_type		= $this->scrap_web->webserv_call($url_acc_type);
+					$json_user_acc_type		= $call_user_acc_type['result'];
+
+					// Change the data
+					$json_user_acc_type->show_host_role->id		= $acc_type;
+
+					// Recode
+					$new_json_acc_type		= json_encode($json_user_acc_type);
+
+					// Submit the changes
+					$update_user			= $this->scrap_web->webserv_call('showhostusers/.json', $new_json_acc_type);
+
+					// Return
+					echo 'okitsdone';
+				}
+				else
+				{
+					// Return the error message
+					$json					= $update_user['result'];
+					echo $json->errorDescription;
+				}
+			}
 		}
 		else
 		{

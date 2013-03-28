@@ -106,6 +106,12 @@ echo open_div('middle');
 			'name'			=> 'inpEmailAddress'
 		);
 		echo form_input($inp_email_address);
+
+		echo div_height(10);
+		echo form_checkbox('termsandconditions', 'terms', FALSE, 'class="termsAndConditions"');
+		echo anchor('legal/terms_and_conditions', 'Accept Terms and Conditions', 'target="_blank" class="termsLink"');
+		echo clear_float();
+		echo div_height(10);
 		
 		// Sign up button
 		echo make_button('Sign Me Up', 'btnSignUp');
@@ -145,3 +151,7 @@ echo close_div();
 
 <!--Base URL-->
 <input type="hidden" id="hdPath" name="hdPath" value="<?php echo base_url(); ?>" />
+
+<?php
+echo div_height(40);
+?>

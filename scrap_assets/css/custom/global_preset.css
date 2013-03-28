@@ -453,3 +453,21 @@ a{text-decoration:none;}
 .icon-plus-sign:before {
     content: "\f0fe";
 }
+.icon-sad:before {
+    content: "\e04b";
+}
+.icon-signout:before {
+    content: "\f08b";
+}
+.icon-reorder:before {
+    content: "\f0c9";
+}
+.icon-menu:before {
+    content: "\e04c";
+}
+.icon-copy:before {
+    content: "\e04d";
+}
+.icon-copy-2:before {
+    content: "\f0c5";
+}

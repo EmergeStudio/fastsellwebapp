@@ -7,7 +7,7 @@ echo open_div('rightColumn');
 	// Item definition
 	echo open_div('inset');
 
-		echo form_label('Group Name');
+		echo form_label('Template Name');
 		$inp_data			= array
 		(
 			'name'			=> 'inpDefinitionName',
@@ -24,7 +24,7 @@ echo open_div('rightColumn');
 	echo open_div('inset includedDefinitionFields');
 
 		echo form_label('Included Fields');
-		echo full_div('The following fields will automatically be created with this group and are required in all upload files.');
+		echo full_div('The following fields will automatically be created with this template and are required in all upload files.');
 		echo div_height(15);
 
 		echo full_div('<span class="icon-checkmark-2"></span>Product Name');

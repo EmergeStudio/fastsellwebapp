@@ -28,9 +28,46 @@ $(document).ready(function(){
     $fc_search();
 
     $fc_pagenate();
+
+    $fc_execute_flexigrid();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- EXECUTE FLEXIGRID
+    function $fc_execute_flexigrid()
+    {
+        // Get field headings
+        $field_headings             = $('.hdFieldHeadings').text();
+        $limit                      = $('input[name="hdLimit"]').val();
+        $page                       = $('input[name="scrap_pageNo"]').val();
+        $total                      = $('input[name="scrap_pageMax"]').val();
+        var $ar_fields              = new Array();
+
+        // Predefined headings
+        $ar_fields.push({ display: 'Image', name : 'productImage', width : 50, sortable : false, align: 'center' });
+        $ar_fields.push({ display: 'Product Name', name : 'productName', width : 200, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Product Fields', name : 'productFields', width : ($(window).width() - 713), sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'MSRP', name : 'msrp', width : 100, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Stock Count', name : 'stock', width : 100, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Price', name : 'price', width : 100, sortable : false, align: 'left' });
+        $ar_fields.push({ display: '', name : 'remove', width : 50, sortable : false, align: 'left' });
+
+        $('#flex1').flexigrid
+        ({
+            colModel                : $ar_fields,
+            onChangeSort            : false,
+            showToggleBtn           : false,
+            height                  : 600,
+            nowrap                  : false,
+            usepager                : true,
+            resizable               : false,
+            rp                      : $limit
+        });
+
+        $('.pcontrol input').val($page);
+        $('.pcontrol span').text($total);
+    }
 
     // ----- PAGENATE
     function $fc_pagenate()
@@ -639,6 +676,7 @@ $(document).ready(function(){
             $data	            = jQuery.trim($data);
 
             $('.ajaxProductsInFastSell').html($data);
+            $fc_execute_flexigrid();
         });
     }
 

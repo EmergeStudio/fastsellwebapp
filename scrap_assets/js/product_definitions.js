@@ -27,9 +27,49 @@ $(document).ready(function(){
         $mouse_x                = $e.pageX;
         $mouse_y                = $e.pageY;
     });
+
+    $fc_copy_definition();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- COPY DEFINITION
+    function $fc_copy_definition()
+    {
+        // Show the popup
+        $('.btnCopyDefinition').live('click', function()
+        {
+            // Some variables
+            $parent                 = $(this).parents('tr');
+            $defintion_name         = $parent.find('.editDefinitionName').text();
+            $loop_cnt               = 0;
+
+            // Edit the popup
+            $('.popAddDefinition .inpDefinitionName').val($defintion_name + ' (copy)');
+            $parent.find('.productField ').each(function()
+            {
+                $loop_cnt++;
+                $existing_field     = $(this).clone().children().remove().end().text();
+
+                // Append the index field
+                if($loop_cnt == 1)
+                {
+                    $('.popAddDefinition .inpDefinitionField:first').val($existing_field);
+                }
+                else
+                {
+                    $html			= '<div class="definitionFieldContainer deleteable"><div class="btnDeleteDefinitionField tooltip" title="Delete definition field">Cross Grey</div><div class="floatRight"><div class="divHeight" style="height:2px"></div></div><label>Add Field</label><input type="text" name="inpDefinitionField" value="'+ $existing_field +'" class="inpDefinitionField"></div>';
+
+                    $('.popAddDefinition .allDefinitionFields').append($html);
+                }
+            });
+
+            // Show the popup
+            $('.popAddDefinition .titleText').text('Copy Product Template');
+            $('body').sunBox.show_popup('popAddDefinition');
+            $('body').sunBox.adjust_popup_height('popAddDefinition');
+        });
+    }
 
     // ----- ADD DEFINITION FIELD
     function $fc_add_field()
@@ -157,6 +197,7 @@ $(document).ready(function(){
         // Show the popup
         $('.btnAddDefinition').live('click', function()
         {
+            $('.popAddDefinition .titleText').text('Add Product Template');
             $('body').sunBox.show_popup('popAddDefinition');
             $('body').sunBox.adjust_popup_height('popAddDefinition');
         });
@@ -272,7 +313,7 @@ $(document).ready(function(){
 
             $('body').sunBox.message(
             {
-                content			: 'Delete the product definition <b>"'+ $definition_name +'"</b>?<br><br>(<b>Please Note</b> that by doing this you will <b>delete all</b> products associated with this definition)',
+                content			: 'Delete the product template <b>"'+ $definition_name +'"</b>?<br><br>(<b>Please Note</b> that by doing this you will <b>delete all</b> products associated with this template)',
                 btn_true		: 'Yup I\'m Sure',
                 btn_false		: 'Oh Gosh No!',
                 message_title	: 'Just Checking',

@@ -75,28 +75,28 @@ echo open_div('middle');
 						echo '</td>';
 
 						// First name
-						echo '<td id="" class="editIt">';
+						echo '<td id="" class="editIt firstname">';
 
 							echo $user_details->firstname;
 
 						echo '</td>';
 
 						// Last name
-						echo '<td class="editIt">';
+						echo '<td class="editIt lastname">';
 
 							echo $user_details->lastname;
 
 						echo '</td class="editIt">';
 
 						// Username
-						echo '<td class="editIt">';
+						echo '<td class="editIt username">';
 
 							echo $user_details->username;
 
 						echo '</td>';
 
 						// Email address
-						echo '<td class="editIt">';
+						echo '<td class="editIt email">';
 
 							echo $user_details->user_emails[0]->email;
 

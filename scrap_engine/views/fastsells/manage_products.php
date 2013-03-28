@@ -42,7 +42,7 @@ echo open_div('middle');
 		echo close_div();
 
 		// Order list - quick
-		echo open_div('listContain ajaxProductsInFastSell');
+		echo open_div('ajaxProductsInFastSell');
 
 			$this->load->view('products/fastsell_products_list');
 

@@ -850,17 +850,17 @@ html {
     background-repeat: no-repeat;
     background-position: 36px 50px;
 }
-.middle .coolTable .extraOptions .icon-cross {
+.middle .extraOptions .icon-cross {
     font-size: 30px;
     text-shadow: none;
 }
-.middle .coolTable .extraOptions .icon-pencil {
+.middle .extraOptions .icon-pencil {
     font-size: 20px;
     text-shadow: none;
     margin-top: 6px;
     margin-right: 6px;
 }
-.middle .coolTable .extraOptions .icon-cross:hover, .middle .coolTable .extraOptions .icon-pencil:hover {
+.middle .extraOptions .icon-cross:hover, .middle .extraOptions .icon-pencil:hover {
     cursor: pointer;
     color: #d61818;
 }

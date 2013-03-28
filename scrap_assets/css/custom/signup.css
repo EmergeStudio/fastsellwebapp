@@ -53,8 +53,6 @@
 .pageSignup .middle .btnSignUp {
 	margin-left:120px;
 }
-
-
 .pageSignup div.selector {
     width: 304px;
 }
@@ -67,4 +65,13 @@
 }
 .pageSignup div.selector select option {
     color: #525252;
+}
+.pageSignup .termsAndConditions {
+    float: left;
+    width: 25px;
+}
+.pageSignup .termsLink {
+    display: block;
+    float: left;
+    margin-top: -2px;
 }

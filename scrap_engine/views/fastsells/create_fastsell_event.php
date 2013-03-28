@@ -190,7 +190,7 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 		echo div_height(35);
 
 		// Active users
-		echo open_div('inset floatRight chosenUsers');
+		echo open_div('inset chosenUsers');
 
 			// Heading
 			echo heading('Customers Who Will Be Notified', 3);
@@ -212,10 +212,6 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 //
 //				// Heading
 //				$this->table->set_heading(form_checkbox($checkbox_remove_all_customers), '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
-				$this->table->set_heading('', '', array('data' => 'Customer Name', 'class' => 'fullCell'), 'Customer Number');
-
-				// Generate table
-				echo $this->table->generate();
 
 			echo close_div();
 

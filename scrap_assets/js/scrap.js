@@ -637,13 +637,14 @@ $(document).ready(function(){
 				function($data)
 				{	
 					$data	= jQuery.trim($data);
+                    console.log($data);
 					
 					if($data == '9876')
 					{
 						$.scrap_logout();
 					}
-					//else if($data == 'okitsdone')
-                    else
+					else if($data == 'okitsdone')
+//                    else
 					{
 						// Close the popup
 						$('#topBar .userNavLink .mainNavLink .blueLink').text($first_name + ' ' + $surname);
@@ -654,10 +655,10 @@ $(document).ready(function(){
 						$.scrap_note_time('Your information has been updated', 4000, 'tick');
 						$('body').sunBox.close_popup('popMyDetails');
 					}
-//					else
-//					{
-//						$.scrap_note_time($data, 4000, 'cross');
-//					}
+					else
+					{
+						$.scrap_note_time($data, 4000, 'cross');
+					}
 				});
 			}
 		});

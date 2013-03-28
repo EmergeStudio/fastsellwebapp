@@ -99,9 +99,6 @@
 .shifterPane_2 .chosenUsers, .shifterPane_2 .userList {
     padding: 25px;
 }
-.shifterPane_2 table .evenRow, .shifterPane_2 table .evenRow, .shifterPane_2 table tr {
-    background-color: #fff;
-}
 .middle .shifterPane_2 .scrapButton.blueButton {
     padding: 8px 14px;
 }

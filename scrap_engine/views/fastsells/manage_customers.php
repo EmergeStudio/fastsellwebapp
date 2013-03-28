@@ -13,6 +13,7 @@ echo open_div('middle');
 			// Add product
 			echo make_button('Upload Master Data File', 'btnUploadDataFile btnAdd blueButton', '', 'right');
 			echo make_button('Link More Customers', 'btnAddCustomersPopup btnAdd blueButton', '', 'right');
+			echo make_button('Add By Group', 'btnAdd btnAddByGroupPopup blueButton', '', 'right');
 			echo make_button('Add New Customers', 'btnAddNewCustomerPopup btnAdd blueButton', '', 'right');
 
 			echo open_div('floatLeft');
@@ -44,7 +45,7 @@ echo open_div('middle');
 		echo close_div();
 
 		// Order list - quick
-		echo open_div('listContain ajaxCustomersInFastSell');
+		echo open_div('ajaxCustomersInFastSell');
 
 			$this->load->view('customers/fastsell_customers_list');
 

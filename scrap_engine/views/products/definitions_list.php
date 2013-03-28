@@ -85,7 +85,9 @@ if($definitions['error'] == FALSE)
 		$html   = '';
 		$html   .= open_div('extraOptions');
 
-			$html   .= full_div('', 'btnDeleteDefinition icon-cross', 'Delete this product group');
+			$html   .= full_div('', 'btnCopyDefinition icon-copy', 'Copy this product template');
+			$html   .= full_div('', 'btnDeleteDefinition icon-cross', 'Delete this product template');
+			$html   .= clear_float();
 
 			// Hidden data
 			$html   .= hidden_div($definition->name, 'hdDefinitionName');

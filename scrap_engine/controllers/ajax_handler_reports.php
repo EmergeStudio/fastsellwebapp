@@ -79,9 +79,10 @@ class Ajax_handler_reports extends CI_Controller
 							// Edit DOM
 							$json_sample_path->path         = 'scrap_downloads/'.$user_id;
 							$json_new_folder                = json_encode($json_sample_path);
+//							echo $json_new_folder;
 
 							// Create directory
-							$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
+							$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put', FALSE, FALSE);
 						}
 						else
 						{
@@ -94,13 +95,20 @@ class Ajax_handler_reports extends CI_Controller
 					}
 
 					// Store the file
-					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$url_file_store                 = 'serverlocalfiles/.bodyexclude_json?path=scrap_downloads/'.$user_id.'/'.$name;
 					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
+
+					if($call_file_store['error'] == TRUE)
+					{
+						$json				        = $call_file_store['result'];
+						//echo $call_file_store['result'];
+					}
 
 					// Change download
 					$download_file                  = $name;
 				}
 			}
+//			echo $call_create_report['result'];
 
 			$dt_body['download_file']           = $download_file;
 
@@ -176,7 +184,7 @@ class Ajax_handler_reports extends CI_Controller
 					}
 
 					// Store the file
-					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$url_file_store                 = 'serverlocalfiles/.bodyexclude_json?path=scrap_downloads/'.$user_id.'/'.$name;
 					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
 
 					// Change download
@@ -259,7 +267,7 @@ class Ajax_handler_reports extends CI_Controller
 					}
 
 					// Store the file
-					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$url_file_store                 = 'serverlocalfiles/.bodyexclude_json?path=scrap_downloads/'.$user_id.'/'.$name;
 					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
 
 					// Change download
@@ -341,7 +349,7 @@ class Ajax_handler_reports extends CI_Controller
 					}
 
 					// Store the file
-					$url_file_store                 = 'serverlocalfiles/.json?path=scrap_downloads/'.$user_id.'/'.$name;
+					$url_file_store                 = 'serverlocalfiles/.bodyexclude_json?path=scrap_downloads/'.$user_id.'/'.$name;
 					$call_file_store                = $this->scrap_web->webserv_call($url_file_store, $call_create_report['result'], 'put', FALSE, FALSE);
 
 					// Change download

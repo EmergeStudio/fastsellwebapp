@@ -165,7 +165,7 @@ class Products extends CI_Controller
 
 		// ----- HEADER ------------------------------------
 		// Some variables
-		$dt_header['title'] 	        = 'Product Definitions';
+		$dt_header['title'] 	        = 'Product Templates';
 		$dt_header['crt_page']	        = 'pageProducts';
 		$dt_header['extra_js']          = array('product_definitions');
 		$dt_header['extra_css']         = array('products');
