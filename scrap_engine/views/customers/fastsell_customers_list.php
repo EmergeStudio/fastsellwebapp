@@ -14,9 +14,27 @@ if($customers['error'] == FALSE)
 		foreach($json_customers->customer_organizations as $customer)
 		{
 			// Get the customer number
-			$url_customer               = 'customertoshowhosts/.json?showhostid='.$show_host_id.'&customerid='.$customer->id;
+			$url_customer               = 'customertoshowhosts/.json?showhostid='.$show_host_id.'&customerid='.$customer->id.'&includegroups=true';
 			$call_customer              = $this->scrap_web->webserv_call($url_customer, FALSE, 'get', FALSE, FALSE);
 			$json_customers             = $call_customer['result'];
+
+			$url_cust_user		        = 'customerusers/.json?customerid='.$customer->id;
+			$call_cust_user	            = $this->scrap_web->webserv_call($url_cust_user, FALSE, 'get', FALSE, FALSE);
+
+			$cust_user_id               = 0;
+			$cust_user_fn               = 'First Name';
+			$cust_user_ln               = 'Last Name';
+			$cust_user_email            = 'Email Address';
+
+			if($call_cust_user['error'] == FALSE)
+			{
+				$json_cust_user         = $call_cust_user['result'];
+
+				$cust_user_id           = $json_cust_user->user->id;
+				$cust_user_fn           = $json_cust_user->user->firstname;
+				$cust_user_ln           = $json_cust_user->user->lastname;
+				$cust_user_email        = $json_cust_user->user->user_emails[0]->email;
+			}
 
 			echo '<tr>';
 
@@ -35,6 +53,30 @@ if($customers['error'] == FALSE)
 				echo '<td>';
 
 					echo $json_customers->customer_number;
+
+				echo '</td>';
+
+				echo '<td>';
+
+					echo $cust_user_fn;
+
+				echo '</td>';
+
+				echo '<td>';
+
+					echo $cust_user_ln;
+
+				echo '</td>';
+
+				echo '<td>';
+
+					echo $cust_user_email;
+
+				echo '</td>';
+
+				echo '<td>';
+
+					echo 'Group';
 
 				echo '</td>';
 

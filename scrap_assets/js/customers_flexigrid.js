@@ -143,6 +143,7 @@ $(document).ready(function(){
         {
             // Value
             $value                  = $(this).val();
+            $('input[name="hdOffset"]').val(1);
             $('input[name="hdLimit"]').val($value);
             $('.frmSearch').submit();
         });
@@ -209,6 +210,7 @@ $(document).ready(function(){
             function($data)
             {
                 $data	            = jQuery.trim($data);
+                console.log($data);
 
                 if($data == '9876')
                 {
@@ -248,9 +250,18 @@ $(document).ready(function(){
     {
         // Some variables
         $window_h                   = $(window).height();
+        $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_table_h               = $('.flexigrid .bDiv table').height();
 
         // Adjust height
-        $('.flexigrid .bDiv').height($window_h - 330);
+        if($bDiv_table_h > $bDiv_h)
+        {
+            $('.flexigrid .bDiv').height($window_h - 330);
+        }
+        else
+        {
+            $('.flexigrid .bDiv').height($bDiv_table_h);
+        }
     }
 
     function $fc_execute_flexigrid()
@@ -270,7 +281,7 @@ $(document).ready(function(){
         $ar_fields.push({ display: 'State', name : 'companyState', width : 200, sortable : false, align: 'left' });
         $ar_fields.push({ display: 'First Name', name : 'viewOrders', width : '150', sortable : true, align: 'left' });
         $ar_fields.push({ display: 'Last Name', name : 'viewOrders', width : '150', sortable : true, align: 'left' });
-        $ar_fields.push({ display: 'Email Address', name : 'viewOrders', width : '150', sortable : true, align: 'left' });
+        $ar_fields.push({ display: 'Email Address', name : 'viewOrders', width : '200', sortable : true, align: 'left' });
         $ar_fields.push({ display: 'Groups', name : 'groups', width : '200', sortable : true, align: 'left' });
         $ar_fields.push({ display: '', name : 'viewOrders', width : '80', sortable : true, align: 'left' });
 

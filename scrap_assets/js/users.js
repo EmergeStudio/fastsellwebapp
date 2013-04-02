@@ -70,9 +70,18 @@ $(document).ready(function(){
     {
         // Some variables
         $window_h                   = $(window).height();
+        $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_table_h               = $('.flexigrid .bDiv table').height();
 
         // Adjust height
-        $('.flexigrid .bDiv').height($window_h - 330);
+        if($bDiv_table_h > $bDiv_h)
+        {
+            $('.flexigrid .bDiv').height($window_h - 330);
+        }
+        else
+        {
+            $('.flexigrid .bDiv').height($bDiv_table_h);
+        }
     }
 
     // ----- ADD A USER

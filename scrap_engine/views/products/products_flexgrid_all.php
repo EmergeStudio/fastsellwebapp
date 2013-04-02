@@ -161,7 +161,8 @@ echo open_div('middle');
 								$img_properties         = array
 								(
 									'src'               => $src,
-									'width'             => 50
+									'width'             => 50,
+									'height'            => 50
 								);
 
 								echo img($img_properties);
@@ -203,6 +204,12 @@ echo open_div('middle');
 
 				// Hidden data
 				echo hidden_div('View Fields', 'hdFieldHeadings');
+			}
+			else
+			{
+				echo div_height(30);
+				echo full_div('', 'messageNoProducts');
+				echo div_height(30);
 			}
 
 		// End of white back

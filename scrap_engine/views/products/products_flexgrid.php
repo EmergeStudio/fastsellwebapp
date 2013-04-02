@@ -45,10 +45,12 @@ echo open_div('middle');
 
 			echo form_open(current_url(), 'class="frmSearch"');
 
+				$crt_page                   = 0;
+				$max_page                   = 0;
 				if($products['error'] == FALSE)
 				{
 					// Data
-					$json_products                          = $products['result'];
+					$json_products          = $products['result'];
 
 					$crt_page               = ($offset / $limit) + 1;
 					$max_page               = floor($json_products->no_limit_count / $limit) + 1;
@@ -163,7 +165,8 @@ echo open_div('middle');
 								$img_properties         = array
 								(
 									'src'               => $src,
-									'width'             => 50
+									'width'             => 50,
+									'height'            => 50
 								);
 
 								echo img($img_properties);
@@ -223,6 +226,12 @@ echo open_div('middle');
 				}
 
 				echo hidden_div($this->scrap_string->remove_flc($field_headings), 'hdFieldHeadings');
+			}
+			else
+			{
+				echo div_height(30);
+				echo full_div('', 'messageNoProducts');
+				echo div_height(30);
 			}
 
 		// End of white back

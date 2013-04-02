@@ -562,7 +562,7 @@ class Ajax_handler_fastsells extends CI_Controller
 			$dt_body['offset']              = $offset;
 
 			// Load the view
-			$this->load->view('products/fastsell_products_list_2', $dt_body);
+			$this->load->view('products/fastsell_products_list', $dt_body);
 		}
 		else
 		{
@@ -677,7 +677,7 @@ class Ajax_handler_fastsells extends CI_Controller
 				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
 
 				// Upload the file
-				$url_file_upload            = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$document_file['name'];
+				$url_file_upload            = 'serverlocalfiles/.bodyexclude_json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$document_file['name'];
 				$call_file_upload           = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', TRUE);
 			}
 			else
@@ -712,7 +712,7 @@ class Ajax_handler_fastsells extends CI_Controller
 				$document_file			= str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
 
 				// Upload the file
-				$url_file_upload            = 'serverlocalfiles/.json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$document_file['name'];
+				$url_file_upload            = 'serverlocalfiles/.bodyexclude_json?path=scrap_shows%2F'.$fastsell_id.'%2Fbanner%2F'.$document_file['name'];
 				$call_file_upload           = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', TRUE);
 			}
 			else
@@ -759,7 +759,7 @@ class Ajax_handler_fastsells extends CI_Controller
 				$document_file			    = str_replace(' ', '%20', $_FILES['uploadedFileFastsellImage']);
 
 				// Upload the file
-				$url_file_upload            = 'serverlocalfiles/.json?path=scrap_shows_temp/temp_'.$random_folder.'_temp/'.$document_file['name'];
+				$url_file_upload            = 'serverlocalfiles/.bodyexclude_json?path=scrap_shows_temp/temp_'.$random_folder.'_temp/'.$document_file['name'];
 				$call_file_upload           = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 
 				echo $this->config->item('scrap_web_address').'serverlocalfiles/file?path=scrap_shows_temp/temp_'.$random_folder.'_temp/'.$_FILES['uploadedFileFastsellImage']['name'];

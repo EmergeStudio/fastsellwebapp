@@ -20,8 +20,8 @@ if($customers['error'] == FALSE)
 			$ctsh_id                = $customer_to_show_host->id;
 			$loop_cnt++;
 
-			$url_cust_users		    = 'customerusers/.jsons?customerid='.$id;
-			$call_cust_users	    = $this->scrap_web->webserv_call($url_cust_users, FALSE, 'get', FALSE, FALSE);
+			$url_cust_user		    = 'customerusers/.json?customerid='.$id;
+			$call_cust_user	        = $this->scrap_web->webserv_call($url_cust_user, FALSE, 'get', FALSE, FALSE);
 			if($customer_details->customer_logged_in_after_link == FALSE)
 			{
 				$active_class           = 'editIt';
@@ -35,14 +35,14 @@ if($customers['error'] == FALSE)
 			$cust_user_ln           = 'Last Name';
 			$cust_user_email        = 'Email Address';
 
-			if($call_cust_users['error'] == FALSE)
+			if($call_cust_user['error'] == FALSE)
 			{
-				$json_cust_users    = $call_cust_users['result'];
+				$json_cust_user     = $call_cust_user['result'];
 
-				foreach($json_cust_users->customer_users as $customer_users)
-				{
-					$customer_user  = $customer_users->user;
-				}
+				$cust_user_id       = $json_cust_user->user->id;
+				$cust_user_fn       = $json_cust_user->user->firstname;
+				$cust_user_ln       = $json_cust_user->user->lastname;
+				$cust_user_email    = $json_cust_user->user->user_emails[0]->email;
 			}
 
 			// HTML
@@ -52,32 +52,45 @@ if($customers['error'] == FALSE)
 				echo '<td>'.$id.'</td>';
 
 				// Customer name
-				echo '<td id="'.$ctsh_id.'_customerName" class="editIt">'.$customer_to_show_host->customer_name.'</td>';
+				echo '<td id="'.$ctsh_id.'_customerName_customer" class="editIt">'.$customer_to_show_host->customer_name.'</td>';
 
 				// Customer number
-				echo '<td id="'.$ctsh_id.'_customerNumber" class="editIt">'.$customer_to_show_host->customer_number.'</td>';
+				echo '<td id="'.$ctsh_id.'_customerNumber_customer" class="editIt">'.$customer_to_show_host->customer_number.'</td>';
 
 				// Customer state
 				if($active_class == '')
 				{
-					echo '<td id="'.$ctsh_id.'_customerState">'.full_span('Accepted and Active', 'greenTxt').'</td>';
+					echo '<td id="'.$ctsh_id.'_customerState_customer">'.full_span('Accepted and Active', 'greenTxt').'</td>';
 				}
 				else
 				{
-					echo '<td id="'.$ctsh_id.'_customerState">The user has not accepted yet<br>'.make_link('Re-send the invitation', 'btnResend Invite').'</td>';
+					echo '<td id="'.$ctsh_id.'_customerState_customer">The user has not accepted yet<br>'.make_link('Re-send the invitation', 'btnResend Invite').'</td>';
 				}
 
 				// Customer first name
-				echo '<td id="'.$cust_user_id.'_customerFirstName" class="'.$active_class.'">'.$cust_user_fn.'</td>';
+				echo '<td id="'.$cust_user_id.'_customerFirstName_user" class="'.$active_class.'">'.$cust_user_fn.'</td>';
 
 				// Customer lastname
-				echo '<td id="'.$cust_user_id.'_customerLastName" class="'.$active_class.'">'.$cust_user_ln.'</td>';
+				echo '<td id="'.$cust_user_id.'_customerLastName_user" class="'.$active_class.'">'.$cust_user_ln.'</td>';
 
 				// Customer email address
-				echo '<td id="'.$cust_user_id.'_customerEmail" class="'.$active_class.'">'.$cust_user_email.'</td>';
+				echo '<td id="'.$cust_user_id.'_customerEmail_user" class="'.$active_class.'">'.$cust_user_email.'</td>';
 
 				// Customer group
-				echo '<td id="'.$ctsh_id.'_customerGroup" class="editIt"></td>';
+				echo '<td id="'.$ctsh_id.'_customerGroup_groups" class="editIt">';
+
+					$groups                 = '';
+
+					if($customer_details->fastsell_customer_groups != NULL)
+					{
+						foreach($customer_details->fastsell_customer_groups as $fs_group)
+						{
+							$groups             .= $fs_group->name.',';
+						}
+					}
+					echo $groups;
+
+				echo '</td>';
 
 				// View orders
 				echo '<td>'.anchor('customers/orders/'.$customer_details->id, 'View Orders').'</td>';

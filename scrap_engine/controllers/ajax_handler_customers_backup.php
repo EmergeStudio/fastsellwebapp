@@ -974,15 +974,7 @@ class Ajax_handler_customers extends CI_Controller
 			{
 				$ex_edit_value              = explode('_', $edit_value);
 				$ctsh_id_value              = $ex_edit_value[0];
-
-				if($ex_edit_value[2] == 'customer')
-				{
-					array_push($ar_ctsh_ids, $ctsh_id_value);
-				}
-				elseif($ex_edit_value[2] == 'user')
-				{
-					array_push($ar_user_ids, $ctsh_id_value);
-				}
+				array_push($ar_ctsh_ids, $ctsh_id_value);
 			}
 			$ar_ctsh_ids                    = array_unique($ar_ctsh_ids);
 
@@ -1002,19 +994,16 @@ class Ajax_handler_customers extends CI_Controller
 						$ex_edit_value              = explode('_', $edit_value);
 
 						// Edit the data
-						if($ex_edit_value[2] == 'customer')
+						if($ex_edit_value[0] == $ctsh_id)
 						{
-							if($ex_edit_value[0] == $ctsh_id)
+							$value_name                 = $ex_edit_value[1];
+							if($value_name == 'customerNumber')
 							{
-								$value_name                 = $ex_edit_value[1];
-								if($value_name == 'customerNumber')
-								{
-									$json_customer->customer_number     = $new_value;
-								}
-								elseif($value_name == 'customerName')
-								{
-									$json_customer->customer_name     = $new_value;
-								}
+								$json_customer->customer_number     = $new_value;
+							}
+							elseif($value_name == 'customerName')
+							{
+								$json_customer->customer_name     = $new_value;
 							}
 						}
 					}
@@ -1024,52 +1013,6 @@ class Ajax_handler_customers extends CI_Controller
 
 					// Do the update
 					$update                             = $this->scrap_web->webserv_call('customertoshowhosts/.json', $json_update, 'post');
-				}
-			}
-
-			// Update the users
-			foreach($ar_user_ids as $ctsh_id)
-			{
-				// Get user info
-				$url_user                   = 'users/.json?id='.$ctsh_id;
-				$call_user                  = $this->scrap_web->webserv_call($url_user);
-
-				if($call_user['error'] == FALSE)
-				{
-					// Get the JSON
-					$json_user          = $call_user['result'];
-
-					foreach($ex_edits as $edit_value)
-					{
-						$ex_edit_value              = explode('_', $edit_value);
-
-						// Edit the data
-						if($ex_edit_value[2] == 'user')
-						{
-							if($ex_edit_value[0] == $ctsh_id)
-							{
-								$value_name                 = $ex_edit_value[1];
-								if($value_name == 'customerFirstName')
-								{
-									$json_user->firstname                   = $new_value;
-								}
-								elseif($value_name == 'customerLastName')
-								{
-									$json_user->lastname                    = $new_value;
-								}
-								elseif($value_name == 'customerEmail')
-								{
-									$json_user->user_emails[0]->email       = $new_value;
-								}
-							}
-						}
-					}
-
-					// Encode
-					$json_update        = json_encode($json_user);
-
-					// Update
-					$call_update        = $this->scrap_web->webserv_call('users/.json', $json_update);
 				}
 			}
 		}

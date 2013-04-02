@@ -48,7 +48,7 @@
 
 .flexigrid div.bDiv table
 {
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 
 .flexigrid div.bDiv table.autoht
@@ -337,7 +337,7 @@
 
 .flexigrid div.bDiv table
 {
-    border-bottom: 1px solid #ccc;
+    /*border-bottom: 1px solid #ccc;*/
 }
 
 .flexigrid div.hGrip

@@ -449,7 +449,10 @@ div.newOverlay {
 										echo make_link('Change My Information', 'btnEditMyProfile').'<br>';
 
 										// Manage accounts
-										echo anchor('manage/users', 'Manage User Accounts');
+										if($this->session->userdata('sv_acc_type') == 'show_host')
+										{
+											echo anchor('manage/users', 'Manage User Accounts');
+										}
 
 										echo div_height(1);
 

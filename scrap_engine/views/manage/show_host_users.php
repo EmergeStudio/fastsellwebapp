@@ -54,6 +54,7 @@ echo open_div('middle');
 							(
 								'src'			=> $this->scrap_web->get_profile_image($user_details->id),
 								'width'			=> '40',
+								'height'	    => '40',
 								'class'			=> 'profileImage'
 							);
 							echo img($img_properties);

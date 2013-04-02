@@ -62,7 +62,7 @@ class Customers extends CI_Controller
 		$dt_body['limit']               = $limit;
 
 		// Get all the customers
-		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
+		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&includegroups=true&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
 		$dt_body['customer_view']       = 'all';
@@ -129,8 +129,7 @@ class Customers extends CI_Controller
 		$dt_body['limit']               = $limit;
 
 		// Get all the customers
-//		$url_customers                  = 'fastsellcustomergroups/.json?id='.$group_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
-		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
+		$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&includegroups=true&fastsellcustomergroup='.$group_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 		$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 		$dt_body['customers']           = $call_customers;
 		$dt_body['customer_view']       = 'all';

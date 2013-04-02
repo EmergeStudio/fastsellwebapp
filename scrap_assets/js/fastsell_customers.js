@@ -105,8 +105,12 @@ $(document).ready(function(){
 
         // Predefined headings
         $ar_fields.push({ display: 'ID', name : 'id', width : 50, sortable : false, align: 'center' });
-        $ar_fields.push({ display: 'Company Name', name : 'companyName', width : ($(window).width() - 380), sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Company Name', name : 'companyName', width : 555, sortable : false, align: 'left' });
         $ar_fields.push({ display: 'Customer Number', name : 'customerNumber', width : 200, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'First Name', name : 'firstName', width : 150, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Last Name', name : 'lastName', width : 150, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Email Address', name : 'emailAddress', width : 200, sortable : false, align: 'left' });
+        $ar_fields.push({ display: 'Groups', name : 'groups', width : '200', sortable : true, align: 'left' });
         $ar_fields.push({ display: '', name : 'remove', width : 50, sortable : false, align: 'left' });
 
         $('#flex1').flexigrid
@@ -123,6 +127,21 @@ $(document).ready(function(){
 
         $('.pcontrol input').val($page);
         $('.pcontrol span').text($total);
+
+        // Some variables
+        $window_h                   = $(window).height();
+        $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_table_h               = $('.flexigrid .bDiv table').height();
+
+        // Adjust height
+        if($bDiv_table_h > 500)
+        {
+            $('.flexigrid .bDiv').height(500);
+        }
+        else
+        {
+            $('.flexigrid .bDiv').height($bDiv_table_h);
+        }
     }
 
     // ----- ADD CUSTOMERS

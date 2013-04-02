@@ -475,7 +475,7 @@ class Ajax_handler_products extends CI_Controller
 			$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
 			// Upload the file
-			$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
+			$url_file_upload                = 'serverlocalfiles/.bodyexclude_json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
 			$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 
 			if($call_file_upload['error'] == FALSE)
@@ -528,7 +528,7 @@ class Ajax_handler_products extends CI_Controller
 				$document_file			    = str_replace(' ', '%20', $_FILES['uploadedFileProductImage']);
 
 				// Upload the file
-				$url_file_upload            = 'serverlocalfiles/.json?path=scrap_temp/temp_'.$random_folder.'_temp/'.$document_file['name'];
+				$url_file_upload            = 'serverlocalfiles/.bodyexclude_json?path=scrap_temp/temp_'.$random_folder.'_temp/'.$document_file['name'];
 				$call_file_upload           = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 
 				echo $this->config->item('scrap_web_address').'serverlocalfiles/file?path=scrap_temp/temp_'.$random_folder.'_temp/'.$document_file['name'];
@@ -587,7 +587,7 @@ class Ajax_handler_products extends CI_Controller
 						$new_directory                  = $this->scrap_web->webserv_call('serverlocalfiles/folder.json', $json_new_folder, 'put');
 
 						// Upload the file
-						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
+						$url_file_upload                = 'serverlocalfiles/.bodyexclude_json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
 						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
 					else
@@ -600,7 +600,7 @@ class Ajax_handler_products extends CI_Controller
 						}
 
 						// Upload the file
-						$url_file_upload                = 'serverlocalfiles/.json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
+						$url_file_upload                = 'serverlocalfiles/.bodyexclude_json?path=scrap_products%2F'.$product_id.'%2Fimage%2F'.$document_file['name'];
 						$call_file_upload               = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$document_file['tmp_name']), 'post', 'multipart_form', FALSE);
 					}
 

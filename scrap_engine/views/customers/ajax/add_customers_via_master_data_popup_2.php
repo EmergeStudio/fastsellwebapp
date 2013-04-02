@@ -13,6 +13,9 @@ echo open_div('inset');
 		echo form_upload($inp_data);
 		echo clear_float();
 
+		echo div_height(15);
+		echo make_button('Download Example File', 'btnDownload btnDownloadExcelFile blueButton', 'scrap_assets/files/examples/customer_upload.xlsx');
+
 	echo form_close();
 
 echo close_div();

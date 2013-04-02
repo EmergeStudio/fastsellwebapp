@@ -175,7 +175,7 @@ class Ajax_handler_users extends CI_Controller
 					}
 
 					// Upload the file
-					$url_file_upload        = 'serverlocalfiles/.json?path=scrap_people/'.$user_date_folder.'profile/image/'.$profile_image['name'];
+					$url_file_upload        = 'serverlocalfiles/.bodyexclude_json?path=scrap_people/'.$user_date_folder.'profile/image/'.$profile_image['name'];
 					$call_file_upload       = $this->scrap_web->webserv_call($url_file_upload, array('uploadedFile'	=> '@'.$profile_image['tmp_name']), 'post', 'multipart_form', FALSE);
 				}
 			}

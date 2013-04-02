@@ -364,3 +364,9 @@ div.uploader input {
     margin: 0px auto;
     width: 400px;
 }
+.sunBox.popCustomerMasterDataFile .contentCenter .popup .inset .btnDownloadExcelFile {
+    margin-left: 175px;
+    color: #fff;
+    text-shadow: none;
+    font-size: 12px;
+}

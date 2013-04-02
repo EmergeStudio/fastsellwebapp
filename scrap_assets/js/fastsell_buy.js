@@ -34,12 +34,14 @@ $(document).ready(function(){
         // Some variables
         $window_w               = $(window).width();
         $('.coolScreen .leftContent').width($window_w - 340);
+        $('.coolScreen .leftContent .productDetails').width($window_w - 640);
 
         $(window).resize(function()
         {
             // Some variables
             $window_w               = $(window).width();
             $('.coolScreen .leftContent').width($window_w - 340);
+            $('.coolScreen .leftContent .productDetails').width($window_w - 640);
         });
     }
 

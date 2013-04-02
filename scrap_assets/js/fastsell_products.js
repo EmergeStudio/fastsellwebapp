@@ -67,6 +67,21 @@ $(document).ready(function(){
 
         $('.pcontrol input').val($page);
         $('.pcontrol span').text($total);
+
+        // Some variables
+        $window_h                   = $(window).height();
+        $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_table_h               = $('.flexigrid .bDiv table').height();
+
+        // Adjust height
+        if($bDiv_table_h > 500)
+        {
+            $('.flexigrid .bDiv').height(500);
+        }
+        else
+        {
+            $('.flexigrid .bDiv').height($bDiv_table_h);
+        }
     }
 
     // ----- PAGENATE

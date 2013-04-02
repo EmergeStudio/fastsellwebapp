@@ -462,71 +462,71 @@ $(document).ready(function(){
 
                 // Post the data
                 $.post($ajax_base_path + 'add_product',
-                    {
-                        product_number			    : $product_number,
-                        product_definition			: $product_definition,
-                        product_fields_required	    : $product_fields_required,
-                        product_fields_extra	    : $product_fields_extra
-                    },
-                    function($data)
-                    {
-                        $data	= jQuery.trim($data);
-                        $data   = $data.split('::');
+                {
+                    product_number			    : $product_number,
+                    product_definition			: $product_definition,
+                    product_fields_required	    : $product_fields_required,
+                    product_fields_extra	    : $product_fields_extra
+                },
+                function($data)
+                {
+                    $data	= jQuery.trim($data);
+                    $data   = $data.split('::');
 
-                        if($data[0] == '9876')
+                    if($data[0] == '9876')
+                    {
+                        $.scrap_logout();
+                    }
+                    else if($data[0] == 'wassuccessfullycreated')
+                    {
+                        if($('.popAddProduct input[name="uploadedFileProductImage"]').val() != '')
                         {
-                            $.scrap_logout();
-                        }
-                        else if($data[0] == 'wassuccessfullycreated')
-                        {
-                            if($('.popAddProduct input[name="uploadedFileProductImage"]').val() != '')
+                            $.scrap_note_loader('Uploading the product image (This may take a few moments depending on the image size)');
+
+                            $('.popAddProduct input[name="hdProductId"]').val($data[1]);
+                            $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                            $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image' });
+                            $('.popAddProduct .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                            $('.popAddProduct .frmProductImage').attr('target', $iframe_name);
+                            $('.popAddProduct .frmProductImage').submit();
+
+                            $('iframe[name="'+ $iframe_name +'"]').load(function()
                             {
-                                $.scrap_note_loader('Uploading the product image (This may take a few moments depending on the image size)');
+                                $data		= jQuery.trim($('.popAddProduct .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
 
-                                $('.popAddProduct input[name="hdProductId"]').val($data[1]);
-                                $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
-                                $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image' });
-                                $('.popAddProduct .popup').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
-                                $('.popAddProduct .frmProductImage').attr('target', $iframe_name);
-                                $('.popAddProduct .frmProductImage').submit();
-
-                                $('iframe[name="'+ $iframe_name +'"]').load(function()
+                                // Display error
+                                if($data == 'wassuccessfullyuploaded')
                                 {
-                                    $data		= jQuery.trim($('.popAddProduct .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                                    $('.popAddProduct input, .popAddProduct textarea').val('');
 
-                                    // Display error
-                                    if($data == 'wassuccessfullyuploaded')
-                                    {
-                                        $('.popAddProduct input, .popAddProduct textarea').val('');
+                                    $fc_refresh_products_list();
 
-                                        $fc_refresh_products_list();
-
-                                        // Close the popup
-                                        $.scrap_note_time('The new product has been added', 4000, 'tick');
-                                        $('body').sunBox.close_popup('popAddProduct');
-                                        $('.blockProductImage .imagePreview').addClass('icon-camera').html('');
-                                        $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image_temp' });
-                                    }
-                                });
-                            }
-                            else
-                            {
-                                $('.popAddProduct input, .popAddProduct textarea').val('');
-
-                                $fc_refresh_products_list();
-
-                                // Close the popup
-                                $.scrap_note_time('The new product has been added', 4000, 'tick');
-                                $('body').sunBox.close_popup('popAddProduct');
-                                $('.blockProductImage .imagePreview').addClass('icon-camera').html('');
-                                $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image_temp' });
-                            }
+                                    // Close the popup
+                                    $.scrap_note_time('The new product has been added', 4000, 'tick');
+                                    $('body').sunBox.close_popup('popAddProduct');
+                                    $('.blockProductImage .imagePreview').addClass('icon-camera').html('');
+                                    $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image_temp' });
+                                }
+                            });
                         }
                         else
                         {
-                            $.scrap_note_time($data[0], 4000, 'cross');
+                            $('.popAddProduct input, .popAddProduct textarea').val('');
+
+                            $fc_refresh_products_list();
+
+                            // Close the popup
+                            $.scrap_note_time('The new product has been added', 4000, 'tick');
+                            $('body').sunBox.close_popup('popAddProduct');
+                            $('.blockProductImage .imagePreview').addClass('icon-camera').html('');
+                            $('.popAddProduct .frmProductImage').attr({ 'action' : $base_path + 'ajax_handler_products/add_product_image_temp' });
                         }
-                    });
+                    }
+                    else
+                    {
+                        $.scrap_note_time($data[0], 4000, 'cross');
+                    }
+                });
             }
         });
 
@@ -542,6 +542,7 @@ $(document).ready(function(){
     function $fc_refresh_products_list()
     {
         location.reload(true);
+        $fc_execute_page_height();
     }
 
     // ---------- EXECUTE PAGE HEIGHT
@@ -549,9 +550,18 @@ $(document).ready(function(){
     {
         // Some variables
         $window_h                   = $(window).height();
+        $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_table_h               = $('.flexigrid .bDiv table').height();
 
         // Adjust height
-        $('.flexigrid .bDiv').height($window_h - 330);
+        if($bDiv_table_h > $bDiv_h)
+        {
+            $('.flexigrid .bDiv').height($window_h - 330);
+        }
+        else
+        {
+            $('.flexigrid .bDiv').height($bDiv_table_h);
+        }
     }
 
     // ---------- EXECUTE FLEXIGRID

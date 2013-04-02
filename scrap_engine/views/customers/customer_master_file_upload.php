@@ -81,8 +81,8 @@ echo open_div('middle').open_div('whiteBack coolScreen');
             echo form_upload($inp_data);
             echo clear_float();
 
-//			echo div_height(30).make_button('Download Example Excel File', 'btnDownload', 'scrap_assets/files/examples/customer_upload.xlsx', 'left');
-//			echo clear_float();
+			echo div_height(10).make_button('Download Example File', 'btnDownload btnDownloadExcelFile blueButton', 'scrap_assets/files/examples/customer_upload.xlsx', 'left');
+			echo clear_float();
 
         // Close the form
         echo form_close();

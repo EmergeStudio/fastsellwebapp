@@ -41,6 +41,7 @@ if($products['error'] == FALSE)
 			(
 				'src'			    => $src,
 				'width'		        => '50',
+				'height'            => '50',
 				'class'			    => 'profileImage'
 			);
 

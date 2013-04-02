@@ -299,6 +299,13 @@
     cursor: pointer;
     color: #d61818;
 }
+.pageProducts .messageNoProducts {
+    display: block;
+    margin: 0px auto;
+    width: 840px;
+    height: 200px;
+    background-image: url(../../images/messages/no_products.png);
+}
 
 
 
