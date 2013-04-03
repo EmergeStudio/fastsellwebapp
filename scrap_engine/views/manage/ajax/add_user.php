@@ -148,9 +148,9 @@ echo open_div('leftColumn');
 
 		$img_properties			= array
 		(
-			'src'			=> $this->scrap_web->get_profile_image(0),
-			'width'			=> '120',
-			'class'			=> 'profileImage'
+			'src'			    => $this->scrap_web->get_profile_image(1000000000),
+			'width'			    => '120',
+			'class'			    => 'profileImage'
 		);
 		echo img($img_properties);
 

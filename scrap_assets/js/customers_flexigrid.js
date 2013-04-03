@@ -11,6 +11,7 @@ $(document).ready(function(){
 	var $ajax_html_path 		= $ajax_base_path + 'html_view/';
     var $crt_page_num           = $('input[name="scrap_pageNo"]').val();
     var $page_max               = $('input[name="scrap_pageMax"]').val();
+    var $group_only             = 'false';
 
 
 // ------------------------------------------------------------------------------EXECUTE
@@ -43,8 +44,121 @@ $(document).ready(function(){
 
     $fc_resend_invitation();
 
+    $fc_search_customers();
+
 
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- SEARCH CUSTOMERS
+    function $fc_search_customers()
+    {
+        var delay = (function()
+        {
+            var timer = 0;
+            return function(callback, ms)
+            {
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $('.popAddGroup input[name="inpSearchCustomerText"]').live('keyup', function()
+        {
+            delay(function()
+                {
+                    $input		= $('.popAddGroup input[name="inpSearchCustomerText"]').val().toLowerCase();
+
+                    if($input.length > 2)
+                    {
+                        // Show all
+                        $('.popAddGroup .customerCheckContain').show();
+
+                        // Hide all that don't check out
+                        $('.popAddGroup .customerCheckContain').each(function()
+                        {
+                            $emp_name	= $(this).find('.customerName').text().toLowerCase();
+
+                            if($emp_name.match($input) == null)
+                            {
+                                $(this).hide();
+                            }
+                        });
+
+                        $('body').sunBox.adjust_popup_height('popAddGroup');
+                    }
+                    else
+                    {
+                        // Hide all that don't check out
+                        $loop_cnt_customer              = 0;
+                        $('.popAddGroup .customerCheckContain').hide();
+                        $('.popAddGroup .customerCheckContain').each(function()
+                        {
+                            $loop_cnt_customer++;
+                            if($loop_cnt_customer <= 50)
+                            {
+                                $(this).show();
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        });
+                        $('body').sunBox.adjust_popup_height('popAddGroup');
+                    }
+                },
+                500
+            );
+        });
+
+        $('.popEditGroup input[name="inpSearchCustomerText"]').live('keyup', function()
+        {
+            delay(function()
+                {
+                    $input		= $('.popEditGroup input[name="inpSearchCustomerText"]').val().toLowerCase();
+
+                    if($input.length > 2)
+                    {
+                        // Show all
+                        $('.popEditGroup .customerCheckContain').show();
+
+                        // Hide all that don't check out
+                        $('.popEditGroup .customerCheckContain').each(function()
+                        {
+                            $emp_name	= $(this).find('.customerName').text().toLowerCase();
+
+                            if($emp_name.match($input) == null)
+                            {
+                                $(this).hide();
+                            }
+                        });
+
+                        $('body').sunBox.adjust_popup_height('popEditGroup');
+                    }
+                    else
+                    {
+                        // Show all
+                        // Hide all that don't check out
+                        $loop_cnt_customer              = 0;
+                        $('.popEditGroup .customerCheckContain').hide();
+                        $('.popEditGroup .customerCheckContain').each(function()
+                        {
+                            $loop_cnt_customer++;
+                            if($loop_cnt_customer <= 50)
+                            {
+                                $(this).show();
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        });
+                        $('body').sunBox.adjust_popup_height('popEditGroup');
+                    }
+                },
+                500
+            );
+        });
+    }
 
     // ----- RESEND INVITATION
     function $fc_resend_invitation()
@@ -185,12 +299,52 @@ $(document).ready(function(){
             // Some variables
             $new_value              = $('.scrapEdit input[name="inpScrapEdit"]').val();
             $edits                  = '';
+            $new_groups             = '';
+            $existing_groups        = '';
+
+            // Groups only
+            if($('.editIt.eHighLight:last').hasClass('groupOnly'))
+            {
+                $group_only         = 'true';
+            }
 
             // Get all the edit details
             $('.editIt.eHighLight').each(function()
             {
                 $edits              += '['+ $(this).attr('id') +']';
             });
+
+            // Check the groups
+            if($group_only == 'true')
+            {
+                $ex_groups          = $new_value.split(',');
+
+                $.each($ex_groups, function($index, $chunk)
+                {
+                    $group_name     = jQuery.trim($chunk).toLowerCase();
+                    $group_check    = false;
+
+                    $('.groupContainer').each(function()
+                    {
+                        $group_name_check	    = $(this).find('a').text().toLowerCase();
+
+                        if($group_name_check.match($group_name) != null)
+                        {
+                            $existing_groups    += '['+ $(this).find('.hdGroupId').text() +']';
+                            $group_check        = true;
+                            return false;
+                        }
+                    });
+
+                    if($group_check == false)
+                    {
+                        $new_groups             += '['+ jQuery.trim($chunk) +']';
+                    }
+                });
+
+//                console.log('E -- ' + $existing_groups + ' -- ');
+//                console.log('N -- ' + $new_groups + ' -- ');
+            }
 
             // Edit the DOM
             $('.scrapEdit').fadeOut('fast');
@@ -205,7 +359,10 @@ $(document).ready(function(){
             $.post($ajax_base_path + 'save_customer_changes',
             {
                 new_value	        : $new_value,
-                edits               : $edits
+                edits               : $edits,
+                group_only          : $group_only,
+                new_groups          : $new_groups,
+                existing_groups     : $existing_groups
             },
             function($data)
             {
@@ -251,7 +408,9 @@ $(document).ready(function(){
         // Some variables
         $window_h                   = $(window).height();
         $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_w                     = $('.flexigrid .bDiv').width();
         $bDiv_table_h               = $('.flexigrid .bDiv table').height();
+        $bDiv_table_w               = $('.flexigrid .bDiv table').width();
 
         // Adjust height
         if($bDiv_table_h > $bDiv_h)
@@ -260,7 +419,14 @@ $(document).ready(function(){
         }
         else
         {
-            $('.flexigrid .bDiv').height($bDiv_table_h);
+            if(($.browser.mozilla == true) && ($bDiv_table_w > $bDiv_w))
+            {
+                $('.flexigrid .bDiv').height($bDiv_table_h + 15);
+            }
+            else
+            {
+                $('.flexigrid .bDiv').height($bDiv_table_h);
+            }
         }
     }
 

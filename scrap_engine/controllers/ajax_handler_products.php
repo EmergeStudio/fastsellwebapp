@@ -1295,7 +1295,7 @@ class Ajax_handler_products extends CI_Controller
 
 			// Get the definitions
 			$url_definitions                = 'fastsellitemdefinitions/.jsons?fastselleventid='.$fastsell_id;
-			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, FALSE);
+			$call_definitions               = $this->scrap_web->webserv_call($url_definitions, FALSE, 'get', FALSE, TRUE);
 			$dt_body['item_defs']           = $call_definitions;
 
 			// Get the view

@@ -47,15 +47,15 @@
 }
 .shifterPane_1 div.selector {
     float: left;
-    width: 73px;
+    width: 61px;
     margin-right: 10px;
     margin-left: -3px;
 }
 .shifterPane_1 div.selector select {
-    width: 85px;
+    width: 73px;
 }
 .shifterPane_1 div.selector span {
-    width: 50px;
+    width: 38px;
 }
 .shifterPane_1 .timeLabel label {
     margin-top: 5px;

@@ -77,7 +77,7 @@ if($customers['error'] == FALSE)
 				echo '<td id="'.$cust_user_id.'_customerEmail_user" class="'.$active_class.'">'.$cust_user_email.'</td>';
 
 				// Customer group
-				echo '<td id="'.$ctsh_id.'_customerGroup_groups" class="editIt">';
+				echo '<td id="'.$ctsh_id.'_customerGroup_groups" class="editIt groupOnly">';
 
 					$groups                 = '';
 
@@ -85,10 +85,10 @@ if($customers['error'] == FALSE)
 					{
 						foreach($customer_details->fastsell_customer_groups as $fs_group)
 						{
-							$groups             .= $fs_group->name.',';
+							$groups             .= $fs_group->name.', ';
 						}
 					}
-					echo $groups;
+					echo $this->scrap_string->remove_lc(trim($groups));
 
 				echo '</td>';
 

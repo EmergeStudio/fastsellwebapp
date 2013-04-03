@@ -38,6 +38,117 @@ $(document).ready(function(){
 
 // ------------------------------------------------------------------------------FUNCTIONS
 
+    // ---------- SEARCH CUSTOMERS
+    function $fc_search_customers()
+    {
+        var delay = (function()
+        {
+            var timer = 0;
+            return function(callback, ms)
+            {
+                clearTimeout (timer);
+                timer = setTimeout(callback, ms);
+            };
+        })();
+
+        $('.popAddGroup input[name="inpSearchCustomerText"]').live('keyup', function()
+        {
+            delay(function()
+                {
+                    $input		= $('.popAddGroup input[name="inpSearchCustomerText"]').val().toLowerCase();
+
+                    if($input.length > 2)
+                    {
+                        // Show all
+                        $('.popAddGroup .customerCheckContain').show();
+
+                        // Hide all that don't check out
+                        $('.popAddGroup .customerCheckContain').each(function()
+                        {
+                            $emp_name	= $(this).find('.customerName').text().toLowerCase();
+
+                            if($emp_name.match($input) == null)
+                            {
+                                $(this).hide();
+                            }
+                        });
+
+                        $('body').sunBox.adjust_popup_height('popAddGroup');
+                    }
+                    else
+                    {
+                        // Hide all that don't check out
+                        $loop_cnt_customer              = 0;
+                        $('.popAddGroup .customerCheckContain').hide();
+                        $('.popAddGroup .customerCheckContain').each(function()
+                        {
+                            $loop_cnt_customer++;
+                            if($loop_cnt_customer <= 50)
+                            {
+                                $(this).show();
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        });
+                        $('body').sunBox.adjust_popup_height('popAddGroup');
+                    }
+                },
+                500
+            );
+        });
+
+        $('.popEditGroup input[name="inpSearchCustomerText"]').live('keyup', function()
+        {
+            delay(function()
+                {
+                    $input		= $('.popEditGroup input[name="inpSearchCustomerText"]').val().toLowerCase();
+
+                    if($input.length > 2)
+                    {
+                        // Show all
+                        $('.popEditGroup .customerCheckContain').show();
+
+                        // Hide all that don't check out
+                        $('.popEditGroup .customerCheckContain').each(function()
+                        {
+                            $emp_name	= $(this).find('.customerName').text().toLowerCase();
+
+                            if($emp_name.match($input) == null)
+                            {
+                                $(this).hide();
+                            }
+                        });
+
+                        $('body').sunBox.adjust_popup_height('popEditGroup');
+                    }
+                    else
+                    {
+                        // Show all
+                        // Hide all that don't check out
+                        $loop_cnt_customer              = 0;
+                        $('.popEditGroup .customerCheckContain').hide();
+                        $('.popEditGroup .customerCheckContain').each(function()
+                        {
+                            $loop_cnt_customer++;
+                            if($loop_cnt_customer <= 50)
+                            {
+                                $(this).show();
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        });
+                        $('body').sunBox.adjust_popup_height('popEditGroup');
+                    }
+                },
+                500
+            );
+        });
+    }
+
     // ----- PAGENATE
     function $fc_pagenate()
     {

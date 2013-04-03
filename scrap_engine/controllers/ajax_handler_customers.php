@@ -964,10 +964,15 @@ class Ajax_handler_customers extends CI_Controller
 			// Some variables
 			$new_value                      = $this->input->post('new_value');
 			$edits                          = $this->input->post('edits');
+			$group_only                     = $this->input->post('group_only');
+			$new_groups                     = $this->input->post('new_groups');
+			$existing_groups                = $this->input->post('existing_groups');
 			$ex_edits                       = explode('][', $this->scrap_string->remove_flc($edits));
+			$show_host_id                   = $this->scrap_web->get_show_host_id();
 			$ar_ctsh_ids                    = array();
 			$ar_user_ids                    = array();
 			$ar_data                        = array();
+			$ar_groups                      = array();
 
 			// Update the customers to show host id array
 			foreach($ex_edits as $edit_value)
@@ -979,6 +984,10 @@ class Ajax_handler_customers extends CI_Controller
 				{
 					array_push($ar_ctsh_ids, $ctsh_id_value);
 				}
+				elseif($ex_edit_value[2] == 'groups')
+				{
+					array_push($ar_ctsh_ids, $ctsh_id_value);
+				}
 				elseif($ex_edit_value[2] == 'user')
 				{
 					array_push($ar_user_ids, $ctsh_id_value);
@@ -986,90 +995,209 @@ class Ajax_handler_customers extends CI_Controller
 			}
 			$ar_ctsh_ids                    = array_unique($ar_ctsh_ids);
 
-			// Get and edit each customer
-			foreach($ar_ctsh_ids as $ctsh_id)
+			if($group_only == 'false')
 			{
-				// Get info
-				$url_customer                   = 'customertoshowhosts/.json?id='.$ctsh_id;
-				$call_customer                  = $this->scrap_web->webserv_call($url_customer);
-
-				if($call_customer['error'] == FALSE)
+				// Get and edit each customer
+				foreach($ar_ctsh_ids as $ctsh_id)
 				{
-					$json_customer                      = $call_customer['result'];
+					// Get info
+					$url_customer                   = 'customertoshowhosts/.json?id='.$ctsh_id;
+					$call_customer                  = $this->scrap_web->webserv_call($url_customer);
 
-					foreach($ex_edits as $edit_value)
+					if($call_customer['error'] == FALSE)
 					{
-						$ex_edit_value              = explode('_', $edit_value);
+						$json_customer                      = $call_customer['result'];
 
-						// Edit the data
-						if($ex_edit_value[2] == 'customer')
+						foreach($ex_edits as $edit_value)
 						{
-							if($ex_edit_value[0] == $ctsh_id)
+							$ex_edit_value              = explode('_', $edit_value);
+
+							// Edit the data
+							if($ex_edit_value[2] == 'customer')
 							{
-								$value_name                 = $ex_edit_value[1];
-								if($value_name == 'customerNumber')
+								if($ex_edit_value[0] == $ctsh_id)
 								{
-									$json_customer->customer_number     = $new_value;
-								}
-								elseif($value_name == 'customerName')
-								{
-									$json_customer->customer_name     = $new_value;
+									$value_name                 = $ex_edit_value[1];
+									if($value_name == 'customerNumber')
+									{
+										$json_customer->customer_number     = $new_value;
+									}
+									elseif($value_name == 'customerName')
+									{
+										$json_customer->customer_name     = $new_value;
+									}
 								}
 							}
 						}
+
+						// Encode
+						$json_update                        = json_encode($json_customer);
+
+						// Do the update
+						$update                             = $this->scrap_web->webserv_call('customertoshowhosts/.json', $json_update, 'post');
 					}
+				}
 
-					// Encode
-					$json_update                        = json_encode($json_customer);
+				// Update the users
+				foreach($ar_user_ids as $ctsh_id)
+				{
+					// Get user info
+					$url_user                   = 'users/.json?id='.$ctsh_id;
+					$call_user                  = $this->scrap_web->webserv_call($url_user);
 
-					// Do the update
-					$update                             = $this->scrap_web->webserv_call('customertoshowhosts/.json', $json_update, 'post');
+					if($call_user['error'] == FALSE)
+					{
+						// Get the JSON
+						$json_user          = $call_user['result'];
+
+						foreach($ex_edits as $edit_value)
+						{
+							$ex_edit_value              = explode('_', $edit_value);
+
+							// Edit the data
+							if($ex_edit_value[2] == 'user')
+							{
+								if($ex_edit_value[0] == $ctsh_id)
+								{
+									$value_name                 = $ex_edit_value[1];
+									if($value_name == 'customerFirstName')
+									{
+										$json_user->firstname                   = $new_value;
+									}
+									elseif($value_name == 'customerLastName')
+									{
+										$json_user->lastname                    = $new_value;
+									}
+									elseif($value_name == 'customerEmail')
+									{
+										$json_user->user_emails[0]->email       = $new_value;
+									}
+								}
+							}
+						}
+
+						// Encode
+						$json_update        = json_encode($json_user);
+
+						// Update
+						$call_update        = $this->scrap_web->webserv_call('users/.json', $json_update);
+					}
 				}
 			}
-
-			// Update the users
-			foreach($ar_user_ids as $ctsh_id)
+			else
 			{
-				// Get user info
-				$url_user                   = 'users/.json?id='.$ctsh_id;
-				$call_user                  = $this->scrap_web->webserv_call($url_user);
-
-				if($call_user['error'] == FALSE)
+				// Create the new groups
+				$ex_new_groups              = explode('][', $this->scrap_string->remove_flc($new_groups));
+				foreach($ex_new_groups as $new_group_name)
 				{
-					// Get the JSON
-					$json_user          = $call_user['result'];
+					// Sample group
+					$url_sample_group               = 'fastsellcustomergroups/sample.json';
+					$call_sample_group              = $this->scrap_web->webserv_call($url_sample_group);
 
-					foreach($ex_edits as $edit_value)
+					if($call_sample_group['error'] == FALSE)
 					{
-						$ex_edit_value              = explode('_', $edit_value);
+						$json_sample_group          = $call_sample_group['result'];
 
-						// Edit the data
-						if($ex_edit_value[2] == 'user')
+						$json_sample_group->name                            = $new_group_name;
+						$json_sample_group->show_host_organization->id      = $show_host_id;
+						$json_sample_group->customer_organizations          = null;
+
+						// Add the customer ids to the group
+						$ar_customer_ids                = array();
+						foreach($ar_ctsh_ids as $ctsh_id)
 						{
-							if($ex_edit_value[0] == $ctsh_id)
-							{
-								$value_name                 = $ex_edit_value[1];
-								if($value_name == 'customerFirstName')
-								{
-									$json_user->firstname                   = $new_value;
-								}
-								elseif($value_name == 'customerLastName')
-								{
-									$json_user->lastname                    = $new_value;
-								}
-								elseif($value_name == 'customerEmail')
-								{
-									$json_user->user_emails[0]->email       = $new_value;
-								}
-							}
+							array_push($ar_customer_ids, array('id' => $ctsh_id));
+						}
+						$json_sample_group->customer_organizations          = $ar_customer_ids;
+
+						// Recode
+						$new_json               = json_encode($json_sample_group);
+
+						// Create the group
+						$new_group              = $this->scrap_web->webserv_call('fastsellcustomergroups/.json', $new_json, 'put');
+
+						if($new_group['error'] == FALSE)
+						{
+							// JSON
+							$json_new_group     = $new_group['result'];
+
+							// Add to array
+							array_push($ar_groups, $json_new_group->id);
 						}
 					}
+				}
 
-					// Encode
-					$json_update        = json_encode($json_user);
+				// Existing groups
+				$ex_existing_groups             = explode('][', $this->scrap_string->remove_flc($existing_groups));
 
-					// Update
-					$call_update        = $this->scrap_web->webserv_call('users/.json', $json_update);
+				foreach($ex_existing_groups as $existing_group_id)
+				{
+					// Add to array
+					array_push($ar_groups, $existing_group_id);
+
+					// Sample group
+					$url_group                      = 'fastsellcustomergroups/.json?id='.$existing_group_id;
+					$call_group                     = $this->scrap_web->webserv_call($url_group);
+
+					if($call_group['error'] == FALSE)
+					{
+						$json_group                 = $call_group['result'];
+
+						// Add the customer ids to the group
+						$ar_customer_ids                = array();
+						foreach($ar_ctsh_ids as $ctsh_id)
+						{
+							array_push($ar_customer_ids, array('id' => $ctsh_id));
+						}
+						$json_group->customer_organizations         = $ar_customer_ids;
+
+						// Recode
+						$update_json                                = json_encode($json_group);
+//						echo $update_json;
+
+						// Update the group
+						$update_group                       = $this->scrap_web->webserv_call('fastsellcustomergroups/.json', $update_json, 'post');
+					}
+				}
+
+				// Get all the groups
+				$url_groups                     = 'fastsellcustomergroups/.jsons?showhostid='.$show_host_id;
+				$call_groups                    = $this->scrap_web->webserv_call($url_groups);
+				$ar_delete_groups               = array();
+
+				// Delete groups id
+				if($call_groups['error'] == FALSE)
+				{
+					$json_groups                = $call_groups['result'];
+
+					foreach($json_groups->fastsell_customer_groups as $customer_group)
+					{
+						if(!in_array($customer_group->id, $ar_groups))
+						{
+							array_push($ar_delete_groups, $customer_group->id);
+						}
+					}
+				}
+
+				// Delete customer from groups
+				$ar_customer_ids                            = array();
+				foreach($ar_ctsh_ids as $ctsh_id)
+				{
+					array_push($ar_customer_ids, array('id' => $ctsh_id));
+				}
+
+				$ar_delete_from_group                       = array('customer_organizations' => $ar_customer_ids);
+				$json_customers                             = json_encode($ar_delete_from_group);
+
+				foreach($ar_delete_groups as $delete_group)
+				{
+					$call_delete_groups                     = $this->scrap_web->webserv_call('fastsellcustomergroups/customers/.jsons?fastsellcustomergroupid='.$delete_group, $json_customers, 'post', FALSE, TRUE);
+
+					if($call_delete_groups['error'] == TRUE)
+					{
+						$json				                = $call_delete_groups['result'];
+						echo $call_delete_groups['result'];
+					}
 				}
 			}
 		}

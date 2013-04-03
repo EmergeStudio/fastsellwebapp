@@ -212,7 +212,7 @@ class Products extends CI_Controller
 		$json_definition            = $call_definition['result'];
 
 		// Get the excel file
-		$url_def_download           = 'fastsellitemdefinitions/sample.xls?id='.$definition_id;
+		$url_def_download           = 'catalogitemdefinitions/sample.xls?id='.$definition_id;
 		$call_def_download          = $this->scrap_web->byte_call($url_def_download, FALSE, 'get', FALSE, FALSE);
 
 		$name                       = str_replace(' ', '_', $json_definition->name).'.xls';

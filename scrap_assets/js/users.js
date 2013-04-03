@@ -35,9 +35,74 @@ $(document).ready(function(){
     $fc_add_a_user();
 
     $fc_delete_user();
+
+    $fc_edit_profile_image();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- EDIT A PROFILE IMAGE
+    function $fc_edit_profile_image()
+    {
+        $('.editIt_image').mouseup(function()
+        {
+            if(($("input[type=checkbox].switch.chkboxEdit").is(':checked')) && ($('.scrapEdit2').is(':hidden')))
+            {
+                // Some variables
+                $crt_cell           = $(this);
+                //                $(this).addClass('eHighLight');
+
+                // Show the DOM
+                $('.scrapEdit2').fadeIn('fast').css({ left : ($mouse_x - 106), top : $mouse_y });
+            }
+        });
+
+        // Close edit
+        $('.scrapEdit2 .btnCancel').click(function()
+        {
+            $('.scrapEdit2').fadeOut('fast');
+        });
+        $('.bDiv').scroll(function()
+        {
+            $('.scrapEdit2').fadeOut('fast');
+        });
+
+        // Save edit
+        $('.scrapEdit2 .btnSave').click(function()
+        {
+            $('.scrapEdit2').fadeOut('fast');
+
+            if($.scrap_is_image($('.scrapEdit2 input[name="inpUploadImage"]').val()) == true)
+            {
+                // Some variables
+                $.scrap_note_loader('Uploading the new user image');
+                $parent         = $crt_cell.parents('tr');
+                $product_id     = $parent.find('td:first div').text();
+                $('.scrapEdit2 input[name="hdUserId"]').val($product_id);
+
+                $iframe_name	= 'attachIframe_'+ $.scrap_random_string();
+                $('.scrapEdit2').append('<iframe name="'+ $iframe_name +'" class="displayNone '+ $iframe_name +'" width="5" height="5"></iframe>');
+                $('.scrapEdit2 .frmUploadUserImage2').attr('target', $iframe_name);
+                $('.scrapEdit2 .frmUploadUserImage2').submit();
+
+                $('iframe[name="'+ $iframe_name +'"]').load(function()
+                {
+                    $data		= jQuery.trim($('.scrapEdit2 iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
+                    $parent.find('img').attr({ 'src' : $data });
+                    $.scrap_note_time('The user image has been uploaded', 4000, 'tick');
+                });
+            }
+            else
+            {
+                $.scrap_message('Only image files are accepted for the product picture');
+                $('.sunMessage .returnFalse').click(function()
+                {
+                    $('.sunMessage').remove();
+                    $.scrap_remove_overlay();
+                });
+            }
+        });
+    }
 
     // ---------- DELETE A USER
     function $fc_delete_user()
@@ -71,7 +136,9 @@ $(document).ready(function(){
         // Some variables
         $window_h                   = $(window).height();
         $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_w                     = $('.flexigrid .bDiv').width();
         $bDiv_table_h               = $('.flexigrid .bDiv table').height();
+        $bDiv_table_w               = $('.flexigrid .bDiv table').width();
 
         // Adjust height
         if($bDiv_table_h > $bDiv_h)
@@ -80,7 +147,14 @@ $(document).ready(function(){
         }
         else
         {
-            $('.flexigrid .bDiv').height($bDiv_table_h);
+            if(($.browser.mozilla == true) && ($bDiv_table_w > $bDiv_w))
+            {
+                $('.flexigrid .bDiv').height($bDiv_table_h + 15);
+            }
+            else
+            {
+                $('.flexigrid .bDiv').height($bDiv_table_h);
+            }
         }
     }
 

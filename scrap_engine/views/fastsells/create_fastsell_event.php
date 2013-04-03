@@ -67,8 +67,9 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo open_div('time');
 
-				echo $this->scrap_string->hours_select('startHoursSelect');
+				echo $this->scrap_string->hours_select_short('startHoursSelect');
 				echo $this->scrap_string->minutes_select('startMinutesSelect');
+				echo $this->scrap_string->ampm_select('startAMPM');
 				echo clear_float();
 
 			echo close_div();
@@ -84,8 +85,9 @@ echo open_div('middle').open_div('whiteBack coolScreen');
 
 			echo open_div('time');
 
-				echo $this->scrap_string->hours_select('endHoursSelect');
+				echo $this->scrap_string->hours_select_short('endHoursSelect');
 				echo $this->scrap_string->minutes_select('endMinutesSelect');
+				echo $this->scrap_string->ampm_select('endAMPM');
 				echo clear_float();
 
 			echo close_div();

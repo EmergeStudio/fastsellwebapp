@@ -23,20 +23,35 @@
 .middle .groupContainer a {
     font-size: 13px;
 }
-.middle .groupContainer .btnDeleteGroup, .middle .groupContainer .btnEditGroup {
-    font-size: 18px;
+.scrapButton2.btnDownload.blueButton .btnIcon {
+    background-image: url(../../images/icons/small_download_2.png);
 }
-.middle .groupContainer .btnEditGroup {
-    font-size: 14px;
-    margin-top: 2px;
-    margin-right: 6px;
+.pageCustomers .middle .leftContentSmall .whiteBack a {
+    margin-left: 50px;
+    padding: 8px 22px 8px 5px;
+    border-top: none;
 }
-.middle .groupContainer .btnDeleteGroup:hover , .middle .groupContainer .btnEditGroup:hover {
+.pageCustomers .middle .leftContentSmall .whiteBack a.firstLink {
+    margin-left: 0px;
+    padding: 8px 22px 8px 55px;
+}
+.pageCustomers .middle .leftContentSmall .whiteBack .groupContainer {
+    border-top: 1px solid #ebebeb;
+}
+.pageCustomers .middle .leftContentSmall .whiteBack .groupContainer.active {
+    border-top: none;
+}
+.pageCustomers .middle .leftContentSmall .whiteBack .btnEditGroup, .pageCustomers .middle .leftContentSmall .whiteBack .btnDeleteGroup {
+    float: left;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+.pageCustomers .middle .leftContentSmall .whiteBack .btnEditGroup:hover, .pageCustomers .middle .leftContentSmall .whiteBack .btnDeleteGroup:hover {
     cursor: pointer;
     color: #d61818;
 }
-.scrapButton2.btnDownload.blueButton .btnIcon {
-    background-image: url(../../images/icons/small_download_2.png);
+.pageCustomers .middle .leftContentSmall .whiteBack .btnDeleteGroup {
+    margin-left: 15px;
 }
 
 

@@ -551,7 +551,9 @@ $(document).ready(function(){
         // Some variables
         $window_h                   = $(window).height();
         $bDiv_h                     = $('.flexigrid .bDiv').height();
+        $bDiv_w                     = $('.flexigrid .bDiv').width();
         $bDiv_table_h               = $('.flexigrid .bDiv table').height();
+        $bDiv_table_w               = $('.flexigrid .bDiv table').width();
 
         // Adjust height
         if($bDiv_table_h > $bDiv_h)
@@ -560,7 +562,14 @@ $(document).ready(function(){
         }
         else
         {
-            $('.flexigrid .bDiv').height($bDiv_table_h);
+            if(($.browser.mozilla == true) && ($bDiv_table_w > $bDiv_w))
+            {
+                $('.flexigrid .bDiv').height($bDiv_table_h + 15);
+            }
+            else
+            {
+                $('.flexigrid .bDiv').height($bDiv_table_h);
+            }
         }
     }
 

@@ -1,6 +1,39 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 
 <?php
+// Edit container 2
+echo open_div('scrapEdit2');
+
+	// Edit arrow
+	echo open_div('arrowContainer');
+
+		echo full_div('', 'arrow');
+
+	echo close_div();
+
+	echo open_div('editContainer');
+
+		echo form_open_multipart('ajax_handler_users/upload_user_image', 'class="frmUploadUserImage2"');
+
+		$upload_inp	 	= array
+		(
+			'name'  	=> 'inpUploadImage',
+			'class'		=> 'inpUploadImage'
+		);
+		echo form_upload($upload_inp);
+		echo form_hidden('hdUserId', 0);
+
+		echo make_button('Save', 'btnSave blueButton', '', 'left');
+		echo make_button('Cancel', 'btnCancel', '', 'left');
+
+		echo form_close();
+
+		echo clear_float();
+
+	echo close_div();
+
+echo close_div();
+
 // Open middle div
 echo open_div('middle');
 
@@ -48,7 +81,7 @@ echo open_div('middle');
 						echo '</td>';
 
 						// User image
-						echo '<td>';
+						echo '<td class="editIt_image">';
 
 							$img_properties			= array
 							(

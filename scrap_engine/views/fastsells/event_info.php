@@ -75,8 +75,9 @@ echo form_open_multipart('fastsells/save_event_changes', 'class="frmSaveEventCha
 
 				echo open_div('time');
 
-					echo $this->scrap_string->hours_select('startHoursSelect', $this->scrap_string->make_hours($fastsell_info->event_start_date));
+					echo $this->scrap_string->hours_select_short('startHoursSelect', $this->scrap_string->make_hours_ampm($fastsell_info->event_start_date));
 					echo $this->scrap_string->minutes_select('startMinutesSelect', $this->scrap_string->make_minutes($fastsell_info->event_start_date));
+					echo $this->scrap_string->ampm_select('startAMPM', $this->scrap_string->make_ampm($fastsell_info->event_start_date));
 					echo clear_float();
 
 				echo close_div();
@@ -95,8 +96,9 @@ echo form_open_multipart('fastsells/save_event_changes', 'class="frmSaveEventCha
 
 				echo open_div('time');
 
-					echo $this->scrap_string->hours_select('endHoursSelect', $this->scrap_string->make_hours($fastsell_info->event_end_date));
+					echo $this->scrap_string->hours_select_short('endHoursSelect', $this->scrap_string->make_hours_ampm($fastsell_info->event_end_date));
 					echo $this->scrap_string->minutes_select('endMinutesSelect', $this->scrap_string->make_minutes($fastsell_info->event_end_date));
+					echo $this->scrap_string->ampm_select('endAMPM', $this->scrap_string->make_ampm($fastsell_info->event_end_date));
 					echo clear_float();
 
 				echo close_div();

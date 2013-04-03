@@ -186,7 +186,6 @@ $(document).ready(function(){
             },
             function($data)
             {
-                //console.log($data);
                 $.scrap_note_time('Customer has been added to this FastSell', 4000, 'tick');
                 $fc_refresh_customer_list();
             });
@@ -591,7 +590,6 @@ $(document).ready(function(){
                 $('iframe[name="'+ $iframe_name +'"]').load(function()
                 {
                     $data		= jQuery.trim($('.shifterPane_1 .blockFastSellImage iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
-                    console.log($data);
 
                     $('.shifterPane_1 .blockFastSellImage .fastSellImage').html('<img src="'+ $data +'" width="250px" alt="">')
                 });
@@ -661,7 +659,6 @@ $(document).ready(function(){
             $('iframe[name="'+ $iframe_name +'"]').load(function()
             {
                 $data		= jQuery.trim($('.popProductsMasterDataFile .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
-                //console.log($data);
 
                 // Display error
                 if($data == 'wassuccessfullyuploaded')
@@ -719,7 +716,6 @@ $(document).ready(function(){
             $('iframe[name="'+ $iframe_name +'"]').load(function()
             {
                 $data		= $('.popCustomerMasterDataFile .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html();
-                //console.log($data);
                 $('.chosenUsersList').html($data).show();
                 $.scrap_note_time('Customers have been uploaded', 4000, 'tick');
                 $('body').sunBox.close_popup('popCustomerMasterDataFile');
@@ -1035,7 +1031,6 @@ $(document).ready(function(){
                 $('iframe[name="'+ $iframe_name +'"]').load(function()
                 {
                     $data		= jQuery.trim($('.blockProductImage iframe[name="'+ $iframe_name +'"]').contents().find('body').html());
-                    console.log($data);
 
                     $('.blockProductImage .imagePreview').html('<img src="'+ $data +'" width="312px" alt="">')
                 });
@@ -1303,9 +1298,11 @@ $(document).ready(function(){
                     $start_date                 = $('input[name="inpStartDate"]').val();
                     $start_hour                 = $('select[name="startHoursSelect"]').val();
                     $start_minute               = $('select[name="startMinutesSelect"]').val();
+                    $start_ampm                 = $('select[name="startAMPM"]').val();
                     $end_date                   = $('input[name="inpEndDate"]').val();
                     $end_hour                   = $('select[name="endHoursSelect"]').val();
                     $end_minute                 = $('select[name="endMinutesSelect"]').val();
+                    $end_ampm                   = $('select[name="endAMPM"]').val();
                     $event_id                   = $('.hdEventId').text();
                     $event_banner               = $('.hdBannerImagePath').text();
                     $categories                 = '';
@@ -1373,9 +1370,11 @@ $(document).ready(function(){
                             start_date		        : $start_date,
                             start_hour			    : $start_hour,
                             start_minute			: $start_minute,
+                            start_ampm			    : $start_ampm,
                             end_date			    : $end_date,
                             end_hour			    : $end_hour,
                             end_minute			    : $end_minute,
+                            end_ampm			    : $end_ampm,
                             event_id			    : $event_id,
                             event_banner	        : $event_banner,
                             categories              : $categories
@@ -1383,7 +1382,6 @@ $(document).ready(function(){
                         function($data)
                         {
                             $data	= jQuery.trim($data);
-                            console.log($data);
 
                             if($data == '9876')
                             {
@@ -1546,7 +1544,6 @@ $(document).ready(function(){
             },
             function($data)
             {
-                //console.log($data);
                 $.scrap_note_time('Customer has been removed from this FastSell', 4000, 'tick');
                 $fc_refresh_customer_list();
             });

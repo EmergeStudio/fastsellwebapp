@@ -50,25 +50,41 @@ class Ajax_handler_fastsells extends CI_Controller
 			$start_date                     = $this->input->post('start_date');
 			$start_hour                     = $this->input->post('start_hour');
 			$start_minute                   = $this->input->post('start_minute');
+			$start_ampm                     = $this->input->post('start_ampm');
 			$end_date                       = $this->input->post('end_date');
 			$end_hour                       = $this->input->post('end_hour');
 			$end_minute                     = $this->input->post('end_minute');
+			$end_ampm                       = $this->input->post('end_ampm');
 			$event_id                       = $this->input->post('event_id');
 			$event_banner                   = $this->input->post('event_banner');
 			$categories                     = $this->input->post('categories');
 
 			// Edit time
-			if(strlen($start_hour) == 1)
+			if($start_ampm == 'am')
 			{
-				$start_hour             = '0'.$start_hour;
+				if(strlen($start_hour) == 1)
+				{
+					$start_hour             = '0'.$start_hour;
+				}
+			}
+			else
+			{
+				$start_hour                 = $start_hour + 12;
 			}
 			if(strlen($start_minute) == 1)
 			{
 				$start_minute          = '0'.$start_minute;
 			}
-			if(strlen($end_hour) == 1)
+			if($end_ampm == 'am')
 			{
-				$end_hour               = '0'.$end_hour;
+				if(strlen($end_hour) == 1)
+				{
+					$end_hour               = '0'.$end_hour;
+				}
+			}
+			else
+			{
+				$end_hour                   = $end_hour + 12;
 			}
 			if(strlen($end_minute) == 1)
 			{

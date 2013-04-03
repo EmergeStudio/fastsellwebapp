@@ -100,16 +100,18 @@ echo open_div('middle');
 				{
 					if(($this->uri->segment(2) == 'by_group') && ($this->uri->segment(3) == $group->id))
 					{
-						$active                 = 'class="active"';
+						$active                 = ' active';
 					}
 					else
 					{
 						$active                 = '';
 					}
 
-					echo open_div('groupContainer');
+					echo open_div('groupContainer outerContainer'.$active);
 
-						echo anchor('customers/by_group/'.$group->id, $group->name, $active);
+						echo full_div('', 'icon-cross btnDeleteGroup');
+						echo full_div('', 'icon-pencil btnEditGroup');
+						echo anchor('customers/by_group/'.$group->id, $group->name);
 						echo hidden_div($group->id, 'hdGroupId');
 
 					echo close_div();

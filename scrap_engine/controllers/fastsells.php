@@ -146,6 +146,7 @@ class Fastsells extends CI_Controller
 	{
 		// ----- APPLICATION PROFILER --------------------------------
 		$this->output->enable_profiler(FALSE);
+//		echo $this->session->userdata('sv_es_token');
 
 
 		// ----- SOME VARIABLES ------------------------------
@@ -157,6 +158,11 @@ class Fastsells extends CI_Controller
 		$url_fastsell                       = 'fastsellevents/.json?id='.$fastsell_id;
 		$call_fastsell                      = $this->scrap_web->webserv_call($url_fastsell, FALSE, 'get', FALSE, FALSE);
 
+		if($call_fastsell['error'] == TRUE)
+		{
+			$json_error                     = $call_fastsell['result'];
+			echo $json_error->error_description;
+		}
 
 		if($call_fastsell['error'] == FALSE)
 		{
@@ -243,7 +249,6 @@ class Fastsells extends CI_Controller
 
 								// Recode
 								$new_show_definition_json                       = json_encode($json_sample);
-								//echo $new_show_definition_json.'<br><br>';
 
 								// Submit the insert
 								$new_show_definition                            = $this->scrap_web->webserv_call('fastsellitemdefinitions/.json', $new_show_definition_json, 'put', FALSE, FALSE);
@@ -348,9 +353,39 @@ class Fastsells extends CI_Controller
 		else
 		{
 			$json_error                     = $call_fastsell['result'];
-			echo $json_error;
 
-			//redirect('fastsells');
+			// Check if the event is locked
+			if($json_error->error_code == 403)
+			{
+				// ----- HEADER ------------------------------------
+				// Some variables
+				$dt_header['title'] 	        = 'FastSell';
+				$dt_header['crt_page']	        = 'pageFastSells';
+				$dt_header['extra_css']	        = array('fastsell_locked');
+				$dt_header['extra_js']          = array('plugin_countdown');
+
+				// Load header
+				$this->load->view('universal/header', $dt_header);
+
+
+				// ----- CONTENT ------------------------------------
+				// Get the fastsells
+				$customer_id                    = $this->scrap_web->get_customer_org_id();
+				$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
+				$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
+				$dt_body['fastsells']           = $call_fastsells;
+
+				// Load the view
+				$this->load->view('fastsells/fastsell_locked', $dt_body);
+
+
+				// ----- FOOTER ------------------------------------
+				$this->load->view('universal/footer');
+			}
+			else
+			{
+				echo $json_error->error_description;
+			}
 		}
 	}
 
@@ -1004,25 +1039,41 @@ class Fastsells extends CI_Controller
 		$start_date                         = $this->input->post('inpStartDate');
 		$start_hour                         = $this->input->post('startHoursSelect');
 		$start_minute                       = $this->input->post('startMinutesSelect');
+		$start_ampm                         = $this->input->post('startAMPM');
 		$end_date                           = $this->input->post('inpEndDate');
 		$end_hour                           = $this->input->post('endHoursSelect');
 		$end_minute                         = $this->input->post('endMinutesSelect');
+		$end_ampm                           = $this->input->post('endAMPM');
 		$fastsell_id                        = $this->input->post('hdEventId');
 		$return_url                         = $this->input->post('hdReturnUrl');
 		$categories                         = $this->input->post('hdFastSellCategories');
 
 		// Edit time
-		if(strlen($start_hour) == 1)
+		if($start_ampm == 'am')
 		{
-			$start_hour             = '0'.$start_hour;
+			if(strlen($start_hour) == 1)
+			{
+				$start_hour             = '0'.$start_hour;
+			}
+		}
+		else
+		{
+			$start_hour                 = $start_hour + 12;
 		}
 		if(strlen($start_minute) == 1)
 		{
 			$start_minute           = '0'.$start_minute;
 		}
-		if(strlen($end_hour) == 1)
+		if($end_ampm == 'am')
 		{
-			$end_hour               = '0'.$end_hour;
+			if(strlen($end_hour) == 1)
+			{
+				$end_hour               = '0'.$end_hour;
+			}
+		}
+		else
+		{
+			$end_hour                   = $end_hour + 12;
 		}
 		if(strlen($end_minute) == 1)
 		{
@@ -1123,13 +1174,13 @@ class Fastsells extends CI_Controller
 				{
 					// Return the error message
 					$json				= $update_fastsell['result'];
-					echo $json;
+					echo $json->error_description;
 				}
 			}
 		}
 
 		// Redirect
-		redirect('fastsells/event/'.$fastsell_id.'/saved');
+//		redirect('fastsells/event/'.$fastsell_id.'/saved');
 	}
 
 

@@ -46,15 +46,15 @@ input {
 }
 div.selector {
     float: left;
-    width: 73px;
+    width: 57px;
     margin-right: 10px;
     margin-left: -3px;
 }
 div.selector select {
-    width: 85px;
+    width: 69px;
 }
 div.selector span {
-    width: 50px;
+    width: 34px;
 }
 .timeLabel label {
     margin-top: 5px;

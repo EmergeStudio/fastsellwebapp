@@ -263,6 +263,35 @@ class Scrap_string
 
 	/*
 	|--------------------------------------------------------------------------
+	| MAKE HOUR BY AM/PM
+	|--------------------------------------------------------------------------
+	*/
+	function make_hours_ampm($date)
+	{
+		return date("h",(strtotime($date)));
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| MAKE AM/PM
+	|--------------------------------------------------------------------------
+	*/
+	function make_ampm($date)
+	{
+		if(date("H",(strtotime($date))) >= 12)
+		{
+			return 'pm';
+		}
+		else
+		{
+			return 'am';
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
 	| MAKE MINUTES
 	|--------------------------------------------------------------------------
 	*/
@@ -379,6 +408,81 @@ class Scrap_string
 		}
 		$select .= '</select>';
 		
+		// Return
+		return $select;
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| HOURS SELECT SHORT
+	|--------------------------------------------------------------------------
+	*/
+	function hours_select_short($class = 'hoursSelect', $selected = null)
+	{
+		// Hours range
+		$r = range(1, 12);
+
+		// Current hours
+		$selected = is_null($selected) ? date('h') : $selected;
+
+		$select = "<select name=\"$class\" class=\"$class\">\n";
+		foreach ($r as $hour)
+		{
+			$select .= "<option value=\"$hour\"";
+			$select .= ($hour==$selected) ? ' selected="selected"' : '';
+			$select .= '>'.$hour.'</option>\n';
+		}
+		$select .= '</select>';
+
+		// Return
+		return $select;
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| AM / PM SELECT
+	|--------------------------------------------------------------------------
+	*/
+	function ampm_select($class = 'hoursSelect', $selected = null)
+	{
+		// Current hours
+		if($selected == null)
+		{
+			$selected       = date('a');
+		}
+
+		$select     = "<select name=\"$class\" class=\"$class\">\n";
+
+			$select .= '<option value="am"';
+
+				if($selected == 'am')
+				{
+					$select .= ' selected="selected"';
+				};
+
+			$select .= '>';
+
+				$select .= 'AM';
+
+			$select .= '</option>';
+
+			$select .= '<option value="pm"';
+
+			if($selected == 'pm')
+			{
+				$select .= ' selected="selected"';
+			};
+
+			$select .= '>';
+
+				$select .= 'PM';
+
+			$select .= '</option>';
+
+		$select .= '</select>';
+
 		// Return
 		return $select;
 	}

@@ -928,12 +928,11 @@ html {
     display: block;
     padding: 8px 22px;
     border-top: 1px solid #ebebeb;
-    border-left: 1px solid #fff;
 }
-.middle .leftContentSmall .whiteBack a.firstLink {
+.middle .leftContentSmall .whiteBack .outerContainer.firstLink {
     border-top: none;
 }
-.middle .leftContentSmall .whiteBack a:hover, .middle .leftContentSmall .whiteBack a.active {
+.middle .leftContentSmall .whiteBack .outerContainer:hover, .middle .leftContentSmall .whiteBack .outerContainer.active, .middle .leftContentSmall .whiteBack a.active {
     background-color: #f7f7f7;
     -webkit-box-shadow: inset 0px 10px 10px -10px rgba(0,0,0,.2);
     box-shadow: inset 0px 10px 10px -10px rgba(0,0,0,.2);
@@ -1187,7 +1186,7 @@ h4.counterHeadings {
 }
 
 /* eHighLight is a class name that will added to an element if selected and highlighted*/
-.flexigrid.editOn .eHighLight {
+.flexigrid.editOn .eHighLight, .flexigrid.editOn .editCustomerGroup:hover {
     background: #d9ebf5;
     border-left: 1px solid #eef8ff;
     border-bottom: 1px dotted #a8d8eb;
