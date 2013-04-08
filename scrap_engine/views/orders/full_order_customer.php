@@ -18,25 +18,9 @@ if($order != FALSE)
 				// Order details
 				echo open_div('orderDetails floatLeft');
 
-					echo full_div('<b>Order Number:</b>'.nbs(4).$crt_order->order_number).div_height(2);
-					echo full_div('<b>Date Created:</b>'.nbs(6).$this->scrap_string->make_long_date($crt_order->date_created)).div_height(2);
-					echo full_div('<b>FastSell Event:</b>'.nbs(5).$crt_order->fastsell_event->name).div_height(6);
-
-					if($crt_order->order_state->id == 1)
-					{
-						$ar_inp         = array
-						(
-							'name'      => 'yourReference',
-							'class'     => 'yourReference',
-							'value'     => $crt_order->order_reference
-						);
-
-						echo full_div('<b>Your Reference:</b>'.nbs(2).form_input($ar_inp)).div_height(2);
-					}
-					else
-					{
-						echo full_div('<b>Your Reference:</b>'.nbs(4).$crt_order->order_reference).div_height(2);
-					}
+					echo full_div('<b>Order Number:</b>'.nbs(1).$crt_order->order_number).div_height(2);
+					echo full_div('<b>Date Created:</b>'.nbs(1).$this->scrap_string->make_long_date($crt_order->date_created)).div_height(2);
+					echo full_div('<b>FastSell Event:</b>'.nbs(1).$crt_order->name);
 
 				echo close_div();
 

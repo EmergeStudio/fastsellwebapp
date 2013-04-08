@@ -26,7 +26,7 @@ echo open_div('middle');
 
 				echo full_div('Select FastSell', 'labelText floatLeft');
 				echo form_dropdown('drpDwnFastSellId', $ar_fastsells);
-				echo make_button('<span class="icon-download"></span>Download Report', 'btnDownloadReport blueButton', '', 'left', '', FALSE);
+				echo make_button('<div class="icon-download"></div>Download Report', 'btnDownloadReport blueButton', '', 'left', '', FALSE);
 
 			echo close_div();
 

@@ -7,7 +7,7 @@ if($orders['error'] == FALSE)
 	$json_orders                    = $orders['result'];
 
 	// Heading
-	$this->table->set_heading('Date Created', array('data' => 'Order Number', 'class' => 'fullCell'), 'FastSell Event', 'Total', '');
+	$this->table->set_heading('Date Created', 'FastSell Event', array('data' => 'Order Number', 'class' => 'fullCell'), 'Total', '');
 
 	// Rows
 	foreach($json_orders->fastsell_orders as $order)
@@ -48,7 +48,7 @@ if($orders['error'] == FALSE)
 		}
 
 		// Add the row
-		$this->table->add_row($date_created, array('data' => div_height(5).anchor('my_orders/view/'.$order->id, $order->order_number).div_height(5), 'class' => 'fullCell'), $fastsell_name, array('data' => '$'.$grand_total, 'class' => 'greenTxt'), $state);
+		$this->table->add_row($date_created, $fastsell_name, array('data' => div_height(5).anchor('my_orders/view/'.$order->id, $order->order_number).div_height(5), 'class' => 'fullCell'), array('data' => '$'.$grand_total, 'class' => 'greenTxt'), $state);
 	}
 
 	// Generate table

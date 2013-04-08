@@ -35,7 +35,7 @@ if($customers['error'] == FALSE)
 		);
 
 		// Table row
-		$this->table->add_row(form_checkbox($checkbox_add_customer), img($img_properties), array('data' => $customer_details->name, 'class' => 'fullCell'), $customer_to_show_host->customer_number);
+		$this->table->add_row(form_checkbox($checkbox_add_customer), img($img_properties), array('data' => $customer_to_show_host->customer_name, 'class' => 'fullCell'), $customer_to_show_host->customer_number);
 	}
 
 	// Generate table

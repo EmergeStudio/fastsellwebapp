@@ -13,7 +13,8 @@ echo open_div('middle');
 			'all'                   => 'All FastSells',
 			'current'               => 'Currently Running FastSells',
 			'upcoming'              => 'FastSells Coming Up',
-			'passed'                => 'Passed FastSells'
+			'passed'                => 'Passed FastSells',
+			'archived'              => 'Archived FastSells'
 		);
 
 		echo form_open('fastsells', 'class="frmFastSellsType"');

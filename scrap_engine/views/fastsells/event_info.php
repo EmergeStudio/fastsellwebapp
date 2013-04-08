@@ -10,6 +10,15 @@ echo form_open_multipart('fastsells/save_event_changes', 'class="frmSaveEventCha
 		// Small right column
 		echo open_div('rightColSmall showDescription');
 
+            // Options
+			echo open_div('whiteBack eventOptions');
+
+				echo make_button(full_div('', 'icon-box-add').'Archive', 'blueButton btnArchiveEvent', '', 'left');
+				echo make_button(full_div('', 'icon-cross-3').'Delete', 'redButton btnDeleteEvent', '', 'left');
+				echo clear_float();
+
+			echo close_div();
+
 			// White back
 			echo open_div('whiteBack');
 
@@ -284,4 +293,7 @@ elseif($this->uri->segment(4) == 'fastsellstarted')
 {
 	echo hidden_div('Your FastSell has now started', 'hdNotification');
 }
+
+// Back to fastsells
+echo form_open('fastsells', 'class="frmBackToFastSells"').form_close();
 ?>

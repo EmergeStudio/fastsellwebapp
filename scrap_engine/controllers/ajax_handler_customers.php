@@ -700,7 +700,25 @@ class Ajax_handler_customers extends CI_Controller
 			$dt_body['show_host_id']    = $show_host_id;
 
 			// Get all the customers
-			$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
+			$offset                         = 0;
+			$limit                          = 100;
+			$search_text                    = '';
+
+			// Search
+			if($this->input->post('inpSearchText'))
+			{
+				$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+			}
+			if($this->input->post('hdLimit'))
+			{
+				$limit                      = $this->input->post('hdLimit');
+			}
+			if($this->input->post('hdOffset'))
+			{
+				$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+			}
+
+			$url_customers              = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&fastselleventid='.$fastsell_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 			$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 			$dt_body['customers']       = $call_customers;
 

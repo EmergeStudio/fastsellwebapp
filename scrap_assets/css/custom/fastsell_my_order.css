@@ -17,8 +17,8 @@
 --------------------------------------------------------------------------------------- */
 .controlBar .bigIcon {
     width: 115px;
-    padding-top: 6px;
-    height: 94px;
+    padding-top: 26px;
+    height: 104px;
     margin-left: 13px;
     font-size: 80px;
     color: #25aae1;
@@ -26,7 +26,7 @@
 }
 .controlBar .orderDetails {
     width: 400px;
-    height: 60px;
+    height: 80px;
     padding: 20px 25px;
     font-size: 80px;
     border-left: 1px solid #fff;
@@ -37,6 +37,13 @@
 }
 .controlBar .orderDeliveryAddress .deliveryAddress {
     width: 120px;
+}
+.middle .coolScreen .controlBar input.yourReference {
+    width: 200px;
+    border: 1px solid #fff;
+    padding: 5px 4px;
+    font-size: 12px;
+    color: #000;
 }
 table .leftText {
     text-align: left;

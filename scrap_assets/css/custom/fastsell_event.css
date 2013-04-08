@@ -257,3 +257,18 @@ div.selector span {
 .middle .coolTable td {
     white-space: normal;
 }
+.middle .eventOptions .scrapButton {
+    font-size: 16px;
+    font-weight: 200;
+    padding: 10px 20px 10px 40px;
+}
+.middle .eventOptions .scrapButton div {
+    position: absolute;
+    margin-left: -25px;
+    text-shadow: none;
+    color: #fff;
+    font-size: 18px;
+}
+.middle .eventOptions .scrapButton.btnArchiveEvent {
+    margin-left: 13px;
+}

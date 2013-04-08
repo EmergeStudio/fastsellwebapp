@@ -629,7 +629,25 @@ class Ajax_handler_fastsells extends CI_Controller
 			$call_link                  = $this->scrap_web->webserv_call($url_link, $encode_file_convert, 'put');
 
 			// Get all the customers
-			$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
+			$offset                         = 0;
+			$limit                          = 100;
+			$search_text                    = '';
+
+			// Search
+			if($this->input->post('inpSearchText'))
+			{
+				$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+			}
+			if($this->input->post('hdLimit'))
+			{
+				$limit                      = $this->input->post('hdLimit');
+			}
+			if($this->input->post('hdOffset'))
+			{
+				$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+			}
+
+			$url_customers              = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&fastselleventid='.$fastsell_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
 			$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
 			$dt_body['customers']       = $call_customers;
 
@@ -875,6 +893,74 @@ class Ajax_handler_fastsells extends CI_Controller
 			}
 
 			echo json_encode($ar_categories);
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| DELETE FASTSELL
+	|--------------------------------------------------------------------------
+	*/
+	function delete_fastsell()
+	{
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$event_id               = $this->input->post('event_id');
+
+			// Do the call
+			$url_delete             = 'fastsellevents/.json?id='.$event_id.'&harddelete=true';
+			$call_delete            = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete');
+
+			if($call_delete['error'] == FALSE)
+			{
+				echo 'wasdeleted';
+			}
+			else
+			{
+				$json_error         = $call_delete['result'];
+				echo $json_error->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
+		}
+	}
+
+
+	/*
+	|--------------------------------------------------------------------------
+	| ARCHIVE FASTSELL
+	|--------------------------------------------------------------------------
+	*/
+	function archive_fastsell()
+	{
+
+		if($this->scrap_wall->login_check_ajax() == TRUE)
+		{
+			// Some variables
+			$event_id               = $this->input->post('event_id');
+
+			// Do the call
+			$url_delete             = 'fastsellevents/.json?id='.$event_id;
+			$call_delete            = $this->scrap_web->webserv_call($url_delete, FALSE, 'delete', FALSE, FALSE);
+
+			if($call_delete['error'] == FALSE)
+			{
+				echo 'wasarchived';
+			}
+			else
+			{
+				$json_error         = $call_delete['result'];
+				echo $json_error->error_description;
+			}
+		}
+		else
+		{
+			echo 9876;
 		}
 	}
 	

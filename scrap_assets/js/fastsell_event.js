@@ -36,10 +36,86 @@ $(document).ready(function(){
 
     $fc_auto_complete_category($('.hdFastSellCategories').text());
 
+    $fc_delete_event();
+
+    $fc_archive_event();
+
 //    $fc_adjust_input();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ----- ARCHIVE EVENT
+    function $fc_archive_event()
+    {
+        $('.btnArchiveEvent').live('click', function()
+        {
+            // Some variables
+            $event_id               = $('.hdEventId').text();
+
+            $.scrap_note_loader('Archiving FastSell');
+
+            // Get the category information
+            $.post($base_path + 'ajax_handler_fastsells/archive_fastsell',
+            {
+                event_id			: $event_id
+            },
+            function($data)
+            {
+                $data	= jQuery.trim($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else if($data == 'wasarchived')
+                {
+                    // Edit the DOM
+                    $('.frmBackToFastSells').submit();
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
+            });
+        });
+    }
+
+    // ----- DELETE EVENT
+    function $fc_delete_event()
+    {
+        $('.btnDeleteEvent').live('click', function()
+        {
+            // Some variables
+            $event_id               = $('.hdEventId').text();
+
+            $.scrap_note_loader('Deleting FastSell');
+
+            // Get the category information
+            $.post($base_path + 'ajax_handler_fastsells/delete_fastsell',
+            {
+                event_id			: $event_id
+            },
+            function($data)
+            {
+                $data	= jQuery.trim($data);
+
+                if($data == '9876')
+                {
+                    $.scrap_logout();
+                }
+                else if($data == 'wasdeleted')
+                {
+                    // Edit the DOM
+                   $('.frmBackToFastSells').submit();
+                }
+                else
+                {
+                    $.scrap_note_time($data, 4000, 'cross');
+                }
+            });
+        });
+    }
 
     // ----- MANAGE CATEGORY
     function $fc_manage_category()

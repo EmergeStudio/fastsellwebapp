@@ -117,7 +117,7 @@ $(document).ready(function(){
         $window_w               = $(window).width();
 
         // Columns
-        $('.middle .leftColBig, .middle .rightColBig').width($window_w - 350);
+        $('.middle .leftColBig, .middle .rightColBig').width($window_w - 360);
         $('.middle .rightContentLarge').width($window_w - 310);
     }
 
@@ -236,6 +236,10 @@ $(document).ready(function(){
             {
                 $(this).css({ backgroundColor : '#0789b5' });
             }
+            else if($(this).hasClass('redButton'))
+            {
+                $(this).css({ backgroundColor : '#8b1400' });
+            }
 			else if($(this).hasClass('pinkButton'))
 			{
 				$(this).css({ backgroundImage : 'url()', backgroundColor : '#f41867' });
@@ -259,6 +263,10 @@ $(document).ready(function(){
             else if($(this).hasClass('blueButton'))
             {
                 $(this).css({ backgroundColor : '#1ba2d0' });
+            }
+            else if($(this).hasClass('redButton'))
+            {
+                $(this).css({ backgroundColor : '#db2e12' });
             }
 			else if($(this).hasClass('pinkButton'))
 			{

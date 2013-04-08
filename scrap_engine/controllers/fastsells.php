@@ -172,6 +172,8 @@ class Fastsells extends CI_Controller
 			// FastSell information
 			$fastsell_info                  = $call_fastsell['result'];
 			$started                        = FALSE;
+//			echo 'Current Time: '.$this->scrap_web->get_current_time().' -- Start Time: '.$fastsell_info->event_start_date;
+
 			if($this->scrap_web->get_current_time() >= $fastsell_info->event_start_date)
 			{
 				$started                    = TRUE;
@@ -357,30 +359,31 @@ class Fastsells extends CI_Controller
 			// Check if the event is locked
 			if($json_error->error_code == 403)
 			{
-				// ----- HEADER ------------------------------------
-				// Some variables
-				$dt_header['title'] 	        = 'FastSell';
-				$dt_header['crt_page']	        = 'pageFastSells';
-				$dt_header['extra_css']	        = array('fastsell_locked');
-				$dt_header['extra_js']          = array('plugin_countdown');
-
-				// Load header
-				$this->load->view('universal/header', $dt_header);
-
-
-				// ----- CONTENT ------------------------------------
-				// Get the fastsells
-				$customer_id                    = $this->scrap_web->get_customer_org_id();
-				$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
-				$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
-				$dt_body['fastsells']           = $call_fastsells;
-
-				// Load the view
-				$this->load->view('fastsells/fastsell_locked', $dt_body);
-
-
-				// ----- FOOTER ------------------------------------
-				$this->load->view('universal/footer');
+				redirect('fastsells');
+//				// ----- HEADER ------------------------------------
+//				// Some variables
+//				$dt_header['title'] 	        = 'FastSell';
+//				$dt_header['crt_page']	        = 'pageFastSells';
+//				$dt_header['extra_css']	        = array('fastsell_locked');
+//				$dt_header['extra_js']          = array('plugin_countdown');
+//
+//				// Load header
+//				$this->load->view('universal/header', $dt_header);
+//
+//
+//				// ----- CONTENT ------------------------------------
+//				// Get the fastsells
+//				$customer_id                    = $this->scrap_web->get_customer_org_id();
+//				$url_fastsells                  = 'fastsellevents/.jsons?customerid='.$customer_id;
+//				$call_fastsells                 = $this->scrap_web->webserv_call($url_fastsells, FALSE, 'get', FALSE, FALSE);
+//				$dt_body['fastsells']           = $call_fastsells;
+//
+//				// Load the view
+//				$this->load->view('fastsells/fastsell_locked', $dt_body);
+//
+//
+//				// ----- FOOTER ------------------------------------
+//				$this->load->view('universal/footer');
 			}
 			else
 			{
@@ -1180,7 +1183,7 @@ class Fastsells extends CI_Controller
 		}
 
 		// Redirect
-//		redirect('fastsells/event/'.$fastsell_id.'/saved');
+		redirect('fastsells/event/'.$fastsell_id.'/saved');
 	}
 
 
@@ -1461,9 +1464,31 @@ class Fastsells extends CI_Controller
 				$dt_body['fastsell_info']   = $fastsell_info;
 
 				// Get all the customers
-				$url_customers              = 'customers/.jsons?fastselleventid='.$fastsell_id;
-				$call_customers             = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
-				$dt_body['customers']       = $call_customers;
+				$offset                         = 0;
+				$limit                          = 100;
+				$search_text                    = '';
+
+				// Search
+				if($this->input->post('inpSearchText'))
+				{
+					$search_text                = str_replace(' ', '%20', $this->input->post('inpSearchText'));
+				}
+				if($this->input->post('hdLimit'))
+				{
+					$limit                      = $this->input->post('hdLimit');
+				}
+				if($this->input->post('hdOffset'))
+				{
+					$offset                     = ($this->input->post('hdOffset') - 1) * $limit;
+				}
+
+				$dt_body['search_text']         = $search_text;
+				$dt_body['offset']              = $offset;
+				$dt_body['limit']               = $limit;
+
+				$url_customers                  = 'customertoshowhosts/.jsons?showhostid='.$show_host_id.'&fastselleventid='.$fastsell_id.'&searchtext='.$search_text.'&limit='.$limit.'&offset='.$offset;
+				$call_customers                 = $this->scrap_web->webserv_call($url_customers, FALSE, 'get', FALSE, FALSE);
+				$dt_body['customers']           = $call_customers;
 
 				// Load the view
 				$this->load->view('fastsells/manage_customers', $dt_body);

@@ -471,3 +471,12 @@ a{text-decoration:none;}
 .icon-copy-2:before {
     content: "\f0c5";
 }
+.icon-cross-2:before {
+    content: "\e04e";
+}
+.icon-cross-3:before {
+    content: "\e04f";
+}
+.icon-box-add:before {
+    content: "\e050";
+}

@@ -11,14 +11,10 @@ if($customers['error'] == FALSE)
 	echo '<table id="flex1">';
 
 		// Loop through and display customer
-		foreach($json_customers->customer_organizations as $customer)
+		foreach($json_customers->customer_to_show_hosts as $customer)
 		{
 			// Get the customer number
-			$url_customer               = 'customertoshowhosts/.json?showhostid='.$show_host_id.'&customerid='.$customer->id.'&includegroups=true';
-			$call_customer              = $this->scrap_web->webserv_call($url_customer, FALSE, 'get', FALSE, FALSE);
-			$json_customers             = $call_customer['result'];
-
-			$url_cust_user		        = 'customerusers/.json?customerid='.$customer->id;
+			$url_cust_user		        = 'customerusers/.json?customerid='.$customer->customer_organization->id;
 			$call_cust_user	            = $this->scrap_web->webserv_call($url_cust_user, FALSE, 'get', FALSE, FALSE);
 
 			$cust_user_id               = 0;
@@ -40,19 +36,19 @@ if($customers['error'] == FALSE)
 
 				echo '<td>';
 
-					echo $customer->id;
+					echo $customer->customer_organization->id;
 
 				echo '</td>';
 
 				echo '<td>';
 
-					echo $customer->name;
+					echo $customer->customer_name;
 
 				echo '</td>';
 
 				echo '<td>';
 
-					echo $json_customers->customer_number;
+					echo $customer->customer_number;
 
 				echo '</td>';
 

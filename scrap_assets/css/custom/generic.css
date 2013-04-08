@@ -42,6 +42,15 @@
     background-color: #1ba2d0;
     background-image: none;
 }
+.scrapButton.redButton, .scrapButton2.redButton {
+	color:#fff;
+	text-shadow:none;
+	font-weight:500;
+	font-size: 12px;
+	border:1px solid #db2e12;
+    background-color: #db2e12;
+    background-image: none;
+}
 .scrapButton.greyButton, .scrapButton2.greyButton {
      color:#8a8a8a;
      text-shadow:none;
@@ -88,6 +97,10 @@
 .scrapButton:hover, .scrapButton2:hover, .pagenation .control:hover {cursor:pointer; border:1px solid #9d9d9d; color:#464646;}
 .scrapButton.blueButton:hover, .middle .scrapButton2.blueButton:hover {
 	border:1px solid #016689;
+	color:#fff;
+}
+.scrapButton.redButton:hover, .middle .scrapButton2.redButton:hover {
+	border:1px solid #8b1400;
 	color:#fff;
 }
 .middle .scrapButton.greyButton:hover, .middle .scrapButton2.greyButton:hover {

@@ -703,8 +703,6 @@ $(document).ready(function(){
         // Submit
         $('.popCustomerMasterDataFile .returnTrue').live('click', function()
         {
-            //$('.frmCustomerMasterDataUpload').submit();
-
             // Submit the information
             $.scrap_note_loader('Uploading customers now');
 
@@ -715,68 +713,12 @@ $(document).ready(function(){
 
             $('iframe[name="'+ $iframe_name +'"]').load(function()
             {
-                $data		= $('.popCustomerMasterDataFile .popup iframe[name="'+ $iframe_name +'"]').contents().find('body').html();
-                $('.chosenUsersList').html($data).show();
                 $.scrap_note_time('Customers have been uploaded', 4000, 'tick');
                 $('body').sunBox.close_popup('popCustomerMasterDataFile');
+                $fc_refresh_customer_list();
             });
         });
     }
-
-    // ----- CUSTOMER LINKS
-//    function $fc_customer_links()
-//    {
-//        $('.userList .btnAddCustomerOne').live('click', function()
-//        {
-//            // Some variables
-//            $this                   = $(this);
-//            $parent				    = $this.parents('tr');
-//            $customer_id            = $parent.find('.hdCustomerIdOne').text();
-//            $event_id               = $('.hdEventId').text();
-//            $.scrap_note_loader('Adding customer');
-//
-//            // Add the customer
-//            $.post($ajax_base_path + 'fastsell_customer_link',
-//            {
-//                event_id		    : $event_id,
-//                customer_id			: $customer_id ,
-//                type                : 'add'
-//            },
-//            function($data)
-//            {
-//                $.scrap_note_hide();
-//                $fc_refresh_customer_list();
-//            });
-//        });
-//
-//        $('.userList .btnAddAllCustomers').live('click', function()
-//        {
-//            $.scrap_note_loader('Adding customers');
-//            $event_id                   = $('.hdEventId').text();
-//
-//            $('.userList tbody tr').each(function()
-//            {
-//                // Some variables
-//                $this                   = $(this);
-//                $customer_id            = $this.find('.hdCustomerIdOne').text();
-////                console.log($customer_id);
-//
-//                // Add the customer
-//                $.post($ajax_base_path + 'fastsell_customer_link',
-//                {
-//                    event_id		    : $event_id,
-//                    customer_id			: $customer_id ,
-//                    type                : 'add'
-//                },
-//                function($data)
-//                {
-//                });
-//            });
-//
-//            $.scrap_note_hide();
-//            $fc_refresh_customer_list();
-//        });
-//    }
 
     // ----- REFRESH CUSTOMERS LIST
     function $fc_refresh_customer_list()
@@ -1549,26 +1491,6 @@ $(document).ready(function(){
             });
         });
     }
-
-    // ---------- REFRESH CUSTOMER LIST
-//    function $fc_refresh_customer_list()
-//    {
-//        // Some variables
-//        $event_id               = $('.hdEventId').text();
-//
-//        // The AJAX call
-//        $.post($base_path + 'ajax_handler_customers/get_added_customers',
-//        {
-//            event_id		    : $event_id
-//        },
-//        function($data)
-//        {
-//            $data	            = jQuery.trim($data);
-//            //console.log($data);
-//
-//            $('.chosenUsersList').html($data);
-//        });
-//    }
 
     // ---------- REMOVE A PRODUCT
     function $fc_remove_product()

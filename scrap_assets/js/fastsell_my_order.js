@@ -16,9 +16,17 @@ $(document).ready(function(){
     $fc_counter();
 
     $fc_remove_product();
+
+    $fc_change_my_reference();
 	
 	
 // ------------------------------------------------------------------------------FUNCTIONS
+
+    // ---------- CHANGE MY REFERENCE
+    function $fc_change_my_reference()
+    {
+        alert('au');
+    }
 
     // ---------- COUNTER
     function $fc_counter()
@@ -35,10 +43,10 @@ $(document).ready(function(){
 
             // Set the counter
             $(this).countdown(
-                {
-                    // Time stamp
-                    timestamp	        : (new Date($ex_date[0], ($ex_date[1]-1), ($ex_date[2]-20), $hours, $minutes, $seconds)).getTime() + 20*24*60*60*1000
-                });
+            {
+                // Time stamp
+                timestamp	        : (new Date($ex_date[0], ($ex_date[1]-1), ($ex_date[2]-20), $hours, $minutes, $seconds)).getTime() + 20*24*60*60*1000
+            });
         });
     }
 
